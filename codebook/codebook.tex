@@ -16,7 +16,7 @@
 \usepackage{multicol}
 \usepackage{titlesec}
 \usepackage{amsmath}
-\usepackage[CheckSingle, CJKmath]{xeCJK}
+% \usepackage[CheckSingle, CJKmath]{xeCJK}
 \usepackage{savetrees}
 \usepackage{array}
 \usepackage{xparse}
@@ -26,16 +26,16 @@
 \usepackage{amsmath, courier, listings, fancyhdr, graphicx}
 \topmargin=0pt
 \headsep=5pt
-\textheight=780pt
+\textheight=800pt
+\textwidth=560pt
 \footskip=0pt
-\voffset=-40pt
-\textwidth=545pt
 \marginparsep=0pt
 \marginparwidth=0pt
 \marginparpush=0pt
 \oddsidemargin=0pt
 \evensidemargin=0pt
-\hoffset=-42pt
+\voffset=-55pt
+\hoffset=-50pt
 
 \titlespacing\section{0pt}{-2pt plus 0pt minus 2pt}{-1pt plus 0pt minus 2pt}
 \titlespacing\subsection{0pt}{-2pt plus 0pt minus 2pt}{-1pt plus 0pt minus 2pt}
@@ -59,37 +59,37 @@
 \lst@CCPutMacro\lst@ProcessOther {"2D}{\lst@ttfamily{-{}}{-{}}}
 \@empty\z@\@empty
 
-\newtoks\BBQube@token
-\newcount\BBQube@length
-\def\BBQube@ResetToken{\BBQube@token{}\BBQube@length\z@}
-\def\BBQube@Append#1{\advance\BBQube@length\@ne
-  \BBQube@token=\expandafter{\the\BBQube@token#1}}
+\newtoks\LionKingFlag@token
+\newcount\LionKingFlag@length
+\def\LionKingFlag@ResetToken{\LionKingFlag@token{}\LionKingFlag@length\z@}
+\def\LionKingFlag@Append#1{\advance\LionKingFlag@length\@ne
+  \LionKingFlag@token=\expandafter{\the\LionKingFlag@token#1}}
 
-\def\BBQube@ProcessChar#1{%
+\def\LionKingFlag@ProcessChar#1{%
   \ifnum\lst@mode=\lst@Pmode%
     \ifnum 9<1#1%
-      \expandafter\BBQube@Append{\begingroup\digitstyle #1 \endgroup}%
+      \expandafter\LionKingFlag@Append{\begingroup\digitstyle #1 \endgroup}%
     \else%
-      \expandafter\BBQube@Append{#1}%
+      \expandafter\LionKingFlag@Append{#1}%
     \fi%
   \else%
-    \expandafter\BBQube@Append{#1}%
+    \expandafter\LionKingFlag@Append{#1}%
   \fi%
 }
-\def\BBQube@ProcessStringInner#1#2\BBQube@nil{%
-  \expandafter\BBQube@ProcessChar{#1}%
+\def\LionKingFlag@ProcessStringInner#1#2\LionKingFlag@nil{%
+  \expandafter\LionKingFlag@ProcessChar{#1}%
   \if\relax\detokenize{#2}\relax%
   \else%
-    \expandafter\BBQube@ProcessStringInner#2\BBQube@nil%
+    \expandafter\LionKingFlag@ProcessStringInner#2\LionKingFlag@nil%
   \fi%
 }
 
-\def\BBQube@ProcessString#1{\expandafter\BBQube@ProcessStringInner#1\BBQube@nil}
+\def\LionKingFlag@ProcessString#1{\expandafter\LionKingFlag@ProcessStringInner#1\LionKingFlag@nil}
 
 \lst@AddToHook{OutputOther}{%
-\BBQube@ResetToken%
-\expandafter\BBQube@ProcessString{\the\lst@token}%
-\lst@token=\expandafter{\the\BBQube@token}%
+\LionKingFlag@ResetToken%
+\expandafter\LionKingFlag@ProcessString{\the\lst@token}%
+\lst@token=\expandafter{\the\LionKingFlag@token}%
 }
 \makeatother
 \lstset{											% Code顯示
@@ -149,7 +149,7 @@ stringstyle=\itshape\color{Green4},
 \pagestyle{fancy}
 \fancyfoot{}
 %\fancyfoot[R]{\includegraphics[width=20pt]{ironwood.jpg}}
-\fancyhead[L]{National Taiwan University 8BQube}
+\fancyhead[L]{National Taiwan University LionKingFlag}
 \fancyhead[R]{\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\contentsname}{Contents} 

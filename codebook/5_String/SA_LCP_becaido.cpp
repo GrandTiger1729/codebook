@@ -4,9 +4,9 @@ vector<int> suffix_array(string s) {
     s += "\0";
     vector<int> sa(n + 1), rnk(n + 1), cnt(n + 1);
     array<int, 256> alp{};
-    for (int i = 0; i <= n; i++) alp[s[i]]++;
-    for (int i = 1; i < 256; i++) alp[i] += alp[i - 1];
-    for (int i = 0; i <= n; i++) sa[--alp[s[i]]] = i;
+    FOR (i, 0, n) alp[s[i]]++;
+    FOR (i, 1, 255) alp[i] += alp[i - 1];
+    FOR (i, 0, n) sa[--alp[s[i]]] = i;
     for (int i = 1, cur = 0; i <= n; i++) {
         if (s[sa[i]] != s[sa[i - 1]]) cur++;
         rnk[sa[i]] = cur;
@@ -14,12 +14,12 @@ vector<int> suffix_array(string s) {
     for (int len = 1; len <= n; len <<= 1) {
         vector<int> lp(n + 1), nrnk(n + 1);
         fill(cnt.begin(), cnt.end(), 0);
-        for (int i = 0; i <= n; i++) {
+        FOR (i, 0, n) {
             lp[i] = sa[i] - len;
             if (lp[i] < 0) lp[i] += n + 1;
             cnt[rnk[i]]++;
         }
-        for (int i = 1; i <= n; i++) cnt[i] += cnt[i - 1];
+        FOR (i, 1, n) cnt[i] += cnt[i - 1];
         for (int i = n; i >= 0; i--) sa[--cnt[rnk[lp[i]]]] = lp[i];
         nrnk[sa[0]] = 0;
         for (int i = 1, cur = 0; i <= n; i++) {
@@ -38,8 +38,8 @@ vector<int> lcp_array(string s, vector<int> sa = {}) {
     int n = s.size(), len = 0;
     if (sa.size() == 0) sa = suffix_array(s);
     vector<int> rnk(n), lcp(n - 1);
-    for (int i = 0; i < n; i++) rnk[sa[i]] = i;
-    for (int i = 0; i < n; i++) {
+    FOR (i, 0, n - 1) rnk[sa[i]] = i;
+    FOR (i, 0, n - 1) {
         if (rnk[i] == n - 1) {
             len = 0;
             continue;

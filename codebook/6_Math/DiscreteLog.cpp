@@ -24,4 +24,4 @@ int DiscreteLog(int x, int y, int m) {
   int p = 100 + DiscreteLog(s, x, y, m);
   if (fpow(x, p, m) != y) return -1;
   return p;
-}
+} // find minimum k such that x^k == y (mod m)

@@ -14,7 +14,7 @@ struct Query {
 };
 void solve(vector<Query> query) {
   sort(ALL(query));
-  int L=0, R=0, T=-1;
+  int L = 0, R = 0, T = -1;
   for (auto q : query) {
     while (T < q.T) addTime(L, R, ++T); // TODO
     while (T > q.T) subTime(L, R, T--); // TODO

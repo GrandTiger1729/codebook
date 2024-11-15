@@ -38,7 +38,7 @@ private:
   copy_n(c, z, x);                                    \
   XD;                                                 \
   copy_n(c, z - 1, x + 1);                            \
-  FOR (i, 0, n - 1)                         \
+  FOR (i, 0, n - 1)                                   \
     if (sa[i] && !t[sa[i] - 1])                       \
       sa[x[s[sa[i] - 1]]++] = sa[i] - 1;              \
   copy_n(c, z, x);                                    \

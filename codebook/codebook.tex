@@ -22,6 +22,11 @@
 \usepackage{xparse}
 % \usepackage{CJKulem}
 
+% \usepackage{listings}
+\usepackage{shellesc} % needed for \ShellEscape
+\usepackage{xstring}  % for string manipulation
+% \usepackage{titlesec} % for better subsection formatting (optional)
+
 %\usepackage[T1]{fontenc}
 \usepackage{amsmath, courier, listings, fancyhdr, graphicx}
 \topmargin=0pt
@@ -59,37 +64,37 @@
 \lst@CCPutMacro\lst@ProcessOther {"2D}{\lst@ttfamily{-{}}{-{}}}
 \@empty\z@\@empty
 
-\newtoks\LionKingFlag@token
-\newcount\LionKingFlag@length
-\def\LionKingFlag@ResetToken{\LionKingFlag@token{}\LionKingFlag@length\z@}
-\def\LionKingFlag@Append#1{\advance\LionKingFlag@length\@ne
-  \LionKingFlag@token=\expandafter{\the\LionKingFlag@token#1}}
+\newtoks\LionKingGrandPa@token
+\newcount\LionKingGrandPa@length
+\def\LionKingGrandPa@ResetToken{\LionKingGrandPa@token{}\LionKingGrandPa@length\z@}
+\def\LionKingGrandPa@Append#1{\advance\LionKingGrandPa@length\@ne
+  \LionKingGrandPa@token=\expandafter{\the\LionKingGrandPa@token#1}}
 
-\def\LionKingFlag@ProcessChar#1{%
+\def\LionKingGrandPa@ProcessChar#1{%
   \ifnum\lst@mode=\lst@Pmode%
     \ifnum 9<1#1%
-      \expandafter\LionKingFlag@Append{\begingroup\digitstyle #1 \endgroup}%
+      \expandafter\LionKingGrandPa@Append{\begingroup\digitstyle #1 \endgroup}%
     \else%
-      \expandafter\LionKingFlag@Append{#1}%
+      \expandafter\LionKingGrandPa@Append{#1}%
     \fi%
   \else%
-    \expandafter\LionKingFlag@Append{#1}%
+    \expandafter\LionKingGrandPa@Append{#1}%
   \fi%
 }
-\def\LionKingFlag@ProcessStringInner#1#2\LionKingFlag@nil{%
-  \expandafter\LionKingFlag@ProcessChar{#1}%
+\def\LionKingGrandPa@ProcessStringInner#1#2\LionKingGrandPa@nil{%
+  \expandafter\LionKingGrandPa@ProcessChar{#1}%
   \if\relax\detokenize{#2}\relax%
   \else%
-    \expandafter\LionKingFlag@ProcessStringInner#2\LionKingFlag@nil%
+    \expandafter\LionKingGrandPa@ProcessStringInner#2\LionKingGrandPa@nil%
   \fi%
 }
 
-\def\LionKingFlag@ProcessString#1{\expandafter\LionKingFlag@ProcessStringInner#1\LionKingFlag@nil}
+\def\LionKingGrandPa@ProcessString#1{\expandafter\LionKingGrandPa@ProcessStringInner#1\LionKingGrandPa@nil}
 
 \lst@AddToHook{OutputOther}{%
-\LionKingFlag@ResetToken%
-\expandafter\LionKingFlag@ProcessString{\the\lst@token}%
-\lst@token=\expandafter{\the\LionKingFlag@token}%
+\LionKingGrandPa@ResetToken%
+\expandafter\LionKingGrandPa@ProcessString{\the\lst@token}%
+\lst@token=\expandafter{\the\LionKingGrandPa@token}%
 }
 \makeatother
 \lstset{											% Code顯示
@@ -149,7 +154,7 @@ stringstyle=\itshape\color{Green4},
 \pagestyle{fancy}
 \fancyfoot{}
 %\fancyfoot[R]{\includegraphics[width=20pt]{ironwood.jpg}}
-\fancyhead[L]{National Taiwan University LionKingFlag}
+\fancyhead[L]{National Taiwan University LionKingGrandPa}
 \fancyhead[R]{\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\contentsname}{Contents} 

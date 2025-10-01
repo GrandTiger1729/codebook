@@ -31,7 +31,8 @@ struct AC_Automatan {
   }
   void solve() {
     for (int i = top - 2; i > 0; --i)
-      cnt[ord[i]] += cnt[fl[ord[i]]];
+       cnt[fl[ord[i]]] += cnt[ord[i]];
   }
 } ac;
+
 

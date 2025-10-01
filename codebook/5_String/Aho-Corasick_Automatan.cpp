@@ -30,9 +30,10 @@ struct AC_Automatan {
     }
   }
   void solve() {
-    for (int i = top - 2; i > 0; --i)
-       cnt[fl[ord[i]]] += cnt[ord[i]];
-  }
+    for (int i = top - 2; i > 0; --i)  // if you want to count all string occurrences in query string t
+       cnt[fl[ord[i]]] += cnt[ord[i]]; // iterate in forward order and
+  }                                    // propagate counts from ord[i] to fl[ord[i]]
 } ac;
+
 
 

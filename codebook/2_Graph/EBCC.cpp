@@ -33,6 +33,6 @@ struct EBCC { // need adj
     }
   }
   void work() {
-    FOR(i, 1, n) if (dfn[i] == 0) tarjan(i, i);
+    FOR (i, 1, n) if (dfn[i] == 0) tarjan(i, i);
   }
 };

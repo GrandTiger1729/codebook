@@ -148,6 +148,14 @@ R_x(\theta_x)=
 \end{bmatrix}
 $$
 
-\item 
+\item Min-Max Inclusion Exclusion Principle
+
+(Works in expect values version, i.e., $E[\min]$, too)
+$$
+\operatorname*{kthmax}_{i \in S} x_i = \sum_{T \subset S} (-1)^{|T|-k} \binom{|T|-1}{k-1} \min_{j \in T} x_j
+$$
+$$
+\operatorname*{kthmin}_{i \in S} x_i = \sum_{T \subset S} (-1)^{|T|-k} \binom{|T|-1}{k-1} \max_{j \in T} x_j
+$$
 
 \end{itemize}

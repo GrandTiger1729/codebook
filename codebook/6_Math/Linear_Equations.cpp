@@ -1,10 +1,12 @@
 struct matrix { // m variables, n equations
   int n, m;
-  fraction M[MAXN][MAXN + 1], sol[MAXN + 1], basis[MAXN][MAXN + 1];
-	bool with_basis = true;
+  fraction M[MAXN][MAXN + 1], sol[MAXN + 1],
+    basis[MAXN][MAXN + 1];
+  bool with_basis = true;
   int rank = -1;
   bool fixed[MAXN];
-  int solve() { // -1: inconsistent, >= 0: rank of solution space
+  int solve() { // -1: inconsistent, >= 0: rank of
+                // solution space
     for (int i = 0; i < n; ++i) {
       int piv = 0;
       while (piv < m && !M[i][piv].n) ++piv;
@@ -34,20 +36,17 @@ struct matrix { // m variables, n equations
       }
     }
     if (with_basis) {
-      for (int i = 0; i < n; ++i) { 
-				int piv = 0;
-				while (piv < m && !M[i][piv].n) ++piv;
-				for (int j = 0, k = 0; j < m; ++j) {
-					if (!fixed[j])
-						basis[k++][piv] = -M[i][j];
-				}
-			}
-			for (int j = 0, k = 0; j < m; ++j) {
-				if (!fixed[j])
-					basis[k++][j] = 1;
-			}
+      for (int i = 0; i < n; ++i) {
+        int piv = 0;
+        while (piv < m && !M[i][piv].n) ++piv;
+        for (int j = 0, k = 0; j < m; ++j) {
+          if (!fixed[j]) basis[k++][piv] = -M[i][j];
+        }
+      }
+      for (int j = 0, k = 0; j < m; ++j) {
+        if (!fixed[j]) basis[k++][j] = 1;
+      }
     }
     return rank;
   }
-
 };

@@ -1,7 +1,10 @@
-#define TRAV(i, link, start) for (int i = link[start]; i != start; i = link[i])
-template<bool E> // E: Exact, NN: num of 1s, RR: num of rows
+#define TRAV(i, link, start)                          \
+  for (int i = link[start]; i != start; i = link[i])
+template <bool E> // E: Exact, NN: num of 1s, RR: num
+                  // of rows
 struct DLX {
-  int lt[NN], rg[NN], up[NN], dn[NN], rw[NN], cl[NN], bt[NN], s[NN], head, sz, ans;
+  int lt[NN], rg[NN], up[NN], dn[NN], rw[NN], cl[NN],
+    bt[NN], s[NN], head, sz, ans;
   int rows, columns;
   bool vis[NN];
   bitset<RR> sol, cur; // not sure
@@ -10,7 +13,8 @@ struct DLX {
     TRAV(i, dn, c) {
       if (E) {
         TRAV(j, rg, i)
-          up[dn[j]] = up[j], dn[up[j]] = dn[j], --s[cl[j]];
+        up[dn[j]] = up[j], dn[up[j]] = dn[j],
+        --s[cl[j]];
       } else {
         lt[rg[i]] = lt[i], rg[lt[i]] = rg[i];
       }
@@ -20,7 +24,7 @@ struct DLX {
     TRAV(i, up, c) {
       if (E) {
         TRAV(j, lt, i)
-          ++s[cl[j]], up[dn[j]] = j, dn[up[j]] = j;
+        ++s[cl[j]], up[dn[j]] = j, dn[up[j]] = j;
       } else {
         lt[rg[i]] = rg[lt[i]] = i;
       }
@@ -65,7 +69,8 @@ struct DLX {
   }
   void dfs(int dep) {
     if (dep + (E ? 0 : h()) >= ans) return;
-    if (rg[head] == head) return sol = cur, ans = dep, void();
+    if (rg[head] == head)
+      return sol = cur, ans = dep, void();
     if (dn[rg[head]] == rg[head]) return;
     int w = rg[head];
     TRAV(x, rg, head) if (s[x] < s[w]) w = x;

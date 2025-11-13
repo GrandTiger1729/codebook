@@ -36,11 +36,11 @@ auto sais(const auto &s) {
 }
 // sa[i]: sa[i]-th suffix is the i-th lexicographically smallest suffix.
 // hi[i]: LCP of suffix sa[i] and suffix sa[i - 1].
-struct Suffix {
+struct Suffix { // 0-based
   int n; vector<int> sa, hi, ra;
   Suffix(const auto &_s, int _n) : n(_n), hi(n), ra(n) {
     vector<int> s(n + 1); // s[n] = 0;
-    copy_n(_s, n, begin(s)); // _s shouldn't contain 0
+    copy_n(begin(_s), n, begin(s)); // _s shouldn't contain 0
     sa = sais(s); sa.erase(sa.begin());
     for (int i = 0; i < n; ++i) ra[sa[i]] = i;
     for (int i = 0, h = 0; i < n; ++i) {

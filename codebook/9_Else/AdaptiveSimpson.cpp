@@ -1,4 +1,4 @@
-template<typename Func, typename d = double>
+template <typename Func, typename d = double>
 struct Simpson {
   using pdd = pair<d, d>;
   Func f;
@@ -12,12 +12,14 @@ struct Simpson {
     auto [flm, sl] = mix(l, m);
     auto [fmr, sr] = mix(m, r);
     d delta = sl + sr - s;
-    if (abs(delta) <= 15 * eps) return sl + sr + delta / 15;
+    if (abs(delta) <= 15 * eps)
+      return sl + sr + delta / 15;
     return eval(l, m, flm, eps / 2) +
       eval(m, r, fmr, eps / 2);
   }
   d eval(d l, d r, d eps) {
-    return eval({l, f(l)}, {r, f(r)}, f((l + r) / 2), eps);
+    return eval(
+      {l, f(l)}, {r, f(r)}, f((l + r) / 2), eps);
   }
   d eval2(d l, d r, d eps, int k = 997) {
     d h = (r - l) / k, s = 0;
@@ -26,5 +28,7 @@ struct Simpson {
     return s;
   }
 };
-template<typename Func>
-Simpson<Func> make_simpson(Func f) { return {f}; }
+template <typename Func>
+Simpson<Func> make_simpson(Func f) {
+  return {f};
+}

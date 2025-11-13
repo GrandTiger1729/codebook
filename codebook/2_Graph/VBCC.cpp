@@ -34,6 +34,6 @@ struct VBCC {  // need adj
     }
   }
   void work() {
-    for (int i = 1; i <= n; i++) if (dfn[i] == 0) tarjan(i, i);
+    FOR(i, 1, n) if (dfn[i] == 0) tarjan(i, i);
   }
 };

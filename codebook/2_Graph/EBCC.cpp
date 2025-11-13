@@ -5,10 +5,10 @@ struct EBCC { // need adj
   EBCC(int n) : n(n) { dfn = low = bcc = vector<int>(n + 1, 0); }
   void tarjan(int pos, int fa) {
     dfn[pos] = low[pos] = ++dfcnt;
-    st.emplace_back(pos);
-    bool vs = false;
+    st.pb(pos);
+    bool vs = 0;
     for (int np : adj[pos]) {
-      if (np != fa || vs == true) {
+      if (np != fa || vs) {
         if (dfn[np] == 0) {
           tarjan(np, pos);
           low[pos] = min(low[pos], low[np]);
@@ -18,17 +18,11 @@ struct EBCC { // need adj
               int x = st.back();
               bcc[x] = bccnt;
               st.pop_back();
-              if (x == np) {
-                break;
-              }
+              if (x == np) break;
             }
           }
-        } else {
-          low[pos] = min(low[pos], dfn[np]);
-        }
-      } else {
-        vs = true;
-      }
+        } else { low[pos] = min(low[pos], dfn[np]); }
+      } else { vs = 1; }
     }
     if (pos == fa) {
       bccnt++;
@@ -39,10 +33,6 @@ struct EBCC { // need adj
     }
   }
   void work() {
-    for (int i = 1; i <= n; i++) {
-      if (dfn[i] == 0) {
-        tarjan(i, i);
-      }
-    }
+    for (int i = 1; i <= n; i++) if (dfn[i] == 0) tarjan(i, i);
   }
 };

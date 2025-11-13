@@ -9,7 +9,7 @@ struct VBCC {  // need adj
   }
   void tarjan(int pos, int fa) {
     dfn[pos] = low[pos] = ++dfcnt;
-    st.emplace_back(pos);
+    st.pb(pos);
     for (int np : adj[pos]) {
       if (np != fa) {
         if (dfn[np] == 0) {
@@ -19,31 +19,21 @@ struct VBCC {  // need adj
             bccnt++;
             while (1) {
               int x = st.back();
-              bcc[x].emplace_back(bccnt);
+              bcc[x].pb(bccnt);
               st.pop_back();
-              if (x == np) {
-                break;
-              }
+              if (x == np) break;
             }
-            bcc[pos].emplace_back(bccnt);
+            bcc[pos].pb(bccnt);
           }
-        } else {
-          low[pos] = min(low[pos], dfn[np]);
-        }
+        } else { low[pos] = min(low[pos], dfn[np]); }
       }
     }
     if (pos == fa) {
       st.pop_back();
-      if (bcc[pos].size() == 0) {
-        bcc[pos].emplace_back(++bccnt);
-      }
+      if (bcc[pos].size() == 0) bcc[pos].pb(++bccnt);
     }
   }
   void work() {
-    for (int i = 1; i <= n; i++) {
-      if (dfn[i] == 0) {
-        tarjan(i, i);
-      }
-    }
+    for (int i = 1; i <= n; i++) if (dfn[i] == 0) tarjan(i, i);
   }
 };

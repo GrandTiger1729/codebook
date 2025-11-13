@@ -1,6 +1,6 @@
 struct matrix { // m variables, n equations
   int n, m;
-  fraction M[MAXN][MAXN + 1], sol[MAXN], basis[MAXN][MAXN];
+  fraction M[MAXN][MAXN + 1], sol[MAXN + 1], basis[MAXN][MAXN + 1];
 	bool with_basis = true;
   int rank = -1;
   bool fixed[MAXN];
@@ -49,4 +49,5 @@ struct matrix { // m variables, n equations
     }
     return rank;
   }
+
 };

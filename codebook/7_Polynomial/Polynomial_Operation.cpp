@@ -62,7 +62,8 @@ struct Poly : vector<ll> { // coefficients in [0, P)
   }
   Poly Sx() const {
     Poly ret(n() + 1);
-    fi(0, n()) ret[i + 1] = ntt.minv(i + 1) * (*this)[i] % P;
+    fi(0, n()) 
+      ret[i + 1] = ntt.minv(i + 1) * (*this)[i] % P;
     return ret;
   }
   Poly _tmul(int nn, const Poly &rhs) const {

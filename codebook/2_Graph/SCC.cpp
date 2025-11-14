@@ -26,9 +26,7 @@ struct SCC { // need adj
 				ist[x] = 0;
 				scc[x] = sccnt;
 				st.pop_back();
-				if (x == pos) {
-					break;
-				}
+				if (x == pos) break;
 			}
 		}
 	}
@@ -36,12 +34,9 @@ struct SCC { // need adj
 		FOR (i, 1, n) if (dfn[i] == 0) tarjan(i, i);
 	}
 	void build_adj() {
-		for (int i = 1; i <= n; i++) {
-			for (int j : adj[i]) {
-				if (scc[i] != scc[j]) {
-					scc_adj[scc[i]].emplace_back(scc[j]);
-				}
+		FOR (i, 1, n) for (int j : adj[i]) 
+			if (scc[i] != scc[j]) {
+				scc_adj[scc[i]].emplace_back(scc[j]);
 			}
-		}
 	}
 };

@@ -1,6 +1,6 @@
 vector<int> val;
 // build
-sort(ALL(val)), val.resize(unique(ALL(val)) - val.begin());
+sort(ALL(val)), val.erase(unique(ALL(val)), val.end());
 // index of x
 upper_bound(ALL(val), x) - val.begin();
 // max idx <= x

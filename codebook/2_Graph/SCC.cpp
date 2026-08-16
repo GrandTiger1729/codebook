@@ -15,7 +15,7 @@ struct SCC { // need adj
 			if (dfn[np] == 0) {
 				tarjan(np);
 				low[pos] = min(low[pos], low[np]);
-			} else if (ist[np] == 1) {
+			} else if (ist[np]) {
 				low[pos] = min(low[pos], dfn[np]);
 			}
 		}
@@ -31,10 +31,10 @@ struct SCC { // need adj
 		}
 	}
 	void work() {
-		FOR (i, 1, n) if (dfn[i] == 0) tarjan(i, i);
+		FOR (i, 1, n) if (dfn[i] == 0) tarjan(i);
 	}
 	void build_adj() {
-		FOR (i, 1, n) for (int j : adj[i]) 
+		FOR (i, 1, n) for (int j : adj[i])
 			if (scc[i] != scc[j]) {
 				scc_adj[scc[i]].emplace_back(scc[j]);
 			}

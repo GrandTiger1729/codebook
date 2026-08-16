@@ -25,7 +25,7 @@ struct dominator_tree { // 1-base
   }
   void tarjan(int root) {
     Time = 0;
-    for (int i = 1; i <= n; ++i) {
+    FOR (i, 1, n) {
       dfn[i] = idom[i] = 0;
       tree[i].clear();
       best[i] = semi[i] = i;
@@ -46,7 +46,7 @@ struct dominator_tree { // 1-base
       }
       tree[pa[i]].clear();
     }
-    for (int i = 2; i <= Time; ++i) {
+    FOR (i, 2, Time) {
       if (idom[i] != semi[i]) idom[i] = idom[idom[i]];
       tree[id[idom[i]]].pb(id[i]);
     }

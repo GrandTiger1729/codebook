@@ -3,9 +3,9 @@ struct MaxClique { // fast when N <= 100
   int ans, sol[N], q, cur[N], d[N], n;
   void init(int _n) {
     n = _n;
-    for (int i = 0; i < n; ++i) G[i].reset();
+    FOR (i, 0, n - 1) G[i].reset();
   }
-  void add_edge(int u, int v) { 
+  void add_edge(int u, int v) {
     G[u][v] = G[v][u] = 1;
   }
   void pre_dfs(vector<int> &r, int l, bitset<N> mask) {
@@ -23,9 +23,9 @@ struct MaxClique { // fast when N <= 100
       cs[k][p] = 1;
       if (k < lft) r[tp++] = p;
     }
-    for (int k = lft; k <= rgt; ++k)
+    FOR (k, lft, rgt)
       for (int p = cs[k]._Find_first(); p < N; p = cs[k]._Find_next(p))
-        r[tp] = p, c[tp] = k, ++tp; 
+        r[tp] = p, c[tp] = k, ++tp;
     dfs(r, c, l + 1, mask);
   }
   void dfs(vector<int> &r, vector<int> &c, int l, bitset<N> mask) {
@@ -36,7 +36,7 @@ struct MaxClique { // fast when N <= 100
       cur[q++] = p;
       vector<int> nr;
       for (int i : r) if (G[p][i]) nr.pb(i);
-      if (!nr.empty()) pre_dfs(nr, l, mask & G[p]); 
+      if (!nr.empty()) pre_dfs(nr, l, mask & G[p]);
       else if (q > ans) ans = q, copy_n(cur, q, sol);
       c.pop_back(), --q;
     }

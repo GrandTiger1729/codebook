@@ -13,7 +13,7 @@ vector<int> dmst(const vector<E> &e, int n, int root) {
   vector<int> v(n * 2, -1), pa(n * 2, -1), r(n * 2);
   v[root] = n + 1;
   int pc = n;
-  for (int i = 0; i < n; ++i) if (v[i] == -1) {
+  FOR (i, 0, n - 1) if (v[i] == -1) {
     for (int p = i; v[p] == -1 || v[p] == i; p = dsu.boss(e[r[p]].s)) {
       if (v[p] == i) {
         int q = p; p = pc++;

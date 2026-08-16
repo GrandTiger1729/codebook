@@ -11,7 +11,7 @@ struct SAT { // 0-base
   }
   bool solve() {
     scc.solve();
-    for (int i = 0; i < n; ++i) {
+    FOR (i, 0, n - 1) {
       if (scc.bln[i] == scc.bln[i + n]) return false;
       istrue[i] = scc.bln[i] < scc.bln[i + n];
       istrue[i + n] = !istrue[i];

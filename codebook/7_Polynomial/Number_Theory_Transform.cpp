@@ -10,12 +10,11 @@ struct NTT {
   NTT() {
     ll dw = mpow(RT, (P - 1) / MAXN);
     w[0] = 1;
-    for (int i = 1; i < MAXN; ++i)
-      w[i] = w[i - 1] * dw % P;
+    FOR (i, 1, MAXN - 1) w[i] = w[i - 1] * dw % P;
   }
   void bitrev(ll *a, int n) {
     int i = 0;
-    for (int j = 1; j < n - 1; ++j) {
+    FOR (j, 1, n - 2) {
       for (int k = n >> 1; (i ^= k) < k; k >>= 1);
       if (j < i) swap(a[i], a[j]);
     }
@@ -27,7 +26,7 @@ struct NTT {
       int dx = MAXN / L, dl = L >> 1;
       for (int i = 0; i < n; i += L) {
         for (int j = i, x = 0; j < i + dl;
-          ++j, x += dx) {
+          j++, x += dx) {
           ll tmp = a[j + dl] * w[x] % P;
           if ((a[j + dl] = a[j] - tmp) < 0)
             a[j + dl] += P;
@@ -38,8 +37,7 @@ struct NTT {
     if (inv) {
       reverse(a + 1, a + n);
       ll invn = minv(n);
-      for (int i = 0; i < n; ++i)
-        a[i] = a[i] * invn % P;
+      FOR (i, 0, n - 1) a[i] = a[i] * invn % P;
     }
   }
 };

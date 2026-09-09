@@ -1,3 +1,4 @@
+typedef pair<ll, ll> pll;
 struct MinCostMaxFlow { // 0-base
   struct Edge {
     ll from, to, cap, flow, cost, rev; 
@@ -50,7 +51,7 @@ struct MinCostMaxFlow { // 0-base
     s = _s, t = _t, flow = 0, cost = 0;
     if (neg) BellmanFord(), copy_n(dis, n, pot);
     for (; Dijkstra(); copy_n(dis, n, pot)) {
-      for (int i = 0; i < n; ++i) dis[i] += pot[i] - pot[s];
+      FOR (i, 0, n - 1) dis[i] += pot[i] - pot[s];
       flow += up[t], cost += up[t] * dis[t];
       for (int i = t; past[i]; i = past[i]->from) {
         auto &e = *past[i];
@@ -60,10 +61,12 @@ struct MinCostMaxFlow { // 0-base
   }
   void init(int _n) {
     n = _n, fill_n(pot, n, 0);
-    for (int i = 0; i < n; ++i) G[i].clear();
+    FOR (i, 0, n - 1) G[i].clear();
   }
   void add_edge(ll a, ll b, ll cap, ll cost) {
-    G[a].pb(Edge{a, b, cap, 0, cost, SZ(G[b])});
-    G[b].pb(Edge{b, a, 0, 0, -cost, SZ(G[a]) - 1});
+    G[a].pb(
+      Edge{a, b, cap, 0, cost, (int)G[b].size()});
+    G[b].pb(
+      Edge{b, a, 0, 0, -cost, (int)G[a].size() - 1});
   }
 };

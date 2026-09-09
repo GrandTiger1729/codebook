@@ -3,7 +3,7 @@
 bool Flag; // 0: insert Line, 1: lower_bound x
 template<class val = ll, class compare = less<val>> // sort lines with comp
 struct DynamicConvexTrick{
-  static const ll minx = 0, maxx = ll(1e9) + 5;
+  static const ll minx = 0, maxx = (ll)1e9 + 5;
   static compare comp;
   struct Line{
     val a, b, l, r; // line ax + b in [l, r]
@@ -37,7 +37,7 @@ struct DynamicConvexTrick{
         st.erase(it);
         L.r = max(idiv(L.b - M.b, M.a - L.a), minx);
         M.l = L.r + 1;
-        it = st.insert(M).X;
+        it = st.insert(M).F;
         break;
       }
     }

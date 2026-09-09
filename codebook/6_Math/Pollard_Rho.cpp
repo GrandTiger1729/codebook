@@ -4,7 +4,7 @@ void PollardRho(ll n) {
   if (prime(n)) return ++cnt[n], void();        
   if (n % 2 == 0) return PollardRho(n / 2), ++cnt[2], void();
   ll x = 2, y = 2, d = 1, p = 1;
-  #define f(x, n, p) ((mul(x, x, n) + p) % n)
+  #define f(x, n, p) (((__int128)x * x + p) % n)
   while (true) {
     if (d != n && d != 1) {
       PollardRho(n / d);

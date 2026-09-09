@@ -13,7 +13,7 @@ struct Query {
   }
 };
 void solve(vector<Query> query) {
-  sort(ALL(query));
+  sort(query.begin(), query.end());
   int L = 0, R = 0, T = -1;
   for (auto q : query) {
     while (T < q.T) addTime(L, R, ++T); // TODO

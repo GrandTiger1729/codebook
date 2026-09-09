@@ -1,7 +1,7 @@
 struct DSU {
   vector<int> arr;
   DSU(int n = 0): arr(n) {
-    iota(ALL(arr), 0);
+    iota(arr.begin(), arr.end(), 0);
   }
   int boss(int x) {
     if (arr[x] == x) return x;

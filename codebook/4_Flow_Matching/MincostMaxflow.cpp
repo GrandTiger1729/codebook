@@ -1,48 +1,72 @@
-struct MinCostMaxFlow { // 0-base
+#include <ext/pb_ds/priority_queue.hpp> // decrease-key
+const ll INF = numeric_limits<ll>::max() / 4;
+struct MinCostMaxFlow { // 0-base, need global N
   struct Edge {
-    ll from, to, cap, flow, cost, rev; 
-  } *past[N];
-  vector<Edge> G[N];
-  int inq[N], n, s, t;
-  ll dis[N], up[N], pot[N];
-  bool BellmanFord() {
-    fill_n(dis, n, INF), fill_n(inq, n, 0);
-    queue<int> q;
-    auto relax = [&](int u, ll d, ll cap, Edge *e) {
-      if (cap > 0 && dis[u] > d) {
-        dis[u] = d, up[u] = cap, past[u] = e;
-        if (!inq[u]) inq[u] = 1, q.push(u);
-      }
-    };
-    relax(s, 0, INF, 0);
-    while (!q.empty()) {
-      int u = q.front();
-      q.pop(), inq[u] = 0;
-      for (auto &e : G[u]) {
-        ll d2 = dis[u] + e.cost + pot[u] - pot[e.to];
-        relax(e.to, d2, min(up[u], e.cap - e.flow), &e);
-      }
-    }
-    return dis[t] != INF;
-  }
-  void solve(int _s, int _t, ll &flow, ll &cost, bool neg = true) {
-    s = _s, t = _t, flow = 0, cost = 0;
-    if (neg) BellmanFord(), copy_n(dis, n, pot);
-    for (; BellmanFord(); copy_n(dis, n, pot)) {
-      for (int i = 0; i < n; ++i) dis[i] += pot[i] - pot[s];
-      flow += up[t], cost += up[t] * dis[t];
-      for (int i = t; past[i]; i = past[i]->from) {
-        auto &e = *past[i];
-        e.flow += up[t], G[e.to][e.rev].flow -= up[t];
-      }
-    }
-  }
+    int from, to, rev;
+    ll cap, cost, flow;
+  } *par[N];
+  vector<Edge> g[N];
+  int n, vis[N];
+  ll dis[N], pot[N];
   void init(int _n) {
     n = _n, fill_n(pot, n, 0);
-    for (int i = 0; i < n; ++i) G[i].clear();
+    FOR (i, 0, n - 1) g[i].clear();
   }
-  void add_edge(ll a, ll b, ll cap, ll cost) {
-    G[a].pb(Edge{a, b, cap, 0, cost, SZ(G[b])});
-    G[b].pb(Edge{b, a, 0, 0, -cost, SZ(G[a]) - 1});
+  void add_edge(int a, int b, ll cap, ll cost) {
+    if (a == b) return;
+    g[a].pb(
+      Edge{a, b, (int)g[b].size(), cap, cost, 0});
+    g[b].pb(
+      Edge{b, a, (int)g[a].size() - 1, 0, -cost, 0});
+  }
+  void path(int s) { // dijkstra on reduced costs
+    fill_n(vis, n, 0), fill_n(dis, n, INF);
+    dis[s] = 0;
+    __gnu_pbds::priority_queue<pair<ll, int>> pq;
+    vector<decltype(pq)::point_iterator> it(n);
+    pq.push({0, s});
+    while (!pq.empty()) {
+      s = pq.top().S, pq.pop(), vis[s] = 1;
+      ll d = dis[s] + pot[s];
+      for (Edge &e : g[s])
+        if (!vis[e.to]) {
+          ll v = d - pot[e.to] + e.cost;
+          if (e.cap - e.flow > 0 && v < dis[e.to]) {
+            dis[e.to] = v, par[e.to] = &e;
+            if (it[e.to] == pq.end())
+              it[e.to] = pq.push({-v, e.to});
+            else pq.modify(it[e.to], {-v, e.to});
+          }
+        }
+    }
+    FOR (i, 0, n - 1)
+      pot[i] = min(pot[i] + dis[i], INF);
+  }
+  pair<ll, ll> maxflow(int s, int t) {
+    ll flow = 0, cost = 0;
+    while (path(s), vis[t]) {
+      ll f = INF;
+      for (Edge *e = par[t]; e; e = par[e->from])
+        f = min(f, e->cap - e->flow);
+      flow += f;
+      for (Edge *e = par[t]; e; e = par[e->from])
+        e->flow += f, g[e->to][e->rev].flow -= f;
+    }
+    FOR (i, 0, n - 1)
+      for (Edge &e : g[i]) cost += e.cost * e.flow;
+    return {flow, cost / 2};
+  }
+  void setpi(int s) { // iff some cost is negative
+    fill_n(pot, n, INF), pot[s] = 0;
+    int it = n, ch = 1;
+    ll v;
+    while (ch-- && it--)
+      FOR (i, 0, n - 1)
+        if (pot[i] != INF)
+          for (Edge &e : g[i])
+            if (e.cap)
+              if ((v = pot[i] + e.cost) < pot[e.to])
+                pot[e.to] = v, ch = 1;
+    assert(it >= 0); // negative cost cycle
   }
 };

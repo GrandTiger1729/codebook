@@ -1,3 +1,4 @@
+#define SZ(a) ((int)a.size())
 struct BoundedFlow { // 0-base
   struct edge {
     int to, cap, flow, rev;
@@ -6,8 +7,7 @@ struct BoundedFlow { // 0-base
   int n, s, t, dis[N], cur[N], cnt[N];
   void init(int _n) {
     n = _n;
-    for (int i = 0; i < n + 2; ++i)
-      G[i].clear(), cnt[i] = 0;
+    FOR (i, 0, n + 1) G[i].clear(), cnt[i] = 0;
   }
   void add_edge(int u, int v, int lcap, int rcap) {
     cnt[u] -= lcap, cnt[v] += lcap;
@@ -20,7 +20,7 @@ struct BoundedFlow { // 0-base
   }
   int dfs(int u, int cap) {
     if (u == t || !cap) return cap;
-    for (int &i = cur[u]; i < SZ(G[u]); ++i) {
+    for (int &i = cur[u]; i < SZ(G[u]); i++) {
       edge &e = G[u][i];
       if (dis[e.to] == dis[u] + 1 && e.cap != e.flow) {
         int df = dfs(e.to, min(e.cap - e.flow, cap));
@@ -57,12 +57,12 @@ struct BoundedFlow { // 0-base
   }
   bool solve() {
     int sum = 0;
-    for (int i = 0; i < n; ++i)
+    FOR (i, 0, n - 1)
       if (cnt[i] > 0)
         add_edge(n + 1, i, cnt[i]), sum += cnt[i];
       else if (cnt[i] < 0) add_edge(i, n + 2, -cnt[i]);
     if (sum != maxflow(n + 1, n + 2)) sum = -1;
-    for (int i = 0; i < n; ++i)
+    FOR (i, 0, n - 1)
       if (cnt[i] > 0)
         G[n + 1].pop_back(), G[i].pop_back();
       else if (cnt[i] < 0)

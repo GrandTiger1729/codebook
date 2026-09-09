@@ -1,4 +1,5 @@
 pdd circenter(pdd p0, pdd p1, pdd p2) { // radius = abs(center)
+  pdd center;
   p1 = p1 - p0, p2 = p2 - p0;
   double x1 = p1.X, y1 = p1.Y, x2 = p2.X, y2 = p2.Y;   
   double m = 2. * (x1 * y2 - y1 * x2);
@@ -9,7 +10,7 @@ pdd circenter(pdd p0, pdd p1, pdd p2) { // radius = abs(center)
 pdd incenter(pdd p1, pdd p2, pdd p3) { // radius = area / s * 2
   double a = abs(p2 - p3), b = abs(p1 - p3), c = abs(p1 - p2);
   double s = a + b + c;
-  return (a * p1 + b * p2 + c * p3) / s;
+  return (p1 * a + p2 * b + p3 * c) / s;
 }
 pdd masscenter(pdd p1, pdd p2, pdd p3) 
 { return (p1 + p2 + p3) / 3; }

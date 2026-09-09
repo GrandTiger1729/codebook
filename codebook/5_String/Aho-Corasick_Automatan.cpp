@@ -20,7 +20,7 @@ struct AC_Automatan {
     for (int t = 0; !q.empty(); ) {
       int R = q.front();
       q.pop(), ord[t++] = R;
-      for (int i = 0; i < sigma; ++i)
+      FOR (i, 0, sigma - 1)
         if (~nx[R][i]) {
           int X = rnx[R][i] = nx[R][i], Z = fl[R];
           for (; Z && !~nx[Z][i]; ) Z = fl[Z];

@@ -2,7 +2,7 @@
 ll prod[MAXP];
 ll fac_no_p(ll n, ll p, ll pk) {
   prod[0] = 1;
-  for (int i = 1; i <= pk; ++i)
+  FOR (i, 1, pk)
     if (i % p) prod[i] = prod[i - 1] * i % pk;
     else prod[i] = prod[i - 1];
   ll rt = 1;

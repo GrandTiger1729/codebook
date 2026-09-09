@@ -74,6 +74,7 @@ EmptyLineBeforeAccessModifier: LogicalBlock
 ExperimentalAutoDetectBinPacking: false
 FixNamespaceComments: true
 ForEachMacros:
+  - FOR
   - foreach
   - Q_FOREACH
   - BOOST_FOREACH

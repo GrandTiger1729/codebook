@@ -20,7 +20,8 @@ struct Matching { // 0-base
     }
   }
   bool Bfs(int r) {
-    iota(ALL(fa), 0); fill(ALL(s), -1);
+    iota(fa.begin(), fa.end(), 0);
+    fill(s.begin(), s.end(), -1);
     q = queue<int>(); q.push(r); s[r] = 0;
     for (; !q.empty(); q.pop()) {
       for (int x = q.front(); int u : G[x])
@@ -44,7 +45,7 @@ struct Matching { // 0-base
   { G[u].pb(v), G[v].pb(u); }
   int solve() {
     int ans = 0;
-    for (int x = 0; x < n; ++x)
+    FOR (x, 0, n - 1)
       if (match[x] == n) ans += Bfs(x);
     return ans;
   } // match[x] == n means not matched

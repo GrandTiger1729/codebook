@@ -1,9 +1,9 @@
 void all_lcs(string s, string t) { // 0-base
-  vector<int> h(SZ(t));
-  iota(ALL(h), 0);
-  for (int a = 0; a < SZ(s); ++a) {
+  vector<int> h((int)t.size());
+  iota(h.begin(), h.end(), 0);
+  FOR (a, 0, (int)s.size() - 1) {
     int v = -1;
-    for (int c = 0; c < SZ(t); ++c)
+    FOR (c, 0, (int)t.size() - 1)
       if (s[a] == t[c] || h[c] < v)
         swap(h[c], v);
     // LCS(s[0, a], t[b, c]) = 

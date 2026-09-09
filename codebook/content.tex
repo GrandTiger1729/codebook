@@ -14,16 +14,16 @@
 
 
 \section{Graph}
-\inputcode{EBCC*}{2_Graph/EBCC.cpp} % test by caido
-\inputcode{VBCC*}{2_Graph/VBCC.cpp} % test by caido
-\inputcode{SCC*}{2_Graph/SCC.cpp} % test by caido
-\inputcode{2SAT*}{2_Graph/2SAT.cpp} % test by ARC069 F
+\inputcode{EBCC*}{2_Graph/EBCC.cpp} % test by caido, Lib-Checker Two-Edge-Connected Components
+\inputcode{VBCC*}{2_Graph/VBCC.cpp} % test by caido, Lib-Checker Biconnected Components
+\inputcode{SCC*}{2_Graph/SCC.cpp} % test by caido, Lib-Checker Strongly Connected Components
+\inputcode{2SAT*}{2_Graph/2SAT.cpp} % test by Lib-Checker Two SAT, local brute force (either/set_value/at_most_one)
 \inputcode{MinimumMeanCycle*}{2_Graph/MinimumMeanCycle.cpp} % test by TIOJ 1934
 \inputcode{Virtual Tree*}{2_Graph/Virtual_Tree.cpp} % test by luogu P2495
 \inputcode{Maximum Clique Dyn*}{2_Graph/Maximum_Clique_Dyn.cpp} % test by TIOJ 1978, CF 101221 I (World Finals' problem)
 \inputcode{Minimum Steiner Tree*}{2_Graph/MinimumSteinerTree.cpp} % test by luogu P6192
-\inputcode{Dominator Tree*}{2_Graph/Dominator_Tree.cpp} % test by CF 100513 L
-\inputcode{Minimum Arborescence*}{2_Graph/Minimum_Arborescence_fast.cpp} % test by luogu P4716 
+\inputcode{Dominator Tree*}{2_Graph/Dominator_Tree.cpp} % test by CF 100513 L, Lib-Checker Dominator Tree
+\inputcode{Minimum Arborescence*}{2_Graph/Minimum_Arborescence_fast.cpp} % test by luogu P4716, Lib-Checker Directed MST
 \inputcode{Vizing's theorem*}{2_Graph/Vizing.cpp} % test by CF 101933 G
 \inputcode{Minimum Clique Cover*}{2_Graph/Minimum_Clique_Cover.cpp} % test by TIOJ 1472
 \inputcode{NumberofMaximalClique*}{2_Graph/NumberofMaximalClique.cpp} % test by POJ 2989
@@ -32,12 +32,13 @@
 \section{Data Structure}
 \subsection{Discrete Trick}
 \lstinputlisting{3_Data_Structure/discrete_trick.cpp}
-\inputcode{BIT kth*}{3_Data_Structure/BIT_kth.cpp} % test by CSES 1076
+\inputcode{Mergeable Heap}{3_Data_Structure/min_heap.cpp} % test by Lib-Checker Directed MST (through Minimum Arborescence)
+\inputcode{BIT kth*}{3_Data_Structure/BIT_kth.cpp} % test by CSES 1076, Lib-Checker Ordered Set
 \inputcode{Interval Container*}{3_Data_Structure/IntervalContainer.cpp} % test by kactl stress test
 % \inputcode{Leftist Tree}{3_Data_Structure/Leftist_Tree.cpp}
-\inputcode{Heavy light Decomposition*}{3_Data_Structure/Heavy_light_Decomposition.cpp} % test by CSES Path Queries II
+\inputcode{Heavy light Decomposition*}{3_Data_Structure/Heavy_light_Decomposition.cpp} % test by CSES Path Queries II, Lib-Checker Vertex Add Path Sum
 \inputcode{Centroid Decomposition*}{3_Data_Structure/Centroid_Decomposition.cpp} % test by TIOJ 1171
-\inputcode{Treap*}{3_Data_Structure/Treap.cpp}
+\inputcode{Treap*}{3_Data_Structure/Treap.cpp} % test by Lib-Checker Ordered Set
 % \inputcode{Smart Pointer}{3_Data_Structure/Smart_Pointer.cpp}
 \inputcode{LiChaoST*}{3_Data_Structure/LiChaoST.cpp} % test by Library Checker Line Add Get Min
 \inputcode{Link cut tree*}{3_Data_Structure/link_cut_tree.cpp} % test by luogu P3690
@@ -47,9 +48,9 @@
 
 \section{Flow/Matching}
 % \inputcode{Dinic}{4_Flow_Matching/Dinic.cpp}
-\inputcode{Bipartite Matching*}{4_Flow_Matching/Bipartite_Matching.cpp} % test by Lib-Checker Matching on Bipartite Graph
-\inputcode{Kuhn Munkres*}{4_Flow_Matching/Kuhn_Munkres.cpp} % test by CF 101239 C (World Finals' problem)
-\inputcode{MincostMaxflow*}{4_Flow_Matching/MincostMaxflow.cpp} % test by luogu 3381
+\inputcode{Bipartite Matching*}{4_Flow_Matching/Bipartite_Matching.cpp} % test by Lib-Checker Matching on Bipartite Graph; cover() by local brute force
+\inputcode{Kuhn Munkres*}{4_Flow_Matching/Kuhn_Munkres.cpp} % test by CF 101239 C (World Finals' problem), Lib-Checker Assignment Problem
+\inputcode{MincostMaxflow*}{4_Flow_Matching/MincostMaxflow.cpp} % test by Lib-Checker Assignment Problem, local stress vs SPFA reference
 \inputcode{Maximum Simple Graph Matching*}{4_Flow_Matching/Maximum_Simple_Graph_Matching.cpp} % test by Library Checker Matching on General Graph 
 \inputcode{Maximum Weight Matching*}{4_Flow_Matching/Maximum_Weight_Matching.cpp} % test by Library Checker General Weighted Matching
 \inputcode{SW-mincut}{4_Flow_Matching/SW-mincut.cpp}
@@ -65,25 +66,25 @@
 \inputcode{KMP}{5_String/KMP.cpp}
 \inputcode{Z-value*}{5_String/Z-value.cpp} % test by Lib-Checker Z Algorithm
 \inputcode{Manacher*}{5_String/Manacher.cpp} % test by Lib-Checker Enumerate Palindromes
-\inputcode{Suffix Array*}{5_String/SA_LCP_becaido.cpp} % test by caido
+\inputcode{Suffix Array*}{5_String/SA_LCP_becaido.cpp} % test by caido, Lib-Checker Suffix Array
 \inputcode{SAIS C++20*}{5_String/SAIS-C++20.cpp} % test by Lib-Checker Suffix Array
 % \inputcode{SAIS*}{5_String/SAIS-old.cpp} % test by CF 104901 H, Lib-Checker Suffix Array
-\inputcode{Aho-Corasick Automatan*}{5_String/Aho-Corasick_Automatan.cpp} % test by CF 102511 G (World Finals' problem)
+\inputcode{Aho-Corasick Automatan*}{5_String/Aho-Corasick_Automatan.cpp} % test by CF 102511 G (World Finals' problem), Lib-Checker Aho-Corasick
 \inputcode{Smallest Rotation*}{5_String/Smallest_Rotation.cpp} % test by CSES Minimal Rotation
 \inputcode{De Bruijn sequence*}{5_String/De_Bruijn_sequence.cpp} % test by CF 102001 C
-\inputcode{Extended SAM*}{5_String/exSAM.cpp} % test by CF 616 C
-\inputcode{PalTree*}{5_String/PalTree.cpp} % test by APIO 2014 palindrome
-\inputcode{Main Lorentz}{5_String/MainLorentz.cpp}
+\inputcode{Extended SAM*}{5_String/exSAM.cpp} % test by CF 616 C, Lib-Checker Number of Substrings
+\inputcode{PalTree*}{5_String/PalTree.cpp} % test by APIO 2014 palindrome, Lib-Checker Eertree
+\inputcode{Main Lorentz}{5_String/MainLorentz.cpp} % test by Lib-Checker Run Enumerate
 
 
 \section{Math}
 \inputcode{ax+by=gcd(only exgcd *)}{6_Math/ax+by=gcd.cpp} % exgcd test by NTUJ 110
 \inputcode{Floor and Ceil}{6_Math/floor_ceil.cpp}
-\inputcode{Floor Enumeration}{6_Math/floor_enumeration.cpp}
-\inputcode{Mod Min}{6_Math/ModMin.cpp}
-\inputcode{Gaussian integer gcd}{6_Math/Gaussian_gcd.cpp}
+\inputcode{Floor Enumeration}{6_Math/floor_enumeration.cpp} % test by Lib-Checker Enumerate Quotients
+\inputcode{Mod Min}{6_Math/ModMin.cpp} % test by Lib-Checker Min of Mod of Linear
+\inputcode{Gaussian integer gcd}{6_Math/Gaussian_gcd.cpp} % test by Lib-Checker GCD of Gaussian Integers
 % \inputcode{floor sum*}{6_Math/floor_sum.cpp} % test by AtCoder Library Practice Contest C, CF 100920 J
-\inputcode{Miller Rabin*}{6_Math/Miller_Rabin.cpp} % test by NTUJ 1237
+\inputcode{Miller Rabin*}{6_Math/Miller_Rabin.cpp} % test by NTUJ 1237, Lib-Checker Primality Test
 % \inputcode{Big number{6_Math/Big_number.cpp}}
 %\inputcode{Fraction}{6_Math/Fraction.cpp}
 \inputcode{System of Linear Equations}{6_Math/Linear_Equations.cpp}
@@ -95,9 +96,9 @@
 \inputcode{chineseRemainder}{6_Math/chineseRemainder.cpp}
 \inputcode{Factorial without prime factor*}{6_Math/fac_no_p.cpp} % test by luogu P4720
 \inputcode{QuadraticResidue*}{6_Math/QuadraticResidue.cpp} % test by Lib-Checker Sqrt Mod
-\inputcode{PiCount*}{6_Math/PiCount.cpp} % test by luogu P7884
+\inputcode{PiCount*}{6_Math/PiCount.cpp} % test by luogu P7884, Lib-Checker Counting Primes
 \inputcode{Discrete Log*}{6_Math/DiscreteLog.cpp} % test by Lib-Checker Discrete Logarithm
-\inputcode{Berlekamp Massey}{6_Math/Berlekamp-Massey.cpp}
+\inputcode{Berlekamp Massey}{6_Math/Berlekamp-Massey.cpp} % test by Lib-Checker Find Linear Recurrence
 \subsection{Primes}
 \lstinputlisting{6_Math/Primes.cpp}
 \subsection{Theorem}
@@ -112,10 +113,11 @@
 \input{6_Math/Generating_function.tex}
 
 \section{Polynomial}
-\inputcode{Fast Fourier Transform}{7_Polynomial/Fast_Fourier_Transform.cpp}
+\inputcode{Fast Fourier Transform}{7_Polynomial/Fast_Fourier_Transform.cpp} % test by Lib-Checker Convolution mod 1e9+7 (through FFT Mod)
+\inputcode{FFT Arbitrary Mod}{7_Polynomial/Fast_Fourier_Transform_Mod.cpp} % test by Lib-Checker Convolution mod 1e9+7
 \inputcode{Number Theory Transform*}{7_Polynomial/Number_Theory_Transform.cpp} % test by Lib-Checker Convolution
 \inputcode{Fast Walsh Transform*}{7_Polynomial/Fast_Walsh_Transform.cpp} % test by luogu P6097
-\inputcode{Polynomial Operation}{7_Polynomial/Polynomial_Operation.cpp} % test by Lib-checker (Inv/Exp/Log/Power) of Formal Power Series
+\inputcode{Polynomial Operation}{7_Polynomial/Polynomial_Operation.cpp} % test by Lib-checker (Inv/Exp/Log/Power) of Formal Power Series, Sqrt of FPS
 \inputcode{Value Polynomial}{7_Polynomial/Value_Poly.cpp}
 \subsection{Newton's Method}
 \input{7_Polynomial/Newton.tex}
@@ -123,9 +125,9 @@
 \section{Geometry}
 \inputcode{Default Code}{8_Geometry/Default_code.cpp}
 \inputcode{PointSegDist*}{8_Geometry/PointSegDist.cpp} % test by aizu oj CGL_2_D
-\inputcode{Heart}{8_Geometry/Heart.cpp}
+\inputcode{Heart}{8_Geometry/Heart.cpp} % circenter test by Lib-Checker Minimum Enclosing Circle
 \inputcode{point in circle}{8_Geometry/point_in_circle.cpp}
-\inputcode{Convex hull*}{8_Geometry/Convex_hull.cpp} % test by Zerojudge b398
+\inputcode{Convex hull*}{8_Geometry/Convex_hull.cpp} % test by Zerojudge b398, Lib-Checker Static Convex Hull
 \inputcode{PointInConvex*}{8_Geometry/PointInConvex.cpp} % test by CF 104114 B, CF 101242 J (World Finals' problem)
 \inputcode{TangentPointToHull*}{8_Geometry/TangentPointToHull.cpp} % test by CF 104114 B, CF 101242 J (World Finals' problem)
 \inputcode{Intersection of line and convex}{8_Geometry/Intersection_of_line_and_convex.cpp} % test by aizu CGL_4_C, probably not enough
@@ -134,11 +136,11 @@
 \inputcode{PolyUnion*}{8_Geometry/PolyUnion.cpp} % test by CF 101673 A
 %\inputcode{PolyCut}{8_Geometry/PolyCut.cpp}
 % \inputcode{Trapezoidalization}{8_Geometry/Trapezoidalization.cpp} % test by aizu CGL_3_C, TIOJ 1403
-\inputcode{Polar Angle Sort*}{8_Geometry/Polar_Angle_Sort.cpp} % test by NTUJ 2270
+\inputcode{Polar Angle Sort*}{8_Geometry/Polar_Angle_Sort.cpp} % test by NTUJ 2270, Lib-Checker Sort Points by Argument
 \inputcode{Half plane intersection*}{8_Geometry/Half_plane_intersection.cpp} % test by qoj 2162 (World Finals' problem)
 \inputcode{HPI Alternative Form}{8_Geometry/HPIGeneralLine.cpp}
 \inputcode{RotatingSweepLine}{8_Geometry/rotatingSweepLine.cpp}
-\inputcode{Minimum Enclosing Circle*}{8_Geometry/Minimum_Enclosing_Circle.cpp} % test by TIOJ 1093
+\inputcode{Minimum Enclosing Circle*}{8_Geometry/Minimum_Enclosing_Circle.cpp} % test by TIOJ 1093, Lib-Checker Minimum Enclosing Circle
 \inputcode{Intersection of two circles*}{8_Geometry/Intersection_of_two_circles.cpp} % test by TIOJ 1503
 \inputcode{Intersection of polygon and circle*}{8_Geometry/Intersection_of_polygon_and_circle.cpp} % test by HDU 2892
 \inputcode{Intersection of line and circle*}{8_Geometry/Intersection_of_line_and_circle.cpp} % test by kactl stress-tests
@@ -149,6 +151,7 @@
 \inputcode{DelaunayTriangulation*}{8_Geometry/DelaunayTriangulation_dq.cpp} % test by Zerojudge b370, TIOJ 1310
 \inputcode{Triangulation Vonoroi*}{8_Geometry/Triangulation_Vonoroi.cpp} % test by CF 104555 J, NPSC 2018 territory
 \inputcode{Minkowski Sum*}{8_Geometry/Minkowski_Sum.cpp} % test by Zerojudge b398
+\inputcode{Closest Pair}{8_Geometry/ClosestPair.cpp} % test by Lib-Checker Closest Pair
 
 \section{Else}
 \inputcode{Cyclic Ternary Search*}{9_Else/cyc_tsearch.cpp} % test by local brute force
@@ -157,18 +160,19 @@
 \subsection{Additional Mo's Algorithm Trick}
 \input{9_Else/Mos_Algorithm.tex}
 \inputcode{Hilbert Curve}{9_Else/HilbertCurve.cpp}
-\inputcode{DynamicConvexTrick*}{9_Else/DynamicConvexTrick.cpp} % test by TIOJ 1921
+\inputcode{DynamicConvexTrick*}{9_Else/DynamicConvexTrick.cpp} % test by TIOJ 1921, Lib-Checker Line Add Get Min
 %\inputcode{cyclicLCS}{9_Else/cyclicLCS.cpp}
 \inputcode{All LCS*}{9_Else/All_LCS.cpp} % test by Library Checker prefix-substring LCS
 \inputcode{DLX*}{9_Else/DLX.cpp} % test by TIOJ 1333, 1381
 \subsection{Matroid Intersection}
 \input{9_Else/Matroid.tex}
+\inputcode{Matroid Intersection}{9_Else/MatroidIntersection.cpp} % test by local brute force (graphic x colourful)
 \inputcode{AdaptiveSimpson*}{9_Else/AdaptiveSimpson.cpp} % test by CF 101193J, 100553D
 \inputcode{Simulated Annealing}{9_Else/simulated_annealing.cpp}
 \inputcode{Tree Hash*}{9_Else/tree_hash.cpp} % test by CSES Tree Isomorphism I
-\inputcode{Binary Search On Fraction*}{9_Else/BinarySearchOnFraction.cpp} % test by ABC 333 G after adjusted to int128
+\inputcode{Binary Search On Fraction*}{9_Else/BinarySearchOnFraction.cpp} % test by ABC 333 G after adjusted to int128, Lib-Checker Rational Approximation
 \inputcode{1D1D}{9_Else/1d1d.cpp}
-\inputcode{SMAWK}{9_Else/smawk.cpp}
+\inputcode{SMAWK}{9_Else/smawk.cpp} % test by Lib-Checker Min Plus Convolution (Convex and Arbitrary)
 \inputcode{Min Plus Convolution*}{9_Else/min_plus_convolution.cpp} % test by Library Checker Min Plus Convolution (Convex and Arbitrary)
 \inputcode{Bitset LCS}{9_Else/BitsetLCS.cpp}
 %\inputcode{N Queens Problem}{9_Else/NQueens.cpp}

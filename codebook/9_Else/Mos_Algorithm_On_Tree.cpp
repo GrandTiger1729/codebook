@@ -29,7 +29,7 @@ void flip(int x) {
     inset[x] = ~inset[x];
 }
 void solve(vector<Query> query) {
-  sort(ALL(query));
+  sort(query.begin(), query.end());
   int L = 0, R = 0;
   for (auto q : query) {
     while (R < q.R) flip(ord[++R]);

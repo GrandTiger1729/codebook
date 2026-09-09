@@ -16,7 +16,7 @@ void reset(int u) {
 }
 void solve(vector<int> &v) {
   top = -1;
-  sort(ALL(v),
+  sort(v.begin(), v.end(),
     [&](int a, int b) { return dfn[a] < dfn[b]; });
   for (int i : v) insert(i);
   while (top > 0) vG[st[top - 1]].pb(st[top]), --top;

@@ -1,12 +1,12 @@
+#define SZ(a) ((int)a.size())
 namespace vizing { // returns edge coloring in adjacent matrix G. 1 - based
 const int N = 105;
 int C[N][N], G[N][N], X[N], vst[N], n;
 void init(int _n) { n = _n;
-  for (int i = 0; i <= n; ++i)
-    for (int j = 0; j <= n; ++j) 
-      C[i][j] = G[i][j] = 0;
+  FOR (i, 0, n)
+    FOR (j, 0, n) C[i][j] = G[i][j] = 0;
 }
-void solve(vector<pii> &E) {
+void solve(vector<pair<int, int>> &E) {
   auto update = [&](int u)
   { for (X[u] = 1; C[u][X[u]]; ++X[u]); };
   auto color = [&](int u, int v, int c) {
@@ -27,22 +27,28 @@ void solve(vector<pii> &E) {
     return p;
   };
   fill_n(X + 1, n, 1);
-  for (int t = 0; t < SZ(E); ++t) {
-    int u = E[t].X, v0 = E[t].Y, v = v0, c0 = X[u], c = c0, d;
-    vector<pii> L;
+  FOR (t, 0, SZ(E) - 1) {
+    int u = E[t].F, v0 = E[t].S, v = v0, c0 = X[u],
+        c = c0, d;
+    vector<pair<int, int>> L;
     fill_n(vst + 1, n, 0);
     while (!G[u][v0]) {
       L.emplace_back(v, d = X[v]);
-      if (!C[v][c]) for (int a = SZ(L) - 1; a >= 0; --a) c = color(u, L[a].X, c);
-      else if (!C[u][d]) for (int a = SZ(L) - 1; a >= 0; --a) color(u, L[a].X, L[a].Y);
+      if (!C[v][c])
+        for (int a = SZ(L) - 1; a >= 0; --a)
+          c = color(u, L[a].F, c);
+      else if (!C[u][d])
+        for (int a = SZ(L) - 1; a >= 0; --a)
+          color(u, L[a].F, L[a].S);
       else if (vst[d]) break;
       else vst[d] = 1, v = C[u][d];
     }
     if (!G[u][v0]) {
       for (; v; v = flip(v, c, d), swap(c, d));
       if (int a; C[u][c0]) {
-        for (a = SZ(L) - 2; a >= 0 && L[a].Y != c; --a);
-        for (; a >= 0; --a) color(u, L[a].X, L[a].Y);
+        for (a = SZ(L) - 2; a >= 0 && L[a].S != c;
+          --a);
+        for (; a >= 0; --a) color(u, L[a].F, L[a].S);
       }
       else --t;
     }

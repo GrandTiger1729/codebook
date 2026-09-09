@@ -1,10 +1,8 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-typedef long long ll;
-typedef pair<int, int> pii;
-typedef pair<ll, ll> pll;
-#define X first
-#define Y second
-#define SZ(a) ((int)a.size())
-#define ALL(v) v.begin(), v.end()
-#define pb push_back
+#define ll long long
+#define Waimai ios::sync_with_stdio(false), cin.tie(0)
+#define FOR(x,a,b) for(int x = a, I = b; x <= I; x++)
+#define pb emplace_back
+#define F first
+#define S second

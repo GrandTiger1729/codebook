@@ -4,8 +4,7 @@ struct Heavy_light_Decomposition { // 1-base
   vector<int> G[N];
   void init(int _n) {
     n = _n;
-    for (int i = 1; i <= n; ++i)
-      G[i].clear(), mxson[i] = 0;
+    FOR (i, 1, n) G[i].clear(), mxson[i] = 0;
   }
   void add_edge(int a, int b) {
     G[a].pb(b), G[b].pb(a);
@@ -26,15 +25,16 @@ struct Heavy_light_Decomposition { // 1-base
       if (i != pa[u] && i != mxson[u])
         cut(i, i);
   }
-  void build() { dfs(1, 1, 1), cut(1, 1), /*build*/; }
+  void build() { dfs(1, 1, 1), cut(1, 1); }
   int query(int a, int b) {
     int ta = ulink[a], tb = ulink[b], res = 0;
     while (ta != tb) {
       if (deep[ta] > deep[tb]) swap(ta, tb), swap(a, b);
-      // query(pl[tb], pl[b])
+      // res += query(pl[tb], pl[b])
       tb = ulink[b = pa[tb]];
     }
     if (pl[a] > pl[b]) swap(a, b);
-    // query(pl[a], pl[b])
+    // res += query(pl[a], pl[b])
+    return res;
   }
 };

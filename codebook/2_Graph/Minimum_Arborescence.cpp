@@ -14,14 +14,14 @@ struct zhu_liu { // O(VE)
     ll ans = 0;
     for (;;) {
       fill_n(in, n, INF);
-      for (int i = 0; i < SZ(E); ++i)
+      FOR (i, 0, (int)E.size() - 1)
         if (E[i].u != E[i].v && E[i].w < in[E[i].v])
           pe[E[i].v] = i, in[E[i].v] = E[i].w;
-      for (int u = 0; u < n; ++u) // no solution
+      FOR (u, 0, n - 1) // no solution
         if (u != root && in[u] == INF) return -INF;
       int cntnode = 0;
       fill_n(id, n, -1), fill_n(vis, n, -1);
-      for (int u = 0; u < n; ++u) {
+      FOR (u, 0, n - 1) {
         if (u != root) ans += in[u];
         int v = u;
         while (vis[v] != u && !~id[v] && v != root)
@@ -34,9 +34,9 @@ struct zhu_liu { // O(VE)
         }
       }
       if (!cntnode) break; // no cycle
-      for (int u = 0; u < n; ++u)
+      FOR (u, 0, n - 1)
         if (!~id[u]) id[u] = cntnode++;
-      for (int i = 0; i < SZ(E); ++i) {
+      FOR (i, 0, (int)E.size() - 1) {
         int v = E[i].v;
         E[i].u = id[E[i].u], E[i].v = id[E[i].v];
         if (E[i].u != E[i].v) E[i].w -= in[v];

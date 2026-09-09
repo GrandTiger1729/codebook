@@ -27,8 +27,7 @@ struct SAM {
       else {
         int nq = newNode();
         mx[nq] = mx[p] + 1;
-        for (int i = 0; i < 33; i++)
-          nxt[nq][i] = nxt[q][i];
+        FOR (i, 0, 32) nxt[nq][i] = nxt[q][i];
         mom[nq] = mom[q];
         mom[q] = nq;
         mom[np] = nq;
@@ -43,10 +42,9 @@ struct SAM {
       push(str[i] - 'a' + 1);
   }
   void count() {
-    for (int i = 1; i <= tot; ++i)
-      ++in[mom[i]];
+    FOR (i, 1, tot) ++in[mom[i]];
     queue<int> q;
-    for (int i = 1; i <= tot; ++i)
+    FOR (i, 1, tot)
       if (!in[i]) q.push(i);
     while (!q.empty()) {
       int u = q.front();

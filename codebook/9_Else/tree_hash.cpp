@@ -1,3 +1,4 @@
+typedef unsigned long long ull;
 ull seed;
 ull shift(ull x) {
   x ^= x << 13; 

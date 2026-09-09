@@ -45,7 +45,7 @@ void splay(Splay *x) {
     splayVec.pb(q);
     if (q->isr()) break;
   }
-  reverse(ALL(splayVec));
+  reverse(splayVec.begin(), splayVec.end());
   for (auto it : splayVec) it->push();
   while (!x->isr()) {
     if (x->f->isr()) rotate(x);

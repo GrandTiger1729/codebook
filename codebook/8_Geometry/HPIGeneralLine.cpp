@@ -3,7 +3,8 @@ struct LN {
   ll a, b, c; // ax + by + c <= 0
   pll dir() const { return pll(a, b); }
   LN(ll ta, ll tb, ll tc) : a(ta), b(tb), c(tc) {}
-  LN(pll S, pll T): a((T-S).Y), b(-(T-S).X), c(cross(T,S)) {}
+  LN(pll p, pll q)
+    : a((q - p).Y), b(-(q - p).X), c(cross(q, p)) {}
 };
 pdd intersect(LN A, LN B) {
   double c = cross(A.dir(), B.dir());

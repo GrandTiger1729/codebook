@@ -3,7 +3,7 @@ struct MaxClique { // fast when N <= 100
   int ans, sol[N], q, cur[N], d[N], n;
   void init(int _n) {
     n = _n;
-    for (int i = 0; i < n; ++i) G[i].reset();
+    FOR (i, 0, n - 1) G[i].reset();
   }
   void add_edge(int u, int v) { 
     G[u][v] = G[v][u] = 1;
@@ -11,9 +11,10 @@ struct MaxClique { // fast when N <= 100
   void pre_dfs(vector<int> &r, int l, bitset<N> mask) {
     if (l < 4) {
       for (int i : r) d[i] = (G[i] & mask).count();
-      sort(ALL(r), [&](int x, int y) { return d[x] > d[y]; });
+      sort(r.begin(), r.end(),
+        [&](int x, int y) { return d[x] > d[y]; });
     }
-    vector<int> c(SZ(r));
+    vector<int> c((int)r.size());
     int lft = max(ans - q + 1, 1), rgt = 1, tp = 0;
     cs[1].reset(), cs[2].reset();
     for (int p : r) {
@@ -23,7 +24,7 @@ struct MaxClique { // fast when N <= 100
       cs[k][p] = 1;
       if (k < lft) r[tp++] = p;
     }
-    for (int k = lft; k <= rgt; ++k)
+    FOR (k, lft, rgt)
       for (int p = cs[k]._Find_first(); p < N; p = cs[k]._Find_next(p))
         r[tp] = p, c[tp] = k, ++tp; 
     dfs(r, c, l + 1, mask);
@@ -43,7 +44,7 @@ struct MaxClique { // fast when N <= 100
   }
   int solve() {
     vector<int> r(n);
-    ans = q = 0, iota(ALL(r), 0);
+    ans = q = 0, iota(r.begin(), r.end(), 0);
     pre_dfs(r, 0, bitset<N>(string(n, '1')));
     return ans;
   }

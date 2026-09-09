@@ -1,17 +1,18 @@
+typedef pair<ll, ll> pll;
 ll road[N][N]; // input here
 struct MinimumMeanCycle {
   ll dp[N + 5][N], n;
   pll solve() {
     ll a = -1, b = -1, L = n + 1;
-    for (int i = 2; i <= L; ++i)
-      for (int k = 0; k < n; ++k)
-        for (int j = 0; j < n; ++j)
+    FOR (i, 2, L)
+      FOR (k, 0, n - 1)
+        FOR (j, 0, n - 1)
           dp[i][j] =
             min(dp[i - 1][k] + road[k][j], dp[i][j]);
-    for (int i = 0; i < n; ++i) {
+    FOR (i, 0, n - 1) {
       if (dp[L][i] >= INF) continue;
       ll ta = 0, tb = 1;
-      for (int j = 1; j < n; ++j)
+      FOR (j, 1, n - 1)
         if (dp[j][i] < INF &&
           ta * (L - j) < (dp[L][i] - dp[j][i]) * tb)
           ta = dp[L][i] - dp[j][i], tb = L - j;
@@ -26,7 +27,7 @@ struct MinimumMeanCycle {
   }
   void init(int _n) {
     n = _n;
-    for (int i = 0; i < n; ++i)
-      for (int j = 0; j < n; ++j) dp[i + 2][j] = INF;
+    FOR (i, 0, n - 1)
+      FOR (j, 0, n - 1) dp[i + 2][j] = INF;
   }
 };

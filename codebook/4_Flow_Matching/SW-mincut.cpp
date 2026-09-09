@@ -1,5 +1,5 @@
 struct SW{ // global min cut, O(V^3)
-  #define REP for (int i = 0; i < n; ++i)
+#define REP FOR (i, 0, n - 1)
   static const int MXN = 514, INF = 2147483647;
   int vst[MXN], edge[MXN][MXN], wei[MXN];
   void init(int n) {
@@ -12,7 +12,7 @@ struct SW{ // global min cut, O(V^3)
     fill_n(vst, n, 0), fill_n(wei, n, 0);
     s = t = -1;
     int mx, cur;
-    for (int j = 0; j < n; ++j) {
+    FOR (j, 0, n - 1) {
       mx = -1, cur = 0;
       REP if (wei[i] > mx) cur = i, mx = wei[i];
       vst[cur] = 1, wei[cur] = -1;

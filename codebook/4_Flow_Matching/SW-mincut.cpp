@@ -1,3 +1,5 @@
+// TODO: change this to solution version (kactl)
+
 struct SW{ // global min cut, O(V^3)
 #define REP FOR (i, 0, n - 1)
   static const int MXN = 514, INF = 2147483647;

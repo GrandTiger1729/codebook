@@ -1,38 +1,21 @@
-// TODO: change this to solution version (kactl)
-
-struct SW{ // global min cut, O(V^3)
-#define REP FOR (i, 0, n - 1)
-  static const int MXN = 514, INF = 2147483647;
-  int vst[MXN], edge[MXN][MXN], wei[MXN];
-  void init(int n) {
-    REP fill_n(edge[i], n, 0);
-  }
-  void addEdge(int u, int v, int w){
-    edge[u][v] += w; edge[v][u] += w;
-  }
-  int search(int &s, int &t, int n){
-    fill_n(vst, n, 0), fill_n(wei, n, 0);
-    s = t = -1;
-    int mx, cur;
-    FOR (j, 0, n - 1) {
-      mx = -1, cur = 0;
-      REP if (wei[i] > mx) cur = i, mx = wei[i];
-      vst[cur] = 1, wei[cur] = -1;
-      s = t; t = cur;
-      REP if (!vst[i]) wei[i] += edge[cur][i];
-    }
-    return mx;
-  }
-  int solve(int n) {
-    int res = INF;
-    for (int x, y; n > 1; n--){
-      res = min(res, search(x, y, n));
-      REP edge[i][x] = (edge[x][i] += edge[y][i]);
-      REP {
-        edge[y][i] = edge[n - 1][i];
-        edge[i][y] = edge[i][n - 1];
-      } // edge[y][y] = 0;
-    }
-    return res;
-  }
-} sw;
+pair<int, vector<int>> globalMinCut(vector<vector<int>> mat) {
+	pair<int, vector<int>> best = {INT_MAX, {}};
+	int n = mat.size();
+	vector<vector<int>> co(n);
+	FOR (i, 0, n - 1) co[i] = {i};
+	FOR (ph, 1, n - 1) {
+		vector<int> w = mat[0];
+		int s = 0, t = 0;
+		FOR (it, 0, n - ph - 1) { // O(V^2) -> O(E log V) with prio. queue
+			w[t] = INT_MIN;
+			s = t, t = max_element(w.begin(), w.end()) - w.begin();
+			FOR (i, 0, n - 1) w[i] += mat[t][i];
+		}
+		best = min(best, {w[t] - mat[t][t], co[t]});
+		co[s].insert(co[s].end(), co[t].begin(), co[t].end());
+		FOR (i, 0, n - 1) mat[s][i] += mat[t][i];
+		FOR (i, 0, n - 1) mat[i][s] = mat[s][i];
+		mat[0][t] = INT_MIN;
+	}
+	return best;
+}

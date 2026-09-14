@@ -1,7 +1,7 @@
 vector<int> suffix_array(string s) {
   int n = s.size();
   if (n == 1) return {0};
-  s += "\0";
+  s += '\0';
   vector<int> sa(n + 1), rnk(n + 1), cnt(n + 1);
   array<int, 256> alp{};
   FOR (i, 0, n) alp[s[i]]++;
@@ -25,8 +25,8 @@ vector<int> suffix_array(string s) {
     nrnk[sa[0]] = 0;
     for (int i = 1, cur = 0; i <= n; i++) {
       int np1 = sa[i] + len, np2 = sa[i - 1] + len;
-      if (np1 > n + 1) np1 -= n + 1;
-      if (np2 > n + 1) np2 -= n + 1;
+      if (np1 >= n + 1) np1 -= n + 1;
+      if (np2 >= n + 1) np2 -= n + 1;
       if (rnk[sa[i]] != rnk[sa[i - 1]] ||
         rnk[np1] != rnk[np2])
         cur++;

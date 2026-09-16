@@ -1,4 +1,6 @@
 #define SZ(a) ((int)a.size())
+// a_i = \sum_{j=1}^{k} c_j a_(i-j); returns c 1-based,
+// c[0] unused, k = SZ(c) - 1. Feeds LinearRecursion.
 template <typename T>
 vector<T> BerlekampMassey(const vector<T> &output) {
   vector<T> d(SZ(output) + 1), me, he;
@@ -18,5 +20,6 @@ vector<T> BerlekampMassey(const vector<T> &output) {
     if (i - f + SZ(he) >= SZ(me)) he = me, f = i;
     me = o;
   }
+  me.insert(me.begin(), T()); // me[j] was c_(j+1)
   return me;
 }

@@ -1,6 +1,7 @@
-struct SteinerTree { // 0-base
-  int n, dst[N][N], dp[1 << T][N], tdst[N];
-  int vcst[N]; // the cost of vertexs
+struct SteinerTree { // 0-base, need INF
+  int n; // W <= 1e9 and V <= 100 already overflow int
+  ll dst[N][N], dp[1 << T][N], tdst[N];
+  ll vcst[N]; // the cost of vertexs
   void init(int _n) {
     n = _n;
     FOR (i, 0, n - 1) {
@@ -8,19 +9,21 @@ struct SteinerTree { // 0-base
       dst[i][i] = vcst[i] = 0;
     }
   }
-  void chmin(int &x, int val) {
+  void chmin(ll &x, ll val) {
     x = min(x, val);
   }
-  void add_edge(int ui, int vi, int wi) {
+  void add_edge(int ui, int vi, ll wi) {
     chmin(dst[ui][vi], wi);
   }
-  void shortest_path() {
-    FOR (k, 0, n - 1)
+  void shortest_path() { // dst[i][j] ends up counting
+    FOR (k, 0, n - 1) // every vcst on i -> j but i's
       FOR (i, 0, n - 1)
         FOR (j, 0, n - 1)
-          chmin(dst[i][j], dst[i][k] + dst[k][j]);
+          chmin(dst[i][j], dst[i][k] + vcst[k] + dst[k][j]);
+    FOR (i, 0, n - 1) FOR (j, 0, n - 1)
+      if (i != j) dst[i][j] += vcst[j];
   }
-  int solve(const vector<int>& ter) {
+  ll solve(const vector<int>& ter) {
     shortest_path();
     int t = (int)ter.size(), full = (1 << t) - 1;
     FOR (i, 0, full) fill_n(dp[i], n, INF);

@@ -5,14 +5,13 @@ public:
     T d[kd];
     inline T dist(const point &x) const {
       T ret = 0;
-      for (size_t i = 0; i < kd; i++)
+      FOR (i, 0, kd - 1)
         ret += std::abs(d[i] - x.d[i]);
       return ret;
     }
     inline bool operator==(const point &p) {
-      for (size_t i = 0; i < kd; i++) {
+      FOR (i, 0, kd - 1)
         if (d[i] != p.d[i]) return 0;
-      }
       return 1;
     }
     inline bool operator<(const point &b) const {
@@ -43,9 +42,8 @@ private:
       const point &x, const point &y) const {
       if (x.d[sort_id] != y.d[sort_id])
         return x.d[sort_id] < y.d[sort_id];
-      for (size_t i = 0; i < kd; i++) {
+      FOR (i, 0, kd - 1)
         if (x.d[i] != y.d[i]) return x.d[i] < y.d[i];
-      }
       return 0;
     }
   } cmp;
@@ -142,7 +140,7 @@ private:
   }
   inline T heuristic(const T h[]) const {
     T ret = 0;
-    for (size_t i = 0; i < kd; i++) ret += h[i];
+    FOR (i, 0, kd - 1) ret += h[i];
     return ret;
   }
   int qM;

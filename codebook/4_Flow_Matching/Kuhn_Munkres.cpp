@@ -20,7 +20,7 @@ struct KM { // 0-base, maximum matching
     ql = qr = 0, qu[qr++] = s, vl[s] = 1;
     for (ll d;;) {
       while (ql < qr)
-        for (int y = 0, x = qu[ql++]; y < m; ++y)
+        for (int y = 0, x = qu[ql++]; y < m; y++)
           if (!vr[y] && slk[y] >= (d = hl[x] + hr[y] - w[x][y])) {
             if (pre[y] = x, d) slk[y] = d;
             else if (!Check(y)) return;

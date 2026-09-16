@@ -104,7 +104,7 @@ struct Poly : vector<ll> { // coefficients in [0, P)
     vector<Poly> up(m * 2);
     FOR (i, 0, m - 1)
       up[m + i] = {(x[i] ? P - x[i] : 0), 1};
-    for (int i = m - 1; i > 0; --i) up[i] = up[i * 2].Mul(up[i * 2 + 1]);
+    for (int i = m - 1; i > 0; i--) up[i] = up[i * 2].Mul(up[i * 2 + 1]);
     return up;
   }
   vector<ll> Eval(const vector<ll> &x) const { // 1e5, 1s
@@ -116,7 +116,7 @@ struct Poly : vector<ll> { // coefficients in [0, P)
     vector<ll> z = up[1].Dx()._eval(x, up);
     FOR (i, 0, m - 1) z[i] = y[i] * ntt.minv(z[i]) % P;
     FOR (i, 0, m - 1) down[m + i] = {z[i]};
-    for (int i = m - 1; i > 0; --i) down[i] = down[i * 2].Mul(up[i * 2 + 1]).iadd(down[i * 2 + 1].Mul(up[i * 2]));
+    for (int i = m - 1; i > 0; i--) down[i] = down[i * 2].Mul(up[i * 2 + 1]).iadd(down[i * 2 + 1].Mul(up[i * 2]));
     return down[1];
   }
   Poly Ln() const { // (*this)[0] == 1, 1e5/170ms

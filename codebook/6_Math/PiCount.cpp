@@ -24,7 +24,7 @@ ll PrimeCount(ll n) { // n ~ 10^13 => < 2s
         roughs[ns++] = i;
       }
       s = ns;
-      for (int j = v / p; j >= p; --j) {
+      for (int j = v / p; j >= p; j--) {
         int c = smalls[j] - pc, e = min(j * p + p, v + 1);
         FOR (i, j * p, e - 1) smalls[i] -= c;
       }

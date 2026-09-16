@@ -16,7 +16,7 @@ void main_lorentz(const string &s, int sft = 0) {
     if (left) rep[l].emplace_back(sft + c - R, sft + c - L);
     else rep[l].emplace_back(sft + c - R - l + 1, sft + c - L - l + 1);
   };
-  for (int cntr = 0; cntr < n; cntr++) {
+  FOR (cntr, 0, n - 1) {
     int l, k1, k2;
     if (cntr < nu) {
       l = nu - cntr;

@@ -15,18 +15,20 @@ struct SteinerTree { // 0-base
     chmin(dst[ui][vi], wi);
   }
   void shortest_path() {
-    FOR (k, 0, n - 1) FOR (i, 0, n - 1) FOR (j, 0, n - 1)
-      chmin(dst[i][j], dst[i][k] + dst[k][j]);
+    FOR (k, 0, n - 1)
+      FOR (i, 0, n - 1)
+        FOR (j, 0, n - 1)
+          chmin(dst[i][j], dst[i][k] + dst[k][j]);
   }
   int solve(const vector<int>& ter) {
     shortest_path();
-    int t = SZ(ter), full = (1 << t) - 1;
+    int t = (int)ter.size(), full = (1 << t) - 1;
     FOR (i, 0, full) fill_n(dp[i], n, INF);
     copy_n(vcst, n, dp[0]);
-    for (int msk = 1; msk <= full; ++msk) {
+    FOR (msk, 1, full) {
       if (!(msk & (msk - 1))) {
         int who = __lg(msk);
-        for (int i = 0; i < n; ++i)
+        FOR (i, 0, n - 1)
           dp[msk][i] = vcst[ter[who]] + dst[ter[who]][i];
       }
       FOR (i, 0, n - 1)
@@ -34,7 +36,8 @@ struct SteinerTree { // 0-base
           chmin(dp[msk][i], dp[sub][i] + dp[msk ^ sub][i] - vcst[i]);
       FOR (i, 0, n - 1) {
         tdst[i] = INF;
-        FOR (j, 0, n - 1) chmin(tdst[i], dp[msk][j] + dst[j][i]);
+        FOR (j, 0, n - 1)
+          chmin(tdst[i], dp[msk][j] + dst[j][i]);
       }
       copy_n(tdst, n, dp[msk]);
     }

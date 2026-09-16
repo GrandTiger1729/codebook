@@ -62,7 +62,7 @@ struct SweepLine {
   }
   // only expected to call the functions below
   SweepLine(T t, T e, vector<Line> vec): _cmp(*this), curTime(t), eps(e), curQ(), base(vec), sweep(_cmp), event(), its(SZ(vec), sweep.end()), eits(SZ(vec), event.end()) {
-    for (int i = 0; i < SZ(base); ++i) {
+    FOR (i, 0, SZ(base) - 1) {
       auto &[p, q] = base[i];
       if (p > q) swap(p, q);
       if (p.X <= curTime && curTime <= q.X)

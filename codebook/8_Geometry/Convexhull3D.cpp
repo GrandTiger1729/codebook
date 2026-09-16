@@ -15,7 +15,7 @@ convex_hull_3D(const vector<Point> &_P): res(), P(_P) {
   swap(P[3], *find_if(ALL(P), [&](auto p) { return sign(volume(P[0], P[1], P[2], p)) != 0; }));
   vector<vector<int>> flag(n, vector<int>(n));
   res.emplace_back(0, 1, 2); res.emplace_back(2, 1, 0);
-  for (int i = 3; i < n; ++i) {
+  FOR (i, 3, n - 1) {
     vector<Face> next;
     for (auto f : res) {
       int d = sign(volume(P[f.a], P[f.b], P[f.c], P[i]));
@@ -24,11 +24,13 @@ convex_hull_3D(const vector<Point> &_P): res(), P(_P) {
       flag[f.a][f.b] = flag[f.b][f.c] = flag[f.c][f.a] = ff;
     }
     for (auto f : res) {
-      auto F = [&](int x, int y) {
+      auto add = [&](int x, int y) {
         if (flag[x][y] > 0 && flag[y][x] <= 0)
           next.emplace_back(x, y, i);
       };
-      F(f.a, f.b); F(f.b, f.c); F(f.c, f.a);
+      add(f.a, f.b);
+      add(f.b, f.c);
+      add(f.c, f.a);
     }
     res = next;
   }
@@ -41,7 +43,7 @@ bool same(Face s, Face t) {
 }
 int polygon_face_num() {
   int ans = 0;
-  for (int i = 0; i < SZ(res); ++i)
+  FOR (i, 0, SZ(res) - 1)
     ans += none_of(res.begin(), res.begin() + i, [&](Face g) { return same(res[i], g); });
   return ans;
 }

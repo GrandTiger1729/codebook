@@ -33,7 +33,7 @@ struct DLX {
   }
   void init(int c) {
     rows = 0, columns = c;
-    for (int i = 0; i < c; ++i) {
+    FOR (i, 0, c - 1) {
       up[i] = dn[i] = bt[i] = i;
       lt[i] = i == 0 ? c : i - 1;
       rg[i] = i == c - 1 ? c : i + 1;
@@ -46,7 +46,7 @@ struct DLX {
   void insert(const vector<int> &col) {
     if (col.empty()) return;
     int f = sz;
-    for (int i = 0; i < (int)col.size(); ++i) {
+    FOR (i, 0, (int)col.size() - 1) {
       int c = col[i], v = sz++;
       dn[bt[c]] = v;
       up[v] = bt[c], bt[c] = v;
@@ -85,7 +85,7 @@ struct DLX {
     if (E) restore(w);
   }
   int solve() {
-    for (int i = 0; i < columns; ++i)
+    FOR (i, 0, columns - 1)
       dn[bt[i]] = i, up[i] = bt[i];
     ans = 1e9, sol.reset(), dfs(0);
     return ans;

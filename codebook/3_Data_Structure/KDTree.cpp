@@ -55,7 +55,7 @@ void dfs(
   }
 }
 void init(const vector<point> &v) {
-  for (int i = 0; i < v.size(); ++i) p[i] = v[i];
+  FOR (i, 0, (int) v.size() - 1) p[i] = v[i];
   root = build(0, v.size());
 }
 long long nearest(const point &q) {

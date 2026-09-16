@@ -19,7 +19,7 @@ struct exSAM {
     int q = next[p][c];
     if (len[p] + 1 == len[q]) return link[cur] = q, cur;
     int clone = newnode();
-    for (int i = 0; i < CNUM; ++i)
+    FOR (i, 0, CNUM - 1)
       next[clone][i] = len[next[q][i]] ? next[q][i] : 0;
     len[clone] = len[p] + 1;
     while (p != -1 && next[p][c] == q)
@@ -42,14 +42,14 @@ struct exSAM {
     while (!q.empty()) {
       int cur = q.front();
       q.pop();
-      for (int i = 0; i < CNUM; ++i)
+      FOR (i, 0, CNUM - 1)
         if (next[cur][i])
           q.push(insertSAM(cur, i));
     }
     vector<int> lc(tot);
-    for (int i = 1; i < tot; ++i) ++lc[len[i]];
-    partial_sum(ALL(lc), lc.begin());
-    for (int i = 1; i < tot; ++i) lenSorted[--lc[len[i]]] = i;
+    FOR (i, 1, tot - 1) ++lc[len[i]];
+    partial_sum(lc.begin(), lc.end(), lc.begin());
+    FOR (i, 1, tot - 1) lenSorted[--lc[len[i]]] = i;
   }
   void solve() {
     for (int i = tot - 2; i >= 0; --i)

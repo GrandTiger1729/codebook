@@ -1,0 +1,6 @@
+# Every text file is stored and checked out with LF, on every platform.
+# Matches .clang-format (UseCRLF: false, DeriveLineEnding: false).
+* text=auto eol=lf
+
+# The built book is binary; never touch its bytes.
+*.pdf binary

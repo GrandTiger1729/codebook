@@ -9,8 +9,7 @@ struct Clique_Cover { // 0-base, O(n2^n)
     E[u] |= 1 << v, E[v] |= 1 << u;
   }
   int solve() {
-    FOR (i, 0, n - 1)
-      co[1 << i] = E[i] | (1 << i);
+    FOR (i, 0, n - 1) co[1 << i] = E[i] | (1 << i);
     co[0] = (1 << n) - 1;
     dp[0] = (n & 1) * 2 - 1;
     FOR (i, 1, (1 << n) - 1) {
@@ -18,13 +17,11 @@ struct Clique_Cover { // 0-base, O(n2^n)
       dp[i] = -dp[i ^ t];
       co[i] = co[i ^ t] & co[t];
     }
-    FOR (i, 0, (1 << n) - 1)
-      co[i] = (co[i] & i) == i;
+    FOR (i, 0, (1 << n) - 1) co[i] = (co[i] & i) == i;
     fwt(co, 1 << n, 1);
     FOR (ans, 1, n - 1) {
       int sum = 0; // probabilistic
-      FOR (i, 0, (1 << n) - 1)
-        sum += (dp[i] *= co[i]);
+      FOR (i, 0, (1 << n) - 1) sum += (dp[i] *= co[i]);
       if (sum) return ans;
     }
     return n;

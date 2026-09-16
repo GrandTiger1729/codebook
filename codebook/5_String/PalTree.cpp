@@ -4,7 +4,7 @@ struct palindromic_tree {
     int cnt, num; // cnt: appear times, num: number of
                   // pal. suf.
     node(int l = 0) : fail(0), len(l), cnt(0), num(0) {
-      for (int i = 0; i < 26; ++i) next[i] = 0;
+      FOR (i, 0, 25) next[i] = 0;
     }
   };
   vector<node> St;
@@ -24,10 +24,10 @@ struct palindromic_tree {
     return x;
   }
   inline void add(int c) {
-    s.push_back(c -= 'a'), ++n;
+    s.pb(c -= 'a'), ++n;
     int cur = get_fail(last);
     if (!St[cur].next[c]) {
-      int now = SZ(St);
+      int now = (int)St.size();
       St.pb(St[cur].len + 2);
       St[now].fail =
         St[get_fail(St[cur].fail)].next[c];
@@ -43,6 +43,6 @@ struct palindromic_tree {
     }
   }
   inline int size() { // The number of diff. pal.
-    return SZ(St) - 2;
+    return (int)St.size() - 2;
   }
 };

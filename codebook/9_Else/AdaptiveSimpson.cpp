@@ -3,12 +3,12 @@ struct Simpson {
   using pdd = pair<d, d>;
   Func f;
   pdd mix(pdd l, pdd r, optional<d> fm = {}) {
-    d h = (r.X - l.X) / 2, v = fm.value_or(f(l.X + h));
-    return {v, h / 3 * (l.Y + 4 * v + r.Y)};
+    d h = (r.F - l.F) / 2, v = fm.value_or(f(l.F + h));
+    return {v, h / 3 * (l.S + 4 * v + r.S)};
   }
   d eval(pdd l, pdd r, d fm, d eps) {
-    pdd m((l.X + r.X) / 2, fm);
-    d s = mix(l, r, fm).second;
+    pdd m((l.F + r.F) / 2, fm);
+    d s = mix(l, r, fm).S;
     auto [flm, sl] = mix(l, m);
     auto [fmr, sr] = mix(m, r);
     d delta = sl + sr - s;
@@ -23,7 +23,7 @@ struct Simpson {
   }
   d eval2(d l, d r, d eps, int k = 997) {
     d h = (r - l) / k, s = 0;
-    for (int i = 0; i < k; ++i, l += h)
+    for (int i = 0; i < k; i++, l += h)
       s += eval(l, l + h, eps / k);
     return s;
   }

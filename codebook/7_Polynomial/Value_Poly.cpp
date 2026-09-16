@@ -1,3 +1,4 @@
+#define SZ(a) ((int)a.size())
 struct Poly {
   mint base; // f(x) = poly[x - base]
   vector<mint> poly;
@@ -7,11 +8,11 @@ struct Poly {
       return poly[x - base];
     mint rt = 0;
     vector<mint> lmul(SZ(poly), 1), rmul(SZ(poly), 1);
-    for (int i = 1; i < SZ(poly); ++i)
+    FOR (i, 1, SZ(poly) - 1)
       lmul[i] = lmul[i - 1] * (x - (base + i - 1));
     for (int i = SZ(poly) - 2; i >= 0; --i)
       rmul[i] = rmul[i + 1] * (x - (base + i + 1));
-    for (int i = 0; i < SZ(poly); ++i)
+    FOR (i, 0, SZ(poly) - 1)
       rt += poly[i] * ifac[i] * inegfac[SZ(poly) - 1 - i] * lmul[i] * rmul[i];
     return rt;
   }
@@ -20,7 +21,6 @@ struct Poly {
       return;
     mint nw = get_val(base + SZ(poly));
     poly.pb(nw);
-    for (int i = 1; i < SZ(poly); ++i)
-      poly[i] += poly[i - 1];
+    FOR (i, 1, SZ(poly) - 1) poly[i] += poly[i - 1];
   }
 };

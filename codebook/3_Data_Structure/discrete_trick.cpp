@@ -1,3 +1,4 @@
+#define ALL(v) v.begin(), v.end()
 vector<int> val;
 // build
 sort(ALL(val)), val.erase(unique(ALL(val)), val.end());

@@ -56,8 +56,7 @@ private:
     for (int i = n - 2; i >= 0; i--)
       t[i] = (s[i] == s[i + 1] ? t[i + 1]
                                : s[i] < s[i + 1]);
-    MAGIC(for (int i = 1; i <= n - 1;
-               i++) if (t[i] && !t[i - 1])
+    MAGIC(FOR (i, 1, n - 1) if (t[i] && !t[i - 1])
             sa[--x[s[i]]] = p[q[i] = nn++] = i);
     FOR (i, 0, n - 1)
       if (sa[i] && t[sa[i]] && !t[sa[i] - 1]) {

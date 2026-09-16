@@ -6,7 +6,7 @@ pdd solve(vector<pll> &dots) {
   double Max = 0, Min = INF, deg;
   int n = SZ(dots);
   dots.pb(dots[0]);
-  for (int i = 0, u = 1, r = 1, l = 1; i < n; ++i) {
+  for (int i = 0, u = 1, r = 1, l = 1; i < n; i++) {
     pll nw = vec(i + 1);
     while (cross(nw, vec(u + 1)) > cross(nw, vec(u)))
       u = (u + 1) % n;

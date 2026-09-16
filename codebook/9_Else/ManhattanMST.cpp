@@ -3,19 +3,20 @@ void solve(Point *a, int n) {
         return p.x + p.y < q.x + q.y;
     });
     set<Point> st; // greater<Point::x>
-    for (int i = 0; i < n; ++i) {
-        for (auto it = st.lower_bound(a[i]); it != st.end(); it = st.erase(it)) {
-            if (it -> x - it -> y < a[i].x - a[i].y) break;
-            es.push_back({it -> u, a[i].u, dist(*it, a[i])});
-        }
-        st.insert(a[i]);
+    FOR (i, 0, n - 1) {
+      for (auto it = st.lower_bound(a[i]);
+        it != st.end(); it = st.erase(it)) {
+        if (it->x - it->y < a[i].x - a[i].y) break;
+        es.pb(it->u, a[i].u, dist(*it, a[i]));
+      }
+      st.insert(a[i]);
     }
 }
 void MST(Point *a, int n) {
-    for (int t = 0; t < 2; ++t) {
-        solve(a, n);
-        for (int i = 0; i < n; ++i) swap(a[i].x, a[i].y);
-        solve(a, n);
-        for (int i = 0; i < n; ++i) a[i].x = -a[i].x;
-    }
+  FOR (t, 0, 1) {
+    solve(a, n);
+    FOR (i, 0, n - 1) swap(a[i].x, a[i].y);
+    solve(a, n);
+    FOR (i, 0, n - 1) a[i].x = -a[i].x;
+  }
 }

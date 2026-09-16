@@ -13,9 +13,9 @@ struct bigN:vector<ll>{
     else negative=0;
     for(int i=int(s.size())-1;i>=0;i-=width){
       ll t=0;
-      for(int j=max(0,i-width+1);j<=i;++j)
+      for (int j = max(0, i - width + 1); j <= i; j++)
         t=t*10+s[j]-'0';
-      push_back(t);
+      pb(t);
     }
     trim();
   }
@@ -27,9 +27,9 @@ struct bigN:vector<ll>{
     if(empty())negative=0;
   }
   void carry(int _base=base){
-    for(size_t i=0;i<size();++i){
+    for (size_t i = 0; i < size(); i++) {
       if(at(i)>=0&&at(i)<_base)continue;
-      if(i+1u==size())push_back(0);
+      if (i + 1u == size()) pb(0);
       int r=at(i)%_base;
       if(r<0)r+=_base;
       at(i+1)+=(at(i)-r)/_base,at(i)=r;
@@ -67,7 +67,8 @@ struct bigN:vector<ll>{
     if(b.negative)return *this-(-b);
     bigN res=*this;
     if(b.size()>size())res.resize(b.size());
-    for(size_t i=0;i<b.size();++i)res[i]+=b[i];
+    for (size_t i = 0; i < b.size(); i++)
+      res[i] += b[i];
     return res.carry(),res.trim(),res;
   }
   bigN operator-(const bigN &b)const{
@@ -76,15 +77,16 @@ struct bigN:vector<ll>{
     if(abscmp(b)<0)return -(b-(*this));
     bigN res=*this;
     if(b.size()>size())res.resize(b.size());
-    for(size_t i=0;i<b.size();++i)res[i]-=b[i];
+    for (size_t i = 0; i < b.size(); i++)
+      res[i] -= b[i];
     return res.carry(),res.trim(),res;
   }
   bigN operator*(const bigN &b)const{
     bigN res;
     res.negative=negative!=b.negative;
     res.resize(size()+b.size());
-    for(size_t i=0;i<size();++i)
-      for(size_t j=0;j<b.size();++j)
+    for (size_t i = 0; i < size(); i++)
+      for (size_t j = 0; j < b.size(); j++)
         if((res[i+j]+=at(i)*b[j])>=base){
           res[i+j+1]+=res[i+j]/base;
           res[i+j]%=base;

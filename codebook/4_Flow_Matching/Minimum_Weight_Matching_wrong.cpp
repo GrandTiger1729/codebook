@@ -3,14 +3,14 @@ struct Graph { // 0-base (Perfect Match), n is even
   ll edge[N][N], dis[N];
   void init(int _n) {
     n = _n, tp = 0;
-    for (int i = 0; i < n; ++i) fill_n(edge[i], n, 0);
+    FOR (i, 0, n - 1) fill_n(edge[i], n, 0);
   }
   void add_edge(int u, int v, ll w) {
     edge[u][v] = edge[v][u] = w;
   }
   bool SPFA(int u) {
     stk[tp++] = u, onstk[u] = 1;
-    for (int v = 0; v < n; ++v)
+    FOR (v, 0, n - 1)
       if (!onstk[v] && match[u] != v) {
         int m = match[v];
         if (dis[m] >
@@ -25,12 +25,12 @@ struct Graph { // 0-base (Perfect Match), n is even
     return 0;
   }
   ll solve() { // find a match
-    for (int i = 0; i < n; ++i) match[i] = i ^ 1;
+    FOR (i, 0, n - 1) match[i] = i ^ 1;
     while (1) {
       int found = 0;
       fill_n(dis, n, 0);
       fill_n(onstk, n, 0);
-      for (int i = 0; i < n; ++i)
+      FOR (i, 0, n - 1)
         if (tp = 0, !onstk[i] && SPFA(i))
           for (found = 1; tp >= 2;) {
             int u = stk[--tp];
@@ -40,8 +40,7 @@ struct Graph { // 0-base (Perfect Match), n is even
       if (!found) break;
     }
     ll ret = 0;
-    for (int i = 0; i < n; ++i)
-      ret += edge[i][match[i]];
+    FOR (i, 0, n - 1) ret += edge[i][match[i]];
     return ret >> 1;
   }
 };

@@ -1,3 +1,4 @@
+typedef pair<int, int> pii;
 // cost(i, j): cost of transit from i to j
 // search(i, j): last point when i is better in row i,
 // j, need to check whether cost(i, i) is defined
@@ -7,7 +8,7 @@ void concave1D1D() {
   vector<int> dp(N + 1, 0);
   vector<pii> st; // (idx, right end h_idx)
   st.emplace_back(pii(0, N + 1));
-  for (int j = 1; j <= N; j++) {
+  FOR (j, 1, N) {
     while (st.back().S < j) st.pop_back();
     int i = st.back().F;
     dp[j] = dp[i] + cost(i, j);
@@ -23,7 +24,7 @@ void convex1D1D() {
   vector<int> dp(N + 1, 0);
   deque<pii> dq; // (idx, right end)
   dq.emplace_back(pii(0, N + 1));
-  for (int j = 1; j <= N; j++) {
+  FOR (j, 1, N) {
     while (dq.back().S < j) dq.pop_back();
     int i = dq.back().F;
     dp[j] = dp[i] + cost(i, j);

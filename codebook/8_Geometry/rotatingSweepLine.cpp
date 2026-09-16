@@ -2,8 +2,8 @@ void rotatingSweepLine(vector<pii> &ps) {
   int n = SZ(ps), m = 0;
   vector<int> id(n), pos(n);
   vector<pii> line(n * (n - 1));
-  for (int i = 0; i < n; ++i)
-    for (int j = 0; j < n; ++j)
+  FOR (i, 0, n - 1)
+    FOR (j, 0, n - 1)
       if (i != j) line[m++] = pii(i, j);
   sort(ALL(line), [&](pii a, pii b) {
     return cmp(ps[a.Y] - ps[a.X], ps[b.Y] - ps[b.X]);
@@ -13,8 +13,8 @@ void rotatingSweepLine(vector<pii> &ps) {
     if (ps[a].Y != ps[b].Y) return ps[a].Y < ps[b].Y;
     return ps[a] < ps[b];
   }); // initial order, since (1, 0) is the smallest
-  for (int i = 0; i < n; ++i) pos[id[i]] = i;
-  for (int i = 0; i < m; ++i) {
+  FOR (i, 0, n - 1) pos[id[i]] = i;
+  FOR (i, 0, m - 1) {
     auto l = line[i];
     // do something
     tie(pos[l.X], pos[l.Y], id[pos[l.X]], id[pos[l.Y]]) = make_tuple(pos[l.Y], pos[l.X], l.Y, l.X);

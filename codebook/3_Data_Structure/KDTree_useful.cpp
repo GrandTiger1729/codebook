@@ -5,12 +5,12 @@ public:
     T d[kd];
     inline T dist(const point &x) const {
       T ret = 0;
-      for (size_t i = 0; i < kd; ++i)
+      for (size_t i = 0; i < kd; i++)
         ret += std::abs(d[i] - x.d[i]);
       return ret;
     }
     inline bool operator==(const point &p) {
-      for (size_t i = 0; i < kd; ++i) {
+      for (size_t i = 0; i < kd; i++) {
         if (d[i] != p.d[i]) return 0;
       }
       return 1;
@@ -43,7 +43,7 @@ private:
       const point &x, const point &y) const {
       if (x.d[sort_id] != y.d[sort_id])
         return x.d[sort_id] < y.d[sort_id];
-      for (size_t i = 0; i < kd; ++i) {
+      for (size_t i = 0; i < kd; i++) {
         if (x.d[i] != y.d[i]) return x.d[i] < y.d[i];
       }
       return 0;
@@ -142,7 +142,7 @@ private:
   }
   inline T heuristic(const T h[]) const {
     T ret = 0;
-    for (size_t i = 0; i < kd; ++i) ret += h[i];
+    for (size_t i = 0; i < kd; i++) ret += h[i];
     return ret;
   }
   int qM;
@@ -155,7 +155,7 @@ private:
     if (dist < mndist) {
       pQ.push(std::make_pair(dist, u->pid));
       if ((int)pQ.size() == qM + 1) {
-        mndist = pQ.top().first, pQ.pop();
+        mndist = pQ.top().F, pQ.pop();
       }
     }
     if (x.d[k] < u->pid.d[k]) {
@@ -174,13 +174,13 @@ private:
     node *u, int k, const point &mi, const point &ma) {
     if (!u) return;
     bool is = 1;
-    for (int i = 0; i < kd; ++i)
+    FOR (i, 0, kd - 1)
       if (u->pid.d[i] < mi.d[i] ||
         ma.d[i] < u->pid.d[i]) {
         is = 0;
         break;
       }
-    if (is) in_range.push_back(u->pid);
+    if (is) in_range.pb(u->pid);
     if (mi.d[k] <= u->pid.d[k])
       range(u->l, (k + 1) % kd, mi, ma);
     if (ma.d[k] >= u->pid.d[k])
@@ -196,7 +196,7 @@ public:
   }
   inline void build(int n, const point *p) {
     clear(root), A.resize(maxn = n);
-    for (int i = 0; i < n; ++i) A[i] = new node(p[i]);
+    FOR (i, 0, n - 1) A[i] = new node(p[i]);
     root = build(0, 0, n - 1);
   }
   inline void insert(const point &x) {
@@ -216,7 +216,7 @@ public:
     qM = k;
     T mndist = INF, h[kd] = {};
     nearest(root, 0, x, h, mndist);
-    mndist = pQ.top().first;
+    mndist = pQ.top().F;
     pQ = std::priority_queue<std::pair<T, point>>();
     return mndist; /*???x?k??????*/
   }

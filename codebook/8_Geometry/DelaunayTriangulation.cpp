@@ -32,7 +32,7 @@ struct Tri {
     return !!chd[0] + !!chd[1] + !!chd[2];
   }
   bool contains(pll const& q) const {
-    for (int i = 0; i < 3; ++i)
+    FOR (i, 0, 2)
       if (ori(p[i], p[(i + 1) % 3], q) < 0)
         return 0;
     return 1;
@@ -54,7 +54,7 @@ struct Trig { // Triangulation
     while (1) {
       if (!root->has_chd())
         return root;
-      for (int i = 0; i < 3 && root->chd[i]; ++i)
+      for (int i = 0; i < 3 && root->chd[i]; i++)
         if (root->chd[i]->contains(p)) {
           root = root->chd[i];
           break;
@@ -65,16 +65,14 @@ struct Trig { // Triangulation
   void add_point(Tri* root, pll const& p) {
     Tri* t[3];
     /* split it into three triangles */
-    for (int i = 0; i < 3; ++i)
+    FOR (i, 0, 2)
       t[i] = new(tris++) Tri(root->p[i], root->p[(i + 1) % 3], p);
-    for (int i = 0; i < 3; ++i)
+    FOR (i, 0, 2)
       edge(Edge(t[i], 0), Edge(t[(i + 1) % 3], 1));
-    for (int i = 0; i < 3; ++i)
+    FOR (i, 0, 2)
       edge(Edge(t[i], 2), root->edge[(i + 2) % 3]);
-    for (int i = 0; i < 3; ++i)
-      root->chd[i] = t[i];
-    for (int i = 0; i < 3; ++i)
-      flip(t[i], 2);
+    FOR (i, 0, 2) root->chd[i] = t[i];
+    FOR (i, 0, 2) flip(t[i], 2);
   }
   void flip(Tri* tri, int pi) {
     Tri* trj = tri->edge[pi].tri;
@@ -103,14 +101,13 @@ void go(Tri* now) { // store all tri into triang
   vst.insert(now);
   if (!now->has_chd())
     return triang.pb(now);
-  for (int i = 0; i < now->num_chd(); ++i)
+  for (int i = 0; i < now->num_chd(); i++)
     go(now->chd[i]);
 }
 void build(int n, pll* ps) { // build triangulation
   tris = pool; triang.clear(); vst.clear();
   random_shuffle(ps, ps + n);
   Trig tri; // the triangulation structure
-  for (int i = 0; i < n; ++i)
-    tri.add_point(ps[i]);
+  FOR (i, 0, n - 1) tri.add_point(ps[i]);
   go(tri.the_root);
 }

@@ -3,7 +3,7 @@ struct Binary_Index_Tree {
   int lb(int x) { return x & -x; }
   void init(int _n, int *data) {
     n = _n;
-    for (int i = 1, t; i <= n; ++i) {
+    for (int i = 1, t; i <= n; i++) {
       bit[i] = data[i], lazy[i] = 0, t = i - lb(i);
       for (int j = i - 1; j > t; j -= lb(j))
         bit[i] += bit[j];

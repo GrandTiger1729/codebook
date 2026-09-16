@@ -48,16 +48,16 @@ int cyclic_lcs() {
   strcpy(tmp, a);
   strcat(a, tmp);
   // basic lcs
-  for (int i = 0; i <= 2 * al; i++) {
+  FOR (i, 0, 2 * al) {
     dp[i][0] = 0;
     pred[i][0] = U;
   }
-  for (int j = 0; j <= bl; j++) {
+  FOR (j, 0, bl) {
     dp[0][j] = 0;
     pred[0][j] = L;
   }
-  for (int i = 1; i <= 2 * al; i++) {
-    for (int j = 1; j <= bl; j++) {
+  FOR (i, 1, 2 * al) {
+    FOR (j, 1, bl) {
       if (a[i - 1] == b[j - 1])
         dp[i][j] = dp[i - 1][j - 1] + 1;
       else dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
@@ -68,7 +68,7 @@ int cyclic_lcs() {
   }
   // do cyclic lcs
   int clcs = 0;
-  for (int i = 0; i < al; i++) {
+  FOR (i, 0, al - 1) {
     clcs = max(clcs, lcs_length(i));
     reroot(i + 1);
   }

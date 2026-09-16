@@ -1,15 +1,12 @@
-template<class T, class Info>
-struct min_heap {
-  priority_queue<pair<T, Info>, vector<pair<T, Info>>, greater<pair<T, Info>>> pq;
+template <class T, class Info> // lazy add tag
+struct min_heap { // mergeable
+  using P = pair<T, Info>;
+  priority_queue<P, vector<P>, greater<P>> pq;
   T lazy = 0;
-  void push(pair<T, Info> v) {
-    pq.emplace(v.X - lazy, v.Y);
-  }
-  pair<T, Info> top() {
-    return make_pair(pq.top().X + lazy, pq.top().Y);
-  }
+  void push(P v) { pq.emplace(v.F - lazy, v.S); }
+  P top() { return P(pq.top().F + lazy, pq.top().S); }
   void join(min_heap &rgt) {
-    if (SZ(pq) < SZ(rgt.pq)) {
+    if ((int)pq.size() < (int)rgt.pq.size()) {
       swap(pq, rgt.pq);
       swap(lazy, rgt.lazy);
     }
@@ -18,13 +15,7 @@ struct min_heap {
       rgt.pop();
     }
   }
-  void pop() {
-    pq.pop();
-  }
-  bool empty() {
-    return pq.empty();
-  }
-  void add_lazy(T v) {
-    lazy += v;
-  }
+  void pop() { pq.pop(); }
+  bool empty() { return pq.empty(); }
+  void add_lazy(T v) { lazy += v; }
 };

@@ -1,16 +1,17 @@
 struct BronKerbosch { // 1-base
   int n, a[N], g[N][N];
-  int S, all[N][N], some[N][N], none[N][N];
+  int cnt, all[N][N], some[N][N], none[N][N];
   void init(int _n) {
     n = _n;
-    FOR (i, 1, n) FOR (j, 1, n) g[i][j] = 0;
+    FOR (i, 1, n)
+      FOR (j, 1, n) g[i][j] = 0;
   }
   void add_edge(int u, int v) {
     g[u][v] = g[v][u] = 1;
   }
   void dfs(int d, int an, int sn, int nn) {
-    if (S > 1000) return; // pruning
-    if (sn == 0 && nn == 0) ++S;
+    if (cnt > 1000) return; // pruning
+    if (sn == 0 && nn == 0) ++cnt;
     int u = some[d][0];
     FOR (i, 0, sn - 1) {
       int v = some[d][i];
@@ -18,10 +19,10 @@ struct BronKerbosch { // 1-base
       int tsn = 0, tnn = 0;
       copy_n(all[d], an, all[d + 1]);
       all[d + 1][an] = v;
-      for (int j = 0; j < sn; ++j)
+      FOR (j, 0, sn - 1)
         if (g[v][some[d][j]])
           some[d + 1][tsn++] = some[d][j];
-      for (int j = 0; j < nn; ++j)
+      FOR (j, 0, nn - 1)
         if (g[v][none[d][j]])
           none[d + 1][tnn++] = none[d][j];
       dfs(d + 1, an + 1, tsn, tnn);
@@ -30,7 +31,7 @@ struct BronKerbosch { // 1-base
   }
   int solve() {
     iota(some[0], some[0] + n, 1);
-    S = 0, dfs(0, 0, n, 0);
-    return S;
+    cnt = 0, dfs(0, 0, n, 0);
+    return cnt;
   }
 };

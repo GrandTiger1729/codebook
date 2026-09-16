@@ -36,20 +36,22 @@ struct MinCostCirculation { // 0-base
   }
   void solve(int mxlg) {
     for (int b = mxlg; b >= 0; --b) {
-      for (int i = 0; i < n; ++i)
+      FOR (i, 0, n - 1)
         for (auto &e : G[i])
           e.cap *= 2, e.flow *= 2;
-      for (int i = 0; i < n; ++i)
+      FOR (i, 0, n - 1)
         for (auto &e : G[i])
           if (e.fcap >> b & 1)
             try_edge(e);
     }
   }
   void init(int _n) { n = _n;
-    for (int i = 0; i < n; ++i) G[i].clear();
+    FOR (i, 0, n - 1) G[i].clear();
   }
   void add_edge(ll a, ll b, ll cap, ll cost) {
-    G[a].pb(Edge{a, b, 0, cap, 0, cost, SZ(G[b]) + (a == b)});
-    G[b].pb(Edge{b, a, 0, 0, 0, -cost, SZ(G[a]) - 1});
+    G[a].pb(Edge{a, b, 0, cap, 0, cost,
+      (int)G[b].size() + (a == b)});
+    G[b].pb(Edge{
+      b, a, 0, 0, 0, -cost, (int)G[a].size() - 1});
   }
 } mcmf; // O(VE * ElogC)

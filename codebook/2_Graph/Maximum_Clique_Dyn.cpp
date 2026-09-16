@@ -11,9 +11,10 @@ struct MaxClique { // fast when N <= 100
   void pre_dfs(vector<int> &r, int l, bitset<N> mask) {
     if (l < 4) {
       for (int i : r) d[i] = (G[i] & mask).count();
-      sort(ALL(r), [&](int x, int y) { return d[x] > d[y]; });
+      sort(r.begin(), r.end(),
+        [&](int x, int y) { return d[x] > d[y]; });
     }
-    vector<int> c(SZ(r));
+    vector<int> c((int)r.size());
     int lft = max(ans - q + 1, 1), rgt = 1, tp = 0;
     cs[1].reset(), cs[2].reset();
     for (int p : r) {
@@ -43,7 +44,7 @@ struct MaxClique { // fast when N <= 100
   }
   int solve() {
     vector<int> r(n);
-    ans = q = 0, iota(ALL(r), 0);
+    ans = q = 0, iota(r.begin(), r.end(), 0);
     pre_dfs(r, 0, bitset<N>(string(n, '1')));
     return ans;
   }

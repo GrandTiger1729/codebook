@@ -4,12 +4,12 @@ double rat(pll a, pll b) {
 double polyUnion(vector<vector<pll>> &poly) {
   double res = 0;
   for (auto &p : poly)
-    for (int a = 0; a < SZ(p); ++a) {
+    FOR (a, 0, SZ(p) - 1) {
       pll A = p[a], B = p[(a + 1) % SZ(p)];
       vector<pair<double, int>> segs = {{0, 0}, {1, 0}};
       for (auto &q : poly) {
         if (&p == &q) continue;
-        for (int b = 0; b < SZ(q); ++b) {
+        FOR (b, 0, SZ(q) - 1) {
           pll C = q[b], D = q[(b + 1) % SZ(q)];
           int sc = ori(A, B, C), sd = ori(A, B, D);
           if (sc != sd && min(sc, sd) < 0) {
@@ -25,8 +25,8 @@ double polyUnion(vector<vector<pll>> &poly) {
       sort(ALL(segs));
       for (auto &s : segs) s.X = clamp(s.X, 0.0, 1.0);
       double sum = 0;
-      int cnt = segs[0].second;
-      for (int j = 1; j < SZ(segs); ++j) {
+      int cnt = segs[0].Y;
+      FOR (j, 1, SZ(segs) - 1) {
         if (!cnt) sum += segs[j].X - segs[j - 1].X;
         cnt += segs[j].Y;
       }

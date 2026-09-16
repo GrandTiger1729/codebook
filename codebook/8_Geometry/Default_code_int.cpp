@@ -1,3 +1,9 @@
+#define X first
+#define Y second
+#define SZ(a) ((int)a.size())
+#define ALL(v) v.begin(), v.end()
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
 typedef pair<double, double> pdd;
 typedef pair<pll, pll> Line;
 pll operator+(pll a, pll b)

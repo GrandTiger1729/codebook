@@ -5,8 +5,7 @@ struct dominator_tree { // 1-base
   vector<int> tree[N]; // dominator_tree
   void init(int _n) {
     n = _n;
-    for (int i = 1; i <= n; ++i)
-      G[i].clear(), rG[i].clear();
+    FOR (i, 1, n) G[i].clear(), rG[i].clear();
   }
   void add_edge(int u, int v) {
     G[u].pb(v), rG[v].pb(u);

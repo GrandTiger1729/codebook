@@ -13,10 +13,10 @@ struct Delaunay { // 0-base
   pll p[N];
   void init(int _n, pll _p[]) {
     n = _n, iota(oidx, oidx + n, 0);
-    for (int i = 0; i < n; ++i) head[i].clear();
+    FOR (i, 0, n - 1) head[i].clear();
     sort(oidx, oidx + n, [&](int a, int b) 
     { return _p[a] < _p[b]; });
-    for (int i = 0; i < n; ++i) p[i] = _p[oidx[i]];
+    FOR (i, 0, n - 1) p[i] = _p[oidx[i]];
     divide(0, n - 1);
   }
   void addEdge(int u, int v) {
@@ -44,10 +44,12 @@ struct Delaunay { // 0-base
     while (true) {
       pll pt[2] = {p[nw[0]], p[nw[1]]};
       int ch = -1, sd = 0;
-      for (int t = 0; t < 2; ++t)
-          for (auto it : head[nw[t]])
-              if (ori(pt[0], pt[1], p[it.id]) > 0 && (ch == -1 || in_cc({pt[0], pt[1], p[ch]}, p[it.id])))
-                  ch = it.id, sd = t;
+      FOR (t, 0, 1)
+        for (auto it : head[nw[t]])
+          if (ori(pt[0], pt[1], p[it.id]) > 0 &&
+            (ch == -1 ||
+              in_cc({pt[0], pt[1], p[ch]}, p[it.id])))
+            ch = it.id, sd = t;
       if (ch == -1) break; // upper common tangent
       for (auto it = head[nw[sd]].begin(); it != head[nw[sd]].end(); )
         if (seg_strict_intersect(pt[sd], p[it->id], pt[sd ^ 1], p[ch]))

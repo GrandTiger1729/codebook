@@ -12,18 +12,18 @@ struct Maxflow {
   void init(int x) {
     tot = x + 2;
     s = x + 1, t = x + 2;
-    for (int i = 0; i <= tot; i++) {
+    FOR (i, 0, tot) {
       G[i].clear();
       iter[i] = d[i] = gap[i] = 0;
     }
   }
   void addEdge(int u, int v, int c) {
-    G[u].push_back(Edge(v, c, SZ(G[v])));
-    G[v].push_back(Edge(u, 0, SZ(G[u]) - 1));
+    G[u].pb(Edge(v, c, (int)G[v].size()));
+    G[v].pb(Edge(u, 0, (int)G[u].size() - 1));
   }
   int dfs(int p, int flow) {
     if (p == t) return flow;
-    for (int &i = iter[p]; i < SZ(G[p]); i++) {
+    for (int &i = iter[p]; i < (int)G[p].size(); i++) {
       Edge &e = G[p][i];
       if (e.c > 0 && d[p] == d[e.v] + 1) {
         int f = dfs(e.v, min(flow, e.c));

@@ -24,19 +24,18 @@ struct CircleCover {
   }
   void solve(){
     fill_n(Area, C + 2, 0);
-    for(int i = 0; i < C; ++i)
-      for(int j = 0; j < C; ++j)
-        overlap[i][j] = contain(i, j);
-    for(int i = 0; i < C; ++i)
-      for(int j = 0; j < C; ++j) 
+    FOR (i, 0, C - 1)
+      FOR (j, 0, C - 1) overlap[i][j] = contain(i, j);
+    FOR (i, 0, C - 1)
+      FOR (j, 0, C - 1)
         g[i][j] = !(overlap[i][j] || overlap[j][i] ||
             disjuct(c[i], c[j], -1));
-    for(int i = 0; i < C; ++i){
+    FOR (i, 0, C - 1) {
       int E = 0, cnt = 1;
-      for(int j = 0; j < C; ++j)
+      FOR (j, 0, C - 1)
         if(j != i && overlap[j][i])
           ++cnt;
-      for(int j = 0; j < C; ++j)
+      FOR (j, 0, C - 1)
         if(i != j && g[i][j]) {
           pdd aa, bb;
           CCinter(c[i], c[j], aa, bb);
@@ -49,7 +48,7 @@ struct CircleCover {
       else{
         sort(eve, eve + E);
         eve[E] = eve[0];
-        for(int j = 0; j < E; ++j){
+        FOR (j, 0, E - 1) {
           cnt += eve[j].add; 
           Area[cnt] += cross(eve[j].p, eve[j + 1].p) * .5;
           double theta = eve[j + 1].ang - eve[j].ang;

@@ -1,7 +1,7 @@
 typedef unsigned long long ull;
 ull seed;
 ull shift(ull x) {
-  x ^= x << 13; 
+  x ^= x << 13;
   x ^= x >> 7;
   x ^= x << 17;
   return x;

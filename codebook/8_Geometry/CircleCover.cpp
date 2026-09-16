@@ -1,6 +1,6 @@
 const int N = 1021;
 struct CircleCover {
-  int C; 
+  int C;
   Cir c[N];
   bool g[N][N], overlap[N][N];
   // Area[i] : area covered by at least i circles
@@ -49,7 +49,7 @@ struct CircleCover {
         sort(eve, eve + E);
         eve[E] = eve[0];
         FOR (j, 0, E - 1) {
-          cnt += eve[j].add; 
+          cnt += eve[j].add;
           Area[cnt] += cross(eve[j].p, eve[j + 1].p) * .5;
           double theta = eve[j + 1].ang - eve[j].ang;
           if (theta < 0) theta += 2. * pi;

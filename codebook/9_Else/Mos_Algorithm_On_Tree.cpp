@@ -1,6 +1,6 @@
 /*
 Mo's Algorithm On Tree
-Preprocess: 
+Preprocess:
 1) LCA
 2) dfs with in[u] = dft++, out[u] = dft++
 3) ord[in[u]] = ord[out[u]] = u

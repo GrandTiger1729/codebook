@@ -6,7 +6,7 @@ void all_lcs(string s, string t) { // 0-base
     FOR (c, 0, (int)t.size() - 1)
       if (s[a] == t[c] || h[c] < v)
         swap(h[c], v);
-    // LCS(s[0, a], t[b, c]) = 
+    // LCS(s[0, a], t[b, c]) =
     // c - b + 1 - sum([h[i] >= b] | i <= c)
     // h[i] might become -1 !!
   }

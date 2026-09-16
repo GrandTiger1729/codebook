@@ -1,6 +1,6 @@
 struct MinCostCirculation { // 0-base
   struct Edge {
-    ll from, to, cap, fcap, flow, cost, rev; 
+    ll from, to, cap, fcap, flow, cost, rev;
   } *past[N];
   vector<Edge> G[N];
   ll dis[N], inq[N], n;

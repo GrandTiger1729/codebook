@@ -54,12 +54,12 @@ double get_volume() {
   return fabs(ans / 6);
 }
 double get_dis(Point p, Face f) {
-  Point p1 = P[f.a], p2 = P[f.b], p3 = P[f.c];                    
-  double a = (p2.y - p1.y) * (p3.z - p1.z) - (p2.z - p1.z) * (p3.y - p1.y); 
-  double b = (p2.z - p1.z) * (p3.x - p1.x) - (p2.x - p1.x) * (p3.z - p1.z); 
-  double c = (p2.x - p1.x) * (p3.y - p1.y) - (p2.y - p1.y) * (p3.x - p1.x); 
-  double d = 0 - (a * p1.x + b * p1.y + c * p1.z); 
-  return fabs(a * p.x + b * p.y + c * p.z + d) / sqrt(a * a + b * b + c * c);                    
+  Point p1 = P[f.a], p2 = P[f.b], p3 = P[f.c];
+  double a = (p2.y - p1.y) * (p3.z - p1.z) - (p2.z - p1.z) * (p3.y - p1.y);
+  double b = (p2.z - p1.z) * (p3.x - p1.x) - (p2.x - p1.x) * (p3.z - p1.z);
+  double c = (p2.x - p1.x) * (p3.y - p1.y) - (p2.y - p1.y) * (p3.x - p1.x);
+  double d = 0 - (a * p1.x + b * p1.y + c * p1.z);
+  return fabs(a * p.x + b * p.y + c * p.z + d) / sqrt(a * a + b * b + c * c);
 }
 };
 // n^2 delaunay: facets with negative z normal of

@@ -24,7 +24,7 @@ struct Matrix {
     }
     rt = (rt & 1) ? P - 1 : 1;
     FOR (i, 0, n - 1) rt = rt * M[i][i] % P;
-    return rt; 
+    return rt;
     // round(rt) if using double to cal. int. det
   }
 };

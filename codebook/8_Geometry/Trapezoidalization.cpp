@@ -5,7 +5,7 @@ struct SweepLine {
     bool operator()(int a, int b) const {
       if (abs(swp.get_y(a) - swp.get_y(b)) <= swp.eps)
         return swp.slope_cmp(a, b);
-      return swp.get_y(a) + swp.eps < swp.get_y(b); 
+      return swp.get_y(a) + swp.eps < swp.get_y(b);
     }
     const SweepLine &swp;
   } _cmp;
@@ -28,7 +28,7 @@ struct SweepLine {
   }
   void insert(int idx) {
     its[idx] = sweep.insert(idx);
-    if (its[idx] != sweep.begin()) 
+    if (its[idx] != sweep.begin())
       update_event(*prev(its[idx]));
     update_event(idx);
     event.emplace(base[idx].Y.X, idx + 2 * SZ(base));
@@ -41,7 +41,7 @@ struct SweepLine {
       update_event(*prev(p));
   }
   void update_event(int idx) {
-    if (eits[idx] != event.end())  
+    if (eits[idx] != event.end())
       event.erase(eits[idx]);
     eits[idx] = event.end();
     auto nxt = next(its[idx]);
@@ -82,7 +82,7 @@ struct SweepLine {
       event.erase(event.begin());
       if (s == 2) erase(idx);
       else if (s == 1) swp(idx);
-      else insert(idx); 
+      else insert(idx);
     }
     curTime = t;
   }
@@ -92,7 +92,7 @@ struct SweepLine {
   }
   int lower_bound(T y) {
     curQ = y;
-    auto p = sweep.lower_bound(-1); 
+    auto p = sweep.lower_bound(-1);
     if (p == sweep.end()) return -1;
     return *p;
   }

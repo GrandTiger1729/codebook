@@ -186,8 +186,7 @@ struct Poly : vector<int> { // coefficients in [0, P)
     FOR (i, 0, m - 1) X[i] = (ll)X[i] * f[i] % P;
     return X;
   }
-  // ret[i] = \sum_j w_j [x^j] (*this)^i, i = 0..m
-  // (*this)[0] == 0, 2^17/3.2s
+  // ret[i] = \sum_j w_j [x^j] f^i, f[0] == 0, 2^17/3.2s
   Poly PowerProj(vector<int> w, int m) const {
     int k = 1, nn = 1;
     while (nn < n()) nn <<= 1;
@@ -224,9 +223,21 @@ struct Poly : vector<int> { // coefficients in [0, P)
     Poly C(k + 1), W(Poly {1}, k), M = {0, 1};
     FOR (i, 1, k) C[k - i] = coef[i] ? P - coef[i] : 0;
     C[k] = 1;
+    // C is fixed: invert reverse(C) once, not inside
+    // each DivMod. max(2, k) >= every quotient length
+    Poly Ci = Poly(C).irev().isz(max(2, k)).Inv();
+    auto rem = [&](Poly X) -> Poly { // X mod C, X.n() <= 2k - 1
+      if (X.n() < C.n()) return X;
+      const int m = X.n() - C.n() + 1;
+      Poly Q = Poly(X).irev().isz(m).Mul(Poly(Ci, m)).isz(m).irev();
+      Poly R = C.Mul(Q);
+      FOR (i, 0, X.n() - 1)
+        if ((X[i] -= R[i]) < 0) X[i] += P;
+      return X.isz(k);
+    };
     while (n) {
-      if (n % 2) W = W.Mul(M).DivMod(C).S;
-      n /= 2, M = M.Mul(M).DivMod(C).S;
+      if (n % 2) W = rem(W.Mul(M));
+      n /= 2, M = rem(M.Mul(M));
     }
     ll ret = 0;
     FOR (i, 0, k - 1) ret = (ret + (ll)W[i] * a[i]) % P;

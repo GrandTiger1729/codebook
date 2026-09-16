@@ -1,8 +1,9 @@
-struct Splay { // xor-sum
+struct Splay { // path sum; swap + for ^ to get xor
   static Splay nil;
   Splay *ch[2], *f;
-  int val, sum, rev, size;
-  Splay (int _val = 0) : val(_val), sum(_val), rev(0), size(1)
+  int rev, size;
+  ll val, sum;
+  Splay (ll _val = 0) : rev(0), size(1), val(_val), sum(_val)
   { f = ch[0] = ch[1] = &nil; }
   bool isr()
   { return f->ch[0] != this && f->ch[1] != this; }
@@ -24,7 +25,7 @@ struct Splay { // xor-sum
   void pull() {
     // take care of the nil!
     size = ch[0]->size + ch[1]->size + 1;
-    sum = ch[0]->sum ^ ch[1]->sum ^ val;
+    sum = ch[0]->sum + ch[1]->sum + val;
     if (ch[0] != &nil) ch[0]->f = this;
     if (ch[1] != &nil) ch[1]->f = this;
   }
@@ -92,10 +93,10 @@ Splay* lca(Splay *x, Splay *y) {
   if (y->f == nil) return y;
   return y->f;
 }
-void change(Splay *x, int val) {
+void change(Splay *x, ll val) {
   splay(x), x->val = val, x->pull();
 }
-int query(Splay *x, Splay *y) {
+ll query(Splay *x, Splay *y) {
   split(x, y);
   return y->sum;
 }

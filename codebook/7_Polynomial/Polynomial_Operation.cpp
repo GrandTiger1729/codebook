@@ -4,9 +4,8 @@ Poly cut(const Poly &a, int m) { // first m coefs
   Poly r(a.begin(), a.begin() + min(m, SZ(a)));
   return r.resize(m), r;
 }
-Poly rev(Poly a) {
-  reverse(a.begin(), a.end());
-  return a;
+Poly rev(const Poly &a) {
+  return Poly(a.rbegin(), a.rend());
 }
 Poly Mul(Poly a, Poly b) {
   int m = SZ(a) + SZ(b) - 1, n = 1;
@@ -29,7 +28,7 @@ Poly Inverse(Poly a) { // a[0] != 0, 1e5/50ms
   ntt(x, true);
   return x.resize(n), x;
 }
-Poly sqrtQR(Poly a) { // a[0] is a QR, 1e5/150ms
+Poly sqrtQR(const Poly &a) { // a[0] is a QR, 1e5/150ms
   if (SZ(a) == 1) return {QuadraticResidue(a[0], MOD)};
   int n = SZ(a);
   Poly x = cut(sqrtQR(cut(a, (n + 1) / 2)), n);
@@ -38,7 +37,7 @@ Poly sqrtQR(Poly a) { // a[0] is a QR, 1e5/150ms
     x[i] = mul(add(x[i], y[i]), (MOD + 1) / 2);
   return x;
 }
-Poly Sqrt(Poly a) { // {} when no square root exists
+Poly Sqrt(const Poly &a) { // {} when no square root exists
   int n = SZ(a), z = 0;
   while (z < n && !a[z]) z++;
   if (z == n) return Poly(n);
@@ -58,21 +57,21 @@ pair<Poly, Poly> Divide(Poly a, Poly b) { // b.back() != 0
   FOR (i, 0, SZ(r) - 1) r[i] = sub(a[i], t[i]);
   return {q, r};
 }
-Poly Derivative(Poly a) {
+Poly Derivative(const Poly &a) {
   Poly r(max(1, SZ(a) - 1));
   FOR (i, 0, SZ(a) - 2) r[i] = mul(i + 1, a[i + 1]);
   return r;
 }
-Poly Integral(Poly a) {
+Poly Integral(const Poly &a) {
   Poly r(SZ(a) + 1);
   FOR (i, 0, SZ(a) - 1) r[i + 1] = mul(inv(i + 1), a[i]);
   return r;
 }
-Poly Ln(Poly a) { // a[0] == 1, 1e5/95ms
+Poly Ln(const Poly &a) { // a[0] == 1, 1e5/95ms
   return cut(Integral(Mul(Derivative(a), Inverse(a))),
     SZ(a));
 }
-Poly Exp(Poly a) { // a[0] == 0, 1e5/240ms
+Poly Exp(const Poly &a) { // a[0] == 0, 1e5/240ms
   int n = SZ(a);
   if (n == 1) return {1};
   Poly x = cut(Exp(cut(a, (n + 1) / 2)), n), y = Ln(x);
@@ -81,7 +80,7 @@ Poly Exp(Poly a) { // a[0] == 0, 1e5/240ms
   return cut(Mul(x, y), n);
 }
 // M := MOD(MOD - 1). If k >= M, k := k % M + M.
-Poly PolyPow(Poly a, ll k) { // 1e5/340ms
+Poly PolyPow(const Poly &a, ll k) { // 1e5/340ms
   int n = SZ(a), z = 0;
   while (z < n && !a[z]) z++;
   if (z * min(k, (ll)n) >= n) return Poly(n);
@@ -95,7 +94,7 @@ Poly PolyPow(Poly a, ll k) { // 1e5/340ms
   reverse(x.begin(), x.end()), x.resize(n);
   return reverse(x.begin(), x.end()), x;
 }
-Poly tmul(Poly a, int m, Poly b) { // middle product
+Poly tmul(const Poly &a, int m, const Poly &b) { // mid
   Poly y = cut(Mul(a, b), SZ(a) + m - 1);
   return Poly(y.begin() + SZ(a) - 1, y.end());
 }

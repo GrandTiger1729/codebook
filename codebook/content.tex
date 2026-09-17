@@ -115,11 +115,11 @@
 \section{Polynomial}
 \inputcode{Fast Fourier Transform}{7_Polynomial/Fast_Fourier_Transform.cpp} % test by Lib-Checker Convolution mod 1e9+7 (through FFT Mod)
 \inputcode{FFT Arbitrary Mod}{7_Polynomial/Fast_Fourier_Transform_Mod.cpp} % test by Lib-Checker Convolution mod 1e9+7
-\inputcode{Number Theory Transform*}{7_Polynomial/Number_Theory_Transform.cpp} % self-contained now (add/sub/mul/pw/inv); test by Lib-Checker Convolution
+\inputcode{Number Theory Transform*}{7_Polynomial/Number_Theory_Transform.cpp} % defines MOD/RT/MAXN, add/sub/mul/pw/inv and the global ntt; test by Lib-Checker Convolution
 \subsection{NTT Primes}
 \input{7_Polynomial/NTTprime.tex}
 \inputcode{Fast Walsh Transform*}{7_Polynomial/Fast_Walsh_Transform.cpp} % test by luogu P6097, local brute force (2000 subset convolutions under ASan/UBSan)
-\inputcode{Polynomial Operation}{7_Polynomial/Polynomial_Operation.cpp} % test by Lib-Checker Inv/Exp/Log/Pow/Sqrt of FPS, Polynomial Taylor Shift, Shift of Sampling Points, Kth Term of Linearly Recurrent Sequence; PowerProj by local brute force
+\inputcode{Polynomial Operation}{7_Polynomial/Polynomial_Operation.cpp} % needs NTT; test by Lib-Checker Inv/Exp/Log/Pow/Sqrt of FPS, Polynomial Taylor Shift, Shift of Sampling Points, Kth Term of Linearly Recurrent Sequence; PowerProj and Evaluate/Interpolate by local brute force
 \inputcode{Value Polynomial}{7_Polynomial/Value_Poly.cpp}
 \subsection{Newton's Method}
 \input{7_Polynomial/Newton.tex}

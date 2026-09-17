@@ -15,6 +15,8 @@ struct fraction {
   { return fraction(n * b.n, d * b.d); }
   fraction operator/(const fraction &b) const
   { return fraction(n * b.d, d * b.n); }
+  bool operator==(const fraction &b) const
+  { return n == b.n && d == b.d; } // always reduced
   void print() {
     cout << n;
     if (d != 1) cout << "/" << d;

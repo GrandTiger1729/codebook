@@ -1,6 +1,7 @@
+template <typename T> // T: + - * / and == T()
 struct matrix { // m variables, n equations
   int n, m;
-  fraction M[MAXN][MAXN + 1], sol[MAXN + 1],
+  T M[MAXN][MAXN + 1], sol[MAXN + 1],
     basis[MAXN][MAXN + 1];
   bool with_basis = true;
   int rank = -1;
@@ -9,11 +10,11 @@ struct matrix { // m variables, n equations
                 // solution space
     FOR (i, 0, n - 1) {
       int piv = 0;
-      while (piv < m && !M[i][piv].n) ++piv;
+      while (piv < m && M[i][piv] == T()) piv++;
       if (piv == m) continue;
       FOR (j, 0, n - 1) {
         if (i == j) continue;
-        fraction tmp = -M[j][piv] / M[i][piv];
+        T tmp = -M[j][piv] / M[i][piv];
         FOR (k, 0, m)
           M[j][k] = tmp * M[i][k] + M[j][k];
       }
@@ -21,8 +22,9 @@ struct matrix { // m variables, n equations
     rank = m;
     FOR (i, 0, n - 1) {
       int piv = 0;
-      while (piv < m && !M[i][piv].n) ++piv;
-      if (piv == m && M[i][m].n) return rank = -1;
+      while (piv < m && M[i][piv] == T()) piv++;
+      if (piv == m && !(M[i][m] == T()))
+        return rank = -1;
       else if (piv < m) {
         --rank;
         if (with_basis) {
@@ -38,7 +40,7 @@ struct matrix { // m variables, n equations
     if (with_basis) {
       FOR (i, 0, n - 1) {
         int piv = 0;
-        while (piv < m && !M[i][piv].n) ++piv;
+        while (piv < m && M[i][piv] == T()) piv++;
         for (int j = 0, k = 0; j < m; j++) {
           if (!fixed[j]) basis[k++][piv] = -M[i][j];
         }

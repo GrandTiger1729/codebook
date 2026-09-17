@@ -1,6 +1,9 @@
 #define SZ(a) ((int)a.size())
 typedef vector<int> Poly; // needs NTT, coefs in [0, MOD)
-Poly cut(Poly a, int m) { return a.resize(m), a; }
+Poly cut(const Poly &a, int m) { // first m coefs
+  Poly r(a.begin(), a.begin() + min(m, SZ(a)));
+  return r.resize(m), r;
+}
 Poly rev(Poly a) {
   reverse(a.begin(), a.end());
   return a;
@@ -19,12 +22,12 @@ Poly Inverse(Poly a) { // a[0] != 0, 1e5/50ms
   int n = SZ(a), m = 1;
   while (m < n * 2) m <<= 1;
   Poly x = cut(Inverse(cut(a, (n + 1) / 2)), m);
-  Poly y = cut(a, m);
-  ntt(x), ntt(y);
+  a.resize(m);
+  ntt(x), ntt(a);
   FOR (i, 0, m - 1)
-    x[i] = mul(x[i], sub(2, mul(x[i], y[i])));
+    x[i] = mul(x[i], sub(2, mul(x[i], a[i])));
   ntt(x, true);
-  return cut(x, n);
+  return x.resize(n), x;
 }
 Poly sqrtQR(Poly a) { // a[0] is a QR, 1e5/150ms
   if (SZ(a) == 1) return {QuadraticResidue(a[0], MOD)};
@@ -47,8 +50,10 @@ Poly Sqrt(Poly a) { // {} when no square root exists
 pair<Poly, Poly> Divide(Poly a, Poly b) { // b.back() != 0
   int n = SZ(a), m = SZ(b), k = n - m + 1;
   if (n < m) return {{0}, a};
-  Poly q = cut(Mul(cut(rev(a), k), Inverse(cut(rev(b), k))), k);
-  q = rev(q);
+  Poly ra(a.rbegin(), a.rend()), rb(b.rbegin(), b.rend());
+  ra.resize(k), rb.resize(k);
+  Poly q = cut(Mul(ra, Inverse(rb)), k);
+  reverse(q.begin(), q.end());
   Poly t = Mul(b, q), r(max(1, m - 1));
   FOR (i, 0, SZ(r) - 1) r[i] = sub(a[i], t[i]);
   return {q, r};
@@ -87,7 +92,8 @@ Poly PolyPow(Poly a, ll k) { // 1e5/340ms
   FOR (i, 0, SZ(x) - 1) x[i] = mul(x[i], k % MOD);
   x = Exp(x);
   FOR (i, 0, SZ(x) - 1) x[i] = mul(x[i], c);
-  return rev(cut(rev(x), n));
+  reverse(x.begin(), x.end()), x.resize(n);
+  return reverse(x.begin(), x.end()), x;
 }
 Poly tmul(Poly a, int m, Poly b) { // middle product
   Poly y = cut(Mul(a, b), SZ(a) + m - 1);
@@ -148,7 +154,9 @@ Poly TaylorShift(Poly a, ll c) { // a(x) -> a(x + c)
     a[i] = mul(a[i], f[i]);
     b[i] = mul(g[i], w), w = mul(w, d);
   }
-  a = rev(cut(Mul(rev(a), b), n));
+  reverse(a.begin(), a.end());
+  a = cut(Mul(a, b), n);
+  reverse(a.begin(), a.end());
   FOR (i, 0, n - 1) a[i] = mul(a[i], g[i]);
   return a;
 }
@@ -163,12 +171,13 @@ vector<int> SamplingShift(Poly a, ll c, int m) {
   }
   a = cut(Mul(a, b), k);
   FOR (i, 0, k - 1) a[i] = mul(a[i], f[i]);
-  a = rev(a);
+  reverse(a.begin(), a.end());
   FOR (i, 0, k - 1) {
     b[i] = mul(g[i], w);
     w = mul(w, ((c - i) % MOD + MOD) % MOD);
   }
-  a = rev(cut(Mul(a, b), k));
+  a = cut(Mul(a, b), k);
+  reverse(a.begin(), a.end());
   FOR (i, 0, k - 1) a[i] = mul(a[i], g[i]);
   a.resize(m), b.resize(m);
   FOR (i, 0, m - 1) b[i] = g[i];
@@ -181,7 +190,8 @@ Poly PowerProj(vector<int> w, Poly f, int m) {
   int k = 1, nn = 1;
   while (nn < SZ(f)) nn <<= 1;
   const int n2 = nn * 2;
-  f = cut(f, nn), w.resize(nn), w = rev(w);
+  f.resize(nn), w.resize(nn);
+  reverse(w.begin(), w.end());
   Poly p(n2), q(n2);
   FOR (i, 0, nn - 1) p[i] = w[i], q[i] = sub(0, f[i]);
   while (nn > 1) {
@@ -204,7 +214,8 @@ Poly PowerProj(vector<int> w, Poly f, int m) {
   }
   Poly ret(k);
   FOR (i, 0, k - 1) ret[i] = p[i * 2];
-  return cut(rev(ret), m + 1);
+  reverse(ret.begin(), ret.end());
+  return ret.resize(m + 1), ret;
 }
 // a_n = \sum_{j=1}^{k} c_j a_(n-j), c is 1-based
 int LinearRecursion(const Poly &a, const Poly &c, ll n) {
@@ -221,7 +232,7 @@ int LinearRecursion(const Poly &a, const Poly &c, ll n) {
     Poly q = rev(cut(Mul(cut(rev(x), m), cut(Ci, m)), m));
     Poly t = Mul(C, q);
     FOR (i, 0, SZ(x) - 1) x[i] = sub(x[i], t[i]);
-    return cut(x, k);
+    return x.resize(k), x;
   };
   while (n) {
     if (n % 2) W = rem(Mul(W, M));

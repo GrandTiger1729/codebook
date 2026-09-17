@@ -180,14 +180,14 @@ Poly TaylorShift(Poly a, int c) {
   FOR (i, 0, n - 1)
     b[i] = mul(ifac[i], w), w = mul(w, c);
   a = Mul(a, b, n), reverse(a.begin(), a.end());
-  FOR (i, 0, n - 1) a[i] = mul(a[i],ifac[i]);
+  FOR (i, 0, n - 1) a[i] = mul(a[i], ifac[i]);
   return a;
 } // 3a3763
 vector<int> SamplingShift(vector<int> a, int c, int m){
   // given f(0), f(1), ..., f(n - 1)
   // return f(c), f(c + 1), ..., f(c + m - 1)
   int n = SZ(a); // 4d649d
-  FOR (i, 0, n - 1) a[i] = mul(a[i],ifac[i]);
+  FOR (i, 0, n - 1) a[i] = mul(a[i], ifac[i]);
   Poly b(n);
   FOR (i, 0, n - 1) {
     b[i] = ifac[i];
@@ -201,7 +201,7 @@ vector<int> SamplingShift(vector<int> a, int c, int m){
     b[i] = mul(ifac[i], w), w = mul(w, sub(c, i));
   a = Mul(a, b, n);
   reverse(a.begin(), a.end());
-  FOR (i, 0, n - 1) a[i] = mul(a[i],ifac[i]);
+  FOR (i, 0, n - 1) a[i] = mul(a[i], ifac[i]);
   a.resize(m), b.resize(m);
   FOR (i, 0, m - 1) b[i] = ifac[i];
   a = Mul(a, b, m);

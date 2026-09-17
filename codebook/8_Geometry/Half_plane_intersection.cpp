@@ -5,7 +5,7 @@ bool isin(Line l0, Line l1, Line l2) {
   auto [a02X, a02Y] = area_pair(l0, l2);
   auto [a12X, a12Y] = area_pair(l1, l2);
   if (a12X - a12Y < 0) a12X *= -1, a12Y *= -1;
-  return (__int128) a02Y * a12X - (__int128) a02X * a12Y > 0;
+  return (__int128)a02Y * a12X - (__int128)a02X * a12Y > 0;
 }
 /* Having solution, check size > 2 */
 /* --^-- Line.X --^-- Line.Y --^-- */

@@ -35,20 +35,4 @@ auto sais(const auto &s) {
   for (auto x = c; int y : nsa | views::reverse)
     y = lms[y], sa[--x[s[y]]] = y;
   return induce(), sa;
-}
-// sa[i]: sa[i]-th suffix is the i-th lexicographically smallest suffix.
-// hi[i]: LCP of suffix sa[i] and suffix sa[i - 1].
-struct Suffix { // 0-based
-  int n; vector<int> sa, hi, ra;
-  Suffix(const auto &_s, int _n) : n(_n), hi(n), ra(n) {
-    vector<int> s(n + 1); // s[n] = 0;
-    copy_n(begin(_s), n, begin(s)); // _s shouldn't contain 0
-    sa = sais(s); sa.erase(sa.begin());
-    for (int i = 0; i < n; i++) ra[sa[i]] = i;
-    for (int i = 0, h = 0; i < n; i++) {
-      if (!ra[i]) { h = 0; continue; }
-      for (int j = sa[ra[i] - 1]; max(i, j) + h < n && s[i + h] == s[j + h];) ++h;
-      hi[ra[i]] = h ? h-- : 0;
-    }
-  }
-};
+} // return with one leading padding

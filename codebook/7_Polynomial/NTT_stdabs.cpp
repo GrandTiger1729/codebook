@@ -1,33 +1,8 @@
 #define SZ(a) ((int)a.size())
 #define ALL(v) v.begin(), v.end()
-const int mod = 998244353, G = 3;
-const int N = 1 << 20; // N must be 2^k
-int add(int a, int b) {
-  a += b;
-  if (a >= mod) a -= mod;
-  return a;
-}
-int sub(int a, int b) {
-  a -= b;
-  if (a < 0) a += mod;
-  return a;
-}
-int mul(int a, int b) { return 1ll * a * b % mod; }
-int Pow(int a, ll b) { // b is ll: PolyPow passes k
-  int r = 1;
-  for (; b; b >>= 1, a = mul(a, a))
-    if (b & 1) r = mul(r, a);
-  return r;
-}
-int fac[N], facp[N]; // build() before TaylorShift or
-void build() { // SamplingShift
-  fac[0] = 1;
-  FOR (i, 1, N - 1) fac[i] = mul(fac[i - 1], i);
-  facp[N - 1] = Pow(fac[N - 1], mod - 2);
-  for (int i = N - 1; i; i--)
-    facp[i - 1] = mul(facp[i], i);
-}
-// mul, add, sub, Pow
+// needs mod, G (a primitive root), N = 2^k, and
+// add, sub, mul, Pow -- Pow's exponent must be ll,
+// PolyPow passes k. Operation wants fac[], ifac[] too
 struct NTT {
   int w[N];
   NTT() {

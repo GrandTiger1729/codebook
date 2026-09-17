@@ -22,23 +22,23 @@ struct Poly : vector<int> { // coefficients in [0, P)
     int m = 1;
     while (m < n() + rhs.n() - 1) m <<= 1;
     Poly X(*this, m), Y(rhs, m);
-    ntt(X.data(), m), ntt(Y.data(), m);
+    ntt(X), ntt(Y);
     FOR (i, 0, m - 1) X[i] = (ll)X[i] * Y[i] % P;
-    ntt(X.data(), m, true);
+    ntt(X, true);
     return X.isz(n() + rhs.n() - 1);
   }
   Poly Inv() const { // (*this)[0] != 0, 1e5/55ms
-    if (n() == 1) return {ntt.minv((*this)[0])};
+    if (n() == 1) return {ntt.inv((*this)[0])};
     int m = 1;
     while (m < n() * 2) m <<= 1;
     Poly Xi = Poly(*this, (n() + 1) / 2).Inv().isz(m);
     Poly Y(*this, m);
-    ntt(Xi.data(), m), ntt(Y.data(), m);
+    ntt(Xi), ntt(Y);
     FOR (i, 0, m - 1) {
       ll t = (2 - (ll)Xi[i] * Y[i]) % P;
       if ((Xi[i] = t * Xi[i] % P) < 0) Xi[i] += P;
     }
-    ntt(Xi.data(), m, true);
+    ntt(Xi, true);
     return Xi.isz(n());
   }
   Poly _sqrt() const { // (*this)[0] is a QR, 1e5/145ms
@@ -77,7 +77,7 @@ struct Poly : vector<int> { // coefficients in [0, P)
   Poly Sx() const {
     Poly ret(n() + 1);
     FOR (i, 0, n() - 1)
-      ret[i + 1] = (ll)ntt.minv(i + 1) * (*this)[i] % P;
+      ret[i + 1] = (ll)ntt.inv(i + 1) * (*this)[i] % P;
     return ret;
   }
   Poly _tmul(int nn, const Poly &rhs) const {
@@ -114,7 +114,7 @@ struct Poly : vector<int> { // coefficients in [0, P)
     const int m = (int)x.size();
     vector<Poly> up = _tree1(x), down(m * 2);
     vector<int> z = up[1].Dx()._eval(x, up);
-    FOR (i, 0, m - 1) z[i] = (ll)y[i] * ntt.minv(z[i]) % P;
+    FOR (i, 0, m - 1) z[i] = (ll)y[i] * ntt.inv(z[i]) % P;
     FOR (i, 0, m - 1) down[m + i] = {z[i]};
     for (int i = m - 1; i > 0; i--) down[i] = down[i * 2].Mul(up[i * 2 + 1]).iadd(down[i * 2 + 1].Mul(up[i * 2]));
     return down[1];
@@ -137,14 +137,14 @@ struct Poly : vector<int> { // coefficients in [0, P)
     if (nz * min(k, (ll)n()) >= n()) return Poly(n());
     if (!k) return Poly(Poly {1}, n());
     Poly X(data() + nz, data() + nz + n() - nz * k);
-    const int c = ntt.mpow(X[0], k % (P - 1));
+    const int c = ntt.pw(X[0], k % (P - 1));
     return X.Ln().imul(k % P).Exp().imul(c).irev().isz(n()).irev();
   }
   static pair<vector<int>, vector<int>> _fac(int m) {
     vector<int> f(m), g(m); // f[i] = i!, g[i] = 1 / i!
     f[0] = 1;
     FOR (i, 1, m - 1) f[i] = (ll)f[i - 1] * i % P;
-    g[m - 1] = ntt.minv(f[m - 1]);
+    g[m - 1] = ntt.inv(f[m - 1]);
     for (int i = m - 1; i > 0; i--)
       g[i - 1] = (ll)g[i] * i % P;
     return {f, g};

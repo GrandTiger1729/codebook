@@ -1,7 +1,7 @@
 typedef pair<ll, ll> pll;
 struct MinCostMaxFlow { // 0-base
   struct Edge {
-    ll from, to, cap, flow, cost, rev; 
+    ll from, to, cap, flow, cost, rev;
   } *past[N];
   vector<Edge> G[N];
   int inq[N], n, s, t;

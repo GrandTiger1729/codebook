@@ -4,7 +4,7 @@ bitset<MX> SubsetSum(const int *a, int n) {
   bitset<MX> dp;
   dp[0] = 1;
   FOR (i, 0, n - 1) ++c[a[i]];
-  for (size_t i = 1; i < MX; i++) {
+  FOR (i, 1, MX - 1) {
     while (c[i] > 2) c[i] -= 2, ++c[i * 2];
     while (c[i]--) dp |= dp << i;
   }

@@ -30,7 +30,7 @@ struct dominator_tree { // 1-base
       best[i] = semi[i] = i;
     }
     dfs(root);
-    for (int i = Time; i > 1; --i) {
+    for (int i = Time; i > 1; i--) {
       int u = id[i];
       for (auto v : rG[u])
         if (v = dfn[v]) {

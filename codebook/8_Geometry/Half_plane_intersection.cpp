@@ -1,4 +1,4 @@
-pll area_pair(Line a, Line b) 
+pll area_pair(Line a, Line b)
 { return pll(cross(a.Y - a.X, b.X - a.X), cross(a.Y - a.X, b.Y - a.X)); }
 bool isin(Line l0, Line l1, Line l2) {
   // Check inter(l1, l2) strictly in l0

@@ -1,5 +1,5 @@
 MaxFlow Dinic;
-int g[MAXN]; 
+int g[MAXN];
 void GomoryHu(int n) { // 0-base
   fill_n(g, n, 0);
   FOR (i, 1, n - 1) {

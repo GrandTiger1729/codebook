@@ -1,6 +1,6 @@
 struct MinCostCirculation { // 0-base
   struct Edge {
-    ll from, to, cap, fcap, flow, cost, rev; 
+    ll from, to, cap, fcap, flow, cost, rev;
   } *past[N];
   vector<Edge> G[N];
   ll dis[N], inq[N], n;
@@ -35,7 +35,7 @@ struct MinCostCirculation { // 0-base
     ++cur.cap;
   }
   void solve(int mxlg) {
-    for (int b = mxlg; b >= 0; --b) {
+    for (int b = mxlg; b >= 0; b--) {
       FOR (i, 0, n - 1)
         for (auto &e : G[i])
           e.cap *= 2, e.flow *= 2;

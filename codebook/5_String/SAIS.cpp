@@ -10,11 +10,11 @@ void pre(int *sa, int *c, int n, int z)
 void induce(int *sa, int *c, int *s, bool *t, int n, int z) {
   copy_n(c, z - 1, x + 1);
   FOR (i, 0, n - 1)
-    if (sa[i] && !t[sa[i] - 1]) 
+    if (sa[i] && !t[sa[i] - 1])
       sa[x[s[sa[i] - 1]]++] = sa[i] - 1;
   copy_n(c, z, x);
-  for (int i = n - 1; i >= 0; --i) 
-    if (sa[i] && t[sa[i] - 1]) 
+  for (int i = n - 1; i >= 0; i--)
+    if (sa[i] && t[sa[i] - 1])
       sa[--x[s[sa[i] - 1]]] = sa[i] - 1;
 }
 void sais(int *s, int *sa, int *p, int *q, bool *t, int *c, int n, int z) {
@@ -27,7 +27,7 @@ void sais(int *s, int *sa, int *p, int *q, bool *t, int *c, int n, int z) {
     FOR (i, 0, n - 1) sa[--c[s[i]]] = i;
     return;
   }
-  for (int i = n - 2; i >= 0; --i)
+  for (int i = n - 2; i >= 0; i--)
     t[i] = (s[i] == s[i + 1] ? t[i + 1] : s[i] < s[i + 1]);
   pre(sa, c, n, z);
   FOR (i, 1, n - 1)
@@ -41,7 +41,7 @@ void sais(int *s, int *sa, int *p, int *q, bool *t, int *c, int n, int z) {
     }
   sais(ns, nsa, p + nn, q + n, t + n, c + z, nn, nmxz + 1);
   pre(sa, c, n, z);
-  for (int i = nn - 1; i >= 0; --i) 
+  for (int i = nn - 1; i >= 0; i--)
     sa[--x[s[p[nsa[i]]]]] = p[nsa[i]];
   induce(sa, c, s, t, n, z);
 }

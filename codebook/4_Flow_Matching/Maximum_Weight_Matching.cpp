@@ -11,9 +11,9 @@ struct WeightGraph { // 1-based
     FOR (u, 1, n)
       FOR (v, 1, n) g[u][v] = {u, v, 0};
   }
-  int E(edge e) 
+  int E(edge e)
   { return lab[e.u] + lab[e.v] - g[e.u][e.v].w * 2; }
-  void update_slk(int u, int x, int &s) 
+  void update_slk(int u, int x, int &s)
   { if (!s || E(g[u][x]) < E(g[s][x])) s = u; }
   void set_slk(int x) {
     slk[x] = 0;

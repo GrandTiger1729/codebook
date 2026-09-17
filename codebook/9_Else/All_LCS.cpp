@@ -1,13 +1,16 @@
-void all_lcs(string s, string t) { // 0-base
-  vector<int> h((int)t.size());
-  iota(h.begin(), h.end(), 0);
-  FOR (a, 0, (int)s.size() - 1) {
-    int v = -1;
-    FOR (c, 0, (int)t.size() - 1)
-      if (s[a] == t[c] || h[c] < v)
-        swap(h[c], v);
-    // LCS(s[0, a], t[b, c]) = 
-    // c - b + 1 - sum([h[i] >= b] | i <= c)
-    // h[i] might become -1 !!
+struct AllLCS { // 0-base
+  string t;
+  vector<int> h;
+  AllLCS(const string &_t) : t(_t), h(t.size()) {
+    iota(h.begin(), h.end(), 0);
   }
-}
+  void push(char c) { // append c to the other string
+    int v = -1;
+    FOR (i, 0, (int)t.size() - 1)
+      if (t[i] == c || h[i] < v) swap(h[i], v);
+  }
+  // after pushing s[0, a], for every b <= c:
+  // LCS(s[0, a], t[b, c]) =
+  // c - b + 1 - #{i <= c : h[i] >= b}
+  // h[i] might become -1 !!
+};

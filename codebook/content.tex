@@ -17,11 +17,11 @@
 \inputcode{EBCC*}{2_Graph/EBCC.cpp} % test by caido, Lib-Checker Two-Edge-Connected Components
 \inputcode{VBCC*}{2_Graph/VBCC.cpp} % test by caido, Lib-Checker Biconnected Components
 \inputcode{SCC*}{2_Graph/SCC.cpp} % test by caido, Lib-Checker Strongly Connected Components
-\inputcode{2SAT*}{2_Graph/2SAT.cpp} % test by Lib-Checker Two SAT, local brute force (either/set_value/at_most_one)
+\inputcode{2SAT*}{2_Graph/2SAT.cpp} % needs SCC; test by Lib-Checker Two SAT, local brute force (either/set_value/at_most_one)
 \inputcode{MinimumMeanCycle*}{2_Graph/MinimumMeanCycle.cpp} % test by TIOJ 1934
 \inputcode{Virtual Tree*}{2_Graph/Virtual_Tree.cpp} % test by luogu P2495
 \inputcode{Maximum Clique Dyn*}{2_Graph/Maximum_Clique_Dyn.cpp} % test by TIOJ 1978, CF 101221 I (World Finals' problem)
-\inputcode{Minimum Steiner Tree*}{2_Graph/MinimumSteinerTree.cpp} % test by luogu P6192
+\inputcode{Minimum Steiner Tree*}{2_Graph/MinimumSteinerTree.cpp} % needs N, T, INF; test by luogu P6192, Lib-Checker Minimum Steiner Tree, local brute force (16000 graphs, with and without vcst)
 \inputcode{Dominator Tree*}{2_Graph/Dominator_Tree.cpp} % test by CF 100513 L, Lib-Checker Dominator Tree
 \inputcode{Minimum Arborescence*}{2_Graph/Minimum_Arborescence_fast.cpp} % test by luogu P4716, Lib-Checker Directed MST
 \inputcode{Vizing's theorem*}{2_Graph/Vizing.cpp} % test by CF 101933 G
@@ -41,7 +41,7 @@
 \inputcode{Treap*}{3_Data_Structure/Treap.cpp} % test by Lib-Checker Ordered Set
 % \inputcode{Smart Pointer}{3_Data_Structure/Smart_Pointer.cpp}
 \inputcode{LiChaoST*}{3_Data_Structure/LiChaoST.cpp} % test by Library Checker Line Add Get Min
-\inputcode{Link cut tree*}{3_Data_Structure/link_cut_tree.cpp} % test by luogu P3690
+\inputcode{Link cut tree*}{3_Data_Structure/link_cut_tree.cpp} % test by luogu P3690, Lib-Checker Dynamic Tree Vertex Add Path Sum
 \inputcode{KDTree}{3_Data_Structure/KDTree.cpp}
 % \inputcode{Range Chmin Chmax Add Range Sum*}{3_Data_Structure/Range_Chmin_Chmax_Add_Range_Sum.cpp} % test by Lib-Checker Range Chmin Chmax Add Range Sum
 
@@ -51,12 +51,12 @@
 \inputcode{Bipartite Matching*}{4_Flow_Matching/Bipartite_Matching.cpp} % test by Lib-Checker Matching on Bipartite Graph; cover() by local brute force
 \inputcode{Kuhn Munkres*}{4_Flow_Matching/Kuhn_Munkres.cpp} % test by CF 101239 C (World Finals' problem), Lib-Checker Assignment Problem
 \inputcode{MincostMaxflow*}{4_Flow_Matching/MincostMaxflow.cpp} % test by Lib-Checker Assignment Problem, local stress vs SPFA reference
-\inputcode{Maximum Simple Graph Matching*}{4_Flow_Matching/Maximum_Simple_Graph_Matching.cpp} % test by Library Checker Matching on General Graph 
+\inputcode{Maximum Simple Graph Matching*}{4_Flow_Matching/Maximum_Simple_Graph_Matching.cpp} % test by Library Checker Matching on General Graph
 \inputcode{Maximum Weight Matching*}{4_Flow_Matching/Maximum_Weight_Matching.cpp} % test by Library Checker General Weighted Matching
 \inputcode{SW-mincut}{4_Flow_Matching/SW-mincut.cpp}
 \inputcode{BoundedFlow*(Dinic*)}{4_Flow_Matching/BoundedFlow.cpp} % Maximum boundedflow test by LOJ 116; Minimum boundedflow test by LOJ 117; Dinic test by NTUJ 184
 \inputcode{Gomory Hu tree*}{4_Flow_Matching/Gomory_Hu_tree.cpp} % test by LOJ 2042
-\inputcode{Minimum Cost Circulation*}{4_Flow_Matching/MinCostCirculation.cpp} % test by uoj 487 
+\inputcode{Minimum Cost Circulation*}{4_Flow_Matching/MinCostCirculation.cpp} % test by uoj 487
 \subsection{Flow Models}
 \input{4_Flow_Matching/Model.tex}
 % \inputcode{isap}{4_Flow_Matching/isap.cpp}
@@ -87,7 +87,7 @@
 \inputcode{Miller Rabin*}{6_Math/Miller_Rabin.cpp} % test by NTUJ 1237, Lib-Checker Primality Test
 % \inputcode{Big number{6_Math/Big_number.cpp}}
 %\inputcode{Fraction}{6_Math/Fraction.cpp}
-\inputcode{System of Linear Equations}{6_Math/Linear_Equations.cpp}
+\inputcode{System of Linear Equations}{6_Math/Linear_Equations.cpp} % needs MAXN and a field type T; test by Lib-Checker System of Linear Equations (modint), local brute force (fraction)
 \inputcode{Pollard Rho*}{6_Math/Pollard_Rho.cpp} % test by Lib-Checker Factorize
 \inputcode{Simplex Algorithm}{6_Math/Simplex_Algorithm.cpp}
 \subsubsection{Construction}
@@ -98,7 +98,7 @@
 \inputcode{QuadraticResidue*}{6_Math/QuadraticResidue.cpp} % test by Lib-Checker Sqrt Mod
 \inputcode{PiCount*}{6_Math/PiCount.cpp} % test by luogu P7884, Lib-Checker Counting Primes
 \inputcode{Discrete Log*}{6_Math/DiscreteLog.cpp} % test by Lib-Checker Discrete Logarithm
-\inputcode{Berlekamp Massey}{6_Math/Berlekamp-Massey.cpp} % test by Lib-Checker Find Linear Recurrence
+\inputcode{Berlekamp Massey}{6_Math/Berlekamp-Massey.cpp} % returns c 1-based, feeds Poly::LinearRecursion directly; test by Lib-Checker Find Linear Recurrence, local round trip through LinearRecursion
 \subsection{Primes}
 \lstinputlisting{6_Math/Primes.cpp}
 \subsection{Theorem}
@@ -115,9 +115,12 @@
 \section{Polynomial}
 \inputcode{Fast Fourier Transform}{7_Polynomial/Fast_Fourier_Transform.cpp} % test by Lib-Checker Convolution mod 1e9+7 (through FFT Mod)
 \inputcode{FFT Arbitrary Mod}{7_Polynomial/Fast_Fourier_Transform_Mod.cpp} % test by Lib-Checker Convolution mod 1e9+7
-\inputcode{Number Theory Transform*}{7_Polynomial/Number_Theory_Transform.cpp} % test by Lib-Checker Convolution
-\inputcode{Fast Walsh Transform*}{7_Polynomial/Fast_Walsh_Transform.cpp} % test by luogu P6097
-\inputcode{Polynomial Operation}{7_Polynomial/Polynomial_Operation.cpp} % test by Lib-checker (Inv/Exp/Log/Power) of Formal Power Series, Sqrt of FPS
+\inputcode{Number Theory Transform*}{7_Polynomial/NTT_stdabs.cpp} % std_abs verbatim; the header block (mod/G/N, sz/all, add/sub/mul/Pow, fac/facp) is what it needs; test by Lib-Checker Convolution
+\subsection{NTT Primes}
+\input{7_Polynomial/NTTprime.tex}
+\inputcode{Fast Walsh Transform*}{7_Polynomial/Fast_Walsh_Transform.cpp} % test by luogu P6097, local brute force (2000 subset convolutions under ASan/UBSan)
+\inputcode{Polynomial Operation}{7_Polynomial/Operation_stdabs.cpp} % std_abs verbatim; needs NTT, QuadraticResidue, and build() for TaylorShift/SamplingShift; test by Lib-Checker Inv/Exp/Log/Pow/Sqrt of FPS, Polynomial Taylor Shift, Shift of Sampling Points
+\inputcode{Linear Recursion}{7_Polynomial/FastLinearRecursion_stdabs.cpp} % std_abs verbatim; c is 0-based here, BerlekampMassey returns 1-based; TLEs Lib-Checker Kth Term of Linearly Recurrent Sequence at d=1e5 (Divide re-inverts the fixed modulus every round)
 \inputcode{Value Polynomial}{7_Polynomial/Value_Poly.cpp}
 \subsection{Newton's Method}
 \input{7_Polynomial/Newton.tex}
@@ -162,14 +165,14 @@
 \inputcode{Hilbert Curve}{9_Else/HilbertCurve.cpp}
 \inputcode{DynamicConvexTrick*}{9_Else/DynamicConvexTrick.cpp} % test by TIOJ 1921, Lib-Checker Line Add Get Min
 %\inputcode{cyclicLCS}{9_Else/cyclicLCS.cpp}
-\inputcode{All LCS*}{9_Else/All_LCS.cpp} % test by Library Checker prefix-substring LCS
+\inputcode{All LCS*}{9_Else/All_LCS.cpp} % test by Lib-Checker Prefix-Substring LCS
 \inputcode{DLX*}{9_Else/DLX.cpp} % test by TIOJ 1333, 1381
 \subsection{Matroid Intersection}
 \input{9_Else/Matroid.tex}
 \inputcode{Matroid Intersection}{9_Else/MatroidIntersection.cpp} % test by local brute force (graphic x colourful)
 \inputcode{AdaptiveSimpson*}{9_Else/AdaptiveSimpson.cpp} % test by CF 101193J, 100553D
 \inputcode{Simulated Annealing}{9_Else/simulated_annealing.cpp}
-\inputcode{Tree Hash*}{9_Else/tree_hash.cpp} % test by CSES Tree Isomorphism I
+\inputcode{Tree Hash*}{9_Else/tree_hash.cpp} % needs G; test by CSES Tree Isomorphism I, Lib-Checker Rooted Tree Isomorphism Classification
 \inputcode{Binary Search On Fraction*}{9_Else/BinarySearchOnFraction.cpp} % test by ABC 333 G after adjusted to int128, Lib-Checker Rational Approximation
 \inputcode{1D1D}{9_Else/1d1d.cpp}
 \inputcode{SMAWK}{9_Else/smawk.cpp} % test by Lib-Checker Min Plus Convolution (Convex and Arbitrary)

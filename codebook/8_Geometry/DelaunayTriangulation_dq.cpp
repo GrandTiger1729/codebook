@@ -14,7 +14,7 @@ struct Delaunay { // 0-base
   void init(int _n, pll _p[]) {
     n = _n, iota(oidx, oidx + n, 0);
     FOR (i, 0, n - 1) head[i].clear();
-    sort(oidx, oidx + n, [&](int a, int b) 
+    sort(oidx, oidx + n, [&](int a, int b)
     { return _p[a] < _p[b]; });
     FOR (i, 0, n - 1) p[i] = _p[oidx[i]];
     divide(0, n - 1);

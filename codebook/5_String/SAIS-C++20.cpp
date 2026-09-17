@@ -5,9 +5,9 @@ auto sais(const auto &s) {
   partial_sum(c.begin(), c.end(), begin(c));
   vector<int> sa(n); auto I = views::iota(0, n);
   vector<bool> t(n, true);
-  for (int i = n - 2; i >= 0; --i)
+  for (int i = n - 2; i >= 0; i--)
     t[i] = (s[i] == s[i + 1] ? t[i + 1] : s[i] < s[i + 1]);
-  auto is_lms = views::filter([&t](int x) { 
+  auto is_lms = views::filter([&t](int x) {
     return x && t[x] && !t[x - 1];
   });
   auto induce = [&] {

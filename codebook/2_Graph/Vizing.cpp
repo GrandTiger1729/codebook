@@ -35,10 +35,10 @@ void solve(vector<pair<int, int>> &E) {
     while (!G[u][v0]) {
       L.emplace_back(v, d = X[v]);
       if (!C[v][c])
-        for (int a = SZ(L) - 1; a >= 0; --a)
+        for (int a = SZ(L) - 1; a >= 0; a--)
           c = color(u, L[a].F, c);
       else if (!C[u][d])
-        for (int a = SZ(L) - 1; a >= 0; --a)
+        for (int a = SZ(L) - 1; a >= 0; a--)
           color(u, L[a].F, L[a].S);
       else if (vst[d]) break;
       else vst[d] = 1, v = C[u][d];
@@ -48,7 +48,7 @@ void solve(vector<pair<int, int>> &E) {
       if (int a; C[u][c0]) {
         for (a = SZ(L) - 2; a >= 0 && L[a].S != c;
           --a);
-        for (; a >= 0; --a) color(u, L[a].F, L[a].S);
+        for (; a >= 0; a--) color(u, L[a].F, L[a].S);
       }
       else --t;
     }

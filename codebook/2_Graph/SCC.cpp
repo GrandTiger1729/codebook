@@ -1,42 +1,31 @@
 struct SCC { // need adj
-	int n, dfcnt = 0, sccnt = 0;
-	vector<int> dfn, low, scc, st, ist;
-	vector<vector<int>> scc_adj;
-	SCC() {}
-	SCC(int n) : n(n) {
-		dfn = low = scc = ist = vector<int>(n + 1, 0);
-		scc_adj = vector<vector<int>>(n + 1, vector<int>());
-	}
-	void tarjan(int pos) {
-		dfn[pos] = low[pos] = ++dfcnt;
-		st.emplace_back(pos);
-		ist[pos] = 1;
-		for (int np : adj[pos]) {
-			if (dfn[np] == 0) {
-				tarjan(np);
-				low[pos] = min(low[pos], low[np]);
-			} else if (ist[np]) {
-				low[pos] = min(low[pos], dfn[np]);
-			}
-		}
-		if (dfn[pos] == low[pos]) {
-			sccnt++;
-			while (1) {
-				int x = st.back();
-				ist[x] = 0;
-				scc[x] = sccnt;
-				st.pop_back();
-				if (x == pos) break;
-			}
-		}
-	}
-	void work() {
-		FOR (i, 1, n) if (dfn[i] == 0) tarjan(i);
-	}
-	void build_adj() {
-		FOR (i, 1, n) for (int j : adj[i])
-			if (scc[i] != scc[j]) {
-				scc_adj[scc[i]].emplace_back(scc[j]);
-			}
-	}
+  int n, dfcnt = 0, sccnt = 0;
+  vector<int> dfn, scc, st;
+  vector<vector<int>> scc_adj;
+  SCC() {}
+  SCC(int n)
+    : n(n), dfn(n + 1), scc(n + 1), scc_adj(n + 1) {}
+  void tarjan(int u) { // scc[] numbered sink first
+    int lw = dfn[u] = ++dfcnt, x;
+    st.pb(u);
+    for (int v : adj[u]) if (!scc[v]) {
+      if (!dfn[v]) tarjan(v);
+      lw = min(lw, dfn[v]);
+    }
+    if (lw == dfn[u]) {
+      sccnt++;
+      do {
+        x = st.back(), st.pop_back(), scc[x] = sccnt;
+      } while (x != u);
+    }
+    dfn[u] = lw; // dfn[] now holds the low-link
+  }
+  void work() {
+    FOR (i, 1, n) if (!dfn[i]) tarjan(i);
+  }
+  void build_adj() {
+    FOR (i, 1, n) for (int j : adj[i])
+      if (scc[i] != scc[j])
+        scc_adj[scc[i]].pb(scc[j]);
+  }
 };

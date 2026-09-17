@@ -24,7 +24,7 @@ double area(Point a, Point b, Point c)
 double volume(Point a, Point b, Point c, Point d)
 { return dot(cross3(a, b, c), d - a); }
 //Azimuthal angle (longitude) to x-axis in interval [-pi, pi]
-double phi(Point p) { return atan2(p.y, p.x); } 
+double phi(Point p) { return atan2(p.y, p.x); }
 //Zenith angle (latitude) to the z-axis in interval [0, pi]
 double theta(Point p) { return atan2(sqrt(p.x * p.x + p.y * p.y), p.z); }
 Point masscenter(Point a, Point b, Point c, Point d)

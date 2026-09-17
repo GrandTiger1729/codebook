@@ -2,7 +2,7 @@ struct Matching { // 0-base
   queue<int> q; int n;
   vector<int> fa, s, vis, pre, match;
   vector<vector<int>> G;
-  int Find(int u) 
+  int Find(int u)
   { return u == fa[u] ? u : fa[u] = Find(fa[u]); }
   int LCA(int x, int y) {
     static int tk = 0; tk++; x = Find(x); y = Find(y);
@@ -41,7 +41,7 @@ struct Matching { // 0-base
     return false;
   }
   Matching(int _n) : n(_n), fa(n + 1), s(n + 1), vis(n + 1), pre(n + 1, n), match(n + 1, n), G(n) {}
-  void add_edge(int u, int v) 
+  void add_edge(int u, int v)
   { G[u].pb(v), G[v].pb(u); }
   int solve() {
     int ans = 0;
@@ -49,4 +49,4 @@ struct Matching { // 0-base
       if (match[x] == n) ans += Bfs(x);
     return ans;
   } // match[x] == n means not matched
-}; 
+};

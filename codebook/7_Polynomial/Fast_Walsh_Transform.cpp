@@ -8,13 +8,16 @@ void fwt(int *a, int n, int op) { //or
       FOR (j, i, j + (L >> 1) - 1)
         a[j + (L >> 1)] += a[j] * op;
 }
-const int N = 21;
-int f[N][1 << N], g[N][1 << N], h[N][1 << N], ct[1 << N];
+const int N = 18; // L <= N, 3 (N + 1) 2^N ints
+int f[N + 1][1 << N], g[N + 1][1 << N],
+  h[N + 1][1 << N], ct[1 << N];
 void subset_convolution(int *a, int *b, int *c, int L) {
   // c_k = \sum_{i | j = k, i & j = 0} a_i * b_j
   int n = 1 << L;
   FOR (i, 1, n - 1)
     ct[i] = ct[i & (i - 1)] + 1;
+  FOR (i, 0, L) fill_n(f[i], n, 0),
+    fill_n(g[i], n, 0), fill_n(h[i], n, 0);
   FOR (i, 0, n - 1)
     f[ct[i]][i] = a[i], g[ct[i]][i] = b[i];
   FOR (i, 0, L)

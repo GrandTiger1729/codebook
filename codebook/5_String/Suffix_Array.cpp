@@ -8,7 +8,7 @@ struct suffix_array {
     fill_n(box, m, 0);
     FOR (i, 0, n - 1) ++box[key[i]];
     partial_sum(box, box + m, box);
-    for (int i = n - 1; i >= 0; --i)
+    for (int i = n - 1; i >= 0; i--)
       ot[--box[key[it[i]]]] = it[i];
   }
   void make_sa(const string &s, int n) {

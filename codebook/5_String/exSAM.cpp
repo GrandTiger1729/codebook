@@ -1,12 +1,12 @@
 struct exSAM {
-  int len[N * 2], link[N * 2]; // maxlength, suflink 
-  int next[N * 2][CNUM], tot; // [0, tot), root = 0 
+  int len[N * 2], link[N * 2]; // maxlength, suflink
+  int next[N * 2][CNUM], tot; // [0, tot), root = 0
   int lenSorted[N * 2]; // topo. order
   int cnt[N * 2]; // occurence
   int newnode() {
     fill_n(next[tot], CNUM, 0);
     len[tot] = cnt[tot] = link[tot] = 0;
-    return tot++; 
+    return tot++;
   }
   void init() { tot = 0, newnode(), link[0] = -1; }
   int insertSAM(int last, int c) {
@@ -52,7 +52,7 @@ struct exSAM {
     FOR (i, 1, tot - 1) lenSorted[--lc[len[i]]] = i;
   }
   void solve() {
-    for (int i = tot - 2; i >= 0; --i)
+    for (int i = tot - 2; i >= 0; i--)
       cnt[link[lenSorted[i]]] += cnt[lenSorted[i]];
   }
 };

@@ -34,13 +34,13 @@
 \lstinputlisting{3_Data_Structure/discrete_trick.cpp}
 \inputcode{Mergeable Heap}{3_Data_Structure/min_heap.cpp} % test by Lib-Checker Directed MST (through Minimum Arborescence)
 \inputcode{BIT kth*}{3_Data_Structure/BIT_kth.cpp} % test by CSES 1076, Lib-Checker Ordered Set
-\inputcode{Interval Container*}{3_Data_Structure/IntervalContainer.cpp} % test by kactl stress test
+% \inputcode{Interval Container*}{3_Data_Structure/IntervalContainer.cpp} % test by kactl stress test
 % \inputcode{Leftist Tree}{3_Data_Structure/Leftist_Tree.cpp}
-\inputcode{Heavy light Decomposition*}{3_Data_Structure/Heavy_light_Decomposition.cpp} % test by CSES Path Queries II, Lib-Checker Vertex Add Path Sum
+% \inputcode{Heavy light Decomposition*}{3_Data_Structure/Heavy_light_Decomposition.cpp} % test by CSES Path Queries II, Lib-Checker Vertex Add Path Sum
 \inputcode{Centroid Decomposition*}{3_Data_Structure/Centroid_Decomposition.cpp} % test by TIOJ 1171
 \inputcode{Treap*}{3_Data_Structure/Treap.cpp} % test by Lib-Checker Ordered Set
 % \inputcode{Smart Pointer}{3_Data_Structure/Smart_Pointer.cpp}
-\inputcode{LiChaoST*}{3_Data_Structure/LiChaoST.cpp} % test by Library Checker Line Add Get Min
+% \inputcode{LiChaoST*}{3_Data_Structure/LiChaoST.cpp} % test by Library Checker Line Add Get Min
 \inputcode{Link cut tree*}{3_Data_Structure/link_cut_tree.cpp} % test by luogu P3690, Lib-Checker Dynamic Tree Vertex Add Path Sum
 \inputcode{KDTree}{3_Data_Structure/KDTree.cpp}
 % \inputcode{Range Chmin Chmax Add Range Sum*}{3_Data_Structure/Range_Chmin_Chmax_Add_Range_Sum.cpp} % test by Lib-Checker Range Chmin Chmax Add Range Sum
@@ -115,11 +115,11 @@
 \section{Polynomial}
 \inputcode{Fast Fourier Transform}{7_Polynomial/Fast_Fourier_Transform.cpp} % test by Lib-Checker Convolution mod 1e9+7 (through FFT Mod)
 \inputcode{FFT Arbitrary Mod}{7_Polynomial/Fast_Fourier_Transform_Mod.cpp} % test by Lib-Checker Convolution mod 1e9+7
-\inputcode{Number Theory Transform*}{7_Polynomial/NTT_stdabs.cpp} % std_abs verbatim; the header block (mod/G/N, sz/all, add/sub/mul/Pow, fac/facp) is what it needs; test by Lib-Checker Convolution
+\inputcode{Number Theory Transform*}{7_Polynomial/NTT_stdabs.cpp} % std_abs verbatim; supply mod/G/N and add/sub/mul/Pow yourself (Pow's exponent must be ll); test by Lib-Checker Convolution
 \subsection{NTT Primes}
 \input{7_Polynomial/NTTprime.tex}
 \inputcode{Fast Walsh Transform*}{7_Polynomial/Fast_Walsh_Transform.cpp} % test by luogu P6097, local brute force (2000 subset convolutions under ASan/UBSan)
-\inputcode{Polynomial Operation}{7_Polynomial/Operation_stdabs.cpp} % std_abs verbatim; needs NTT, QuadraticResidue, and build() for TaylorShift/SamplingShift; test by Lib-Checker Inv/Exp/Log/Pow/Sqrt of FPS, Polynomial Taylor Shift, Shift of Sampling Points
+\inputcode{Polynomial Operation}{7_Polynomial/Operation_stdabs.cpp} % std_abs verbatim; needs NTT, QuadraticResidue, and fac[]/ifac[] for TaylorShift/SamplingShift; test by Lib-Checker Inv/Exp/Log/Pow/Sqrt of FPS, Polynomial Taylor Shift, Shift of Sampling Points
 \inputcode{Linear Recursion}{7_Polynomial/FastLinearRecursion_stdabs.cpp} % std_abs verbatim; c is 0-based here, BerlekampMassey returns 1-based; TLEs Lib-Checker Kth Term of Linearly Recurrent Sequence at d=1e5 (Divide re-inverts the fixed modulus every round)
 \inputcode{Value Polynomial}{7_Polynomial/Value_Poly.cpp}
 \subsection{Newton's Method}
@@ -139,7 +139,7 @@
 \inputcode{PolyUnion*}{8_Geometry/PolyUnion.cpp} % test by CF 101673 A
 %\inputcode{PolyCut}{8_Geometry/PolyCut.cpp}
 % \inputcode{Trapezoidalization}{8_Geometry/Trapezoidalization.cpp} % test by aizu CGL_3_C, TIOJ 1403
-\inputcode{Polar Angle Sort*}{8_Geometry/Polar_Angle_Sort.cpp} % test by NTUJ 2270, Lib-Checker Sort Points by Argument
+% \inputcode{Polar Angle Sort*}{8_Geometry/Polar_Angle_Sort.cpp} % test by NTUJ 2270, Lib-Checker Sort Points by Argument
 \inputcode{Half plane intersection*}{8_Geometry/Half_plane_intersection.cpp} % test by qoj 2162 (World Finals' problem)
 \inputcode{HPI Alternative Form}{8_Geometry/HPIGeneralLine.cpp}
 \inputcode{RotatingSweepLine}{8_Geometry/rotatingSweepLine.cpp}
@@ -166,7 +166,7 @@
 \inputcode{DynamicConvexTrick*}{9_Else/DynamicConvexTrick.cpp} % test by TIOJ 1921, Lib-Checker Line Add Get Min
 %\inputcode{cyclicLCS}{9_Else/cyclicLCS.cpp}
 \inputcode{All LCS*}{9_Else/All_LCS.cpp} % test by Lib-Checker Prefix-Substring LCS
-\inputcode{DLX*}{9_Else/DLX.cpp} % test by TIOJ 1333, 1381
+% \inputcode{DLX*}{9_Else/DLX.cpp} % test by TIOJ 1333, 1381
 \subsection{Matroid Intersection}
 \input{9_Else/Matroid.tex}
 \inputcode{Matroid Intersection}{9_Else/MatroidIntersection.cpp} % test by local brute force (graphic x colourful)

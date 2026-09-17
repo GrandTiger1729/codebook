@@ -24,9 +24,8 @@ struct NTT {
     w[0] = 1;
     FOR (i, 1, MAXN - 1) w[i] = mul(w[i - 1], dw);
   }
-  void operator()(vector<int> &v, bool rev = false) {
-    int n = (int)v.size(), *a = v.data();
-    // n = 2^k, a[i] in [0, MOD)
+  void operator()(vector<int> &a, bool rev = false) {
+    int n = (int)a.size(); // n = 2^k, a[i] in [0, MOD)
     for (int j = 1, x = 0; j < n - 1; j++) {
       for (int k = n >> 1; (x ^= k) < k; k >>= 1);
       if (j < x) swap(a[x], a[j]);
@@ -40,7 +39,7 @@ struct NTT {
         }
     }
     if (rev) {
-      reverse(a + 1, a + n);
+      reverse(a.begin() + 1, a.end());
       int in = inv(n);
       FOR (i, 0, n - 1) a[i] = mul(a[i], in);
     }

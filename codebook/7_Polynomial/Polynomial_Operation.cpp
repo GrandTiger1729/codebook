@@ -14,7 +14,7 @@ Poly Mul(Poly a, Poly b) {
   ntt(a, true);
   return a.resize(m), a;
 }
-Poly Inverse(Poly a) { // a[0] != 0, 1e5/55ms
+Poly Inverse(Poly a) { // a[0] != 0, 1e5/50ms
   if (SZ(a) == 1) return {inv(a[0])};
   int n = SZ(a), m = 1;
   while (m < n * 2) m <<= 1;
@@ -26,7 +26,7 @@ Poly Inverse(Poly a) { // a[0] != 0, 1e5/55ms
   ntt(x, true);
   return cut(x, n);
 }
-Poly sqrtQR(Poly a) { // a[0] is a QR, 1e5/145ms
+Poly sqrtQR(Poly a) { // a[0] is a QR, 1e5/150ms
   if (SZ(a) == 1) return {QuadraticResidue(a[0], MOD)};
   int n = SZ(a);
   Poly x = cut(sqrtQR(cut(a, (n + 1) / 2)), n);
@@ -63,11 +63,11 @@ Poly Integral(Poly a) {
   FOR (i, 0, SZ(a) - 1) r[i + 1] = mul(inv(i + 1), a[i]);
   return r;
 }
-Poly Ln(Poly a) { // a[0] == 1, 1e5/100ms
+Poly Ln(Poly a) { // a[0] == 1, 1e5/95ms
   return cut(Integral(Mul(Derivative(a), Inverse(a))),
     SZ(a));
 }
-Poly Exp(Poly a) { // a[0] == 0, 1e5/215ms
+Poly Exp(Poly a) { // a[0] == 0, 1e5/240ms
   int n = SZ(a);
   if (n == 1) return {1};
   Poly x = cut(Exp(cut(a, (n + 1) / 2)), n), y = Ln(x);
@@ -76,7 +76,7 @@ Poly Exp(Poly a) { // a[0] == 0, 1e5/215ms
   return cut(Mul(x, y), n);
 }
 // M := MOD(MOD - 1). If k >= M, k := k % M + M.
-Poly PolyPow(Poly a, ll k) {
+Poly PolyPow(Poly a, ll k) { // 1e5/340ms
   int n = SZ(a), z = 0;
   while (z < n && !a[z]) z++;
   if (z * min(k, (ll)n) >= n) return Poly(n);
@@ -116,10 +116,10 @@ vector<int> evalOn(Poly a, const vector<int> &x,
   return y;
 }
 vector<int> Evaluate(Poly a, const vector<int> &x) {
-  return evalOn(a, x, subTree(x)); // 1e5, 0.6s
+  return evalOn(a, x, subTree(x)); // 1e5/0.8s
 }
 Poly Interpolate(const vector<int> &x,
-  const vector<int> &y) { // 1e5, 0.9s
+  const vector<int> &y) { // 1e5/1.2s
   int m = SZ(x);
   vector<Poly> up = subTree(x), dn(m * 2);
   vector<int> z = evalOn(Derivative(up[1]), x, up);
@@ -176,7 +176,7 @@ vector<int> SamplingShift(Poly a, ll c, int m) {
   FOR (i, 0, m - 1) a[i] = mul(a[i], f[i]);
   return a;
 }
-// ret[i] = \sum_j w_j [x^j] f^i, f[0] == 0, 2^17/3.2s
+// ret[i] = \sum_j w_j [x^j] f^i, f[0] == 0, 2^17/2.0s
 Poly PowerProj(vector<int> w, Poly f, int m) {
   int k = 1, nn = 1;
   while (nn < SZ(f)) nn <<= 1;

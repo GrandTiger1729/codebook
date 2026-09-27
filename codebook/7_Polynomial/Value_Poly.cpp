@@ -13,12 +13,12 @@ struct Poly {
     for (int i = SZ(poly) - 2; i >= 0; i--)
       rmul[i] = rmul[i + 1] * (x - (base + i + 1));
     FOR (i, 0, SZ(poly) - 1)
-      rt += poly[i] * ifac[i] * inegfac[SZ(poly) - 1 - i] * lmul[i] * rmul[i];
+      rt += poly[i] * ifac[i] * inegfac[SZ(poly) - 1 - i]
+        * lmul[i] * rmul[i];
     return rt;
   }
   void raise() { // g(x) = sigma{base:x} f(x)
-    if (SZ(poly) == 1 && poly[0] == 0)
-      return;
+    if (SZ(poly) == 1 && poly[0] == 0) return;
     mint nw = get_val(base + SZ(poly));
     poly.pb(nw);
     FOR (i, 1, SZ(poly) - 1) poly[i] += poly[i - 1];

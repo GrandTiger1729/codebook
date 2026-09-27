@@ -59,7 +59,7 @@ void init(const vector<point> &v) {
   root = build(0, v.size());
 }
 long long nearest(const point &q) {
-  long long res = 1e18;
+  long long res = LLONG_MAX;
   dfs(q, res, root);
   return res;
 }

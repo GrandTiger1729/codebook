@@ -14,8 +14,7 @@ struct MinCostMaxFlow { // 0-base, need global N
   }
   void add_edge(int a, int b, ll cap, ll cost) {
     if (a == b) return;
-    g[a].pb(
-      Edge{a, b, (int)g[b].size(), cap, cost, 0});
+    g[a].pb(Edge{a, b, (int)g[b].size(), cap, cost, 0});
     g[b].pb(
       Edge{b, a, (int)g[a].size() - 1, 0, -cost, 0});
   }
@@ -39,8 +38,7 @@ struct MinCostMaxFlow { // 0-base, need global N
           }
         }
     }
-    FOR (i, 0, n - 1)
-      pot[i] = min(pot[i] + dis[i], INF);
+    FOR (i, 0, n - 1) pot[i] = min(pot[i] + dis[i], INF);
   }
   pair<ll, ll> maxflow(int s, int t) {
     ll flow = 0, cost = 0;

@@ -25,11 +25,13 @@ struct MaxClique { // fast when N <= 100
       if (k < lft) r[tp++] = p;
     }
     FOR (k, lft, rgt)
-      for (int p = cs[k]._Find_first(); p < N; p = cs[k]._Find_next(p))
+      for (int p = cs[k]._Find_first(); p < N;
+        p = cs[k]._Find_next(p))
         r[tp] = p, c[tp] = k, ++tp;
     dfs(r, c, l + 1, mask);
   }
-  void dfs(vector<int> &r, vector<int> &c, int l, bitset<N> mask) {
+  void dfs(vector<int> &r, vector<int> &c, int l,
+    bitset<N> mask) {
     while (!r.empty()) {
       int p = r.back();
       r.pop_back(), mask[p] = 0;

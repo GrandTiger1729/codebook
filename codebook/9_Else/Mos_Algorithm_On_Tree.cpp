@@ -11,12 +11,11 @@ struct Query {
   Query(int u, int v) {
     int c = LCA(u, v);
     if (c == u || c == v)
-      q.lca = -1, q.L = out[c ^ u ^ v], q.R = out[c];
+      lca = -1, L = out[c ^ u ^ v], R = out[c];
     else if (out[u] < in[v])
-      q.lca = c, q.L = out[u], q.R = in[v];
-    else
-      q.lca = c, q.L = out[v], q.R = in[u];
-    q.Lid = q.L / blk;
+      lca = c, L = out[u], R = in[v];
+    else lca = c, L = out[v], R = in[u];
+    LBid = L / blk;
   }
   bool operator<(const Query &q) const {
     if (LBid != q.LBid) return LBid < q.LBid;
@@ -24,13 +23,13 @@ struct Query {
   }
 };
 void flip(int x) {
-    if (inset[x]) sub(arr[x]); // TODO
-    else add(arr[x]); // TODO
-    inset[x] = ~inset[x];
+  if (inset[x]) sub(arr[x]); // TODO
+  else add(arr[x]); // TODO
+  inset.flip(x);
 }
 void solve(vector<Query> query) {
   sort(query.begin(), query.end());
-  int L = 0, R = 0;
+  int L = 0, R = -1;
   for (auto q : query) {
     while (R < q.R) flip(ord[++R]);
     while (L > q.L) flip(ord[--L]);

@@ -1,4 +1,5 @@
-bool PointInConvex(const vector<pll> &C, pll p, bool strict = true) {
+bool PointInConvex(const vector<pll> &C, pll p,
+  bool strict = true) { // C: no 3 collinear vertices
   int a = 1, b = SZ(C) - 1, r = !strict;
   if (SZ(C) == 0) return false;
   if (SZ(C) < 3) return r && btw(C[0], C.back(), p);

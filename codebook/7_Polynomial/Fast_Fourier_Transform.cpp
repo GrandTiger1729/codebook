@@ -13,8 +13,7 @@ void fft(vector<cplx> &a) {
   vector<int> rev(n);
   FOR (i, 0, n - 1)
     rev[i] = (rev[i / 2] | (i & 1) << L) / 2;
-  FOR (i, 0, n - 1)
-    if (i < rev[i]) swap(a[i], a[rev[i]]);
+  FOR (i, 0, n - 1) if (i < rev[i]) swap(a[i], a[rev[i]]);
   for (int k = 1; k < n; k *= 2)
     for (int i = 0; i < n; i += 2 * k)
       FOR (j, 0, k - 1) {

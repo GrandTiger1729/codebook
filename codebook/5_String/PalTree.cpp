@@ -19,8 +19,7 @@ struct palindromic_tree {
     St[0].fail = 1, s.pb(-1);
   }
   inline int get_fail(int x) {
-    while (s[n - St[x].len - 1] != s[n])
-      x = St[x].fail;
+    while (s[n - St[x].len - 1] != s[n]) x = St[x].fail;
     return x;
   }
   inline void add(int c) {

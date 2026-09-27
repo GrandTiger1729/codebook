@@ -9,12 +9,12 @@ struct Query {
   bool operator<(const Query &q) const {
     if (LBid != q.LBid) return LBid < q.LBid;
     if (RBid != q.RBid) return RBid < q.RBid;
-    return T < b.T;
+    return T < q.T;
   }
 };
 void solve(vector<Query> query) {
   sort(query.begin(), query.end());
-  int L = 0, R = 0, T = -1;
+  int L = 0, R = -1, T = -1;
   for (auto q : query) {
     while (T < q.T) addTime(L, R, ++T); // TODO
     while (T > q.T) subTime(L, R, T--); // TODO

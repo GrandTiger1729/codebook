@@ -1,8 +1,9 @@
 /* TODO
 DSU: disjoint set
 - DSU(n), .boss(x), .Union(x, y)
-min_heap<T, Info>: min heap for type {T, Info} with lazy tag
-- .push({w, i}), .top(), .join(heap), .pop(), .empty(), .add_lazy(v)
+min_heap<T, Info>: min heap of {T, Info}, lazy add on T
+- .push({w, i}), .top(), .join(heap), .pop(), .empty(),
+  .add_lazy(v)
 */
 struct E { int s, t; ll w; }; // 0-base
 vector<int> dmst(const vector<E> &e, int n, int root) {
@@ -35,7 +36,8 @@ vector<int> dmst(const vector<E> &e, int n, int root) {
       }
     }
   vector<int> ans;
-  for (int i = pc - 1; i >= 0; i--) if (i != root && v[i] != n) {
+  for (int i = pc - 1; i >= 0; i--) {
+    if (i == root || v[i] == n) continue;
     for (int f = e[r[i]].t; ~f && v[f] != n; f = pa[f])
       v[f] = n;
     ans.pb(r[i]);

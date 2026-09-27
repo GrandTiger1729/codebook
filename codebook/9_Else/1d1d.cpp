@@ -25,9 +25,10 @@ void convex1D1D() {
   deque<pii> dq; // (idx, right end)
   dq.emplace_back(pii(0, N + 1));
   FOR (j, 1, N) {
-    while (dq.back().S < j) dq.pop_back();
-    int i = dq.back().F;
+    while (dq.front().S < j) dq.pop_front();
+    int i = dq.front().F;
     dp[j] = dp[i] + cost(i, j);
+    i = dq.back().F;
     while (dq.size() >= 2 &&
       search(i, j, j) <= dq.end()[-2].S) {
       dq.pop_back();

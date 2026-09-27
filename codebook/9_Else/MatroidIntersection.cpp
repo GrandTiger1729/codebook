@@ -13,8 +13,7 @@ vector<int> matroid_isect(int n, M1 &m1, M2 &m2) {
     m1.build(sel), m2.build(sel);
     vector<int> pre(n, -2), q;
     FOR (y, 0, n - 1)
-      if (!sel[y] && m1.ind(-1, y))
-        pre[y] = -1, q.pb(y);
+      if (!sel[y] && m1.ind(-1, y)) pre[y] = -1, q.pb(y);
     int t = -1;
     for (int h = 0; h < (int)q.size(); h++) {
       int u = q[h];
@@ -38,8 +37,7 @@ struct ColorMat { // <= cap[c] chosen of colour c
     : col(col), cap(cap) {}
   void build(const vector<int> &s) {
     cnt.assign(cap.size(), 0);
-    FOR (i, 0, (int)s.size() - 1)
-      if (s[i]) cnt[col[i]]++;
+    FOR (i, 0, (int)s.size() - 1) if (s[i]) cnt[col[i]]++;
   }
   bool ind(int x, int y) {
     int c = cnt[col[y]];

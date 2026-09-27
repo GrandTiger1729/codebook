@@ -1,9 +1,9 @@
-const double INF = 1e18, qi = acos(-1) / 2 * 3;
+const double INF = 1e18;
 pdd solve(vector<pll> &dots) {
 #define diff(u, v) (dots[u] - dots[v])
 #define vec(v) (dots[v] - dots[i])
   hull(dots);
-  double Max = 0, Min = INF, deg;
+  double Max = 0, Min = INF;
   int n = SZ(dots);
   dots.pb(dots[0]);
   for (int i = 0, u = 1, r = 1, l = 1; i < n; i++) {
@@ -15,10 +15,10 @@ pdd solve(vector<pll> &dots) {
     if (!i) l = (r + 1) % n;
     while (dot(nw, vec(l + 1)) < dot(nw, vec(l)))
       l = (l + 1) % n;
-    Min = min(Min, (double)(dot(nw, vec(r)) - dot(nw, vec(l))) * cross(nw, vec(u)) / abs2(nw));
-    deg = acos(dot(diff(r, l), vec(u)) / abs(diff(r, l)) / abs(vec(u)));
-    deg = (qi - deg) / 2;
-    Max = max(Max, abs(diff(r, l)) * abs(vec(u)) * sin(deg) * sin(deg));
+    Min = min(Min, (double)(dot(nw, vec(r)) -
+      dot(nw, vec(l))) * cross(nw, vec(u)) / abs2(nw));
+    Max = max(Max, (abs(diff(r, l)) * abs(vec(u)) +
+      cross(diff(r, l), vec(u))) / 2);
   }
   return pdd(Min, Max);
 }

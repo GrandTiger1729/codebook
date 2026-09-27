@@ -1,10 +1,9 @@
 #define SZ(a) ((int)a.size())
-namespace vizing { // returns edge coloring in adjacent matrix G. 1 - based
+namespace vizing { // 1-base, color of (u,v) in G[u][v]
 const int N = 105;
 int C[N][N], G[N][N], X[N], vst[N], n;
 void init(int _n) { n = _n;
-  FOR (i, 0, n)
-    FOR (j, 0, n) C[i][j] = G[i][j] = 0;
+  FOR (i, 0, n) FOR (j, 0, n) C[i][j] = G[i][j] = 0;
 }
 void solve(vector<pair<int, int>> &E) {
   auto update = [&](int u)

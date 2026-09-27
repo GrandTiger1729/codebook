@@ -5,9 +5,9 @@ double _area(pdd pa, pdd pb, double r) {
   if (abs(pb) < eps) return 0;
   double ar, h, theta;
   double a = abs(pb), b = abs(pa), c = abs(pb - pa);
-  double cosB = dot(pb, pb - pa) / a / c,
-         B = acos(cosB);
-  double cosC = dot(pa, pb) / a / b, C = acos(cosC);
+  double k = fabs(cross(pa, pb)); // acos may give NaN
+  double B = atan2(k, dot(pb, pb - pa));
+  double C = atan2(k, dot(pa, pb));
   if (a > r) {
     ar = (C / 2) * r * r;
     h = a * b * sin(C) / c;

@@ -21,10 +21,8 @@ Poly Inverse(Poly a) {
       v1[i] = mul(mul(v1[i], v2[i]), v2[i]);
     ntt(v1, true);
     res.resize(m * 2);
-    FOR (i, 0, m - 1)
-      res[i] = add(res[i], res[i]);
-    FOR (i, 0, m * 2 - 1)
-      res[i] = sub(res[i], v1[i]);
+    FOR (i, 0, m - 1) res[i] = add(res[i], res[i]);
+    FOR (i, 0, m * 2 - 1) res[i] = sub(res[i], v1[i]);
   }
   res.resize(n);
   return res;
@@ -39,8 +37,7 @@ pair<Poly, Poly> Divide(Poly a, Poly b) {
   Poly Q = Mul(ra, Inverse(rb), k);
   reverse(Q.begin(), Q.end());
   Poly res = Mul(b, Q), R(m - 1);
-  FOR (i, 0, m - 2)
-    R[i] = sub(a[i], res[i]);
+  FOR (i, 0, m - 2) R[i] = sub(a[i], res[i]);
   return {Q, R};
 } // 7d15e3
 Poly SqrtImpl(Poly a) {
@@ -53,8 +50,7 @@ Poly SqrtImpl(Poly a) {
     if (n < m * 2) a.resize(m * 2);
     q.resize(m * 2);
     Poly f2 = Mul(q, q, m * 2);
-    FOR (i, 0, m * 2 - 1)
-      f2[i] = sub(f2[i], a[i]);
+    FOR (i, 0, m * 2 - 1) f2[i] = sub(f2[i], a[i]);
     f2 = Mul(f2, Inverse(q), m * 2);
     FOR (i, 0, m * 2 - 1)
       q[i] = sub(q[i], mul(f2[i], inv2));
@@ -71,15 +67,13 @@ Poly Sqrt(Poly a) {
   Poly s = SqrtImpl(Poly(a.begin() + m, a.end()));
   if (s[0] == -1) return {-1};
   Poly res(n);
-  FOR (i, 0, SZ(s) - 1)
-    res[i + m / 2] = s[i];
+  FOR (i, 0, SZ(s) - 1) res[i + m / 2] = s[i];
   return res;
 } // d1acd7
 Poly Derivative(Poly a) {
   int n = SZ(a);
   Poly res(n - 1);
-  FOR (i, 0, n - 2)
-    res[i] = mul(a[i + 1], i + 1);
+  FOR (i, 0, n - 2) res[i] = mul(a[i + 1], i + 1);
   return res;
 } // 001be0
 Poly Integral(Poly a) {
@@ -106,8 +100,7 @@ Poly Exp(Poly a) {
     if (n < m * 2) a.resize(m * 2);
     Poly g(a.begin(), a.begin() + m * 2), h(ALL(q));
     h.resize(m * 2), h = Ln(h);
-    FOR (i, 0, m * 2 - 1)
-      g[i] = sub(g[i], h[i]);
+    FOR (i, 0, m * 2 - 1) g[i] = sub(g[i], h[i]);
     q = Mul(g, q, m * 2);
   }
   q.resize(n);
@@ -122,22 +115,18 @@ Poly PolyPow(Poly a, ll k) {
   int lead = m * k;
   Poly b(a.begin() + m, a.end());
   int base = Pow(b[0], k), inv = Pow(b[0], mod - 2);
-  FOR (i, 0, n - m - 1)
-    b[i] = mul(b[i], inv);
+  FOR (i, 0, n - m - 1) b[i] = mul(b[i], inv);
   b = Ln(b);
-  FOR (i, 0, n - m - 1)
-    b[i] = mul(b[i], k % mod);
+  FOR (i, 0, n - m - 1) b[i] = mul(b[i], k % mod);
   b = Exp(b);
-  FOR (i, lead, n - 1)
-    ans[i] = mul(b[i - lead], base);
+  FOR (i, lead, n - 1) ans[i] = mul(b[i - lead], base);
   return ans;
 } // 7d695a
 vector<int> Evaluate(Poly a, vector<int> x) {
   if (x.empty()) return {};
   int n = SZ(x);
   vector<Poly> up(n * 2);
-  FOR (i, 0, n - 1)
-    up[i + n] = {sub(0, x[i]), 1};
+  FOR (i, 0, n - 1) up[i + n] = {sub(0, x[i]), 1};
   for (int i = n - 1; i > 0; i--)
     up[i] = Mul(up[i * 2], up[i * 2 + 1]);
   vector<Poly> down(n * 2);
@@ -151,13 +140,11 @@ vector<int> Evaluate(Poly a, vector<int> x) {
 Poly Interpolate(vector<int> x, vector<int> y) {
   int n = SZ(x);
   vector<Poly> up(n * 2);
-  FOR (i, 0, n - 1)
-    up[i + n] = {sub(0, x[i]), 1};
+  FOR (i, 0, n - 1) up[i + n] = {sub(0, x[i]), 1};
   for (int i = n - 1; i > 0; i--)
     up[i] = Mul(up[i * 2], up[i * 2 + 1]);
   Poly a = Evaluate(Derivative(up[1]), x);
-  FOR (i, 0, n - 1)
-    a[i] = mul(y[i], Pow(a[i], mod - 2));
+  FOR (i, 0, n - 1) a[i] = mul(y[i], Pow(a[i], mod - 2));
   vector<Poly> down(n * 2);
   FOR (i, 0, n - 1) down[i + n] = {a[i]};
   for (int i = n - 1; i > 0; i--) {
@@ -177,13 +164,12 @@ Poly TaylorShift(Poly a, int c) {
   reverse(a.begin(), a.end());
   Poly b(n);
   int w = 1;
-  FOR (i, 0, n - 1)
-    b[i] = mul(ifac[i], w), w = mul(w, c);
+  FOR (i, 0, n - 1) b[i] = mul(ifac[i], w), w = mul(w, c);
   a = Mul(a, b, n), reverse(a.begin(), a.end());
   FOR (i, 0, n - 1) a[i] = mul(a[i], ifac[i]);
   return a;
 } // 3a3763
-vector<int> SamplingShift(vector<int> a, int c, int m){
+vector<int> SamplingShift(vector<int> a, int c, int m) {
   // given f(0), f(1), ..., f(n - 1)
   // return f(c), f(c + 1), ..., f(c + m - 1)
   int n = SZ(a); // 4d649d
@@ -215,8 +201,7 @@ Poly power_proj(vector<int> w, Poly f, int m) {
   f.resize(n), w.resize(n), reverse(w.begin(), w.end());
   int k = 1, n2 = 2 * n, n4 = 4 * n;
   Poly _P(n2), _Q(n2);
-  FOR (i, 0, n - 1)
-    _P[i] = w[i], _Q[i] = sub(0, f[i]);
+  FOR (i, 0, n - 1) _P[i] = w[i], _Q[i] = sub(0, f[i]);
   while (n > 1) {
     Poly R(n2);
     FOR (i, 0, n2 - 1)

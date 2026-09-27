@@ -2,7 +2,7 @@ struct EBCC { // need adj
   int n, dfcnt = 0, bccnt = 0;
   vector<int> dfn, low, bcc, st;
   EBCC() {}
-  EBCC(int n) : n(n) { dfn = low = bcc = vector<int>(n + 1, 0); }
+  EBCC(int n) : n(n), dfn(n + 1), low(dfn), bcc(dfn) {}
   void tarjan(int pos, int fa) {
     dfn[pos] = low[pos] = ++dfcnt;
     st.pb(pos);

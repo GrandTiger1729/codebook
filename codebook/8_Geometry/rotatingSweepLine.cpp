@@ -3,8 +3,7 @@ void rotatingSweepLine(vector<pii> &ps) {
   vector<int> id(n), pos(n);
   vector<pii> line(n * (n - 1));
   FOR (i, 0, n - 1)
-    FOR (j, 0, n - 1)
-      if (i != j) line[m++] = pii(i, j);
+    FOR (j, 0, n - 1) if (i != j) line[m++] = pii(i, j);
   sort(ALL(line), [&](pii a, pii b) {
     return cmp(ps[a.Y] - ps[a.X], ps[b.Y] - ps[b.X]);
   }); // cmp(): polar angle compare
@@ -17,6 +16,7 @@ void rotatingSweepLine(vector<pii> &ps) {
   FOR (i, 0, m - 1) {
     auto l = line[i];
     // do something
-    tie(pos[l.X], pos[l.Y], id[pos[l.X]], id[pos[l.Y]]) = make_tuple(pos[l.Y], pos[l.X], l.Y, l.X);
+    swap(pos[l.X], pos[l.Y]);
+    swap(id[pos[l.X]], id[pos[l.Y]]);
   }
 }

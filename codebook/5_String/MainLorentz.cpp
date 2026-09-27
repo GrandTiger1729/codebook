@@ -4,17 +4,17 @@ void main_lorentz(const string &s, int sft = 0) {
   if (n == 1) return;
   const int nu = n / 2, nv = n - nu;
   const string u = s.substr(0, nu), v = s.substr(nu),
-        ru(u.rbegin(), u.rend()), rv(v.rbegin(), v.rend());
+    ru(u.rbegin(), u.rend()), rv(v.rbegin(), v.rend());
   main_lorentz(u, sft), main_lorentz(v, sft + nu);
   const auto z1 = Zalgo(ru), z2 = Zalgo(v + '#' + u),
              z3 = Zalgo(ru + '#' + rv), z4 = Zalgo(v);
   auto get_z = [](const vector<int> &z, int i) {
     return (0 <= i and i < (int)z.size()) ? z[i] : 0; };
-  auto add_rep = [&](bool left, int c, int l, int k1, int k2) {
-    const int L = max(1, l - k2), R = min(l - left, k1);
+  auto add = [&](bool lf, int c, int l, int k1, int k2) {
+    const int L = max(1, l - k2), R = min(l - lf, k1);
     if (L > R) return;
-    if (left) rep[l].emplace_back(sft + c - R, sft + c - L);
-    else rep[l].emplace_back(sft + c - R - l + 1, sft + c - L - l + 1);
+    const int o = sft + c - (lf ? 0 : l - 1);
+    rep[l].pb(o - R, o - L);
   };
   FOR (cntr, 0, n - 1) {
     int l, k1, k2;
@@ -27,7 +27,6 @@ void main_lorentz(const string &s, int sft = 0) {
       k1 = get_z(z3, nu + 1 + nv - 1 - (cntr - nu));
       k2 = get_z(z4, (cntr - nu) + 1);
     }
-    if (k1 + k2 >= l)
-      add_rep(cntr < nu, cntr, l, k1, k2);
+    if (k1 + k2 >= l) add(cntr < nu, cntr, l, k1, k2);
   }
 } // p \in [l, r] => s[p, p + i) = s[p + i, p + 2i)

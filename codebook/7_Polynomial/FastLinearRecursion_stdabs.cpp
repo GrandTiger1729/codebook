@@ -1,11 +1,11 @@
-int FastLinearRecursion(vector<int> a, vector<int> c, ll k) {
+int FastLinearRecursion(vector<int> a, vector<int> c,
+  ll k) {
   // a_n = sigma c_j * a_{n - j - 1}, 0-based
   // O(NlogNlogK), |a| = |c|
   int n = SZ(a);
   if (k < n) return a[k];
   vector<int> base(n + 1, 1);
-  FOR (i, 0, n - 1)
-    base[i] = sub(0, c[n - i - 1]);
+  FOR (i, 0, n - 1) base[i] = sub(0, c[n - i - 1]);
   vector<int> poly(n);
   (n == 1 ? poly[0] = c[n - 1] : poly[1] = 1);
   auto calc = [&](vector<int> p1, vector<int> p2) {
@@ -16,7 +16,6 @@ int FastLinearRecursion(vector<int> a, vector<int> c, ll k) {
     if (k & 1) res = calc(res, poly);
   }
   int ans = 0;
-  FOR (i, 0, n - 1)
-    ans = add(ans, mul(res[i], a[i]));
+  FOR (i, 0, n - 1) ans = add(ans, mul(res[i], a[i]));
   return ans;
 }

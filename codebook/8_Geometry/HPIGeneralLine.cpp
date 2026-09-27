@@ -19,6 +19,7 @@ bool cov(LN l, LN A, LN B) {
   return sign(a * l.b - b * l.a + c * l.c) * sign(c) >= 0;
 }
 bool operator<(LN a, LN b) {
-  if (int c = cmp(a.dir(), b.dir(), false); c != -1) return c;
-  return i128(abs(b.a) + abs(b.b)) * a.c > i128(abs(a.a) + abs(a.b)) * b.c;
+  if (int c = cmp(a.dir(), b.dir(), false); ~c) return c;
+  return i128(abs(b.a) + abs(b.b)) * a.c >
+    i128(abs(a.a) + abs(a.b)) * b.c;
 }

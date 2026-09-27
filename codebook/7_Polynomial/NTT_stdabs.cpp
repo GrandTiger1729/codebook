@@ -8,8 +8,7 @@ struct NTT {
   NTT() {
     int dw = Pow(G, (mod - 1) / N);
     w[0] = 1;
-    FOR (i, 1, N - 1)
-      w[i] = mul(w[i - 1], dw);
+    FOR (i, 1, N - 1) w[i] = mul(w[i - 1], dw);
   } // 0 <= a[i] < P
   void operator()(vector<int>& a, bool inv = false) {
     int n = SZ(a);
@@ -30,8 +29,7 @@ struct NTT {
     if (inv) {
       reverse(a.begin() + 1, a.end());
       int invn = Pow(n, mod - 2);
-      FOR (i, 0, n - 1)
-        a[i] = mul(a[i], invn);
+      FOR (i, 0, n - 1) a[i] = mul(a[i], invn);
     }
   }
 } ntt;

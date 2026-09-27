@@ -14,17 +14,23 @@ FLAGS="-std=c++20 -O2 -I$CB -I$HERE/.. -I$HERE -w"
 cd "$HERE"
 files=("$@"); [ ${#files[@]} = 0 ] && files=(*/*.cpp)
 pass=0; fail=0
+# In GitHub Actions, turn each failure into an annotation on the PR.
+annotate() { [ -n "${GITHUB_ACTIONS:-}" ] || return 0
+  printf '::error file=verify/stress/%s,title=%s::%s\n' "$1" "$2" \
+    "$(head -c 2000 "$3" | sed ':a;N;$!ba;s/%/%25/g;s/\r/%0D/g;s/\n/%0A/g')"; }
 for f in "${files[@]}"; do
   exe=$OUT/$(echo "${f%.cpp}" | tr / _)
   if ! g++ $FLAGS "$f" -o "$exe" 2>"$exe.cerr"; then
-    echo "COMPILE FAIL  $f"; head -5 "$exe.cerr"; fail=$((fail+1)); continue
+    echo "COMPILE FAIL  $f"; head -5 "$exe.cerr"; annotate "$f" "compile failed" "$exe.cerr"
+    fail=$((fail+1)); continue
   fi
   start=$EPOCHREALTIME
   if timeout 300 "$exe" >"$exe.out" 2>&1; then
     printf "PASS  %-50s %6.1fs  %s\n" "$f" "$(awk "BEGIN{print $EPOCHREALTIME - $start}")" "$(tail -1 "$exe.out")"
     pass=$((pass+1))
   else
-    echo "FAIL  $f"; tail -5 "$exe.out"; fail=$((fail+1))
+    echo "FAIL  $f"; tail -5 "$exe.out"; tail -20 "$exe.out" > "$exe.tail"
+    annotate "$f" "stress test failed" "$exe.tail"; fail=$((fail+1))
   fi
 done
 echo "$pass passed, $fail failed"

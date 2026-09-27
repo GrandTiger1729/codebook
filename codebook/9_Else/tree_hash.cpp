@@ -8,8 +8,6 @@ ull shift(ull x) {
 }
 ull dfs(int u, int f) {
   ull sum = seed;
-  for (int i : G[u])
-    if (i != f)
-      sum += shift(dfs(i, u));
+  for (int i : G[u]) if (i != f) sum += shift(dfs(i, u));
   return h[u] = sum;
 }

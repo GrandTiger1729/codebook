@@ -6,7 +6,6 @@ void GomoryHu(int n) { // 0-base
     Dinic.reset();
     add_edge(i, g[i], Dinic.maxflow(i, g[i]));
     FOR (j, i + 1, n - 1)
-      if (g[j] == g[i] && ~Dinic.dis[j])
-        g[j] = i;
+      if (g[j] == g[i] && ~Dinic.dis[j]) g[j] = i;
   }
 }

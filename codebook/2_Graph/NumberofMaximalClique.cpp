@@ -3,8 +3,7 @@ struct BronKerbosch { // 1-base
   int cnt, all[N][N], some[N][N], none[N][N];
   void init(int _n) {
     n = _n;
-    FOR (i, 1, n)
-      FOR (j, 1, n) g[i][j] = 0;
+    FOR (i, 1, n) FOR (j, 1, n) g[i][j] = 0;
   }
   void add_edge(int u, int v) {
     g[u][v] = g[v][u] = 1;

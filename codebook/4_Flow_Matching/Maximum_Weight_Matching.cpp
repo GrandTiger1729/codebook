@@ -8,8 +8,7 @@ struct WeightGraph { // 1-based
     g(nx + 1, vector<edge>(nx + 1)), slk(nx + 1),
     flo(nx + 1), flo_from(nx + 1, vector(n + 1, 0)) {
     match = st = pa = sl = vis = slk;
-    FOR (u, 1, n)
-      FOR (v, 1, n) g[u][v] = {u, v, 0};
+    FOR (u, 1, n) FOR (v, 1, n) g[u][v] = {u, v, 0};
   }
   int E(edge e)
   { return lab[e.u] + lab[e.v] - g[e.u][e.v].w * 2; }
@@ -135,8 +134,7 @@ struct WeightGraph { // 1-based
         if (int s = slk[x];
           st[x] == x && s && sl[x] <= 0)
           d = min(d, E(g[s][x]) / (sl[x] + 2));
-      FOR (u, 1, n)
-        if (sl[st[u]] == 1) lab[u] += d;
+      FOR (u, 1, n) if (sl[st[u]] == 1) lab[u] += d;
         else if (sl[st[u]] == 0) {
           if (lab[u] <= d) return false;
           lab[u] -= d;

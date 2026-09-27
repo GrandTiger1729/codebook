@@ -25,7 +25,6 @@ struct SCC { // need adj
   }
   void build_adj() {
     FOR (i, 1, n) for (int j : adj[i])
-      if (scc[i] != scc[j])
-        scc_adj[scc[i]].pb(scc[j]);
+      if (scc[i] != scc[j]) scc_adj[scc[i]].pb(scc[j]);
   }
 };

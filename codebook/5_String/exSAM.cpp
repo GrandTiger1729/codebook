@@ -43,8 +43,7 @@ struct exSAM {
       int cur = q.front();
       q.pop();
       FOR (i, 0, CNUM - 1)
-        if (next[cur][i])
-          q.push(insertSAM(cur, i));
+        if (next[cur][i]) q.push(insertSAM(cur, i));
     }
     vector<int> lc(tot);
     FOR (i, 1, tot - 1) ++lc[len[i]];

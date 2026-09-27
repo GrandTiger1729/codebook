@@ -26,8 +26,7 @@ double simplex(int n, int m){
     if (r < n) {
       swap(ix[s], ix[r + m]);
       d[r][s] = 1.0 / d[r][s];
-      FOR (j, 0, m)
-        if (j != s) d[r][j] *= -d[r][s];
+      FOR (j, 0, m) if (j != s) d[r][j] *= -d[r][s];
       FOR (i, 0, n + 1)
         if (i != r) {
           FOR (j, 0, m)

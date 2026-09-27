@@ -12,9 +12,7 @@ struct Bipartite_Matching { // 0-base
   bool bfs() {
     queue<int> q;
     fill_n(dis, l + 1, -1);
-    FOR (i, 0, l - 1)
-      if (!~mp[i])
-        q.push(i), dis[i] = 0;
+    FOR (i, 0, l - 1) if (!~mp[i]) q.push(i), dis[i] = 0;
     while (!q.empty()) {
       int u = q.front();
       q.pop();

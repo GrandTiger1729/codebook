@@ -33,9 +33,7 @@ struct CircleCover {
     FOR (i, 0, C - 1) {
       int E = 0, cnt = 1;
       pdd o = c[i].O; double R = c[i].R;
-      FOR (j, 0, C - 1)
-        if(j != i && overlap[j][i])
-          ++cnt;
+      FOR (j, 0, C - 1) if(j != i && overlap[j][i]) ++cnt;
       FOR (j, 0, C - 1)
         if(i != j && g[i][j]) {
           pdd aa, bb;

@@ -14,8 +14,7 @@ struct Query {
       lca = -1, L = out[c ^ u ^ v], R = out[c];
     else if (out[u] < in[v])
       lca = c, L = out[u], R = in[v];
-    else
-      lca = c, L = out[v], R = in[u];
+    else lca = c, L = out[v], R = in[u];
     LBid = L / blk;
   }
   bool operator<(const Query &q) const {

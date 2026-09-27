@@ -46,8 +46,7 @@ struct Matching { // 0-base
   { G[u].pb(v), G[v].pb(u); }
   int solve() {
     int ans = 0;
-    FOR (x, 0, n - 1)
-      if (match[x] == n) ans += Bfs(x);
+    FOR (x, 0, n - 1) if (match[x] == n) ans += Bfs(x);
     return ans;
   } // match[x] == n means not matched
 };

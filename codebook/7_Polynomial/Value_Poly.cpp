@@ -18,8 +18,7 @@ struct Poly {
     return rt;
   }
   void raise() { // g(x) = sigma{base:x} f(x)
-    if (SZ(poly) == 1 && poly[0] == 0)
-      return;
+    if (SZ(poly) == 1 && poly[0] == 0) return;
     mint nw = get_val(base + SZ(poly));
     poly.pb(nw);
     FOR (i, 1, SZ(poly) - 1) poly[i] += poly[i - 1];

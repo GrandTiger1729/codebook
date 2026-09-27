@@ -5,7 +5,7 @@ inside circumcircle of any triangle. */
 struct Edge {
   int id; // oidx[id]
   list<Edge>::iterator twin;
-  Edge(int _id = 0):id(_id) {}
+  Edge(int _id = 0) : id(_id) {}
 };
 struct Delaunay { // 0-base
   int n, oidx[N];

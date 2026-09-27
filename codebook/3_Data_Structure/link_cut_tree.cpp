@@ -62,7 +62,7 @@ Splay* access(Splay *x) {
   return q;
 }
 void root_path(Splay *x) { access(x), splay(x); }
-void chroot(Splay *x){
+void chroot(Splay *x) {
   root_path(x), x->give_tag(1);
   x->push(), x->pull();
 }

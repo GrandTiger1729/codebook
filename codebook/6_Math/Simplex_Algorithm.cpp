@@ -8,7 +8,7 @@ int ix[MAXN + MAXM]; // !!! array all indexed from 0
 // x[] is the optimal solution vector
 // usage :
 // value = simplex(a, b, c, N, M);
-double simplex(int n, int m){
+double simplex(int n, int m) {
   ++m;
   fill_n(d[n], m + 1, 0);
   fill_n(d[n + 1], m + 1, 0);
@@ -57,7 +57,7 @@ double simplex(int n, int m){
   fill_n(x, m, 0);
   FOR (i, m,
     n + m - 1) { // the missing enumerated x[i] = 0
-    if (ix[i] < m - 1){
+    if (ix[i] < m - 1) {
       ans += d[i - m][m] * c[ix[i]];
       x[ix[i]] = d[i-m][m];
     }

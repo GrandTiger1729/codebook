@@ -77,7 +77,7 @@ int main() {
       edges[{f.a, f.b}]++, edges[{f.b, f.c}]++, edges[{f.c, f.a}]++;
       sa += area(h.P[f.a], h.P[f.b], h.P[f.c]) / 2;
     }
-    for (auto [e, c] : edges) assert(c == 1 && edges.count({e.S, e.F}) && edges[{e.S, e.F}] == 1);
+    for (auto [e, c] : edges) assert((c == 1 && edges.count({e.S, e.F}) && edges[{e.S, e.F}] == 1));
     assert(fabs(sa - want.area) < 1e-6 * max(1.0, want.area));
     assert(fabs(h.get_volume() - want.vol) < 1e-6 * max(1.0, want.vol));
     assert(h.polygon_face_num() == want.faces);

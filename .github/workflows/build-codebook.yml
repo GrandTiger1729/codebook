@@ -1,41 +1,58 @@
 name: Build Codebook
 on:
   push:
-    branches:
-      - master
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: write # publish the "latest" release from master
 jobs:
-  build-codebook:
+  pdf:
     runs-on: ubuntu-latest
     steps:
-      - name: Get codebook source
-        uses: actions/checkout@v4
-        with:
-          path: source
-      - name: Get codebook pdf branch
-        uses: actions/checkout@v4
-        with:
-          ref: codebook 
-          path: pdf
+      - uses: actions/checkout@v7
+      - name: Every listing fits in 58 columns
+        run: python3 verify/check_layout.py
       - name: Get Ubuntu fonts
         run: |
-          wget https://assets.ubuntu.com/v1/0cef8205-ubuntu-font-family-0.83.zip -O ubuntu-font.zip
-          unzip ubuntu-font.zip
+          wget -q https://assets.ubuntu.com/v1/0cef8205-ubuntu-font-family-0.83.zip -O ubuntu-font.zip
+          unzip -q ubuntu-font.zip
       - name: Build
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: source/codebook/codebook.tex
+          root_file: codebook/codebook.tex
           latexmk_use_xelatex: true
-          latexmk_shell_escape: true
+          latexmk_shell_escape: true # \inputcode hashes each file with cpp
           work_in_root_file_dir: true
           extra_system_packages: "gcc g++"
           extra_fonts: |
             ./ubuntu-font-family-0.83/*.ttf
-      - name: Push codebook.pdf
+      - name: At most 25 pages
         run: |
-          cp source/codebook/codebook.pdf pdf/codebook.pdf
-          cd pdf
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add .
-          git commit -m "Auto build, $(date +'%Y-%m-%d_%H:%M:%S')"
-          git push
+          sudo apt-get install -y -qq poppler-utils > /dev/null
+          pages=$(pdfinfo codebook/codebook.pdf | awk '/^Pages:/ {print $2}')
+          echo "codebook.pdf: **$pages** pages (limit 25)" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$pages" -gt 25 ]; then
+            echo "::error::codebook.pdf has $pages pages, the limit is 25"
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v7
+        with:
+          name: codebook-pdf
+          path: codebook/codebook.pdf
+      - name: Publish to the "latest" release
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view latest > /dev/null 2>&1 ||
+            gh release create latest --title "Latest codebook" --notes ""
+          gh release upload latest codebook/codebook.pdf --clobber
+          gh release edit latest --notes "Built by CI from $GITHUB_SHA."
+
+  stress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7 # no submodules: stress tests need no LC data
+      - name: Local stress tests (ASan + UBSan + _GLIBCXX_DEBUG)
+        run: verify/stress/run.sh

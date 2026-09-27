@@ -28,8 +28,7 @@ struct palindromic_tree {
     if (!St[cur].next[c]) {
       int now = (int)St.size();
       St.pb(St[cur].len + 2);
-      St[now].fail =
-        St[get_fail(St[cur].fail)].next[c];
+      St[now].fail = St[get_fail(St[cur].fail)].next[c];
       St[cur].next[c] = now;
       St[now].num = St[St[now].fail].num + 1;
     }

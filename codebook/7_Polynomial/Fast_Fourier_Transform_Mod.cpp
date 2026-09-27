@@ -17,8 +17,7 @@ vector<ll> conv_mod(
   FOR (i, 0, n - 1) {
     int j = -i & (n - 1);
     ol[j] = (L[i] + conj(L[j])) * R[i] / (2.0 * n);
-    os[j] =
-      (L[i] - conj(L[j])) * R[i] / (2.0 * n) / 1i;
+    os[j] = (L[i] - conj(L[j])) * R[i] / (2.0 * n) / 1i;
   }
   fft(ol), fft(os);
   FOR (i, 0, m - 1) {

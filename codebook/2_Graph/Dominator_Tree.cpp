@@ -32,11 +32,10 @@ struct dominator_tree { // 1-base
     dfs(root);
     for (int i = Time; i > 1; i--) {
       int u = id[i];
-      for (auto v : rG[u])
-        if (v = dfn[v]) {
-          find(v, i);
-          semi[i] = min(semi[i], semi[best[v]]);
-        }
+      for (auto v : rG[u]) if (v = dfn[v]) {
+        find(v, i);
+        semi[i] = min(semi[i], semi[best[v]]);
+      }
       tree[semi[i]].pb(i);
       for (auto v : tree[pa[i]]) {
         find(v, pa[i]);

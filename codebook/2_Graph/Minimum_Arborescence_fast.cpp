@@ -14,27 +14,26 @@ vector<int> dmst(const vector<E> &e, int n, int root) {
   vector<int> v(n * 2, -1), pa(n * 2, -1), r(n * 2);
   v[root] = n + 1;
   int pc = n;
-  FOR (i, 0, n - 1)
-    if (v[i] == -1) {
-      for (int p = i; v[p] == -1 || v[p] == i;
-        p = dsu.boss(e[r[p]].s)) {
-        if (v[p] == i) {
-          int q = p;
-          p = pc++;
-          do {
-            h[q].add_lazy(-h[q].top().F);
-            pa[q] = p, dsu.Union(p, q),
-            h[p].join(h[q]);
-          } while ((q = dsu.boss(e[r[q]].s)) != p);
-        }
-        v[p] = i;
-        while (!h[p].empty() &&
-          dsu.boss(e[h[p].top().S].s) == p)
-          h[p].pop();
-        if (h[p].empty()) return {}; // no solution
-        r[p] = h[p].top().S;
+  FOR (i, 0, n - 1) if (v[i] == -1) {
+    for (int p = i; v[p] == -1 || v[p] == i;
+      p = dsu.boss(e[r[p]].s)) {
+      if (v[p] == i) {
+        int q = p;
+        p = pc++;
+        do {
+          h[q].add_lazy(-h[q].top().F);
+          pa[q] = p, dsu.Union(p, q),
+          h[p].join(h[q]);
+        } while ((q = dsu.boss(e[r[q]].s)) != p);
       }
+      v[p] = i;
+      while (!h[p].empty() &&
+        dsu.boss(e[h[p].top().S].s) == p)
+        h[p].pop();
+      if (h[p].empty()) return {}; // no solution
+      r[p] = h[p].top().S;
     }
+  }
   vector<int> ans;
   for (int i = pc - 1; i >= 0; i--) {
     if (i == root || v[i] == n) continue;

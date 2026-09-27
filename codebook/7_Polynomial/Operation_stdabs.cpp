@@ -213,11 +213,10 @@ Poly power_proj(vector<int> w, Poly f, int m) {
       QQ[j] = add(QQ[j], add(_Q[i], R[i]));
     }
     fill(ALL(_P), 0), fill(ALL(_Q), 0);
-    FOR (j, 0, 2 * k - 1)
-      FOR (i, 0, n / 2 - 1) {
-        _P[n * j + i] = PQ[2 * n * j + 2 * i + 1];
-        _Q[n * j + i] = QQ[2 * n * j + 2 * i + 0];
-      }
+    FOR (j, 0, 2 * k - 1) FOR (i, 0, n / 2 - 1) {
+      _P[n * j + i] = PQ[2 * n * j + 2 * i + 1];
+      _Q[n * j + i] = QQ[2 * n * j + 2 * i + 0];
+    }
     n /= 2, k *= 2;
   }
   Poly p(k);

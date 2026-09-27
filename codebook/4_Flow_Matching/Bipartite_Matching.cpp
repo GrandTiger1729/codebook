@@ -16,9 +16,8 @@ struct Bipartite_Matching { // 0-base
     while (!q.empty()) {
       int u = q.front();
       q.pop();
-      for (int e : G[u])
-        if (!~dis[mq[e]])
-          q.push(mq[e]), dis[mq[e]] = dis[u] + 1;
+      for (int e : G[u]) if (!~dis[mq[e]])
+        q.push(mq[e]), dis[mq[e]] = dis[u] + 1;
     }
     return dis[l] != -1;
   }

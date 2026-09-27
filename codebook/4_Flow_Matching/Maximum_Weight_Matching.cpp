@@ -111,9 +111,8 @@ struct WeightGraph { // 1-based
   bool matching() {
     fill(ALL(sl), -1), fill(ALL(slk), 0);
     q = queue<int>();
-    FOR (x, 1, nx)
-      if (st[x] == x && !match[x])
-        pa[x] = sl[x] = 0, q_push(x);
+    FOR (x, 1, nx) if (st[x] == x && !match[x])
+      pa[x] = sl[x] = 0, q_push(x);
     if (q.empty()) return false;
     for (;;) {
       while ((int)q.size()) {
@@ -127,21 +126,20 @@ struct WeightGraph { // 1-based
           }
       }
       int d = INF;
-      FOR (b, n + 1, nx)
-        if (st[b] == b && sl[b] == 1)
-          d = min(d, lab[b] / 2);
+      FOR (b, n + 1, nx) if (st[b] == b && sl[b] == 1)
+        d = min(d, lab[b] / 2);
       FOR (x, 1, nx)
         if (int s = slk[x];
           st[x] == x && s && sl[x] <= 0)
           d = min(d, E(g[s][x]) / (sl[x] + 2));
-      FOR (u, 1, n) if (sl[st[u]] == 1) lab[u] += d;
+      FOR (u, 1, n)
+        if (sl[st[u]] == 1) lab[u] += d;
         else if (sl[st[u]] == 0) {
           if (lab[u] <= d) return false;
           lab[u] -= d;
         }
-      FOR (b, n + 1, nx)
-        if (st[b] == b && sl[b] >= 0)
-          lab[b] += d * (2 - 4 * sl[b]);
+      FOR (b, n + 1, nx) if (st[b] == b && sl[b] >= 0)
+        lab[b] += d * (2 - 4 * sl[b]);
       FOR (x, 1, nx)
         if (int s = slk[x]; st[x] == x &&
             s && st[s] != x && E(g[s][x]) == 0)
@@ -156,17 +154,15 @@ struct WeightGraph { // 1-based
     fill(ALL(match), 0);
     FOR (u, 0, n) st[u] = u, flo[u].clear();
     int w_max = 0;
-    FOR (u, 1, n)
-      FOR (v, 1, n) {
-        flo_from[u][v] = (u == v ? u : 0);
-        w_max = max(w_max, g[u][v].w);
-      }
+    FOR (u, 1, n) FOR (v, 1, n) {
+      flo_from[u][v] = (u == v ? u : 0);
+      w_max = max(w_max, g[u][v].w);
+    }
     fill(ALL(lab), w_max);
     int n_matches = 0; ll tot_weight = 0;
     while (matching()) ++n_matches;
-    FOR (u, 1, n)
-      if (match[u] && match[u] < u)
-        tot_weight += g[u][match[u]].w;
+    FOR (u, 1, n) if (match[u] && match[u] < u)
+      tot_weight += g[u][match[u]].w;
     return make_pair(tot_weight, n_matches);
   }
   void add_edge(int u, int v, int w)

@@ -21,11 +21,10 @@ vector<int> matroid_isect(int n, M1 &m1, M2 &m2) {
         t = u;
         break;
       }
-      FOR (v, 0, n - 1)
-        if (pre[v] == -2)
-          if (sel[u] ? !sel[v] && m1.ind(u, v)
-                     : sel[v] && m2.ind(v, u))
-            pre[v] = u, q.pb(v);
+      FOR (v, 0, n - 1) if (pre[v] == -2)
+        if (sel[u] ? !sel[v] && m1.ind(u, v)
+                   : sel[v] && m2.ind(v, u))
+          pre[v] = u, q.pb(v);
     }
     if (t < 0) return sel;
     for (int v = t; v != -1; v = pre[v]) sel[v] ^= 1;

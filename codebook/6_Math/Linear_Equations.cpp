@@ -26,9 +26,8 @@ struct matrix { // m variables, n equations
         M[i][j] = M[i][j] / M[i][p];
       sol[p] = M[i][m], fixed[p] = 1;
     }
-    FOR (i, 0, n - 1)
-      for (int j = 0, k = 0; j < m; j++)
-        if (!fixed[j]) basis[k++][pv[i]] = -M[i][j];
+    FOR (i, 0, n - 1) for (int j = 0, k = 0; j < m; j++)
+      if (!fixed[j]) basis[k++][pv[i]] = -M[i][j];
     for (int j = 0, k = 0; j < m; j++)
       if (!fixed[j]) basis[k++][j] = 1;
     return rank;

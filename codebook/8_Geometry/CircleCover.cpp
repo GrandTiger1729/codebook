@@ -26,23 +26,21 @@ struct CircleCover {
     fill_n(Area, C + 2, 0);
     FOR (i, 0, C - 1)
       FOR (j, 0, C - 1) overlap[i][j] = contain(i, j);
-    FOR (i, 0, C - 1)
-      FOR (j, 0, C - 1)
-        g[i][j] = !(overlap[i][j] || overlap[j][i] ||
-            disjuct(c[i], c[j], -1));
+    FOR (i, 0, C - 1) FOR (j, 0, C - 1)
+      g[i][j] = !(overlap[i][j] || overlap[j][i] ||
+          disjuct(c[i], c[j], -1));
     FOR (i, 0, C - 1) {
       int E = 0, cnt = 1;
       pdd o = c[i].O; double R = c[i].R;
       FOR (j, 0, C - 1) cnt += j != i && overlap[j][i];
-      FOR (j, 0, C - 1)
-        if (i != j && g[i][j]) {
-          pdd aa, bb;
-          CCinter(c[i], c[j], aa, bb);
-          double A = atan2(aa.Y - o.Y, aa.X - o.X);
-          double B = atan2(bb.Y - o.Y, bb.X - o.X);
-          eve[E++] = {bb, B, 1}, eve[E++] = {aa, A, -1};
-          if (B > A) ++cnt;
-        }
+      FOR (j, 0, C - 1) if (i != j && g[i][j]) {
+        pdd aa, bb;
+        CCinter(c[i], c[j], aa, bb);
+        double A = atan2(aa.Y - o.Y, aa.X - o.X);
+        double B = atan2(bb.Y - o.Y, bb.X - o.X);
+        eve[E++] = {bb, B, 1}, eve[E++] = {aa, A, -1};
+        if (B > A) ++cnt;
+      }
       if (E == 0) Area[cnt] += acos(-1) * R * R;
       else {
         sort(eve, eve + E);

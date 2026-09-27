@@ -29,11 +29,10 @@ struct AC_Automatan {
         else rnx[R][i] = R > 1 ? rnx[fl[R]][i] : 1;
     }
   }
+  // count every pattern in t: walk t along rnx, ++cnt
+  // at each node, then solve() pushes cnt up fail links
   void solve() {
-    for (int i = top - 2; i > 0; i--)  // if you want to count all string occurrences in query string t
-       cnt[fl[ord[i]]] += cnt[ord[i]]; // iterate in forward order and
-  }                                    // propagate counts from ord[i] to fl[ord[i]]
+    for (int i = top - 2; i > 0; i--)
+      cnt[fl[ord[i]]] += cnt[ord[i]];
+  }
 } ac;
-
-
-

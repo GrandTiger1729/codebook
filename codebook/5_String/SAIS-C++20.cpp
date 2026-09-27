@@ -6,7 +6,7 @@ auto sais(const auto &s) {
   vector<int> sa(n); auto I = views::iota(0, n);
   vector<bool> t(n, true);
   for (int i = n - 2; i >= 0; i--)
-    t[i] = (s[i] == s[i + 1] ? t[i + 1] : s[i] < s[i + 1]);
+    t[i] = s[i] == s[i + 1] ? t[i + 1] : s[i] < s[i + 1];
   auto is_lms = views::filter([&t](int x) {
     return x && t[x] && !t[x - 1];
   });

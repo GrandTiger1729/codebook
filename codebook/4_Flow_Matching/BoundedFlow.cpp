@@ -7,7 +7,7 @@ struct BoundedFlow { // 0-base
   int n, s, t, dis[N], cur[N], cnt[N];
   void init(int _n) {
     n = _n;
-    FOR (i, 0, n + 1) G[i].clear(), cnt[i] = 0;
+    FOR (i, 0, n + 2) G[i].clear(), cnt[i] = 0;
   }
   void add_edge(int u, int v, int lcap, int rcap) {
     cnt[u] -= lcap, cnt[v] += lcap;

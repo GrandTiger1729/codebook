@@ -2,7 +2,7 @@ map<ll, int> cnt;
 void PollardRho(ll n) {
   if (n == 1) return;
   if (prime(n)) return ++cnt[n], void();
-  if (n % 2 == 0) return PollardRho(n / 2), ++cnt[2], void();
+  if (n % 2 == 0) return ++cnt[2], PollardRho(n / 2);
   ll x = 2, y = 2, d = 1, p = 1;
   #define f(x, n, p) (((__int128)x * x + p) % n)
   while (true) {

@@ -1,22 +1,15 @@
-pdd Minimum_Enclosing_Circle(vector<pdd> dots, double &r) {
-  pdd cent;
+pdd Minimum_Enclosing_Circle(vector<pdd> p, double &r) {
   static mt19937 rng(random_device{}());
-  shuffle(ALL(dots), rng);
-  cent = dots[0], r = 0;
-  FOR (i, 1, SZ(dots) - 1)
-    if (abs(dots[i] - cent) > r) {
-      cent = dots[i], r = 0;
-      FOR (j, 0, i - 1)
-        if (abs(dots[j] - cent) > r) {
-          cent = (dots[i] + dots[j]) / 2;
-          r = abs(dots[i] - cent);
-          FOR (k, 0, j - 1)
-            if (abs(dots[k] - cent) > r) {
-              cent =
-                circenter(dots[i], dots[j], dots[k]);
-              r = abs(dots[i] - cent);
-            }
-        }
+  shuffle(ALL(p), rng);
+  pdd c = p[0]; r = 0;
+  FOR (i, 1, SZ(p) - 1) if (abs(p[i] - c) > r) {
+    c = p[i], r = 0;
+    FOR (j, 0, i - 1) if (abs(p[j] - c) > r) {
+      c = (p[i] + p[j]) / 2, r = abs(p[i] - c);
+      FOR (k, 0, j - 1) if (abs(p[k] - c) > r)
+        c = circenter(p[i], p[j], p[k]),
+        r = abs(p[i] - c);
     }
-  return cent;
-}
+  }
+  return c;
+} // expected O(n)

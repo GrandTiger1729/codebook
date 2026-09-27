@@ -44,18 +44,22 @@ bool seg_intersect(pdd p1, pdd p2, pdd p3, pdd p4) {
       btw(p3, p4, p1) || btw(p3, p4, p2);
   return a123 * a124 <= 0 && a341 * a342 <= 0;
 }
-pdd intersect(pdd p1, pdd p2, pdd p3, pdd p4) {
+pdd intersect(pdd p1, pdd p2, pdd p3, pdd p4) { // C^3/C^2
   double a123 = cross(p2 - p1, p3 - p1);
   double a124 = cross(p2 - p1, p4 - p1);
-  return (p4 * a123 - p3 * a124) / (a123 - a124); // C^3 / C^2
+  return (p4 * a123 - p3 * a124) / (a123 - a124);
 }
 pdd perp(pdd p1)
 { return pdd(-p1.Y, p1.X); }
-pdd projection(pdd p1, pdd p2, pdd p3)
-{ return p1 + (p2 - p1) * dot(p3 - p1, p2 - p1) / abs2(p2 - p1); }
+pdd projection(pdd p1, pdd p2, pdd p3) { // p3 onto p1p2
+  pdd d = p2 - p1;
+  return p1 + d * dot(p3 - p1, d) / abs2(d);
+}
 pdd reflection(pdd p1, pdd p2, pdd p3)
-{ return p3 + perp(p2 - p1) * cross(p3 - p1, p2 - p1) / abs2(p2 - p1) * 2; }
-pdd linearTransformation(pdd p0, pdd p1, pdd q0, pdd q1, pdd r) {
-  pdd dp = p1 - p0, dq = q1 - q0, num(cross(dp, dq), dot(dp, dq));
-  return q0 + pdd(cross(r - p0, num), dot(r - p0, num)) / abs2(dp);
-} // from line p0--p1 to q0--q1, apply to r
+{ return projection(p1, p2, p3) * 2 - p3; }
+pdd linearTransformation(pdd p0, pdd p1, pdd q0,
+  pdd q1, pdd r) { // map line p0p1 onto q0q1, apply to r
+  pdd dp = p1 - p0, dq = q1 - q0, r0 = r - p0;
+  pdd n(cross(dp, dq), dot(dp, dq));
+  return q0 + pdd(cross(r0, n), dot(r0, n)) / abs2(dp);
+}

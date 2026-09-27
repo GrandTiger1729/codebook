@@ -1,6 +1,6 @@
 typedef pair<ll, ll> pll;
 ll road[N][N]; // input here
-struct MinimumMeanCycle {
+struct MinimumMeanCycle { // needs every weight > 0
   ll dp[N + 5][N], n;
   pll solve() {
     ll a = -1, b = -1, L = n + 1;
@@ -12,7 +12,7 @@ struct MinimumMeanCycle {
     FOR (i, 0, n - 1) {
       if (dp[L][i] >= INF) continue;
       ll ta = 0, tb = 1;
-      FOR (j, 1, n - 1)
+      FOR (j, 1, n)
         if (dp[j][i] < INF &&
           ta * (L - j) < (dp[L][i] - dp[j][i]) * tb)
           ta = dp[L][i] - dp[j][i], tb = L - j;

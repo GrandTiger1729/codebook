@@ -46,19 +46,19 @@ struct SteinerTree { // 0-base, need INF
         dp[msk][w] = vcst[w];
       }
       FOR (i, 0, n - 1)
-        for (int s = (msk - 1) & msk; s; s = (s - 1) & msk)
-          if (dp[s][i] + dp[msk ^ s][i] - vcst[i] < dp[msk][i])
-            dp[msk][i] = dp[s][i] + dp[msk ^ s][i] - vcst[i],
-            fr[msk][i] = s;
+        for (int s = (msk - 1) & msk; s; --s &= msk)
+          if (ll v = dp[s][i] + dp[msk ^ s][i] - vcst[i];
+            v < dp[msk][i])
+            dp[msk][i] = v, fr[msk][i] = s;
       FOR (i, 0, n - 1) FOR (j, 0, n - 1) // in place is
         if (dp[msk][j] + dst[j][i] < dp[msk][i]) // fine
           dp[msk][i] = dp[msk][j] + dst[j][i],
           fr[msk][i] = -j - 1;
     }
-    int b = min_element(dp[full], dp[full] + n) - dp[full];
+    ll *d = dp[full]; int b = min_element(d, d + n) - d;
     ans.clear(), walk(full, b);
     sort(ans.begin(), ans.end());
     ans.erase(unique(ans.begin(), ans.end()), ans.end());
-    return dp[full][b];
+    return d[b];
   }
 }; // O(V 3^T + V^2 2^T)

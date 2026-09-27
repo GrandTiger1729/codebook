@@ -10,18 +10,20 @@ convex_hull_3D(const vector<Point> &_P): res(), P(_P) {
   int n = SZ(P);
   if (n <= 2) return; // be careful about edge case
   // ensure first 4 points are not coplanar
-  swap(P[1], *find_if(ALL(P), [&](auto p) { return sign(abs2(P[0] - p)) != 0; }));
-  swap(P[2], *find_if(ALL(P), [&](auto p) { return sign(abs2(cross3(p, P[0], P[1]))) != 0; }));
-  swap(P[3], *find_if(ALL(P), [&](auto p) { return sign(volume(P[0], P[1], P[2], p)) != 0; }));
+  swap(P[1], *find_if(ALL(P), [&](auto p)
+    { return sign(abs(P[0] - p)) != 0; }));
+  swap(P[2], *find_if(ALL(P), [&](auto p)
+    { return sign(abs(cross3(p, P[0], P[1]))) != 0; }));
+  swap(P[3], *find_if(ALL(P), [&](auto p)
+    { return sign(volume(P[0], P[1], P[2], p)) != 0; }));
   vector<vector<int>> flag(n, vector<int>(n));
   res.emplace_back(0, 1, 2); res.emplace_back(2, 1, 0);
   FOR (i, 3, n - 1) {
     vector<Face> next;
-    for (auto f : res) {
-      int d = sign(volume(P[f.a], P[f.b], P[f.c], P[i]));
-      if (d <= 0) next.pb(f);
-      int ff = (d > 0) - (d < 0);
-      flag[f.a][f.b] = flag[f.b][f.c] = flag[f.c][f.a] = ff;
+    for (auto [a, b, c] : res) {
+      int d = sign(volume(P[a], P[b], P[c], P[i]));
+      if (d <= 0) next.pb(a, b, c);
+      flag[a][b] = flag[b][c] = flag[c][a] = d;
     }
     for (auto f : res) {
       auto add = [&](int x, int y) {
@@ -36,15 +38,16 @@ convex_hull_3D(const vector<Point> &_P): res(), P(_P) {
   }
 }
 bool same(Face s, Face t) {
-  if (sign(volume(P[s.a], P[s.b], P[s.c], P[t.a])) != 0) return 0;
-  if (sign(volume(P[s.a], P[s.b], P[s.c], P[t.b])) != 0) return 0;
-  if (sign(volume(P[s.a], P[s.b], P[s.c], P[t.c])) != 0) return 0;
+  for (int x : {t.a, t.b, t.c})
+    if (sign(volume(P[s.a], P[s.b], P[s.c], P[x])))
+      return 0;
   return 1;
 }
 int polygon_face_num() {
   int ans = 0;
   FOR (i, 0, SZ(res) - 1)
-    ans += none_of(res.begin(), res.begin() + i, [&](Face g) { return same(res[i], g); });
+    ans += none_of(res.begin(), res.begin() + i,
+      [&](Face g) { return same(res[i], g); });
   return ans;
 }
 double get_volume() {
@@ -54,12 +57,8 @@ double get_volume() {
   return fabs(ans / 6);
 }
 double get_dis(Point p, Face f) {
-  Point p1 = P[f.a], p2 = P[f.b], p3 = P[f.c];
-  double a = (p2.y - p1.y) * (p3.z - p1.z) - (p2.z - p1.z) * (p3.y - p1.y);
-  double b = (p2.z - p1.z) * (p3.x - p1.x) - (p2.x - p1.x) * (p3.z - p1.z);
-  double c = (p2.x - p1.x) * (p3.y - p1.y) - (p2.y - p1.y) * (p3.x - p1.x);
-  double d = 0 - (a * p1.x + b * p1.y + c * p1.z);
-  return fabs(a * p.x + b * p.y + c * p.z + d) / sqrt(a * a + b * b + c * c);
+  Point a = P[f.a], b = P[f.b], c = P[f.c];
+  return fabs(volume(a, b, c, p)) / area(a, b, c);
 }
 };
 // n^2 delaunay: facets with negative z normal of

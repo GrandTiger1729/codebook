@@ -34,7 +34,8 @@ struct Delaunay { // 0-base
       pll pt[2] = {p[nw[0]], p[nw[1]]};
       for (auto it : head[nw[t]]) {
         int v = ori(pt[1], pt[0], p[it.id]);
-        if (v > 0 || (v == 0 && abs2(pt[t ^ 1] - p[it.id]) < abs2(pt[1] - pt[0])))
+        if (v > 0 || (v == 0 && abs2(pt[t ^ 1] - p[it.id])
+          < abs2(pt[1] - pt[0])))
           return nw[t] = it.id, true;
       }
       return false;
@@ -51,9 +52,11 @@ struct Delaunay { // 0-base
               in_cc({pt[0], pt[1], p[ch]}, p[it.id])))
             ch = it.id, sd = t;
       if (ch == -1) break; // upper common tangent
-      for (auto it = head[nw[sd]].begin(); it != head[nw[sd]].end(); )
-        if (seg_strict_intersect(pt[sd], p[it->id], pt[sd ^ 1], p[ch]))
-          head[it->id].erase(it->twin), head[nw[sd]].erase(it++);
+      auto &hd = head[nw[sd]];
+      for (auto it = hd.begin(); it != hd.end(); )
+        if (seg_strict_intersect(pt[sd], p[it->id],
+          pt[sd ^ 1], p[ch]))
+          head[it->id].erase(it->twin), hd.erase(it++);
         else ++it;
       nw[sd] = ch, addEdge(nw[0], nw[1]);
     }

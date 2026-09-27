@@ -1,4 +1,5 @@
-int FastLinearRecursion(vector<int> a, vector<int> c, ll k) {
+int FastLinearRecursion(vector<int> a, vector<int> c,
+  ll k) {
   // a_n = sigma c_j * a_{n - j - 1}, 0-based
   // O(NlogNlogK), |a| = |c|
   int n = SZ(a);

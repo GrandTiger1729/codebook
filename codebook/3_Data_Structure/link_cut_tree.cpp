@@ -3,7 +3,7 @@ struct Splay { // path sum; swap + for ^ to get xor
   Splay *ch[2], *f;
   int rev, size;
   ll val, sum;
-  Splay (ll _val = 0) : rev(0), size(1), val(_val), sum(_val)
+  Splay(ll v = 0) : rev(0), size(1), val(v), sum(v)
   { f = ch[0] = ch[1] = &nil; }
   bool isr()
   { return f->ch[0] != this && f->ch[1] != this; }

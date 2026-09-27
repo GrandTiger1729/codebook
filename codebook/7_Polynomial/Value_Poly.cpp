@@ -13,7 +13,8 @@ struct Poly {
     for (int i = SZ(poly) - 2; i >= 0; i--)
       rmul[i] = rmul[i + 1] * (x - (base + i + 1));
     FOR (i, 0, SZ(poly) - 1)
-      rt += poly[i] * ifac[i] * inegfac[SZ(poly) - 1 - i] * lmul[i] * rmul[i];
+      rt += poly[i] * ifac[i] * inegfac[SZ(poly) - 1 - i]
+        * lmul[i] * rmul[i];
     return rt;
   }
   void raise() { // g(x) = sigma{base:x} f(x)

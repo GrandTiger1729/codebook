@@ -36,12 +36,13 @@ struct Cent_Dec { // 1-base
     int mx = 1e9, c = 0, lc;
     get_cent(u, f, mx, c, num);
     done[c] = 1, pa[c] = f, layer[c] = layer[f] + 1;
+    info[c] = upinfo[c] = pll(), dis[layer[c]][c] = 0;
     for (pll e : G[c])
       if (!done[e.F]) {
         if (sz[e.F] > sz[c])
           lc = cut(e.F, c, num - sz[c]);
         else lc = cut(e.F, c, sz[e.F]);
-        upinfo[lc] = pll(), dfs(e.F, c, e.S, c);
+        dfs(e.F, c, e.S, c);
       }
     return done[c] = 0, c;
   }

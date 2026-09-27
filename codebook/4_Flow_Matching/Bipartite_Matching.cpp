@@ -3,8 +3,8 @@ struct Bipartite_Matching { // 0-base
   vector<int> G[N + 1];
   bool dfs(int u) {
     for (int &i = cur[u]; i < (int)G[u].size(); i++) {
-      int e = G[u][i];
-      if (mq[e] == l || (dis[mq[e]] == dis[u] + 1 && dfs(mq[e])))
+      int e = G[u][i], v = mq[e];
+      if (v == l || (dis[v] == dis[u] + 1 && dfs(v)))
         return mp[mq[e] = u] = e, 1;
     }
     return dis[u] = -1, 0;

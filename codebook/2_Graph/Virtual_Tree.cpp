@@ -21,5 +21,5 @@ void solve(vector<int> &v) {
   for (int i : v) insert(i);
   while (top > 0) vG[st[top - 1]].pb(st[top]), --top;
   // do something
-  reset(v[0]);
+  reset(st[0]);
 }

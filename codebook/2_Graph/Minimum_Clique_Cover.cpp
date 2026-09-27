@@ -1,6 +1,6 @@
 struct Clique_Cover { // 0-base, O(n2^n)
   int co[1 << N], n, E[N];
-  int dp[1 << N];
+  unsigned dp[1 << N];
   void init(int _n) {
     n = _n, fill_n(dp, 1 << n, 0);
     fill_n(E, n, 0), fill_n(co, 1 << n, 0);
@@ -20,7 +20,7 @@ struct Clique_Cover { // 0-base, O(n2^n)
     FOR (i, 0, (1 << n) - 1) co[i] = (co[i] & i) == i;
     fwt(co, 1 << n, 1);
     FOR (ans, 1, n - 1) {
-      int sum = 0; // probabilistic
+      unsigned sum = 0; // probabilistic
       FOR (i, 0, (1 << n) - 1) sum += (dp[i] *= co[i]);
       if (sum) return ans;
     }

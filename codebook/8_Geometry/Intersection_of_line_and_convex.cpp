@@ -27,6 +27,6 @@ pii lineHull(pll a, pll b, vector<pll> &C) {
     }
   /* crossing sides (i, i+1) and (j, j+1)
   crossing corner i is treated as side (i, i+1)
-  returned in the same order as the line hits the convex */
+  in the order the line hits the convex */
   return res;
 } // convex cut: (r, l]

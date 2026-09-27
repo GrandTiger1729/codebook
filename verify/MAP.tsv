@@ -1,0 +1,65 @@
+# LC problem	driver	codebook template(s)	notes
+string/zalgorithm	zalgorithm.cpp	5_String/Z-value.cpp	
+string/enumerate_palindromes	enumerate_palindromes.cpp	5_String/Manacher.cpp	
+string/suffixarray	suffixarray_sais.cpp	5_String/SAIS-C++20.cpp	
+number_theory/factorize	factorize.cpp	6_Math/Pollard_Rho.cpp, 6_Math/Miller_Rabin.cpp	driver supplies mul(); codebook defines none
+number_theory/sqrt_mod	sqrt_mod.cpp	6_Math/QuadraticResidue.cpp	
+number_theory/discrete_logarithm_mod	discrete_logarithm_mod.cpp	6_Math/DiscreteLog.cpp	driver supplies fpow()
+convolution/min_plus_convolution_convex_arbitrary	min_plus_convolution_convex_arbitrary.cpp	9_Else/min_plus_convolution.cpp	
+convolution/convolution_mod	convolution_mod.cpp	7_Polynomial/NTT_stdabs.cpp	
+graph/bipartitematching	bipartitematching.cpp	4_Flow_Matching/Bipartite_Matching.cpp	cover() (Konig min vertex cover) verified separately against exhaustive search on 30000 random graphs
+graph/general_matching	general_matching.cpp	4_Flow_Matching/Maximum_Simple_Graph_Matching.cpp	
+graph/general_weighted_matching	general_weighted_matching.cpp	4_Flow_Matching/Maximum_Weight_Matching.cpp	driver supplies INF
+polynomial/inv_of_formal_power_series	fps.cpp -DOP_INV	7_Polynomial/Operation_stdabs.cpp	
+polynomial/exp_of_formal_power_series	fps.cpp -DOP_EXP	7_Polynomial/Operation_stdabs.cpp	
+polynomial/log_of_formal_power_series	fps.cpp -DOP_LOG	7_Polynomial/Operation_stdabs.cpp	
+polynomial/pow_of_formal_power_series	fps.cpp -DOP_POW	7_Polynomial/Operation_stdabs.cpp	
+polynomial/sqrt_of_formal_power_series	fps.cpp -DOP_SQRT	7_Polynomial/Operation_stdabs.cpp	Sqrt() needs QuadraticResidue
+data_structure/line_add_get_min#lichao	-	3_Data_Structure/LiChaoST.cpp	not a defect: LiChao is written over an integer domain x in [0, n) and is correct there (verified by brute force). LC gives x in [-1e9,1e9], which this template can only take after coordinate compression -- and that needs at() evaluated at xs[l] rather than at the node index l, so it cannot be driven unmodified.
+string/prefix_substring_lcs	prefix_substring_lcs.cpp	9_Else/All_LCS.cpp	
+graph/two_edge_connected_components	two_edge_connected_components.cpp	2_Graph/EBCC.cpp	driver supplies the global adj[]
+graph/biconnected_components	biconnected_components.cpp	2_Graph/VBCC.cpp	driver supplies the global adj[]; VBCC stores comps per vertex, driver inverts
+graph/scc	scc.cpp	2_Graph/SCC.cpp	driver supplies the global adj[]; tarjan numbers sccs in reverse topo order so the driver emits them backwards
+other/two_sat	two_sat.cpp	2_Graph/2SAT.cpp + 2_Graph/SCC.cpp	2SAT delegates the SCC to SCC.cpp (no duplicated Tarjan); driver supplies the global adj
+graph/dominatortree	dominatortree.cpp	2_Graph/Dominator_Tree.cpp	
+graph/directedmst	directedmst.cpp	2_Graph/Minimum_Arborescence_fast.cpp + 3_Data_Structure/min_heap.cpp	driver supplies DSU only (not in content.tex, memorised); min_heap now is
+graph/minimum_steiner_tree	minimum_steiner_tree.cpp	2_Graph/MinimumSteinerTree.cpp	
+data_structure/line_add_get_min	line_add_get_min.cpp	9_Else/DynamicConvexTrick.cpp	driver negates: the template maintains max
+data_structure/ordered_set	ordered_set.cpp	3_Data_Structure/BIT_kth.cpp	driver supplies the BIT add/prefix-sum; the template is descent only
+data_structure/ordered_set#treap	ordered_set_treap.cpp	3_Data_Structure/Treap.cpp	Treap driven as an ordered set (split/merge/kth/Rank/insert/erase); its node has no lazy/aggregate, so the affine/reverse LC problems need the template extended first
+tree/vertex_add_path_sum	vertex_add_path_sum.cpp	3_Data_Structure/Heavy_light_Decomposition.cpp	query() is a skeleton (segment-tree calls left as comments), so the driver walks the path with its own BIT; this covers the decomposition, not the query body
+tree/dynamic_tree_vertex_add_path_sum	dynamic_tree_vertex_add_path_sum.cpp	3_Data_Structure/link_cut_tree.cpp	
+tree/frequency_table_of_tree_distance	-	3_Data_Structure/Centroid_Decomposition.cpp	the template's info/upinfo answer "sum of distances to marked vertices", not a distance frequency table; no LC problem matches this API.
+number_theory/enumerate_quotients	enumerate_quotients.cpp	6_Math/floor_enumeration.cpp	snippet is int-typed; N goes to 1e12, so the driver widens int and inlines the loop body to observe x
+number_theory/gcd_of_gaussian_integers	gcd_of_gaussian_integers.cpp	6_Math/Gaussian_gcd.cpp	driver supplies cpx = complex<ll> and the zero-input cases
+number_theory/counting_primes	counting_primes.cpp	6_Math/PiCount.cpp	
+number_theory/primality_test	primality_test.cpp	6_Math/Miller_Rabin.cpp	driver supplies mul() and the base set from the template's comment
+other/find_linear_recurrence	find_linear_recurrence.cpp	6_Math/Berlekamp-Massey.cpp	driver supplies a modint T
+number_theory/min_of_mod_of_linear	min_of_mod_of_linear.cpp	6_Math/ModMin.cpp	driver binary searches on top of mod_min (mod_min itself patched: `; ~y`)
+tree/rooted_tree_isomorphism_classification	rooted_tree_isomorphism_classification.cpp	9_Else/tree_hash.cpp	
+string/suffixarray#becaido	suffixarray_becaido.cpp	5_String/SA_LCP_becaido.cpp	
+string/number_of_substrings	number_of_substrings.cpp	5_String/exSAM.cpp	driver supplies N and CNUM
+geo/static_convex_hull	static_convex_hull.cpp	8_Geometry/Convex_hull.cpp	works on pll but 8_Geometry/Default_code.cpp only defines the pdd primitives, so ori/sign/cross come from the driver
+geo/sort_points_by_argument	sort_points_by_argument.cpp	8_Geometry/Polar_Angle_Sort.cpp	integer sign/cross/abs2 from the driver; the template starts at the +x axis so the driver rotates to LC's atan2 convention
+graph/assignment	assignment.cpp	4_Flow_Matching/Kuhn_Munkres.cpp	KM now takes init(n, m) and starts weights at 0 (max weight, not forced perfect); driver shifts every weight by +1e9 so a maximum-weight matching on the complete n*n graph is perfect, then subtracts n*1e9. Rectangular n<=m verified separately: 20000 random cases vs brute force
+graph/assignment#mcmf	assignment_mcmf.cpp	4_Flow_Matching/MincostMaxflow.cpp	assignment as min-cost max-flow; driver shifts every cost by +1e9 so all costs are non-negative (setpi would be O(VE) = 5e8 here) and subtracts N*1e9 at the end
+convolution/convolution_mod_1000000007	convolution_mod_1000000007.cpp	7_Polynomial/Fast_Fourier_Transform.cpp + 7_Polynomial/Fast_Fourier_Transform_Mod.cpp	
+convolution/min_plus_convolution_convex_arbitrary#smawk	min_plus_smawk.cpp	9_Else/smawk.cpp	driver supplies query() and negates, since SMAWK maximises
+linear_algebra/system_of_linear_equations	system_of_linear_equations.cpp	6_Math/Linear_Equations.cpp	driver supplies the modint; the template is generic on T now
+enumerative_combinatorics/binomial_coefficient	-	6_Math/fac_no_p.cpp	fac_no_p is one component of arbitrary-mod binomial (still needs Lucas + CRT over prime powers) and depends on an mpow() the codebook does not define; no LC problem matches it directly.
+string/aho_corasick	aho_corasick.cpp	5_String/Aho-Corasick_Automatan.cpp	the template hardcodes c - 'A' so the driver shifts the lowercase input; trie parents are not stored, driver recovers them from nx[]
+string/eertree	eertree.cpp	5_String/PalTree.cpp	trie parents are not stored, driver recovers them from next[]
+number_theory/rational_approximation	rational_approximation.cpp	9_Else/BinarySearchOnFraction.cpp	driver defines the template's declared pred(); the "<= x/y" side is the same search on the reciprocal
+graph/min_cost_b_flow	-	4_Flow_Matching/MinCostCirculation.cpp	LC additionally requires the dual variables p_v, infeasibility detection, and answers that may exceed 2^64; the template computes only the circulation's flow and exposes no potentials.
+string/runenumerate	runenumerate.cpp	5_String/MainLorentz.cpp	template calls a Zalgo(s) returning a vector, which the codebook does not have (Z-value.cpp fills a global instead); driver supplies it plus the run post-processing and minimal-period filter
+geo/closest_pair	closest_pair.cpp	8_Geometry/ClosestPair.cpp	
+geo/minimum_enclosing_circle	minimum_enclosing_circle.cpp	8_Geometry/Minimum_Enclosing_Circle.cpp + 8_Geometry/Heart.cpp	driver marks a point as on the boundary when |p-c| > r-1e-6
+polynomial/polynomial_taylor_shift	fps.cpp -DOP_SHIFT	7_Polynomial/Operation_stdabs.cpp	
+polynomial/shift_of_sampling_points_of_polynomial	fps.cpp -DOP_SAMPLE	7_Polynomial/Operation_stdabs.cpp	
+other/kth_term_of_linearly_recurrent_sequence	kth_term_of_linearly_recurrent_sequence.cpp	7_Polynomial/Operation_stdabs.cpp	
+convolution/convolution_mod#ours	convolution_mod_ours.cpp	7_Polynomial/Number_Theory_Transform.cpp	side branch, not in content.tex
+polynomial/inv_of_formal_power_series#ours	fps_ours.cpp -DOP_INV	7_Polynomial/Polynomial_Operation.cpp	side branch, not in content.tex
+polynomial/exp_of_formal_power_series#ours	fps_ours.cpp -DOP_EXP	7_Polynomial/Polynomial_Operation.cpp	side branch, not in content.tex
+polynomial/pow_of_formal_power_series#ours	fps_ours.cpp -DOP_POW	7_Polynomial/Polynomial_Operation.cpp	side branch, not in content.tex
+polynomial/sqrt_of_formal_power_series#ours	fps_ours.cpp -DOP_SQRT	7_Polynomial/Polynomial_Operation.cpp	side branch, not in content.tex
+other/kth_term_of_linearly_recurrent_sequence#ours	kth_term_ours.cpp	7_Polynomial/Polynomial_Operation.cpp	side branch: AC where the std_abs one TLEs

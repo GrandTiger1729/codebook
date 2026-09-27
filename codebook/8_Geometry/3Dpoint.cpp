@@ -28,7 +28,7 @@ double volume(Point a, Point b, Point c, Point d)
 { return dot(cross3(a, b, c), d - a); }
 // azimuth (longitude) from the x-axis, in [-pi, pi]
 double phi(Point p) { return atan2(p.y, p.x); }
-// zenith angle from the z-axis, in [0, pi]
+// zenith angle (latitude) from the z-axis, in [0, pi]
 double theta(Point p)
 { return atan2(sqrt(p.x * p.x + p.y * p.y), p.z); }
 Point masscenter(Point a, Point b, Point c, Point d)

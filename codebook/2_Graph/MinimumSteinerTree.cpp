@@ -14,11 +14,10 @@ struct SteinerTree { // 0-base, need INF
   }
   void shortest_path() { // dst[i][j] ends up counting
     FOR (k, 0, n - 1) // every vcst on i -> j but i's
-      FOR (i, 0, n - 1)
-        FOR (j, 0, n - 1)
-          if (dst[i][k] + vcst[k] + dst[k][j] < dst[i][j])
-            dst[i][j] = dst[i][k] + vcst[k] + dst[k][j],
-            mid[i][j] = k;
+      FOR (i, 0, n - 1) FOR (j, 0, n - 1)
+        if (dst[i][k] + vcst[k] + dst[k][j] < dst[i][j])
+          dst[i][j] = dst[i][k] + vcst[k] + dst[k][j],
+          mid[i][j] = k;
     FOR (i, 0, n - 1) FOR (j, 0, n - 1)
       if (i != j) dst[i][j] += vcst[j];
   }

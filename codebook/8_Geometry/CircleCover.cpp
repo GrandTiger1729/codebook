@@ -26,10 +26,9 @@ struct CircleCover {
     fill_n(Area, C + 2, 0);
     FOR (i, 0, C - 1)
       FOR (j, 0, C - 1) overlap[i][j] = contain(i, j);
-    FOR (i, 0, C - 1)
-      FOR (j, 0, C - 1)
-        g[i][j] = !(overlap[i][j] || overlap[j][i] ||
-            disjuct(c[i], c[j], -1));
+    FOR (i, 0, C - 1) FOR (j, 0, C - 1)
+      g[i][j] = !(overlap[i][j] || overlap[j][i] ||
+          disjuct(c[i], c[j], -1));
     FOR (i, 0, C - 1) {
       int E = 0, cnt = 1;
       pdd o = c[i].O; double R = c[i].R;

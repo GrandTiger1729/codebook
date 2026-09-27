@@ -156,11 +156,10 @@ struct WeightGraph { // 1-based
     fill(ALL(match), 0);
     FOR (u, 0, n) st[u] = u, flo[u].clear();
     int w_max = 0;
-    FOR (u, 1, n)
-      FOR (v, 1, n) {
-        flo_from[u][v] = (u == v ? u : 0);
-        w_max = max(w_max, g[u][v].w);
-      }
+    FOR (u, 1, n) FOR (v, 1, n) {
+      flo_from[u][v] = (u == v ? u : 0);
+      w_max = max(w_max, g[u][v].w);
+    }
     fill(ALL(lab), w_max);
     int n_matches = 0; ll tot_weight = 0;
     while (matching()) ++n_matches;

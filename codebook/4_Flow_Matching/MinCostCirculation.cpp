@@ -38,9 +38,8 @@ struct MinCostCirculation { // 0-base
     for (int b = mxlg; b >= 0; b--) {
       FOR (i, 0, n - 1)
         for (auto &e : G[i]) e.cap *= 2, e.flow *= 2;
-      FOR (i, 0, n - 1)
-        for (auto &e : G[i])
-          if (e.fcap >> b & 1) try_edge(e);
+      FOR (i, 0, n - 1) for (auto &e : G[i])
+        if (e.fcap >> b & 1) try_edge(e);
     }
   }
   void init(int _n) { n = _n;

@@ -4,11 +4,8 @@ struct MinimumMeanCycle { // needs every weight > 0
   ll dp[N + 5][N], n;
   pll solve() {
     ll a = -1, b = -1, L = n + 1;
-    FOR (i, 2, L)
-      FOR (k, 0, n - 1)
-        FOR (j, 0, n - 1)
-          dp[i][j] =
-            min(dp[i - 1][k] + road[k][j], dp[i][j]);
+    FOR (i, 2, L) FOR (k, 0, n - 1) FOR (j, 0, n - 1)
+      dp[i][j] = min(dp[i - 1][k] + road[k][j], dp[i][j]);
     FOR (i, 0, n - 1) {
       if (dp[L][i] >= INF) continue;
       ll ta = 0, tb = 1;

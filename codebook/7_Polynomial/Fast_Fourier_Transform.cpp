@@ -15,12 +15,11 @@ void fft(vector<cplx> &a) {
     rev[i] = (rev[i / 2] | (i & 1) << L) / 2;
   FOR (i, 0, n - 1) if (i < rev[i]) swap(a[i], a[rev[i]]);
   for (int k = 1; k < n; k *= 2)
-    for (int i = 0; i < n; i += 2 * k)
-      FOR (j, 0, k - 1) {
-        cplx z = rt[j + k] * a[i + j + k];
-        a[i + j + k] = a[i + j] - z;
-        a[i + j] += z;
-      }
+    for (int i = 0; i < n; i += 2 * k) FOR (j, 0, k - 1) {
+      cplx z = rt[j + k] * a[i + j + k];
+      a[i + j + k] = a[i + j] - z;
+      a[i + j] += z;
+    }
 }
 vector<double> conv(
   const vector<double> &a, const vector<double> &b) {

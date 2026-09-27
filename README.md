@@ -2,8 +2,8 @@
 
 Codebook of NTU LionKingFlag forked from 8BQube
 
-[Codebook](https://github.com/GrandTiger1729/codebook/releases/download/latest/codebook.pdf)
-(built by CI from `master`; every PR also uploads its PDF as an artifact).
+[Codebook PDF](https://github.com/GrandTiger1729/codebook/releases/download/latest/codebook.pdf)
+— always built from the latest commit on `master`.
 
 Tests live in [`verify/`](verify/README.md).
 

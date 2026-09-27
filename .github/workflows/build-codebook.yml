@@ -48,7 +48,7 @@ jobs:
           gh release view latest > /dev/null 2>&1 ||
             gh release create latest --title "Latest codebook" --notes ""
           gh release upload latest codebook/codebook.pdf --clobber
-          gh release edit latest --notes "Built by CI from $GITHUB_SHA."
+          gh release edit latest --notes "PDF of the latest master, built by CI from $GITHUB_SHA. The tag itself is not moved; only the PDF is replaced."
 
   stress:
     runs-on: ubuntu-latest

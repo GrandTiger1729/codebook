@@ -17,33 +17,30 @@ struct Cent_Dec { // 1-base
     int u, int f, int &mx, int &c, int num) {
     int mxsz = 0;
     sz[u] = 1;
-    for (pll e : G[u])
-      if (!done[e.F] && e.F != f) {
-        get_cent(e.F, u, mx, c, num);
-        sz[u] += sz[e.F], mxsz = max(mxsz, sz[e.F]);
-      }
+    for (pll e : G[u]) if (!done[e.F] && e.F != f) {
+      get_cent(e.F, u, mx, c, num);
+      sz[u] += sz[e.F], mxsz = max(mxsz, sz[e.F]);
+    }
     if (mx > max(mxsz, num - sz[u]))
       mx = max(mxsz, num - sz[u]), c = u;
   }
   void dfs(int u, int f, ll d, int org) {
     // if required, add self info or climbing info
     dis[layer[org]][u] = d;
-    for (pll e : G[u])
-      if (!done[e.F] && e.F != f)
-        dfs(e.F, u, d + e.S, org);
+    for (pll e : G[u]) if (!done[e.F] && e.F != f)
+      dfs(e.F, u, d + e.S, org);
   }
   int cut(int u, int f, int num) {
     int mx = 1e9, c = 0, lc;
     get_cent(u, f, mx, c, num);
     done[c] = 1, pa[c] = f, layer[c] = layer[f] + 1;
     info[c] = upinfo[c] = pll(), dis[layer[c]][c] = 0;
-    for (pll e : G[c])
-      if (!done[e.F]) {
-        if (sz[e.F] > sz[c])
-          lc = cut(e.F, c, num - sz[c]);
-        else lc = cut(e.F, c, sz[e.F]);
-        dfs(e.F, c, e.S, c);
-      }
+    for (pll e : G[c]) if (!done[e.F]) {
+      if (sz[e.F] > sz[c])
+        lc = cut(e.F, c, num - sz[c]);
+      else lc = cut(e.F, c, sz[e.F]);
+      dfs(e.F, c, e.S, c);
+    }
     return done[c] = 0, c;
   }
   void build() { cut(1, 0, n); }

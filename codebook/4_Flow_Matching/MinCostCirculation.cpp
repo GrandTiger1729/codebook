@@ -17,9 +17,8 @@ struct MinCostCirculation { // 0-base
     while (!q.empty()) {
       int u = q.front();
       q.pop(), inq[u] = 0;
-      for (auto &e : G[u])
-        if (e.cap > e.flow)
-          relax(e.to, dis[u] + e.cost, &e);
+      for (auto &e : G[u]) if (e.cap > e.flow)
+        relax(e.to, dis[u] + e.cost, &e);
     }
   }
   void try_edge(Edge &cur) {

@@ -18,12 +18,10 @@ struct BronKerbosch { // 1-base
       int tsn = 0, tnn = 0;
       copy_n(all[d], an, all[d + 1]);
       all[d + 1][an] = v;
-      FOR (j, 0, sn - 1)
-        if (g[v][some[d][j]])
-          some[d + 1][tsn++] = some[d][j];
-      FOR (j, 0, nn - 1)
-        if (g[v][none[d][j]])
-          none[d + 1][tnn++] = none[d][j];
+      FOR (j, 0, sn - 1) if (g[v][some[d][j]])
+        some[d + 1][tsn++] = some[d][j];
+      FOR (j, 0, nn - 1) if (g[v][none[d][j]])
+        none[d + 1][tnn++] = none[d][j];
       dfs(d + 1, an + 1, tsn, tnn);
       some[d][i] = 0, none[d][nn++] = v;
     }

@@ -27,16 +27,15 @@ struct MinCostMaxFlow { // 0-base, need global N
     while (!pq.empty()) {
       s = pq.top().S, pq.pop(), vis[s] = 1;
       ll d = dis[s] + pot[s];
-      for (Edge &e : g[s])
-        if (!vis[e.to]) {
-          ll v = d - pot[e.to] + e.cost;
-          if (e.cap - e.flow > 0 && v < dis[e.to]) {
-            dis[e.to] = v, par[e.to] = &e;
-            if (it[e.to] == pq.end())
-              it[e.to] = pq.push({-v, e.to});
-            else pq.modify(it[e.to], {-v, e.to});
-          }
+      for (Edge &e : g[s]) if (!vis[e.to]) {
+        ll v = d - pot[e.to] + e.cost;
+        if (e.cap - e.flow > 0 && v < dis[e.to]) {
+          dis[e.to] = v, par[e.to] = &e;
+          if (it[e.to] == pq.end())
+            it[e.to] = pq.push({-v, e.to});
+          else pq.modify(it[e.to], {-v, e.to});
         }
+      }
     }
     FOR (i, 0, n - 1) pot[i] = min(pot[i] + dis[i], INF);
   }
@@ -59,12 +58,10 @@ struct MinCostMaxFlow { // 0-base, need global N
     int it = n, ch = 1;
     ll v;
     while (ch-- && it--)
-      FOR (i, 0, n - 1)
-        if (pot[i] != INF)
-          for (Edge &e : g[i])
-            if (e.cap)
-              if ((v = pot[i] + e.cost) < pot[e.to])
-                pot[e.to] = v, ch = 1;
+      FOR (i, 0, n - 1) if (pot[i] != INF)
+        for (Edge &e : g[i]) if (e.cap)
+          if ((v = pot[i] + e.cost) < pot[e.to])
+            pot[e.to] = v, ch = 1;
     assert(it >= 0); // negative cost cycle
   }
 };

@@ -6,10 +6,9 @@ vector<int> min_plus_convolution(
   auto dc = [&](auto Y, int l, int r, int jl, int jr) {
     if (l > r) return;
     int mid = (l + r) / 2, from = -1, &best = c[mid];
-    FOR (j, jl, jr)
-      if (int i = mid - j; i >= 0 && i < n)
-        if (best > a[i] + b[j])
-          best = a[i] + b[j], from = j;
+    FOR (j, jl, jr) if (int i = mid - j; i >= 0 && i < n)
+      if (best > a[i] + b[j])
+        best = a[i] + b[j], from = j;
     Y(Y, l, mid - 1, jl, from),
       Y(Y, mid + 1, r, from, jr);
   };

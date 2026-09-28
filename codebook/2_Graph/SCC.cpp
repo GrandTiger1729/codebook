@@ -21,9 +21,7 @@ struct SCC { // need adj
       }
     }
   }
-  void work() {
-    FOR (i, 1, n) if (!dfn[i]) tarjan(i);
-  }
+  void work() { FOR (i, 1, n) if (!dfn[i]) tarjan(i); }
   void build_adj() {
     FOR (i, 1, n) for (int j : adj[i])
       if (scc[i] != scc[j]) scc_adj[scc[i]].pb(scc[j]);

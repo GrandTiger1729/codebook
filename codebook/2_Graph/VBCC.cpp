@@ -1,39 +1,31 @@
-struct VBCC {  // need adj
+struct VBCC { // 1-base, need adj; bcc[v] = comps of v
   int n, dfcnt = 0, bccnt = 0;
   vector<int> dfn, low, st;
   vector<vector<int>> bcc;
   VBCC() {}
-  VBCC(int n) : n(n) {
-    dfn = low = vector<int>(n + 1, 0);
-    bcc = vector<vector<int>>(n + 1, vector<int>());
-  }
-  void tarjan(int pos, int fa) {
-    dfn[pos] = low[pos] = ++dfcnt;
-    st.pb(pos);
-    for (int np : adj[pos]) {
-      if (np != fa) {
-        if (dfn[np] == 0) {
-          tarjan(np, pos);
-          low[pos] = min(low[pos], low[np]);
-          if (dfn[pos] <= low[np]) {
-            bccnt++;
-            while (1) {
-              int x = st.back();
-              bcc[x].pb(bccnt);
-              st.pop_back();
-              if (x == np) break;
-            }
-            bcc[pos].pb(bccnt);
-          }
-        } else { low[pos] = min(low[pos], dfn[np]); }
+  VBCC(int n) : n(n), dfn(n + 1), low(dfn), bcc(n + 1) {}
+  void tarjan(int u, int fa) { // root: fa = 0
+    dfn[u] = low[u] = ++dfcnt;
+    st.pb(u);
+    for (int v : adj[u]) {
+      if (v == fa) continue;
+      if (dfn[v]) low[u] = min(low[u], dfn[v]);
+      else {
+        tarjan(v, u), low[u] = min(low[u], low[v]);
+        if (low[v] < dfn[u]) continue;
+        bccnt++; // u cuts v's subtree off
+        while (1) {
+          int x = st.back();
+          st.pop_back(), bcc[x].pb(bccnt);
+          if (x == v) break;
+        }
+        bcc[u].pb(bccnt);
       }
     }
-    if (pos == fa) {
+    if (!fa) { // u is a root
       st.pop_back();
-      if (bcc[pos].size() == 0) bcc[pos].pb(++bccnt);
+      if (bcc[u].empty()) bcc[u].pb(++bccnt); // isolated
     }
   }
-  void work() {
-    FOR (i, 1, n) if (dfn[i] == 0) tarjan(i, i);
-  }
+  void work() { FOR (i, 1, n) if (!dfn[i]) tarjan(i, 0); }
 };

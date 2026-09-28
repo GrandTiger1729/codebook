@@ -1,38 +1,25 @@
-struct EBCC { // need adj
+struct EBCC { // 1-base, need adj; bcc[v] = component id
   int n, dfcnt = 0, bccnt = 0;
   vector<int> dfn, low, bcc, st;
   EBCC() {}
   EBCC(int n) : n(n), dfn(n + 1), low(dfn), bcc(dfn) {}
-  void tarjan(int pos, int fa) {
-    dfn[pos] = low[pos] = ++dfcnt;
-    st.pb(pos);
-    bool vs = 0;
-    for (int np : adj[pos]) {
-      if (np != fa || vs) {
-        if (dfn[np] == 0) {
-          tarjan(np, pos);
-          low[pos] = min(low[pos], low[np]);
-          if (dfn[pos] < low[np]) {
-            bccnt++;
-            while (1) {
-              int x = st.back();
-              bcc[x] = bccnt;
-              st.pop_back();
-              if (x == np) break;
-            }
-          }
-        } else { low[pos] = min(low[pos], dfn[np]); }
-      } else { vs = 1; }
+  void tarjan(int u, int fa) {
+    dfn[u] = low[u] = ++dfcnt;
+    st.pb(u);
+    bool skipped = 0; // skip one copy of the edge to fa
+    for (int v : adj[u]) {
+      if (v == fa && !skipped) skipped = 1;
+      else if (dfn[v]) low[u] = min(low[u], dfn[v]);
+      else tarjan(v, u), low[u] = min(low[u], low[v]);
     }
-    if (pos == fa) {
+    if (low[u] == dfn[u]) { // fa-u is a bridge
       bccnt++;
-      while (st.size()) {
-        bcc[st.back()] = bccnt;
-        st.pop_back();
+      while (1) {
+        int x = st.back();
+        st.pop_back(), bcc[x] = bccnt;
+        if (x == u) break;
       }
     }
   }
-  void work() {
-    FOR (i, 1, n) if (dfn[i] == 0) tarjan(i, i);
-  }
+  void work() { FOR (i, 1, n) if (!dfn[i]) tarjan(i, 0); }
 };

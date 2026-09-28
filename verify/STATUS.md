@@ -31,7 +31,7 @@
 |---|---|---|---|---|
 | `2_Graph/EBCC.cpp` | `graph/two_edge_connected_components` **AC** 21 筆 · 0.116s/5s (2%) | — | 需要外部 `adj` | test by caido, Lib-Checker Two-Edge-Connected Components |
 | `2_Graph/VBCC.cpp` | `graph/biconnected_components` **AC** 22 筆 · 0.518s/5s (10%) | — | 需要外部 `adj` | test by caido, Lib-Checker Biconnected Components |
-| `2_Graph/SCC.cpp` | `graph/scc` **AC** 12 筆 · 0.316s/5s (6%)<br>`other/two_sat` **AC** 18 筆 · 0.317s/5s (6%) | 30 000 組隨機有向圖 vs 可達性閉包（含 sink-first 編號、scc_adj） | 需要外部 `adj` | test by caido, Lib-Checker Strongly Connected Components |
+| `2_Graph/SCC.cpp` | `graph/scc` **AC** 12 筆 · 0.316s/5s (6%)<br>`other/two_sat` **AC** 18 筆 · 0.317s/5s (6%) | 30 000 組隨機有向圖 vs 可達性閉包（含反向拓撲序編號、scc_adj） | 需要外部 `adj` | test by caido, Lib-Checker Strongly Connected Components |
 | `2_Graph/2SAT.cpp` | `other/two_sat` **AC** 18 筆 · 0.317s/5s (6%) | 20 000 組 vs 2^n 窮舉（either / set_value / at_most_one） | 需要外部 `adj` | needs SCC; test by Lib-Checker Two SAT, local brute force (either/set_value/at_most_one) |
 | `2_Graph/MinimumMeanCycle.cpp` | — 無對應題 | 20 000 組 n≤8 vs 枚舉簡單環（**修 bug**：Karp 少算 k=n−1） | 需要外部 `N` | test by TIOJ 1934 |
 | `2_Graph/Virtual_Tree.cpp` | — 無對應題 | 150 000 筆查詢 n≤40 vs 暴力（**修 bug**：`reset(st[0])`） | 需要外部 `N` | test by luogu P2495 |

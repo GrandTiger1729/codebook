@@ -20,7 +20,7 @@ struct MinCostMaxFlow { // 0-base, need global N
   }
   void path(int s) { // dijkstra on reduced costs
     fill_n(vis, n, 0), fill_n(dis, n, INF);
-    dis[s] = 0;
+    dis[s] = 0, par[s] = 0;
     __gnu_pbds::priority_queue<pair<ll, int>> pq;
     vector<decltype(pq)::point_iterator> it(n);
     pq.push({0, s});

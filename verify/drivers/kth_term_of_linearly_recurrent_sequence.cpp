@@ -3,7 +3,7 @@
 #include "../mod_helpers.h"
 #include "../../codebook/7_Polynomial/NTT_stdabs.cpp"
 #include "../../codebook/7_Polynomial/Operation_stdabs.cpp"
-#include "../../codebook/7_Polynomial/BostanMori.cpp"
+#include "../../codebook/7_Polynomial/FastLinearRecursion.cpp"
 
 int main() {
   Waimai;

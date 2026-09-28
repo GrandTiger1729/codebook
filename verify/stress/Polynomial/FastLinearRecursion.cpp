@@ -4,7 +4,7 @@
 #include "mod_helpers.h"
 #include "7_Polynomial/NTT_stdabs.cpp"
 #include "7_Polynomial/Operation_stdabs.cpp" // supplies Mul, Divide
-#include "7_Polynomial/BostanMori.cpp"
+#include "7_Polynomial/FastLinearRecursion.cpp"
 struct mi { // field type for BerlekampMassey
   int v = 0;
   mi(ll x = 0) : v((x % mod + mod) % mod) {}
@@ -63,5 +63,5 @@ int main() {
     }
     cases++;
   }
-  printf("BostanMori: %d recurrences (d=1..20), %d terms OK\n", cases, terms);
+  printf("FastLinearRecursion: %d recurrences (d=1..20), %d terms OK\n", cases, terms);
 }

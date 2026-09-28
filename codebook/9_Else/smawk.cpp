@@ -1,11 +1,12 @@
-// For every 2x2 submatrix (row 0 above row 1):
-// If M[0][0] < M[0][1], M[1][0] < M[1][1]
-// If M[0][0] == M[0][1], M[1][0] <= M[1][1]
-// M[i][ans_i] is the best value in the i-th row
-// select, e.g. row minima (leftmost best):
-// [&](int r, int u, int v) { return f(r, v) < f(r, u); }
-// Invalid cells: INF + (distance to the valid ones), so
-// the condition still holds (a constant INF breaks it)
+// For every 2x2 submatrix:
+// If M[1][0] < M[1][1], then M[0][0] < M[0][1]
+// If M[1][0] == M[1][1], then M[0][0] <= M[0][1]
+// M[i][ans_i] is the minimum value in the i-th row
+// select = [&](int r, int u, int v)
+//             { return cost(r, v) < cost(r, u); }
+// If row i is defined only on columns [l_i, r_i],
+// elsewhere cost(i, j) = INF + l_i - j (j < l_i)
+//                     or INF + j - r_i (j > r_i)
 vector<int> smawk(int N, int M, auto &&select) {
   auto dc = [&](auto self, const vector<int> &r,
     const vector<int> &c) {

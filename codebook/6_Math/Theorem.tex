@@ -38,7 +38,12 @@ In a DAG with sources $a_1, \ldots, a_n$ and sinks $b_1, \ldots, b_n$, let $e(a,
 
 \item Cycle Lemma
 
-If integers $x_1, \ldots, x_N$ are all $\le 1$ and sum to $k > 0$, exactly $k$ of the $N$ cyclic shifts have every prefix sum $> 0$. E.g. $\text{Catalan}(n) = \frac{1}{2n+1}\binom{2n+1}{n}$; plane trees with $n_d$ nodes of $d$ children, $N = \sum n_d$ nodes: $\frac{1}{N}\binom{N}{n_0, n_1, \ldots}$.
+If integers $x_1, \ldots, x_N$ are all $\le 1$ and sum to $k > 0$, exactly $k$ of the $N$ cyclic shifts have every prefix sum $> 0$. Counting each sequence with its $N$ shifts: of all such sequences, a $\frac{k}{N}$ fraction are good.
+\begin{itemize}
+  \item Ballot: A gets $a$ votes ($+1$ each), B gets $b$ votes ($-t$ each), $a > tb$. Orders in which A keeps strictly more than $t$ times B's votes: $\frac{a - tb}{a + b}\binom{a + b}{a}$.
+  \item Catalan: $n + 1$ steps $+1$ and $n$ steps $-1$ (sum $1$) give $\frac{1}{2n+1}\binom{2n+1}{n}$ good sequences; each starts with $+1$, and the rest is a Dyck path.
+  \item Trees: write $1 - (\#\text{children})$ for each node in preorder (sum $1$). Ordered trees with $n_d$ nodes having $d$ children, $N = \sum n_d$: $\frac{1}{N}\binom{N}{n_0, n_1, \ldots}$.
+\end{itemize}
 
 \item Erdős–Gallai theorem
 

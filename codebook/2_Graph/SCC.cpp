@@ -1,24 +1,24 @@
 struct SCC { // need adj
   int n, dfcnt = 0, sccnt = 0;
-  vector<int> dfn, scc, st;
+  vector<int> dfn, low, scc, st;
   vector<vector<int>> scc_adj;
   SCC() {}
-  SCC(int n)
-    : n(n), dfn(n + 1), scc(n + 1), scc_adj(n + 1) {}
+  SCC(int n) : n(n), dfn(n + 1), low(dfn), scc(dfn),
+    scc_adj(n + 1) {}
   void tarjan(int u) { // scc[] numbered sink first
-    int lw = dfn[u] = ++dfcnt, x;
+    dfn[u] = low[u] = ++dfcnt;
     st.pb(u);
-    for (int v : adj[u]) if (!scc[v]) {
-      if (!dfn[v]) tarjan(v);
-      lw = min(lw, dfn[v]);
+    for (int v : adj[u]) if (!scc[v]) { // new or on stack
+      if (dfn[v]) low[u] = min(low[u], dfn[v]);
+      else tarjan(v), low[u] = min(low[u], low[v]);
     }
-    if (lw == dfn[u]) {
+    if (low[u] == dfn[u]) {
       sccnt++;
+      int x;
       do {
         x = st.back(), st.pop_back(), scc[x] = sccnt;
       } while (x != u);
     }
-    dfn[u] = lw; // dfn[] now holds the low-link
   }
   void work() {
     FOR (i, 1, n) if (!dfn[i]) tarjan(i);

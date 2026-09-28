@@ -42,9 +42,9 @@
 \voffset=-57pt
 \hoffset=-58pt
 
-\titlespacing\section{0pt}{-1pt plus 0pt minus 1pt}{-2pt plus 0pt minus 2pt}
-\titlespacing\subsection{0pt}{-1pt plus 0pt minus 1pt}{-2pt plus 0pt minus 2pt}
-\titlespacing\subsubsection{0pt}{-1pt plus 0pt minus 1pt}{-2pt plus 0pt minus 2pt}
+\titlespacing\section{0pt}{0pt}{2pt}
+\titlespacing\subsection{0pt}{0pt}{2pt}
+\titlespacing\subsubsection{0pt}{0pt}{2pt}
 
 
 %\renewcommand\listfigurename{圖目錄}
@@ -64,41 +64,43 @@
 \lst@CCPutMacro\lst@ProcessOther {"2D}{\lst@ttfamily{-{}}{-{}}}
 \@empty\z@\@empty
 
-\newtoks\LionKingGrandPa@token
-\newcount\LionKingGrandPa@length
-\def\LionKingGrandPa@ResetToken{\LionKingGrandPa@token{}\LionKingGrandPa@length\z@}
-\def\LionKingGrandPa@Append#1{\advance\LionKingGrandPa@length\@ne
-  \LionKingGrandPa@token=\expandafter{\the\LionKingGrandPa@token#1}}
+\newtoks\YajuKingFlag@token
+\newcount\YajuKingFlag@length
+\def\YajuKingFlag@ResetToken{\YajuKingFlag@token{}\YajuKingFlag@length\z@}
+\def\YajuKingFlag@Append#1{\advance\YajuKingFlag@length\@ne
+  \YajuKingFlag@token=\expandafter{\the\YajuKingFlag@token#1}}
 
-\def\LionKingGrandPa@ProcessChar#1{%
+\def\YajuKingFlag@ProcessChar#1{%
   \ifnum\lst@mode=\lst@Pmode%
     \ifnum 9<1#1%
-      \expandafter\LionKingGrandPa@Append{\begingroup\digitstyle #1 \endgroup}%
+      \expandafter\YajuKingFlag@Append{\begingroup\digitstyle #1 \endgroup}%
     \else%
-      \expandafter\LionKingGrandPa@Append{#1}%
+      \expandafter\YajuKingFlag@Append{#1}%
     \fi%
   \else%
-    \expandafter\LionKingGrandPa@Append{#1}%
+    \expandafter\YajuKingFlag@Append{#1}%
   \fi%
 }
-\def\LionKingGrandPa@ProcessStringInner#1#2\LionKingGrandPa@nil{%
-  \expandafter\LionKingGrandPa@ProcessChar{#1}%
+\def\YajuKingFlag@ProcessStringInner#1#2\YajuKingFlag@nil{%
+  \expandafter\YajuKingFlag@ProcessChar{#1}%
   \if\relax\detokenize{#2}\relax%
   \else%
-    \expandafter\LionKingGrandPa@ProcessStringInner#2\LionKingGrandPa@nil%
+    \expandafter\YajuKingFlag@ProcessStringInner#2\YajuKingFlag@nil%
   \fi%
 }
 
-\def\LionKingGrandPa@ProcessString#1{\expandafter\LionKingGrandPa@ProcessStringInner#1\LionKingGrandPa@nil}
+\def\YajuKingFlag@ProcessString#1{\expandafter\YajuKingFlag@ProcessStringInner#1\YajuKingFlag@nil}
 
 \lst@AddToHook{OutputOther}{%
-\LionKingGrandPa@ResetToken%
-\expandafter\LionKingGrandPa@ProcessString{\the\lst@token}%
-\lst@token=\expandafter{\the\LionKingGrandPa@token}%
+\YajuKingFlag@ResetToken%
+\expandafter\YajuKingFlag@ProcessString{\the\lst@token}%
+\lst@token=\expandafter{\the\YajuKingFlag@token}%
 }
 \makeatother
 \lstset{											% Code顯示
 language=C++,										% the language of the code
+aboveskip=-2pt,										% cancel the 2pt under headings: code sits right under
+belowskip=0pt,										% no extra gap before the next heading
 basicstyle=\footnotesize\ttfamily, 						% the size of the fonts that are used for the code
 %numbers=left,										% where to put the line-numbers
 numberstyle=\footnotesize,						% the size of the fonts that are used for the line-numbers
@@ -154,7 +156,7 @@ stringstyle=\itshape\color{Green4},
 \pagestyle{fancy}
 \fancyfoot{}
 %\fancyfoot[R]{\includegraphics[width=20pt]{ironwood.jpg}}
-\fancyhead[L]{National Taiwan University LionKingGrandPa}
+\fancyhead[L]{National Taiwan University YajuKingFlag}
 \fancyhead[R]{\thepage}
 \renewcommand{\headrulewidth}{0.2pt}
 \renewcommand{\contentsname}{Contents}

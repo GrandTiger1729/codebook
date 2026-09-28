@@ -1,6 +1,6 @@
-# LionKingFlag
+# YajuKingFlag
 
-Codebook of NTU LionKingFlag forked from 8BQube
+Codebook of NTU YajuKingFlag forked from 8BQube
 
 [Codebook PDF](https://github.com/GrandTiger1729/codebook/releases/download/latest/codebook.pdf)
 — always built from the latest commit on `master`.

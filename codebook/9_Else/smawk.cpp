@@ -2,8 +2,8 @@
 // If M[0][0] < M[0][1], M[1][0] < M[1][1]
 // If M[0][0] == M[0][1], M[1][0] <= M[1][1]
 // M[i][ans_i] is the best value in the i-th row
-// select(r, u, v): true if f(r, v) is at least as good
-// as f(r, u) (<=; strict < breaks on ties, e.g. INF)
+// select, e.g. row minima (<=, not <):
+// [&](int r, int u, int v) { return f(r, v) <= f(r, u); }
 vector<int> smawk(int N, int M, auto &&select) {
   auto dc = [&](auto self, const vector<int> &r,
     const vector<int> &c) {

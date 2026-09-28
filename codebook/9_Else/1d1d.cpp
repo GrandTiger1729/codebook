@@ -1,40 +1,64 @@
-typedef pair<int, int> pii;
-// cost(i, j): cost of transit from i to j
-// search(i, j): last point when i is better in row i,
-// j, need to check whether cost(i, i) is defined
-int cost(int i, int j);
-int search(int i, int j, int L, int R = N);
-void concave1D1D() {
-  vector<int> dp(N + 1, 0);
-  vector<pii> st; // (idx, right end h_idx)
-  st.emplace_back(pii(0, N + 1));
-  FOR (j, 1, N) {
-    while (st.back().S < j) st.pop_back();
-    int i = st.back().F;
-    dp[j] = dp[i] + cost(i, j);
-    while (
-      !st.empty() && search(j, i, j) >= st.back().S) {
-      st.pop_back();
-      i = st.back().F;
+// dp[i] = min_{j<i} dp[j] + w(j, i), set dp[0] first
+// convex:  w(a,c)+w(b,d) <= w(a,d)+w(b,c) for a<b<c<d,
+//          a newer j wins the columns to the right
+// concave: the reverse inequality, it wins to the left
+ll w(int j, int i);
+ll dp[N];
+struct Seg { int p, l, r; }; // dp[l..r] best from p
+ll cal(int j, int i) { return dp[j] + w(j, i); }
+void convex1D1D(int n) {
+  deque<Seg> dq{{0, 1, n}};
+  FOR (i, 1, n) {
+    dp[i] = cal(dq[0].p, i);
+    if (++dq[0].l > dq[0].r) dq.pop_front();
+    while (!dq.empty()) { // i wins a whole segment
+      auto [p, l, r] = dq.back();
+      if (cal(i, l) > cal(p, l)) break;
+      dq.pop_back();
     }
-    st.emplace_back(pii(j, search(j, i, j)));
+    int st = i + 1; // i wins columns st..n
+    if (!dq.empty()) {
+      auto &[p, l, r] = dq.back();
+      st = r + 1;
+      if (cal(i, r) < cal(p, r)) { // binary search
+        int lo = l, hi = r;
+        while (lo < hi) {
+          int m = (lo + hi) / 2;
+          if (cal(i, m) < cal(p, m)) hi = m;
+          else lo = m + 1;
+        }
+        st = lo;
+      }
+      r = st - 1;
+    }
+    if (st <= n) dq.push_back({i, st, n});
   }
 }
-void convex1D1D() {
-  vector<int> dp(N + 1, 0);
-  deque<pii> dq; // (idx, right end)
-  dq.emplace_back(pii(0, N + 1));
-  FOR (j, 1, N) {
-    while (dq.front().S < j) dq.pop_front();
-    int i = dq.front().F;
-    dp[j] = dp[i] + cost(i, j);
-    i = dq.back().F;
-    while (dq.size() >= 2 &&
-      search(i, j, j) <= dq.end()[-2].S) {
-      dq.pop_back();
-      i = dq.back().F;
+void concave1D1D(int n) {
+  deque<Seg> dq{{0, 1, n}};
+  FOR (i, 1, n) {
+    dp[i] = cal(dq[0].p, i);
+    if (++dq[0].l > dq[0].r) dq.pop_front();
+    while (!dq.empty()) { // i wins a whole segment
+      auto [p, l, r] = dq[0];
+      if (cal(i, r) > cal(p, r)) break;
+      dq.pop_front();
     }
-    dq.back().S = search(i, j, j);
-    dq.emplace_back(pii(j, N + 1));
+    int ed = n; // i wins columns i+1..ed
+    if (!dq.empty()) {
+      auto &[p, l, r] = dq[0];
+      ed = l - 1;
+      if (cal(i, l) < cal(p, l)) { // binary search
+        int lo = l, hi = r;
+        while (lo < hi) {
+          int m = (lo + hi + 1) / 2;
+          if (cal(i, m) < cal(p, m)) lo = m;
+          else hi = m - 1;
+        }
+        ed = lo;
+      }
+      l = ed + 1;
+    }
+    if (ed > i) dq.push_front({i, i + 1, ed});
   }
 }

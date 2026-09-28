@@ -14,10 +14,11 @@ struct SCC { // need adj
     }
     if (low[u] == dfn[u]) {
       sccnt++;
-      int x;
-      do {
-        x = st.back(), st.pop_back(), scc[x] = sccnt;
-      } while (x != u);
+      while (1) {
+        int x = st.back();
+        st.pop_back(), scc[x] = sccnt;
+        if (x == u) break;
+      }
     }
   }
   void work() {

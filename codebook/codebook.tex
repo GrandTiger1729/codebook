@@ -42,9 +42,9 @@
 \voffset=-57pt
 \hoffset=-58pt
 
-\titlespacing\section{0pt}{-2pt plus 0pt minus 2pt}{-1pt plus 0pt minus 2pt}
-\titlespacing\subsection{0pt}{-2pt plus 0pt minus 2pt}{-1pt plus 0pt minus 2pt}
-\titlespacing\subsubsection{0pt}{-2pt plus 0pt minus 2pt}{-1pt plus 0pt minus 2pt}
+\titlespacing\section{0pt}{-2pt plus 0pt minus 2pt}{2pt plus 0pt minus 2pt}
+\titlespacing\subsection{0pt}{-2pt plus 0pt minus 2pt}{2pt plus 0pt minus 2pt}
+\titlespacing\subsubsection{0pt}{-2pt plus 0pt minus 2pt}{2pt plus 0pt minus 2pt}
 
 
 %\renewcommand\listfigurename{圖目錄}
@@ -99,7 +99,8 @@
 \makeatother
 \lstset{											% Code顯示
 language=C++,										% the language of the code
-aboveskip=0pt,										% code right under its heading
+aboveskip=-2pt,										% cancel the 2pt under headings: code sits right under
+belowskip=2pt,										% offsets the heading's -2pt: no gap, no overlap
 basicstyle=\footnotesize\ttfamily, 						% the size of the fonts that are used for the code
 %numbers=left,										% where to put the line-numbers
 numberstyle=\footnotesize,						% the size of the fonts that are used for the line-numbers

@@ -52,10 +52,10 @@ int main() {
     vector<mi> pre(2 * d);
     FOR (i, 0, 2 * d - 1) pre[i] = s[i];
     vector<mi> bm = BerlekampMassey(pre);
-    int e = SZ(bm) - 1;
+    int e = SZ(bm);
     if (e == 0) continue; // all-zero sequence: BostanMori needs |a| >= 1
     vector<int> a(s.begin(), s.begin() + e), c0(e), c1(e + 1);
-    FOR (j, 0, e - 1) c0[j] = c1[j + 1] = bm[j + 1].v; // 1-based -> 0-based
+    FOR (j, 0, e - 1) c0[j] = c1[j + 1] = bm[j].v; // both 0-based
     FOR (k, 0, T - 1) assert(BostanMori(a, c0, k) == s[k]), terms++;
     FOR (q, 1, 1) {
       ll k = rnd(0, 1) ? rnd(T, 10000) : rnd(0, (ll)1e18);

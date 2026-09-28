@@ -1,5 +1,5 @@
 int BostanMori(vector<int> a, vector<int> c, ll k) {
-  // a_n = sigma c_j * a_{n - j - 1}, 0-based
+  // a_n = sum_j c_j * a_{n-j-1}, c: 0-based
   // O(NlogNlogK), |a| = |c| >= 1
   // Bostan-Mori: a_k = [x^k] P(x) / Q(x)
   int n = SZ(a), m = 1;

@@ -1,6 +1,5 @@
 #define SZ(a) ((int)a.size())
-// a_i = \sum_{j=0}^{k-1} c_j a_(i-j-1), k = SZ(c)
-// c is 0-based, feeds FastLinearRecursion directly
+// a_i = \sum_{j=0}^{k-1} c_j a_(i-j-1), c: 0-based
 template <typename T>
 vector<T> BerlekampMassey(const vector<T> &output) {
   vector<T> d(SZ(output) + 1), me, he;

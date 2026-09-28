@@ -2,17 +2,16 @@
 #include "stress.h"
 #include "9_Else/smawk.cpp"
 // Random matrices that satisfy the 2x2 condition in the template's comment
-// (checked by brute force; others are skipped). That comment used to state
-// the condition backwards (as std_abs and PCkomachi still do): matrices
-// meeting the old wording broke both the old and the new code, while every
-// matrix meeting this one is solved (with < or <=: < returns the leftmost
-// best column, <= the rightmost). Here select() uses <=, because the
-// min-plus band padded with one constant -INF does not meet the condition
-// and a strict < fails on its ties (81 of 15000 here).
-// Each row's chosen column must hold that row's maximum.
-// Two families: -(p_i - q_j)^2 (Monge-like) and the min-plus convolution
-// shape -(a[k - j] + b[j]) with a convex and -INF outside the band, which
-// is always tested (it is what the template is used for).
+// (checked by brute force), with select() preferring the strictly larger
+// value; each row's chosen column must hold that row's maximum.
+// That comment used to state the condition backwards (as std_abs and
+// PCkomachi still do): matrices meeting the old wording broke both the
+// old and the new code.
+// Two families: -(p_i - q_j)^2 (Monge-like, filtered by the condition) and
+// the min-plus band -(a[k - j] + b[j]) with a convex. Its out-of-band
+// cells get worse the farther out, which must always meet the condition
+// (asserted). With one constant -INF instead, the band does not meet it,
+// and a strict select fails on those ties (81 of 15000).
 const ll NEG = LLONG_MIN / 4;
 bool ok(const vector<vector<ll>> &M) {
   int n = M.size(), m = M[0].size();
@@ -43,11 +42,14 @@ int main() {
       for (auto &x : b) x = rnd(-9, 9);
       FOR (k, 0, n - 1) FOR (j, 0, m - 1) {
         int i = k - j;
-        M[k][j] = (i < 0 || i >= an) ? NEG : -(a[i] + b[j]);
+        M[k][j] = i < 0 ? NEG - (-i)                // worse the farther out
+                : i >= an ? NEG - (i - an + 1)
+                : -(a[i] + b[j]);
       }
     }
-    if (it % 2 && !ok(M)) { skipped++; continue; }  // min-plus: always tested
-    auto ans = smawk(n, m, [&](int r, int u, int v) { return M[r][u] <= M[r][v]; });
+    if (!(it % 2)) assert(ok(M));   // this padding must satisfy the condition
+    if (it % 2 && !ok(M)) { skipped++; continue; }
+    auto ans = smawk(n, m, [&](int r, int u, int v) { return M[r][u] < M[r][v]; });
     assert((int)ans.size() == n);
     FOR (i, 0, n - 1) {
       assert(0 <= ans[i] && ans[i] < m);

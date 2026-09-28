@@ -2,9 +2,10 @@
 // If M[0][0] < M[0][1], M[1][0] < M[1][1]
 // If M[0][0] == M[0][1], M[1][0] <= M[1][1]
 // M[i][ans_i] is the best value in the i-th row
-// select, e.g. row minima (<= picks the rightmost best,
-// < the leftmost; a constant INF padding needs <=):
-// [&](int r, int u, int v) { return f(r, v) <= f(r, u); }
+// select, e.g. row minima (leftmost best):
+// [&](int r, int u, int v) { return f(r, v) < f(r, u); }
+// Invalid cells: INF + (distance to the valid ones), so
+// the condition still holds (a constant INF breaks it)
 vector<int> smawk(int N, int M, auto &&select) {
   auto dc = [&](auto self, const vector<int> &r,
     const vector<int> &c) {

@@ -178,8 +178,8 @@
 | `9_Else/tree_hash.cpp` | `tree/rooted_tree_isomorphism_classification` **AC** 17 筆 · 0.166s/5s (3%) | — | 需要外部 `G`、`N` | test by CSES Tree Isomorphism I, Lib-Checker Rooted Tree Isomorphism Classification |
 | `9_Else/BinarySearchOnFraction.cpp` | `number_theory/rational_approximation` **AC** 28 筆 · 0.117s/5s (2%) | — | ✅ | test by ABC 333 G after adjusted to int128, Lib-Checker Rational Approximation |
 | `9_Else/1d1d.cpp` | — 無對應題 | 20 000×2 組 vs O(n²)（**修 bug**：convex 版 deque 用錯端） | 需要外部 `N` | — |
-| `9_Else/smawk.cpp` | `convolution/min_plus_convolution_convex_arbitrary#smawk` **AC** 41 筆 · 0.169s/5s (3%) | — | 需要外部 `N` | test by Lib-Checker Min Plus Convolution (Convex and Arbitrary) |
-| `9_Else/min_plus_convolution.cpp` | `convolution/min_plus_convolution_convex_arbitrary` **AC** 41 筆 · 0.119s/5s (2%) | — | 需要外部 `INF` | test by Library Checker Min Plus Convolution (Convex and Arbitrary) |
+| `9_Else/smawk.cpp` | `convolution/min_plus_convolution_convex_arbitrary#smawk` **AC** 41 筆 | 30 000 組完全單調矩陣求每列最小值 vs 暴力（Monge 型 + min-plus 斜帶） | ✅ | test by Lib-Checker Min Plus Convolution (Convex and Arbitrary) |
+| `9_Else/min_plus_convolution.cpp` | `convolution/min_plus_convolution_convex_arbitrary` **AC** 41 筆 · 0.119s/5s (2%) | 15 000 組 vs 暴力與 SMAWK 交叉比對（在 SMAWK 的對拍裡） | 需要外部 `INF` | test by Library Checker Min Plus Convolution (Convex and Arbitrary) |
 | `9_Else/BitsetLCS.cpp` | — 無對應題 | 10 000 組 vs O(nm) DP（需自備 bitset 型別） | 需要外部 `cin` | — |
 
 ---

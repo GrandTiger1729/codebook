@@ -44,7 +44,7 @@ geo/sort_points_by_argument	sort_points_by_argument.cpp	8_Geometry/Polar_Angle_S
 graph/assignment	assignment.cpp	4_Flow_Matching/Kuhn_Munkres.cpp	KM now takes init(n, m) and starts weights at 0 (max weight, not forced perfect); driver shifts every weight by +1e9 so a maximum-weight matching on the complete n*n graph is perfect, then subtracts n*1e9. Rectangular n<=m verified separately: 20000 random cases vs brute force
 graph/assignment#mcmf	assignment_mcmf.cpp	4_Flow_Matching/MincostMaxflow.cpp	assignment as min-cost max-flow; driver shifts every cost by +1e9 so all costs are non-negative (setpi would be O(VE) = 5e8 here) and subtracts N*1e9 at the end
 convolution/convolution_mod_1000000007	convolution_mod_1000000007.cpp	7_Polynomial/Fast_Fourier_Transform.cpp + 7_Polynomial/Fast_Fourier_Transform_Mod.cpp	
-convolution/min_plus_convolution_convex_arbitrary#smawk	min_plus_smawk.cpp	9_Else/smawk.cpp	driver supplies query() and negates, since SMAWK maximises
+convolution/min_plus_convolution_convex_arbitrary#smawk	min_plus_smawk.cpp	9_Else/smawk.cpp	driver passes a select() that prefers the smaller cost
 linear_algebra/system_of_linear_equations	system_of_linear_equations.cpp	6_Math/Linear_Equations.cpp	driver supplies the modint; the template is generic on T now
 enumerative_combinatorics/binomial_coefficient	-	6_Math/fac_no_p.cpp	fac_no_p is one component of arbitrary-mod binomial (still needs Lucas + CRT over prime powers) and depends on an mpow() the codebook does not define; no LC problem matches it directly.
 string/aho_corasick	aho_corasick.cpp	5_String/Aho-Corasick_Automatan.cpp	the template hardcodes c - 'A' so the driver shifts the lowercase input; trie parents are not stored, driver recovers them from nx[]

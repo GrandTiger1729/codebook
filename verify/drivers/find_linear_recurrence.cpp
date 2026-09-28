@@ -18,9 +18,9 @@ int main() {
   int n; cin >> n;
   vector<mint> a(n);
   for (auto &x : a) { ll v; cin >> v; x = mint(v); }
-  auto c = BerlekampMassey(a);  // 1-based, c[0] unused
-  int d = (int)c.size() - 1;
+  auto c = BerlekampMassey(a);  // 0-based
+  int d = (int)c.size();
   cout << d << '\n';
-  for (int i = 1; i <= d; i++) cout << c[i].v << " \n"[i == d];
+  for (int i = 0; i < d; i++) cout << c[i].v << " \n"[i == d - 1];
   if (!d) cout << '\n';
 }

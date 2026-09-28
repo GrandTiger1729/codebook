@@ -49,7 +49,7 @@ int kitamasa(const Poly &a, const Poly &c1, ll k) { // naive O(d^2 log k), c1 1-
 
 int main() {
   int cnt[6] = {}, terms = 0;
-  // LinearRecursion fed straight from BerlekampMassey (both 1-based); d = 1 often
+  // LinearRecursion (1-based c) fed from BerlekampMassey (0-based); d = 1 often
   FOR (it, 1, 600) {
     int d = it % 3 == 0 ? 1 : rnd(1, 20), T = 2 * d + rnd(1, 20);
     Poly c(d + 1), s(T);
@@ -60,10 +60,10 @@ int main() {
     }
     vector<mi> pre(s.begin(), s.begin() + 2 * d);
     vector<mi> bm = BerlekampMassey(pre);
-    int e = SZ(bm) - 1;
+    int e = SZ(bm);
     if (e == 0) continue; // all-zero sequence, nothing to recurse on
     Poly a(s.begin(), s.begin() + e), c1(e + 1);
-    FOR (j, 1, e) c1[j] = bm[j].v;
+    FOR (j, 1, e) c1[j] = bm[j - 1].v;
     FOR (k, 0, T - 1) assert(LinearRecursion(a, c1, k) == s[k]), terms++;
     ll k = rnd(0, 1) ? rnd(T, 10000) : rnd(0, (ll)1e18);
     assert(LinearRecursion(a, c1, k) == kitamasa(a, c1, k)), terms++;

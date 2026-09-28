@@ -4,7 +4,7 @@
 #include "mod_helpers.h"
 #include "7_Polynomial/NTT_stdabs.cpp"
 #include "7_Polynomial/Operation_stdabs.cpp" // supplies Mul, Divide
-#include "7_Polynomial/FastLinearRecursion_stdabs.cpp"
+#include "7_Polynomial/FastLinearRecursion.cpp"
 struct mi { // field type for BerlekampMassey
   int v = 0;
   mi(ll x = 0) : v((x % mod + mod) % mod) {}
@@ -18,7 +18,7 @@ struct mi { // field type for BerlekampMassey
 #include "6_Math/Berlekamp-Massey.cpp"
 
 // Random order-d recurrence -> 2d-term prefix -> BerlekampMassey (1-based c) ->
-// shift to FastLinearRecursion's 0-based c -> must replay every term of a longer
+// shift to BostanMori's 0-based c -> must replay every term of a longer
 // run, and agree with a naive O(d^2 log k) Kitamasa for huge k.
 int R() { return rnd(0, mod - 1); }
 int kitamasa(const vector<int> &a, const vector<int> &c1, ll k) { // c1 1-based
@@ -52,16 +52,16 @@ int main() {
     vector<mi> pre(2 * d);
     FOR (i, 0, 2 * d - 1) pre[i] = s[i];
     vector<mi> bm = BerlekampMassey(pre);
-    int e = SZ(bm) - 1;
-    if (e == 0) continue; // all-zero sequence: FastLinearRecursion needs |a| >= 1
+    int e = SZ(bm);
+    if (e == 0) continue; // all-zero sequence: BostanMori needs |a| >= 1
     vector<int> a(s.begin(), s.begin() + e), c0(e), c1(e + 1);
-    FOR (j, 0, e - 1) c0[j] = c1[j + 1] = bm[j + 1].v; // 1-based -> 0-based
-    FOR (k, 0, T - 1) assert(FastLinearRecursion(a, c0, k) == s[k]), terms++;
+    FOR (j, 0, e - 1) c0[j] = c1[j + 1] = bm[j].v; // both 0-based
+    FOR (k, 0, T - 1) assert(BostanMori(a, c0, k) == s[k]), terms++;
     FOR (q, 1, 1) {
       ll k = rnd(0, 1) ? rnd(T, 10000) : rnd(0, (ll)1e18);
-      assert(FastLinearRecursion(a, c0, k) == kitamasa(a, c1, k)), terms++;
+      assert(BostanMori(a, c0, k) == kitamasa(a, c1, k)), terms++;
     }
     cases++;
   }
-  printf("FastLinearRecursion_stdabs: %d recurrences (d=1..20), %d terms OK\n", cases, terms);
+  printf("FastLinearRecursion: %d recurrences (d=1..20), %d terms OK\n", cases, terms);
 }

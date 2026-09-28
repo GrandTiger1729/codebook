@@ -46,6 +46,9 @@ int main() {
       if (rnd(1, 5) == 1) E.pb(a, b), adj[a].pb(b), adj[b].pb(a); // parallel edge
     }
     VBCC g(n); g.work();
+    VBCC h(n);                                          // calling tarjan directly on
+    FOR (i, 1, n) if (!h.dfn[i]) h.tarjan(i, 0);        // each root must match work()
+    assert(h.bccnt == g.bccnt && h.bcc == g.bcc && h.st.empty());
     vector<set<int>> mine(g.bccnt + 1);
     FOR (v, 1, n) {
       assert(!g.bcc[v].empty());
@@ -71,5 +74,5 @@ int main() {
     assert(a == b);
     cases++;
   }
-  printf("VBCC: %d multigraphs (n<=10, parallel edges) vs kactl bicomps\n", cases);
+  printf("VBCC: %d multigraphs (n<=10, parallel edges) vs kactl bicomps; direct tarjan == work()\n", cases);
 }

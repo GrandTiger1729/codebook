@@ -4,7 +4,7 @@ struct VBCC { // 1-base, need adj; bcc[v] = comps of v
   vector<vector<int>> bcc;
   VBCC() {}
   VBCC(int n) : n(n), dfn(n + 1), low(dfn), bcc(n + 1) {}
-  void tarjan(int u, int fa) {
+  void tarjan(int u, int fa) { // root: fa = 0
     dfn[u] = low[u] = ++dfcnt;
     st.pb(u);
     for (int v : adj[u]) {
@@ -22,11 +22,10 @@ struct VBCC { // 1-base, need adj; bcc[v] = comps of v
         bcc[u].pb(bccnt);
       }
     }
-  }
-  void work() {
-    FOR (i, 1, n) if (!dfn[i]) {
-      tarjan(i, 0), st.pop_back();
-      if (bcc[i].empty()) bcc[i].pb(++bccnt); // isolated
+    if (!fa) { // u is a root
+      st.pop_back();
+      if (bcc[u].empty()) bcc[u].pb(++bccnt); // isolated
     }
   }
+  void work() { FOR (i, 1, n) if (!dfn[i]) tarjan(i, 0); }
 };

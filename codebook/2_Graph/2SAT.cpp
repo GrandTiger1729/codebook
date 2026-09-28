@@ -22,7 +22,7 @@ struct TwoSat {
     }
     either(cur, ~v[1]);
   }
-  bool solve() { // scc[] is numbered sink first
+  bool solve() { // scc[]: reverse topological order
     SCC scc(n * 2);
     scc.work();
     ans.assign(n, 0);

@@ -4,7 +4,7 @@ const int MAXN = 20;
 vector<int> adj[MAXN];
 #include "2_Graph/SCC.cpp"
 // u, v share an SCC iff each reaches the other (Floyd-Warshall closure).
-// Also: ids are 1..sccnt, numbered sink first (every edge between SCCs goes
+// Also: ids are 1..sccnt in reverse topological order (every edge between SCCs goes
 // from a larger id to a smaller one, which 2SAT relies on), and build_adj()
 // holds exactly the edges between different SCCs.
 int main() {
@@ -28,7 +28,7 @@ int main() {
     FOR (u, 1, n) FOR (v, 1, n) assert((r[u][v] && r[v][u]) == (s.scc[u] == s.scc[v]));
     multiset<pair<int, int>> want, got;
     for (auto [a, b] : E) if (s.scc[a] != s.scc[b]) {
-      assert(s.scc[a] > s.scc[b]);                    // sink first
+      assert(s.scc[a] > s.scc[b]);                    // reverse topological
       want.insert({s.scc[a], s.scc[b]});
     }
     FOR (c, 1, s.sccnt) for (int d : s.scc_adj[c]) got.insert({c, d});

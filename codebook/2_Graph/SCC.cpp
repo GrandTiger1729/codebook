@@ -5,7 +5,7 @@ struct SCC { // need adj
   SCC() {}
   SCC(int n) : n(n), dfn(n + 1), low(dfn), scc(dfn),
     scc_adj(n + 1) {}
-  void tarjan(int u) { // scc[] numbered sink first
+  void tarjan(int u) { // scc[]: reverse topological order
     dfn[u] = low[u] = ++dfcnt;
     st.pb(u);
     for (int v : adj[u]) if (!scc[v]) { // new or on stack

@@ -40,8 +40,7 @@ int main() {
     vector<pair<int, int>> E;
     FOR (i, 1, n) adj[i].clear();
     FOR (i, 1, m) {
-      int a = rnd(1, n), b = rnd(1, n);
-      if (a == b) continue;                           // no self-loops
+      int a = rnd(1, n), b = rnd(1, 4) == 1 ? a : rnd(1, n); // some self-loops
       E.pb(a, b), adj[a].pb(b), adj[b].pb(a);
       if (rnd(1, 5) == 1) E.pb(a, b), adj[a].pb(b), adj[b].pb(a); // parallel edge
     }
@@ -60,13 +59,13 @@ int main() {
     FOR (i, 0, (int)E.size() - 1)
       kactl::ed[E[i].F].pb(E[i].S, i), kactl::ed[E[i].S].pb(E[i].F, i);
     vector<int> deg(n + 1);
-    for (auto [x, y] : E) deg[x]++, deg[y]++;
+    for (auto [x, y] : E) if (x != y) deg[x]++, deg[y]++; // self-loops don't count
     kactl::bicomps([&](const vector<int> &es) {
       set<int> s; for (int e : es) s.insert(E[e].F), s.insert(E[e].S);
       b.insert(s);
     });
-    FOR (v, 1, n) if (!deg[v]) b.insert({v});           // isolated vertex
-    for (auto [x, y] : E) {                             // a bridge is a block too
+    FOR (v, 1, n) if (!deg[v]) b.insert({v});           // isolated (or only self-loops)
+    for (auto [x, y] : E) if (x != y) {                 // a bridge is a block too
       bool inside = 0;
       for (auto &s : b) inside |= s.count(x) && s.count(y);
       if (!inside) b.insert({x, y});
@@ -74,5 +73,5 @@ int main() {
     assert(a == b);
     cases++;
   }
-  printf("VBCC: %d multigraphs (n<=10, parallel edges) vs kactl bicomps; direct tarjan == work()\n", cases);
+  printf("VBCC: %d multigraphs (n<=10, parallel edges, self-loops) vs kactl bicomps; direct tarjan == work()\n", cases);
 }

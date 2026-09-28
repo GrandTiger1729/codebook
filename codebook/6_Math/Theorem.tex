@@ -24,6 +24,10 @@ Denote $L$ be a $n \times n$ matrix as the Laplacian matrix of graph $G$, where 
 
 Let $D$ be a $n \times n$ matrix, where $d_{ij} = x_{ij}$ ($x_{ij}$ is chosen uniformly at random) if $i < j$ and $(i, j) \in E$, otherwise $d_{ij} = -d_{ji}$. $\frac{rank(D)}{2}$ is the maximum matching on $G$.
 
+\item Lindström–Gessel–Viennot Lemma
+
+In a DAG with sources $a_1, \ldots, a_n$ and sinks $b_1, \ldots, b_n$, let $e(a, b)$ be the number of paths $a \to b$ (or the sum of their weights) and $M_{ij} = e(a_i, b_j)$. Then $\det M = \sum_{\sigma} \operatorname{sgn}(\sigma) \cdot \#\{\text{vertex-disjoint paths } a_i \to b_{\sigma(i)}\}$. If only $\sigma = \mathrm{id}$ can be disjoint (e.g. a grid with sources and sinks in the same order), $\det M$ counts the non-intersecting path systems.
+
 \item Cayley's Formula
 
 \begin{itemize}
@@ -31,6 +35,10 @@ Let $D$ be a $n \times n$ matrix, where $d_{ij} = x_{ij}$ ($x_{ij}$ is chosen un
   \item Given a degree sequence $d_1, d_2, \ldots, d_n$ for each \textit{labeled} vertices, there are $\frac{(n - 2)!}{(d_1 - 1)!(d_2 - 1)!\cdots(d_n - 1)!}$ spanning trees.
   \item Let $T_{n, k}$ be the number of \textit{labeled} forests on $n$ vertices with $k$ components, such that vertex $1, 2, \ldots, k$ belong to different components. Then $T_{n, k} = kn^{n - k - 1}$.
 \end{itemize}
+
+\item Cycle Lemma
+
+If integers $x_1, \ldots, x_N$ are all $\le 1$ and sum to $k > 0$, exactly $k$ of the $N$ cyclic shifts have every prefix sum $> 0$. E.g. $\text{Catalan}(n) = \frac{1}{2n+1}\binom{2n+1}{n}$; plane trees with $n_d$ nodes of $d$ children, $N = \sum n_d$ nodes: $\frac{1}{N}\binom{N}{n_0, n_1, \ldots}$.
 
 \item Erdős–Gallai theorem
 

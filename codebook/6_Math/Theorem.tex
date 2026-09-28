@@ -174,7 +174,8 @@ $$
 
 \begin{itemize}
   \item compute $S(N)=\sum_{i=1}^N f(N)$, find a function $g$ such that $f*g$ is easy to compute
-  \item $\sum_{i=1}^N (f*g)(i)=\sum_{i=1}^N g(i)S(\lfloor\frac{N}{d}\rfloor)\implies g(1)S(N)=\sum_{i=1}^N (f*g)(i)-sum_{i=2}^N g(i)S(\lfloor\frac{N}{i}\rfloor)$
+  \item $\sum_{i=1}^N (f*g)(i)=\sum_{i=1}^N g(i)S(\lfloor\frac{N}{d}\rfloor)$
+  \item $\implies g(1)S(N)=\sum_{i=1}^N (f*g)(i)-\sum_{i=2}^N g(i)S(\lfloor\frac{N}{i}\rfloor)$
   \item use sqrt decomposition and memoization (sometimes need to precompute small prefix)
 \end{itemize}
 

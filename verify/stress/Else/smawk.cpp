@@ -5,9 +5,10 @@
 // (checked by brute force; others are skipped). That comment used to state
 // the condition backwards (as std_abs and PCkomachi still do): matrices
 // meeting the old wording broke both the old and the new code, while every
-// matrix meeting this one is solved. select() says whether v is at least
-// as good as u (<=): with a strict < the min-plus band, padded with one
-// constant -INF, fails on ties (81 of 15000 here), as the comment warns.
+// matrix meeting this one is solved (with < or <=: < returns the leftmost
+// best column, <= the rightmost). Here select() uses <=, because the
+// min-plus band padded with one constant -INF does not meet the condition
+// and a strict < fails on its ties (81 of 15000 here).
 // Each row's chosen column must hold that row's maximum.
 // Two families: -(p_i - q_j)^2 (Monge-like) and the min-plus convolution
 // shape -(a[k - j] + b[j]) with a convex and -INF outside the band, which

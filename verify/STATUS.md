@@ -116,7 +116,7 @@
 | `7_Polynomial/NTT_stdabs.cpp` | `convolution/convolution_mod` **AC** 53 筆 · 0.379s/5s (8%) | — | 需要外部 `mod`/`G`/`N` 和 `add`/`sub`/`mul`/`Pow`（`Pow` 的指數要 `ll`，`PolyPow` 會傳 k）；可用的 (mod, G, 2^k) 見下面的 NTT Primes 表 | std_abs 原檔 + macro 契約；test by Lib-Checker Convolution |
 | `7_Polynomial/Fast_Walsh_Transform.cpp` | — 無對應題 | `subset_convolution`：2 000 組 vs 樸素 $O(4^L)$，L = 1..5、共用同一組全域 | ✅ | test by luogu P6097, local brute force |
 | `7_Polynomial/Operation_stdabs.cpp` | `polynomial/inv_of_formal_power_series` **AC** 25 筆 · 0.581s/10s (6%)<br>`polynomial/exp_of_formal_power_series` **AC** 26 筆 · 2.077s/10s (21%)<br>`polynomial/log_of_formal_power_series` **AC** 25 筆 · 0.974s/10s (10%)<br>`polynomial/pow_of_formal_power_series` **AC** 37 筆 · 2.779s/10s (28%)<br>`polynomial/sqrt_of_formal_power_series` **AC** 35 筆 · 1.826s/10s (18%)<br>`polynomial/polynomial_taylor_shift` **AC** 38 筆 · 0.478s/5s (10%)<br>`polynomial/shift_of_sampling_points_of_polynomial` **AC** 32 筆 · 0.893s/5s (18%) | `Divide`（$bq+r=a$）500 組、`Evaluate` vs Horner 300 組、`Interpolate` 來回 300 組、`TaylorShift` vs 直接代入 300 組、`SamplingShift` vs Lagrange 200 組、`power_proj` vs $O(n^2m)$ 樸素 250 組 | 需要外部 NTT、`QuadraticResidue`；`TaylorShift`/`SamplingShift` 要 `fac[]`/`ifac[]` | std_abs 原檔 + macro 契約 |
-| `7_Polynomial/FastLinearRecursion_stdabs.cpp` | `other/kth_term_of_linearly_recurrent_sequence` **AC** 20 筆 · 3.573s/10s (36%) | BM → FastLinearRecursion 重播整段前綴，290 組（d = 1..20）共 9 166 項 | 需要外部 `Mul`、`ntt`（`Operation_stdabs`、`NTT_stdabs`） | Bostan–Mori（2026-09-28 取代 std_abs 的 Kitamasa，原本 TLE 19.442s）；`c` 是 **0-based**（BM 回傳 1-based，串接要平移） |
+| `7_Polynomial/BostanMori.cpp` | `other/kth_term_of_linearly_recurrent_sequence` **AC** 20 筆 · 3.573s/10s (36%) | BM → BostanMori 重播整段前綴，290 組（d = 1..20）共 9 166 項 | 需要外部 `Mul`、`ntt`（`Operation_stdabs`、`NTT_stdabs`） | Bostan–Mori（2026-09-28 取代 std_abs 的 Kitamasa，原本 TLE 19.442s）；`c` 是 **0-based**（BM 回傳 1-based，串接要平移） |
 | `7_Polynomial/Value_Poly.cpp` | — 無對應題 | 431 189 組 vs 前綴和表 | 需要外部 `mint` | — |
 
 ### 支線（不在 `content.tex`，不進 PDF）
@@ -205,4 +205,4 @@
 - 表中 15 個模版的「本地對拍」原本只有紀錄、沒有檔案，這次補成 `verify/stress/` 裡的測試，表中數字改成實際輸出：ModMin、Linear_Equations、DiscreteLog、LiChaoST、FFT、FWT、Operation_stdabs、FastLinearRecursion_stdabs、Polynomial_Operation、2SAT、MinimumSteinerTree、Bipartite_Matching、Kuhn_Munkres、MincostMaxflow、MatroidIntersection。
 - **修 bug**：`MincostMaxflow` 的 `path()` 沒有重設 `par[s]`，同一物件 `init()` 後重用會沿舊邊回溯（算錯或無窮迴圈）。
 - 補記先前已有檔案但表中沒寫的對拍（EBCC、VBCC、min_heap、Pollard_Rho、1d1d 等），`（不在書中）` 標註不在 `content.tex` 的列，總計重算。
-- `FastLinearRecursion_stdabs.cpp` 換成 Bostan–Mori（介面不變）：kth_term 從 **TLE** 19.442s 變成 **AC** 3.573s；每步共用 Q 的 NTT，只做 4 次轉換。
+- `FastLinearRecursion_stdabs.cpp` 換成 Bostan–Mori，改名 `BostanMori.cpp`（參數不變）：kth_term 從 **TLE** 19.442s 變成 **AC** 3.573s；每步共用 Q 的 NTT，只做 4 次轉換。

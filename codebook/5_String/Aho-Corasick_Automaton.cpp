@@ -38,14 +38,7 @@ struct AC { // remember to build_fail!!!
       }
     }
   }
-  // int match(string &s) {
-  //   int now = 0, ans = 0;
-  //   for (char c : s) {
-  //     now = to[now][c - 'a'];
-  //     ans += cnt[now];
-  //   }
-  //   return ans;
-  // }
+  // total matches in s: walk to[], sum up cnt[now]
   // occ[v]: times the string of node v occurs in s
   // for a pattern, v is what insert() returned
   vector<int> count(string &s) {

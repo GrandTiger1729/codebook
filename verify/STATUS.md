@@ -211,6 +211,6 @@
 ## 2026-09-30：AC 自動機換成 std_abs
 
 - `Aho-Corasick_Automatan.cpp` 換成 std_abs 的 `AC`（套 macro 契約），檔名改正為 `Aho-Corasick_Automaton.cpp`：需要 `N`、`C`，根是 0，字元以 `'a'` 為基底，`insert` / `build_fail` / `reset`。Library Checker **AC** 0.369s，速度和舊版相同（同一批輸入逐一執行，最大測資兩者都約 0.16s）。
-- `cnt[]` 在 `build_fail()` 後沿 fail 累加成「以該節點結尾的 pattern 數」，走 `to[]` 加總就是總出現次數（註解裡的 `match`）。
+- `cnt[]` 在 `build_fail()` 後沿 fail 累加成「以該節點結尾的 pattern 數」，走 `to[]` 加總就是總出現次數（std_abs 註解掉的 `match` 縮成一行註解）。
 - 在 std_abs 原檔之外加了 `ord`（BFS 順序）和 `count(s)`：回傳 `occ[v]` = 節點 `v` 的字串在 `s` 裡的出現次數，pattern 的 `v` 就是 `insert()` 的回傳值；對應舊版的 `ord[]` + `solve()`。
 - 新增本地對拍 100 000 組（fail、match、count）。

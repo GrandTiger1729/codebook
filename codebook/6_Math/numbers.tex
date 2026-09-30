@@ -3,7 +3,7 @@
 
 $B_0=1,B_1^{\pm}=\pm\frac{1}{2},B_2=\frac{1}{6},B_3=0$
 
-$\displaystyle\sum_{j=0}^m\binom{m+1}{j}B_j=0$, EGF is $B(x) = \frac{x}{e^x - 1}=\displaystyle\sum_{n=0}^\infty B_n\frac{x^n}{n!}$.
+$\displaystyle\sum_{j=0}^m\binom{m+1}{j}B^{-}_j=0$ ($m \ge 1$), EGF is $\frac{x}{e^x - 1}=\displaystyle\sum_{n=0}^\infty B^{-}_n\frac{x^n}{n!}$.
 
 $S_m(n)=\displaystyle\sum_{k=1}^nk^m=\frac{1}{m+1}\sum_{k=0}^m\binom{m+1}{k}B^{+}_kn^{m+1-k}$
 
@@ -25,7 +25,7 @@ $x^n     = \sum_{i=0}^{n} S(n, i) (x)_i$
 
 \item Bell numbers
 
-$B_{n+1} = \sum_{k=0}^{n} \binom nk B_k$, $B_n = \sum_k S(n, k)$, EGF $e^{e^x-1}$ (use \ref{sec:polyop} \texttt{Exp}).
+$B_{n+1} = \sum_{k=0}^{n} \binom nk B_k$, $B_n = \sum_k S(n, k)$, EGF $\exp(e^x-1)$.
 
 \item Pentagonal number theorem
 

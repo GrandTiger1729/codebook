@@ -1,8 +1,5 @@
 \begin{itemize}
-\item Vandermonde's Identity
-$$
-C(n + m, k) = \sum_{i=0}^k C(n, i)C(m, k - i)
-$$
+\item Vandermonde's Identity $\displaystyle \binom{n+m}{k} = \sum_{i=0}^{k} \binom{n}{i}\binom{m}{k-i}$
 
 \item Kirchhoff's Theorem
 
@@ -83,7 +80,7 @@ Number of orbits $= \frac{1}{|G|} \sum_{g \in G} |X^g|$, $X^g$: elements fixed b
 \item Labeled graph counts
 
 \begin{itemize}
-  \item Connected graphs: EGF $C(x) = \ln G(x)$, $G(x) = \sum_n 2^{\binom n2} \frac{x^n}{n!}$ (use \texttt{Ln}).
+  \item Connected graphs: EGF $C(x) = \ln G(x)$, $G(x) = \sum_n 2^{\binom n2} \frac{x^n}{n!}$ (use \ref{sec:polyop} \texttt{Ln}).
   \item DAGs: $a_n = \sum_{k=1}^{n} (-1)^{k+1} \binom nk 2^{k(n-k)} a_{n-k}$, $a_0 = 1$.
 \end{itemize}
 

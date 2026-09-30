@@ -24,9 +24,8 @@ $S(n, k) = \frac{1}{k!}\sum_{i=0}^{k}(-1)^{k-i}{k \choose i}i^n$
 $x^n     = \sum_{i=0}^{n} S(n, i) (x)_i$
 
 \item Bell numbers
-Partitions of $n$ distinct elements into any number of groups.
 
-$B_{n+1} = \sum_{k=0}^{n} \binom nk B_k$, \quad $B_n = \sum_k S(n, k)$, \quad EGF is $e^{e^x-1}$ (use \texttt{Exp}).
+$B_{n+1} = \sum_{k=0}^{n} \binom nk B_k$, $B_n = \sum_k S(n, k)$, EGF $e^{e^x-1}$ (use \ref{sec:polyop} \texttt{Exp}).
 
 \item Pentagonal number theorem
 

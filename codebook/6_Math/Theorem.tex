@@ -1,11 +1,4 @@
 \begin{itemize}
-\item Cramer's rule
-$$
-\begin{aligned}ax+by=e\\cx+dy=f\end{aligned}
-\;\Rightarrow\;
-x=\dfrac{ed-bf}{ad-bc},\quad y=\dfrac{af-ec}{ad-bc}
-$$
-
 \item Vandermonde's Identity
 $$
 C(n + m, k) = \sum_{i=0}^k C(n, i)C(m, k - i)
@@ -16,13 +9,21 @@ $$
 Denote $L$ be a $n \times n$ matrix as the Laplacian matrix of graph $G$, where $L_{ii} = d(i)$ (in-degree for directed case), $L_{ij} = -c$ where $c$ is the number of edge $(i, j)$ in $G$.
 \begin{itemize}
     %\itemsep-0.5em
-    \item The number of undirected spanning in $G$ is $\lvert \det(\tilde{L}_{11}) \rvert$.
+    \item The number of undirected spanning trees in $G$ is $\lvert \det(\tilde{L}_{11}) \rvert$.
     \item The number of directed spanning tree rooted at $r$ in $G$ is $\lvert \det(\tilde{L}_{rr}) \rvert$.
 \end{itemize}
 
+\item BEST Theorem
+
+The number of Eulerian circuits of a directed Eulerian graph is $t_w(G) \prod_v (\deg^+(v) - 1)!$, where $t_w(G)$ is the number of spanning trees rooted at $w$ (Kirchhoff; the same for every $w$).
+
 \item Tutte's Matrix
 
-Let $D$ be a $n \times n$ matrix, where $d_{ij} = x_{ij}$ ($x_{ij}$ is chosen uniformly at random) if $i < j$ and $(i, j) \in E$, otherwise $d_{ij} = -d_{ji}$. $\frac{rank(D)}{2}$ is the maximum matching on $G$.
+Let $D$ be a $n \times n$ matrix with $d_{ij} = x_{ij}$ ($x_{ij}$ chosen uniformly at random) if $i < j$ and $(i, j) \in E$, $d_{ij} = -d_{ji}$ if $i > j$, and $0$ otherwise. $\frac{rank(D)}{2}$ is the maximum matching on $G$ (compute the rank modulo a large prime; correct with high probability).
+
+\item Tutte–Berge Formula
+
+Maximum matching $= \frac12 \min_{U \subseteq V} \big(|V| + |U| - \mathrm{odd}(G - U)\big)$, where $\mathrm{odd}$ counts the components with an odd number of vertices.
 
 \item Lindström–Gessel–Viennot Lemma
 
@@ -46,7 +47,7 @@ If integers $x_1, \ldots, x_N$ are all $\le 1$ and sum to $k > 0$, exactly $k$ o
 
 \item Erdős–Gallai theorem
 
-A sequence of nonnegative integers $d_1\ge\cdots\ge d_n$ can be represented as the degree sequence of a finite simple graph on $n$ vertices if and only if $d_1+\cdots+d_n$ is even and $\displaystyle\sum_{i-1}^kd_i\le k(k-1)+\displaystyle\sum_{i=k+1}^n\min(d_i,k)$ holds for every $1\le k\le n$.
+A sequence of nonnegative integers $d_1\ge\cdots\ge d_n$ can be represented as the degree sequence of a finite simple graph on $n$ vertices if and only if $d_1+\cdots+d_n$ is even and $\displaystyle\sum_{i=1}^kd_i\le k(k-1)+\displaystyle\sum_{i=k+1}^n\min(d_i,k)$ holds for every $1\le k\le n$.
 
 \item Gale–Ryser theorem
 
@@ -55,6 +56,53 @@ A pair of sequences of nonnegative integers $a_1\ge\cdots\ge a_n$ and $b_1,\ldot
 \item Fulkerson–Chen–Anstee theorem
 
 A sequence $(a_1,b_1),\ldots,(a_n,b_n)$ of nonnegative integer pairs with $a_1\ge\cdots\ge a_n$ is digraphic if and only if $\displaystyle\sum_{i=1}^n a_i=\displaystyle\sum_{i=1}^n b_i$ and $\displaystyle\sum_{i=1}^k a_i\le \displaystyle\sum_{i=1}^k\min(b_i,k-1)+\displaystyle\sum_{i=k+1}^n\min(b_i,k)$ holds for every $1\le k\le n$.
+
+\item Dilworth / Mirsky
+
+\begin{itemize}
+  \item Minimum number of chains covering a poset $=$ maximum antichain; minimum number of antichains $=$ longest chain.
+  \item Minimum vertex-disjoint path cover of a DAG $= n\, -$ maximum matching (split each vertex into out/in). If paths may share vertices, take the transitive closure first.
+\end{itemize}
+
+\item Graph facts
+
+\begin{itemize}
+  \item Hall: a bipartite graph has a matching saturating $L$ iff $|N(S)| \ge |S|$ for all $S \subseteq L$; maximum matching $= |L| - \max_{S \subseteq L} (|S| - |N(S)|)$.
+  \item Gallai: maximum independent set $+$ minimum vertex cover $= n$; with no isolated vertices, maximum matching $+$ minimum edge cover $= n$.
+  \item Dirac / Ore ($n \ge 3$): a Hamiltonian cycle exists if every $\deg(v) \ge n/2$, or if $\deg(u) + \deg(v) \ge n$ for all non-adjacent $u, v$.
+\end{itemize}
+
+\item Burnside's Lemma
+
+Number of orbits $= \frac{1}{|G|} \sum_{g \in G} |X^g|$, $X^g$: elements fixed by $g$.
+\begin{itemize}
+  \item Necklaces ($n$ beads, $k$ colours, rotations): $N = \frac1n \sum_{d \mid n} \varphi(d)\, k^{n/d}$.
+  \item Bracelets (also reflections): $\frac N2 + \frac12 k^{(n+1)/2}$ for odd $n$; $\frac N2 + \frac14 (k+1) k^{n/2}$ for even $n$.
+\end{itemize}
+
+\item Labeled graph counts
+
+\begin{itemize}
+  \item Connected graphs: EGF $C(x) = \ln G(x)$, $G(x) = \sum_n 2^{\binom n2} \frac{x^n}{n!}$ (use \texttt{Ln}).
+  \item DAGs: $a_n = \sum_{k=1}^{n} (-1)^{k+1} \binom nk 2^{k(n-k)} a_{n-k}$, $a_0 = 1$.
+\end{itemize}
+
+\item Hook length formula
+
+Number of standard Young tableaux of shape $\lambda$ ($n$ cells) is $\frac{n!}{\prod_{c \in \lambda} h(c)}$, where $h(c)$ = cells to the right of $c$ + cells below $c$ + 1.
+
+\item Fibonacci
+
+\begin{itemize}
+  \item $M = \begin{bmatrix}1&1\\1&0\end{bmatrix}$, $M^n = \begin{bmatrix}F_{n+1}&F_n\\F_n&F_{n-1}\end{bmatrix}$; the next line follows from $M^{m+n} = M^m M^n$ and $\det M^n = (-1)^n$.
+  \item $F_{m+n} = F_m F_{n+1} + F_{m-1} F_n$, \quad $F_{n-1}F_{n+1} - F_n^2 = (-1)^n$
+  \item $\gcd(F_m, F_n) = F_{\gcd(m,n)}$; $F_m \mid F_n \iff m \mid n$ ($m \ge 3$). Same shape: $\gcd(a^m - 1, a^n - 1) = a^{\gcd(m,n)} - 1$.
+  \item Pisano period $\pi(m) \le 6m$. Zeckendorf: every $n$ is uniquely a sum of non-adjacent Fibonacci numbers (greedy).
+\end{itemize}
+
+\item Pell equation
+
+$x^2 - Dy^2 = 1$, $D$ not a square: with the smallest solution $(x_1, y_1)$ (\texttt{pell(D)} in the Python section), all solutions are $x_{k+1} = x_1 x_k + D y_1 y_k$, $y_{k+1} = x_1 y_k + y_1 x_k$.
 
 \item Pick's theorem
 
@@ -73,19 +121,14 @@ For simple polygon, when points are all integer, we have $A=\text{\#\{lattice po
 \begin{itemize}
     %\itemsep-0.5em
   \item A portion of a sphere cut off by a plane.
-  \item $r$: sphere radius, $a$: radius of the base of the cap, $h$: height of the cap, $\theta$: $\arcsin(a/r)$.
+  \item $r$: sphere radius, $a$: radius of the base of the cap, $h$: height of the cap, $\cos\theta = (r-h)/r$.
   \item Volume $=\pi h^2(3r-h)/3=\pi h(3a^2+h^2)/6=\pi r^3(2+\cos\theta)(1-\cos\theta)^2/3$.
   \item Area $=2\pi rh=\pi(a^2+h^2)=2\pi r^2(1-\cos\theta)$.
 \end{itemize}
 
 \item Lagrange multiplier
 
-\begin{itemize}
-    %\itemsep-0.5em
-  \item Optimize $f(x_1, \ldots, x_n)$ when $k$ constraints $g_i(x_1, \ldots, x_n)=0$.
-  \item Lagrangian function $\mathcal{L}(x_1, \ldots, x_n, \lambda_1, \ldots, \lambda_k) = f(x_1, \ldots, x_n) - \sum^{k}_{i=1}\lambda_i g_i(x_1, \ldots, x_n)$.
-  \item The solution corresponding to the original constrained optimization is always a saddle point of the Lagrangian function.
-\end{itemize}
+Minimise $\sum f_i(x_i)$ subject to $\sum x_i = C$ with every $f_i$ convex: at the optimum $f_i'(x_i) = \lambda$ for all interior $x_i$ (clamp at the bounds); binary search $\lambda$.
 
 \item Nearest points of two skew lines
 
@@ -134,32 +177,6 @@ Integration by parts:
   \)
 }
 
-\item Spherical Coordinate
-
-$$
-(x, y, z) = (r\sin\theta\cos\phi, r\sin\theta\sin\phi, r\cos\theta)
-$$
-
-$$
-(r, \theta, \phi) = (\sqrt{x^2+y^2+z^2}, \textrm{acos}(z/\sqrt{x^2+y^2+z^2}), \textrm{atan2}(y,x))
-$$
-
-\item Rotation Matrix
-
-$$
-M(\theta)=
-\begin{bmatrix}
-\cos\theta & -\sin\theta\\
-\sin\theta & \cos\theta
-\end{bmatrix},
-R_x(\theta_x)=
-\begin{bmatrix}
-1 & 0 & 0\\
-0 & \cos\theta_x & -\sin\theta_x \\
-0 & \sin\theta & \cos\theta
-\end{bmatrix}
-$$
-
 \item Min-Max Inclusion Exclusion Principle
 
 (Works in expect values version, i.e., $E[\min]$, too)
@@ -173,8 +190,8 @@ $$
 \item Du's Sieve
 
 \begin{itemize}
-  \item compute $S(N)=\sum_{i=1}^N f(N)$, find a function $g$ such that $f*g$ is easy to compute
-  \item $\sum_{i=1}^N (f*g)(i)=\sum_{i=1}^N g(i)S(\lfloor\frac{N}{d}\rfloor)$
+  \item compute $S(N)=\sum_{i=1}^N f(i)$, find a function $g$ such that $f*g$ is easy to compute
+  \item $\sum_{i=1}^N (f*g)(i)=\sum_{i=1}^N g(i)S(\lfloor\frac{N}{i}\rfloor)$
   \item $\implies g(1)S(N)=\sum_{i=1}^N (f*g)(i)-\sum_{i=2}^N g(i)S(\lfloor\frac{N}{i}\rfloor)$
   \item use sqrt decomposition and memoization (sometimes need to precompute small prefix)
 \end{itemize}

@@ -1,6 +1,6 @@
 # 模版測試狀態
 
-產生於 2026-09-16，最後更新 2026-09-30（本地對拍共 76 個、修 14 個 bug；見文末）。
+產生於 2026-09-16，最後更新 2026-09-30（本地對拍共 78 個、修 14 個 bug；見文末）。
 資料來源：`content.tex`、`MAP.tsv`、`RESULT.md`、`stress/`。怎麼跑見 `verify/README.md`。
 
 > **2026-09-16 修正**：`run.py` 原本用 `checker <in> <jury> <ours>` 呼叫官方 checker，
@@ -42,6 +42,7 @@
 | `2_Graph/Vizing.cpp` | — 無對應題 | 4 000 組 n≤104，合法著色且 ≤Δ+1 色 | ✅ | test by CF 101933 G |
 | `2_Graph/Minimum_Clique_Cover.cpp` | — 無對應題 | 3 000 組 n≤14 vs 子集 DP（**修 UB**：改 `unsigned`） | 需要外部 `N` | test by TIOJ 1472 |
 | `2_Graph/NumberofMaximalClique.cpp` | — 無對應題 | 4 000 組 n≤15 精確 + Moon–Moser n≤120（上限 1001） | 需要外部 `N` | test by POJ 2989 |
+| `2_Graph/C3C4.cpp` | `graph/enumerate_triangles` **AC** 17 筆 · 0.164s/5s (3%) | 30 000 張隨機圖 vs 暴力（247 994 個三角形各回報恰一次、973 727 個四環）+ 星狀圖加團 n=2·10⁵ 的複雜度檢查 | 需要外部 `N`；先呼叫 `build(n)` | 2026-09-30 加入；`C3(n, f)` 對每個三角形呼叫 `f(a, b, c)`，`C4(n)` 回傳四環數 |
 
 ## Data Structure
 
@@ -187,9 +188,9 @@
 
 ## 總計
 
-- 收錄模版：**107**（上面各章主表中在書裡的列；不含 `hash.sh`、`Primes`、`misc.py` 與支線）
-- 有 Library Checker AC 的：**50**（另有支線 2 個）
-- 有本地對拍的：**76**（`verify/stress/`，76 個測試）
+- 收錄模版：**108**（上面各章主表中在書裡的列；不含 `hash.sh`、`Primes`、`misc.py` 與支線）
+- 有 Library Checker AC 的：**51**（另有支線 2 個）
+- 有本地對拍的：**77**（`verify/stress/`，78 個測試；多的一個是 `misc.py` 裡 `pell` 的 `Math/pell.py`）
 - 兩種自動測試都沒有的：**4**（black_magic、Pragma、sanitize_fixer、simulated_annealing；都是片段或工具檔）
 
 ## 2026-09-27：stress test + 排版
@@ -220,3 +221,12 @@
 
 - 新增 `5_String/LyndonFactorization.cpp`（std_abs 的 `duval`，只把 `sz(s)` 換成 `s.size()`）。Library Checker **AC** 0.032s，本地對拍 79 524 組，PDF 仍是 25 頁。
 - `Smallest_Rotation.cpp` 改名 `MinimumRotation.cpp`，函式 `mcp` 改名 `min_rotation`（只改名字）。
+
+## 2026-09-30：數學章補充（依 review 的決定）
+
+- **新增理論**（公式都先用暴力程式驗過小範圍）：`Theorem.tex` 加 BEST、Tutte–Berge、Dilworth/Mirsky、Graph facts（Hall、Gallai、Dirac/Ore）、Burnside（項鍊、手環）、Labeled graph counts、Hook length、Fibonacci、Pell；`numbers.tex` 加第一類 Stirling、Bell、Narayana。
+- **新增程式**：`2_Graph/C3C4.cpp`（三角形列舉、四環計數，O(M√M)）；`1_Basic/stress.sh`（對拍迴圈）；`misc.py` 加 `pell(D)`（連分數求最小解，用 Python 是因為解很快就超過 64 位元）。
+- **移除**：Cramer's rule、Spherical Coordinate、Rotation Matrix（幾何章已有對應程式）。
+- **修正**：Erdős–Gallai 的求和下標、Du's sieve 的 `f(i)` 與 `N/i`、Tutte's matrix 的定義、Kirchhoff 的用詞、Spherical cap 的 θ 改成 `cos θ = (r−h)/r`、Lagrange multiplier 換成凸函數分配的版本。
+- 備選四項只放得下 Narayana；Generalized Euler、Landau、Misère Nim 加進去會變 26 頁，沒有加。HPI Alternative Form 等隊伍確認後再決定，沒有動。
+- `stress/run.sh` 現在也會跑 `*/*.py`。PDF 25 頁。

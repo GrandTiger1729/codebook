@@ -142,16 +142,23 @@ Use sqrt decomposition with memoization (precompute small prefixes if needed).
 
 \item Nearest points of two skew lines
 
-$\boldsymbol{n} = \boldsymbol{d}_1 \times \boldsymbol{d}_2$ \\
-{\setlength{\arraycolsep}{2pt}
-$\begin{array}{ll}
-\text{Line 1}: \boldsymbol{v}_1 = \boldsymbol{p}_1 + t_1\boldsymbol{d}_1 &
-\text{Line 2}: \boldsymbol{v}_2 = \boldsymbol{p}_2 + t_2\boldsymbol{d}_2 \\
-\boldsymbol{n}_1 = \boldsymbol{d}_1 \times \boldsymbol{n} &
-\boldsymbol{n}_2 = \boldsymbol{d}_2 \times \boldsymbol{n} \\[2pt]
-\displaystyle \boldsymbol{c}_1 = \boldsymbol{p}_1 + \frac{(\boldsymbol{p}_2 - \boldsymbol{p}_1)\cdot\boldsymbol{n}_2}{\boldsymbol{d}_1\cdot\boldsymbol{n}_2}\boldsymbol{d}_1 &
-\displaystyle \boldsymbol{c}_2 = \boldsymbol{p}_2 + \frac{(\boldsymbol{p}_1 - \boldsymbol{p}_2)\cdot\boldsymbol{n}_1}{\boldsymbol{d}_2\cdot\boldsymbol{n}_1}\boldsymbol{d}_2
-\end{array}$}
+$\boldsymbol{n} = \boldsymbol{d}_1 \times \boldsymbol{d}_2$
+
+\noindent
+\begin{minipage}[t]{0.47\linewidth}
+\begin{itemize}
+  \item Line 1: $\boldsymbol{v}_1 = \boldsymbol{p}_1 + t_1\boldsymbol{d}_1$
+  \item $\boldsymbol{n}_1 = \boldsymbol{d}_1 \times \boldsymbol{n}$
+  \item $\boldsymbol{c}_1 = \boldsymbol{p}_1 + \frac{(\boldsymbol{p}_2 - \boldsymbol{p}_1)\cdot\boldsymbol{n}_2}{\boldsymbol{d}_1\cdot\boldsymbol{n}_2}\boldsymbol{d}_1$
+\end{itemize}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.47\linewidth}
+\begin{itemize}
+  \item Line 2: $\boldsymbol{v}_2 = \boldsymbol{p}_2 + t_2\boldsymbol{d}_2$
+  \item $\boldsymbol{n}_2 = \boldsymbol{d}_2 \times \boldsymbol{n}$
+  \item $\boldsymbol{c}_2 = \boldsymbol{p}_2 + \frac{(\boldsymbol{p}_1 - \boldsymbol{p}_2)\cdot\boldsymbol{n}_1}{\boldsymbol{d}_2\cdot\boldsymbol{n}_1}\boldsymbol{d}_2$
+\end{itemize}
+\end{minipage}
 
 \item Lagrange multiplier
 

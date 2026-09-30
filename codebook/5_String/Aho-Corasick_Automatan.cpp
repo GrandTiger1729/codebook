@@ -1,38 +1,48 @@
-struct AC_Automatan {
-  int nx[len][sigma], fl[len], cnt[len], ord[len], top;
-  int rnx[len][sigma]; // node actually be reached
+struct AC { // remember to build_fail!!!
+  int ch[N][C], to[N][C], fail[N], cnt[N], _id;
+  // fail link tree: fail[i] -> i
+  AC() { reset(); }
   int newnode() {
-    fill_n(nx[top], sigma, -1);
-    return top++;
+    fill_n(ch[_id], C, 0), fill_n(to[_id], C, 0);
+    fail[_id] = cnt[_id] = 0;
+    return _id++;
   }
-  void init() { top = 1, newnode(); }
-  int input(string &s) {
-    int X = 1;
+  int insert(string s) {
+    int now = 0;
     for (char c : s) {
-      if (!~nx[X][c - 'A']) nx[X][c - 'A'] = newnode();
-      X = nx[X][c - 'A'];
+      if (!ch[now][c - 'a'])
+        ch[now][c - 'a'] = newnode();
+      now = ch[now][c - 'a'];
     }
-    return X; // return the end node of string
+    cnt[now]++;
+    return now;
   }
-  void make_fl() {
+  void build_fail() {
     queue<int> q;
-    q.push(1), fl[1] = 0;
-    for (int t = 0; !q.empty(); ) {
-      int R = q.front();
-      q.pop(), ord[t++] = R;
-      FOR (i, 0, sigma - 1)
-        if (~nx[R][i]) {
-          int X = rnx[R][i] = nx[R][i], Z = fl[R];
-          for (; Z && !~nx[Z][i]; ) Z = fl[Z];
-          fl[X] = Z ? nx[Z][i] : 1, q.push(X);
+    FOR (i, 0, C - 1) if (ch[0][i])
+      q.push(ch[0][i]), to[0][i] = ch[0][i];
+    while (!q.empty()) {
+      int v = q.front();
+      q.pop();
+      FOR (i, 0, C - 1) {
+        if (!ch[v][i]) to[v][i] = to[fail[v]][i];
+        else {
+          int u = ch[v][i], k = fail[v];
+          while (k && !ch[k][i]) k = fail[k];
+          if (ch[k][i]) k = ch[k][i];
+          fail[u] = k, cnt[u] += cnt[k], to[v][i] = u;
+          q.push(u);
         }
-        else rnx[R][i] = R > 1 ? rnx[fl[R]][i] : 1;
+      }
     }
   }
-  // count every pattern in t: walk t along rnx, ++cnt
-  // at each node, then solve() pushes cnt up fail links
-  void solve() {
-    for (int i = top - 2; i > 0; i--)
-      cnt[fl[ord[i]]] += cnt[ord[i]];
-  }
+  // int match(string &s) {
+  //   int now = 0, ans = 0;
+  //   for (char c : s) {
+  //     now = to[now][c - 'a'];
+  //     ans += cnt[now];
+  //   }
+  //   return ans;
+  // }
+  void reset() { _id = 0, newnode(); }
 } ac;

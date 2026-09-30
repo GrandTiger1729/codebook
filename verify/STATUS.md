@@ -1,6 +1,6 @@
 # 模版測試狀態
 
-產生於 2026-09-16，最後更新 2026-09-28（本地對拍共 74 個、修 14 個 bug；見文末）。
+產生於 2026-09-16，最後更新 2026-09-30（本地對拍共 75 個、修 14 個 bug；見文末）。
 資料來源：`content.tex`、`MAP.tsv`、`RESULT.md`、`stress/`。怎麼跑見 `verify/README.md`。
 
 > **2026-09-16 修正**：`run.py` 原本用 `checker <in> <jury> <ours>` 呼叫官方 checker，
@@ -80,7 +80,7 @@
 | `5_String/Manacher.cpp` | `string/enumerate_palindromes` **AC** 24 筆 · 0.068s/5s (1%) | — | 需要外部 `SIZE` | test by Lib-Checker Enumerate Palindromes |
 | `5_String/SA_LCP_becaido.cpp` | `string/suffixarray#becaido` **AC** 50 筆 · 0.167s/5s (3%) | — | ✅ | test by caido, Lib-Checker Suffix Array |
 | `5_String/SAIS-C++20.cpp` | `string/suffixarray` **AC** 50 筆 · 0.181s/5s (4%) | σ≤3 窮舉 + 隨機 n≤3000，共 30 252 組 | ✅ | test by Lib-Checker Suffix Array |
-| `5_String/Aho-Corasick_Automatan.cpp` | `string/aho_corasick` **AC** 72 筆 · 0.320s/5s (6%) | — | 需要外部 `len` | test by CF 102511 G (World Finals' problem), Lib-Checker Aho-Corasick |
+| `5_String/Aho-Corasick_Automatan.cpp` | `string/aho_corasick` **AC** 72 筆 · 0.818s/5s (16%) | `fail[]` vs 最長後綴節點、沿 `to[]` 累加 `cnt[]` vs 樸素出現次數，100 000 組（含 `reset()` 重用） | 需要外部 `N`、`C`；字元以 `'a'` 為基底；根是 0 | std_abs 原檔 + macro 契約（2026-09-30 取代舊版）；`cnt[]` 在 `build_fail()` 後是「以該節點結尾的 pattern 數」，舊版的逐 pattern 出現次數（`ord[]`/`solve()`）沒有了 |
 | `5_String/Smallest_Rotation.cpp` | — 無對應題 | 79 523 組（σ=3 n≤9 窮舉 + 週期串） | ✅ | test by CSES Minimal Rotation |
 | `5_String/De_Bruijn_sequence.cpp` | — 無對應題 | 416 組 (C,N,K)，每個長 N 字只出現一次 | ✅ | test by CF 102001 C |
 | `5_String/exSAM.cpp` | `string/number_of_substrings` **AC** 24 筆 · 0.065s/5s (1%) | — | 需要外部 `N` | test by CF 616 C, Lib-Checker Number of Substrings |
@@ -188,7 +188,7 @@
 
 - 收錄模版：**106**（上面各章主表中在書裡的列；不含 `hash.sh`、`Primes`、`misc.py` 與支線）
 - 有 Library Checker AC 的：**49**（另有支線 2 個）
-- 有本地對拍的：**74**（`verify/stress/`，74 個測試）
+- 有本地對拍的：**75**（`verify/stress/`，75 個測試）
 - 兩種自動測試都沒有的：**4**（black_magic、Pragma、sanitize_fixer、simulated_annealing；都是片段或工具檔）
 
 ## 2026-09-27：stress test + 排版
@@ -207,3 +207,8 @@
 - 補記先前已有檔案但表中沒寫的對拍（EBCC、VBCC、min_heap、Pollard_Rho、1d1d 等），`（不在書中）` 標註不在 `content.tex` 的列，總計重算。
 - `FastLinearRecursion_stdabs.cpp` 換成 Bostan–Mori，改名 `FastLinearRecursion.cpp`、函式 `BostanMori`（參數不變）：kth_term 從 **TLE** 19.442s 變成 **AC** 3.573s；每步共用 Q 的 NTT，只做 4 次轉換。
 - `Berlekamp-Massey.cpp` 改回傳 **0-based** 的 `c`（刪掉前面補的 `c[0]`），可以直接餵給 `FastLinearRecursion`；支線 `LinearRecursion` 仍是 1-based。
+
+## 2026-09-30：AC 自動機換成 std_abs
+
+- `Aho-Corasick_Automatan.cpp` 換成 std_abs 的 `AC`（只套 macro 契約）：需要 `N`、`C`，根是 0，字元以 `'a'` 為基底，`insert` / `build_fail` / `reset`。Library Checker **AC** 0.818s（舊版 0.320s），新增本地對拍 100 000 組。
+- 行為差異：`cnt[]` 在 `build_fail()` 後沿 fail 累加成「以該節點結尾的 pattern 數」，走 `to[]` 加總就是總出現次數；舊版用 `ord[]` + `solve()` 算每個 pattern 各自的出現次數，新版沒有這個功能。

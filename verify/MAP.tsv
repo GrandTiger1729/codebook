@@ -47,7 +47,7 @@ convolution/convolution_mod_1000000007	convolution_mod_1000000007.cpp	7_Polynomi
 convolution/min_plus_convolution_convex_arbitrary#smawk	min_plus_smawk.cpp	9_Else/smawk.cpp	driver passes a select() that prefers the smaller cost
 linear_algebra/system_of_linear_equations	system_of_linear_equations.cpp	6_Math/Linear_Equations.cpp	driver supplies the modint; the template is generic on T now
 enumerative_combinatorics/binomial_coefficient	-	6_Math/fac_no_p.cpp	fac_no_p is one component of arbitrary-mod binomial (still needs Lucas + CRT over prime powers) and depends on an mpow() the codebook does not define; no LC problem matches it directly.
-string/aho_corasick	aho_corasick.cpp	5_String/Aho-Corasick_Automatan.cpp	the template hardcodes c - 'A' so the driver shifts the lowercase input; trie parents are not stored, driver recovers them from nx[]
+string/aho_corasick	aho_corasick.cpp	5_String/Aho-Corasick_Automatan.cpp	std_abs AC; trie parents are not stored, driver recovers them from ch[]
 string/eertree	eertree.cpp	5_String/PalTree.cpp	trie parents are not stored, driver recovers them from next[]
 number_theory/rational_approximation	rational_approximation.cpp	9_Else/BinarySearchOnFraction.cpp	driver defines the template's declared pred(); the "<= x/y" side is the same search on the reciprocal
 graph/min_cost_b_flow	-	4_Flow_Matching/MinCostCirculation.cpp	LC additionally requires the dual variables p_v, infeasibility detection, and answers that may exceed 2^64; the template computes only the circulation's flow and exposes no potentials.

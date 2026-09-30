@@ -224,7 +224,7 @@
 
 ## 2026-09-30：數學章補充（依 review 的決定）
 
-- **新增理論**（公式都先用暴力程式驗過小範圍）：`Theorem.tex` 加 BEST、Tutte–Berge、Dilworth/Mirsky、Graph facts（Hall、Gallai、Dirac/Ore）、Burnside（項鍊、手環）、Labeled graph counts、Hook length、Fibonacci、Generalized Euler、Landau、Misère Nim；`numbers.tex` 加第一類 Stirling、Bell、Narayana。
+- **新增理論**（公式都先用暴力程式驗過小範圍）：`Theorem.tex` 加 BEST、Tutte–Berge、Dilworth/Mirsky、Graph facts（Hall、Gallai、Dirac/Ore）、Burnside（項鍊、手環）、Labeled graph counts、Hook length、Fibonacci、Generalized Euler、Landau、Misère Nim、Sum of squares；`numbers.tex` 加第一類 Stirling、Bell、Narayana。
 - **新增程式**：`2_Graph/C3C4.cpp`（三角形列舉、四環計數，O(M√M)）；`1_Basic/stress.sh`（對拍迴圈）。
 - **移除**：Cramer's rule、Spherical Coordinate、Rotation Matrix（幾何章已有對應程式）；另外移除 Nearest points of two skew lines（隊上沒人用）。
 - **修正**：Erdős–Gallai 的求和下標、Du's sieve 的 `f(i)` 與 `N/i`、Tutte's matrix 的定義、Kirchhoff 的用詞、Spherical cap 的 θ 改成 `cos θ = (r−h)/r`、Lagrange multiplier 換成凸函數分配的版本。

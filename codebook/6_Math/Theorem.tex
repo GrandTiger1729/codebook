@@ -112,6 +112,14 @@ $s_1 \le \dots \le s_n$ is the score sequence of a tournament iff $\sum_{i \le k
 
 The first player wins iff (some pile $> 1$ and $\bigoplus a_i \ne 0$) or (all piles $\le 1$ and $\bigoplus a_i = 0$).
 
+\item Sum of squares
+
+\begin{itemize}
+  \item Two: $n = a^2 + b^2$ iff every prime $p \equiv 3 \pmod 4$ divides $n$ to an even power. The number of $(a, b) \in \mathbb{Z}^2$ is $4(d_1(n) - d_3(n))$, $d_i(n)$: divisors of $n$ that are $\equiv i \pmod 4$.
+  \item Three: $n = a^2 + b^2 + c^2$ iff $n \ne 4^a(8b + 7)$.
+  \item Four: every $n \ge 0$ is a sum of four squares.
+\end{itemize}
+
 \item Pick's theorem
 
 For simple polygon, when points are all integer, we have $A=\text{\#\{lattice points in the interior\}} + \frac{\text{\#\{lattice points on the boundary\}}}{2} - 1$.

@@ -53,10 +53,10 @@ If integers $x_1, \ldots, x_N$ are all $\le 1$ and sum to $k > 0$, exactly $k$ o
 
 \item Degree sequences (all entries nonnegative integers; each inequality for every $1 \le k \le n$)
 \begin{itemize}
-  \item Erdős–Gallai: $d_1 \ge \cdots \ge d_n$ is the degree sequence of a simple graph iff $\sum_i d_i$ is even and $\sum_{i \le k} d_i \le k(k-1) + \sum_{i > k} \min(d_i, k)$.
-  \item Gale–Ryser: $a_1 \ge \cdots \ge a_n$ and $b_1, \ldots, b_m$ are the degrees of the two sides of a simple bipartite graph ($0/1$ matrix with row sums $a$, column sums $b$) iff $\sum_i a_i = \sum_j b_j$ and $\sum_{i \le k} a_i \le \sum_{j} \min(b_j, k)$.
-  \item Fulkerson–Chen–Anstee: pairs $(a_i, b_i)$ with $a_1 \ge \cdots \ge a_n$ are the (out, in)-degrees of a simple directed graph iff $\sum_i a_i = \sum_i b_i$ and $\sum_{i \le k} a_i \le \sum_{i \le k} \min(b_i, k-1) + \sum_{i > k} \min(b_i, k)$.
-  \item Landau: $s_1 \le \cdots \le s_n$ are the out-degrees (scores) of a tournament iff $\sum_{i \le k} s_i \ge \binom{k}{2}$, with equality at $k = n$.
+  \item Erdős–Gallai: $d_1 \ge \cdots \ge d_n$ is the degree sequence of a simple graph iff $\sum_i d_i$ is even and $\displaystyle\sum_{i=1}^k d_i \le k(k-1) + \displaystyle\sum_{i=k+1}^n \min(d_i, k)$.
+  \item Gale–Ryser: $a_1 \ge \cdots \ge a_n$ and $b_1, \ldots, b_m$ are the degrees of the two sides of a simple bipartite graph ($0/1$ matrix with row sums $a$, column sums $b$) iff $\sum_i a_i = \sum_j b_j$ and $\displaystyle\sum_{i=1}^k a_i \le \displaystyle\sum_{j=1}^m \min(b_j, k)$.
+  \item Fulkerson–Chen–Anstee: pairs $(a_i, b_i)$ with $a_1 \ge \cdots \ge a_n$ are the (out, in)-degrees of a simple directed graph iff $\sum_i a_i = \sum_i b_i$ and $\displaystyle\sum_{i=1}^k a_i \le \displaystyle\sum_{i=1}^k \min(b_i, k-1) + \displaystyle\sum_{i=k+1}^n \min(b_i, k)$.
+  \item Landau: $s_1 \le \cdots \le s_n$ are the out-degrees (scores) of a tournament iff $\displaystyle\sum_{i=1}^k s_i \ge \binom{k}{2}$, with equality at $k = n$.
 \end{itemize}
 
 \item Dilworth / Mirsky

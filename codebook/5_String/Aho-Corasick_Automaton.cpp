@@ -1,9 +1,9 @@
 struct AC { // remember to build_fail!!!
   int ch[N][C], to[N][C], fail[N], cnt[N], _id;
   vector<int> ord; // BFS order, without the root
-  // fail link tree: fail[i] -> i
+  void reset() { _id = 0, newnode(); ord.clear(); }
   AC() { reset(); }
-  int newnode() {
+  int newnode() { // root at 0
     fill_n(ch[_id], C, 0), fill_n(to[_id], C, 0);
     fail[_id] = cnt[_id] = 0;
     return _id++;
@@ -15,12 +15,10 @@ struct AC { // remember to build_fail!!!
         ch[now][c - 'a'] = newnode();
       now = ch[now][c - 'a'];
     }
-    cnt[now]++;
-    return now;
+    cnt[now]++; return now;
   }
-  void build_fail() {
+  void build_fail() { // fail link tree: fail[i] -> i
     queue<int> q;
-    ord.clear();
     FOR (i, 0, C - 1) if (ch[0][i])
       q.push(ch[0][i]), to[0][i] = ch[0][i];
     while (!q.empty()) {
@@ -49,5 +47,4 @@ struct AC { // remember to build_fail!!!
       occ[fail[ord[i]]] += occ[ord[i]];
     return occ;
   }
-  void reset() { _id = 0, newnode(); }
 } ac;

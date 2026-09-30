@@ -1,11 +1,11 @@
 \begin{itemize}
-\item Bernoulli numbers
+\item Bernoulli numbers (convention $B_1 = +\frac{1}{2}$)
 
-$B_0=1,B_1^{\pm}=\pm\frac{1}{2},B_2=\frac{1}{6},B_3=0$
+$B_0=1,B_1=\frac{1}{2},B_2=\frac{1}{6},B_3=0$
 
-$\displaystyle\sum_{j=0}^m\binom{m+1}{j}B^{-}_j=0$ ($m \ge 1$), EGF is $\frac{x}{e^x - 1}=\displaystyle\sum_{n=0}^\infty B^{-}_n\frac{x^n}{n!}$.
+$\displaystyle\sum_{j=0}^m\binom{m+1}{j}B_j=m+1$, EGF is $\frac{x}{1 - e^{-x}}=\displaystyle\sum_{n=0}^\infty B_n\frac{x^n}{n!}$.
 
-$S_m(n)=\displaystyle\sum_{k=1}^nk^m=\frac{1}{m+1}\sum_{k=0}^m\binom{m+1}{k}B^{+}_kn^{m+1-k}$
+$S_m(n)=\displaystyle\sum_{k=1}^nk^m=\frac{1}{m+1}\sum_{k=0}^m\binom{m+1}{k}B_kn^{m+1-k}$
 
 \item Stirling numbers of the first kind
 Permutations of $n$ elements with exactly $k$ cycles.

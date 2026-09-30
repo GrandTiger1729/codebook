@@ -3,10 +3,10 @@
 
 \item Kirchhoff's Theorem
 
-Denote $L$ be a $n \times n$ matrix as the Laplacian matrix of graph $G$, where $L_{ii} = d(i)$ (in-degree for directed case), $L_{ij} = -c$ where $c$ is the number of edge $(i, j)$ in $G$.
+Let $L$ be the $n \times n$ Laplacian matrix of $G$, where $L_{ii} = d(i)$ (in-degree for directed case), $L_{ij} = -c$ where $c$ is the number of edges $(i, j)$ in $G$.
 \begin{itemize}
   \item The number of undirected spanning trees in $G$ is $\lvert \det(\tilde{L}_{11}) \rvert$.
-  \item The number of directed spanning tree rooted at $r$ in $G$ is $\lvert \det(\tilde{L}_{rr}) \rvert$.
+  \item The number of directed spanning trees rooted at $r$ in $G$ is $\lvert \det(\tilde{L}_{rr}) \rvert$.
 \end{itemize}
 
 \item BEST Theorem
@@ -19,7 +19,7 @@ Let $G$ be a directed Eulerian graph with no isolated vertices, $d(v)$ = in-degr
 
 \item Tutte's Matrix
 
-Let $D$ be a $n \times n$ matrix with $d_{ij} = x_{ij}$ ($x_{ij}$ random in $\mathbb{F}_p$) if $i < j$ and $(i, j) \in E$, $d_{ij} = -d_{ji}$ if $i > j$, and $0$ otherwise. $\frac{rank(D)}{2}$ is the maximum matching on $G$ (error $\le n/p$, only underestimates).
+Let $D$ be an $n \times n$ matrix with $d_{ij} = x_{ij}$ ($x_{ij}$ random in $\mathbb{F}_p$) if $i < j$ and $(i, j) \in E$, $d_{ij} = -d_{ji}$ if $i > j$, and $0$ otherwise. $\frac{rank(D)}{2}$ is the maximum matching on $G$ (error $\le n/p$, only underestimates).
 
 \item Tutte–Berge Formula
 
@@ -39,8 +39,8 @@ In a DAG with sources $a_1, \ldots, a_n$ and sinks $b_1, \ldots, b_n$, let $e(a,
 \item Cayley's Formula
 
 \begin{itemize}
-  \item Given a degree sequence $d_1, d_2, \ldots, d_n$ for each \textit{labeled} vertices, there are $\frac{(n - 2)!}{(d_1 - 1)!(d_2 - 1)!\cdots(d_n - 1)!}$ spanning trees.
-  \item Let $T_{n, k}$ be the number of \textit{labeled} forests on $n$ vertices with $k$ components, such that vertex $1, 2, \ldots, k$ belong to different components. Then $T_{n, k} = kn^{n - k - 1}$.
+  \item Given a degree sequence $d_1, d_2, \ldots, d_n$ of \textit{labeled} vertices, there are $\frac{(n - 2)!}{(d_1 - 1)!(d_2 - 1)!\cdots(d_n - 1)!}$ spanning trees.
+  \item Let $T_{n, k}$ be the number of \textit{labeled} forests on $n$ vertices with $k$ components, such that vertices $1, 2, \ldots, k$ are in different components. Then $T_{n, k} = kn^{n - k - 1}$.
 \end{itemize}
 
 \item Cycle Lemma
@@ -85,7 +85,7 @@ Number of orbits $= \frac{1}{|G|} \sum_{g \in G} |X^g|$, $X^g$: elements fixed b
 
 \item Hook length formula
 
-The number of ways to fill a Young diagram $\lambda$ (left-aligned rows of non-increasing length, $n$ cells) with $1, \ldots, n$ that rows and columns increase is $\frac{n!}{\prod_{c} h(c)}$, where $h(c)$ = cells right of $c$ + cells below $c$ + 1. For a $2 \times n$ rectangle this is the Catalan number $C_n$.
+The number of ways to fill a Young diagram $\lambda$ (left-aligned rows of non-increasing length, $n$ cells) with $1, \ldots, n$ such that rows and columns increase is $\frac{n!}{\prod_{c} h(c)}$, where $h(c)$ = cells right of $c$ + cells below $c$ + 1. For a $2 \times n$ rectangle this is the Catalan number $C_n$.
 
 \item Fibonacci
 
@@ -126,11 +126,11 @@ Simple polygon with lattice vertices: $A = I + \frac{B}{2} - 1$ ($I$: interior l
 \item Du's Sieve
 
 \begin{itemize}
-  \item compute $S(N)=\sum_{i=1}^N f(i)$, find a function $g$ such that $f*g$ is easy to compute
+  \item To compute $S(N)=\sum_{i=1}^N f(i)$, find $g$ such that $f*g$ is easy to sum.
   \item $\sum_{i=1}^N (f*g)(i)=\sum_{i=1}^N g(i)S(\lfloor\frac{N}{i}\rfloor)$
   \item $\implies g(1)S(N)=\sum_{i=1}^N (f*g)(i)-\sum_{i=2}^N g(i)S(\lfloor\frac{N}{i}\rfloor)$
 \end{itemize}
-use sqrt decomposition and memoization (sometimes need to precompute small prefix)
+Use sqrt decomposition with memoization (precompute small prefixes if needed).
 
 \item Spherical cap
 
@@ -192,12 +192,12 @@ $\begin{array}{|*{3}{>{\displaystyle}c|}}
 
 \item Min-Max Inclusion Exclusion Principle
 
-(Works in expect values version, i.e., $E[\min]$, too)
+(Also holds for expected values, i.e.\ $E[\min]$.)
 \[
-\operatorname*{kthmax}_{i \in S} x_i = \sum_{T \subset S} (-1)^{|T|-k} \binom{|T|-1}{k-1} \min_{j \in T} x_j
+\operatorname*{kthmax}_{i \in S} x_i = \sum_{\emptyset \ne T \subseteq S} (-1)^{|T|-k} \binom{|T|-1}{k-1} \min_{j \in T} x_j
 \]
 \[
-\operatorname*{kthmin}_{i \in S} x_i = \sum_{T \subset S} (-1)^{|T|-k} \binom{|T|-1}{k-1} \max_{j \in T} x_j
+\operatorname*{kthmin}_{i \in S} x_i = \sum_{\emptyset \ne T \subseteq S} (-1)^{|T|-k} \binom{|T|-1}{k-1} \max_{j \in T} x_j
 \]
 
 \end{itemize}

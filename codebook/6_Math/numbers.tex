@@ -39,8 +39,7 @@ $\displaystyle\prod_{n=1}^{\infty}(1-x^n)=1+\sum_{k=1}^{\infty}(-1)^k\left(x^{k(
 $C^{(k)}_n$: number of $k$-ary trees with $n$ internal nodes, where trees are compared as in the Cycle Lemma (children are ordered).
 
 \begin{itemize}
-  \item $C^{(k)}_n = \frac{1}{(k - 1)n + 1}\binom{kn}{n}$
-  \item GF: $C^{(k)}(x) = 1 + x [C^{(k)}(x)]^k$
+  \item $C^{(k)}_n = \frac{1}{(k - 1)n + 1}\binom{kn}{n}$, \quad GF: $C^{(k)}(x) = 1 + x [C^{(k)}(x)]^k$
 \end{itemize}
 
 \item Narayana numbers
@@ -49,10 +48,10 @@ $N(n, k) = \frac{1}{n} \binom{n}{k} \binom{n}{k-1}$ = number of balanced sequenc
 
 \item Eulerian numbers
 
-$E(n, k)$ = number of permutations of $n$ with exactly $k$ ascents ($\pi(j) < \pi(j+1)$). $E(n, k)$ also counts those with: $k$ descents; $k$ excedances ($\pi(j) > j$); $k+1$ weak excedances ($\pi(j) \ge j$).
+$E(n, k)$: permutations of $n$ with $k$ ascents ($\pi(j) < \pi(j+1)$); same count for $k$ descents, $k$ excedances ($\pi(j) > j$), $k+1$ weak excedances ($\pi(j) \ge j$).
 \begin{itemize}
-  \item $E(n,k) = (k+1)E(n-1,k) + (n-k)E(n-1,k-1)$, $E(n,0) = E(n,n-1) = 1$.
-  \item $E(n,k) = \sum_{j=0}^{k} (-1)^j \binom{n+1}{j} (k+1-j)^n$.
+  \item $E(n,k) = (k+1)E(n-1,k) + (n-k)E(n-1,k-1)$
+  \item $E(n,k) = \sum_{j=0}^{k} (-1)^j \binom{n+1}{j} (k+1-j)^n$, $E(n,0) = E(n,n-1) = 1$.
 \end{itemize}
 
 \end{itemize}

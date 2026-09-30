@@ -1,29 +1,30 @@
 \begin{itemize}
 \item Bernoulli numbers (convention $B_1 = +\frac{1}{2}$)
 
-$B_0=1,B_1=\frac{1}{2},B_2=\frac{1}{6},B_3=0$
-
-$\displaystyle\sum_{j=0}^m\binom{m+1}{j}B_j=m+1$, EGF is $\displaystyle\frac{x}{1 - e^{-x}}=\displaystyle\sum_{n=0}^\infty B_n\frac{x^n}{n!}$.
-
-$S_m(n)=\displaystyle\sum_{k=1}^nk^m=\frac{1}{m+1}\sum_{k=0}^m\binom{m+1}{k}B_kn^{m+1-k}$
+\begin{itemize}
+  \item $B_0=1,B_1=\frac{1}{2},B_2=\frac{1}{6},B_3=0$
+  \item $\displaystyle\sum_{j=0}^m\binom{m+1}{j}B_j=m+1$, EGF is $\displaystyle\frac{x}{1 - e^{-x}}=\displaystyle\sum_{n=0}^\infty B_n\frac{x^n}{n!}$.
+  \item $S_m(n)=\displaystyle\sum_{k=1}^nk^m=\frac{1}{m+1}\sum_{k=0}^m\binom{m+1}{k}B_kn^{m+1-k}$
+\end{itemize}
 
 \item Stirling numbers of the first kind
 
 $c(n, k) \, = $ number of permutations of $n$ elements with exactly $k$ cycles.
 
-$c(n, k) = c(n - 1, k - 1) + (n - 1)c(n - 1, k)$
-
-$x(x + 1)\cdots(x + n - 1) = \sum_{k=0}^{n} c(n, k) x^k$
+\begin{itemize}
+  \item $c(n, k) = c(n - 1, k - 1) + (n - 1)c(n - 1, k)$
+  \item $x(x + 1)\cdots(x + n - 1) = \sum_{k=0}^{n} c(n, k) x^k$
+\end{itemize}
 
 \item Stirling numbers of the second kind
 
 $S(n, k) \, = $ number of partitions of $n$ distinct elements into exactly $k$ groups.
 
-$S(n, k) = S(n - 1, k - 1) + kS(n - 1, k), S(n, 1) = S(n, n) = 1$
-
-$S(n, k) = \frac{1}{k!}\sum_{i=0}^{k}(-1)^{k-i}{k \choose i}i^n$
-
-$x^n     = \sum_{i=0}^{n} S(n, i) (x)_i$
+\begin{itemize}
+  \item $S(n, k) = S(n - 1, k - 1) + kS(n - 1, k), S(n, 1) = S(n, n) = 1$
+  \item $S(n, k) = \frac{1}{k!}\sum_{i=0}^{k}(-1)^{k-i}{k \choose i}i^n$
+  \item $x^n     = \sum_{i=0}^{n} S(n, i) (x)_i$
+\end{itemize}
 
 \item Bell numbers
 
@@ -37,7 +38,10 @@ $\displaystyle\prod_{n=1}^{\infty}(1-x^n)=1+\sum_{k=1}^{\infty}(-1)^k\left(x^{k(
 
 $C^{(k)}_n$: number of $k$-ary trees with $n$ internal nodes, where trees are compared as in the Cycle Lemma (children are ordered).
 
-$C^{(k)}_n = \frac{1}{(k - 1)n + 1}\binom{kn}{n}$, \quad GF: $C^{(k)}(x) = 1 + x [C^{(k)}(x)]^k$
+\begin{itemize}
+  \item $C^{(k)}_n = \frac{1}{(k - 1)n + 1}\binom{kn}{n}$
+  \item GF: $C^{(k)}(x) = 1 + x [C^{(k)}(x)]^k$
+\end{itemize}
 
 \item Narayana numbers
 

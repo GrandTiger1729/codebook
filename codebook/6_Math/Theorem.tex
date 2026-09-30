@@ -100,9 +100,17 @@ Number of standard Young tableaux of shape $\lambda$ ($n$ cells) is $\frac{n!}{\
   \item Pisano period $\pi(m) \le 6m$. Zeckendorf: every $n$ is uniquely a sum of non-adjacent Fibonacci numbers (greedy).
 \end{itemize}
 
-\item Pell equation
+\item Generalized Euler
 
-$x^2 - Dy^2 = 1$, $D$ not a square: with the smallest solution $(x_1, y_1)$ (\texttt{pell(D)} in the Python section), all solutions are $x_{k+1} = x_1 x_k + D y_1 y_k$, $y_{k+1} = x_1 y_k + y_1 x_k$.
+For any $a$ and $b \ge \varphi(m)$: $a^b \equiv a^{\,b \bmod \varphi(m) + \varphi(m)} \pmod m$ (the condition on $b$ is required).
+
+\item Landau's theorem
+
+$s_1 \le \dots \le s_n$ is the score sequence of a tournament iff $\sum_{i \le k} s_i \ge \binom k2$ for all $k$, with equality at $k = n$.
+
+\item Mis\`ere Nim
+
+The first player wins iff (some pile $> 1$ and $\bigoplus a_i \ne 0$) or (all piles $\le 1$ and $\bigoplus a_i = 0$).
 
 \item Pick's theorem
 

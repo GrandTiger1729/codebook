@@ -1,4 +1,4 @@
-string mcp(string s) {
+string min_rotation(string s) {
   int n = (int)s.size(), i = 0, j = 1;
   s += s;
   while (i < n && j < n) {

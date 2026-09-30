@@ -81,7 +81,7 @@
 | `5_String/SA_LCP_becaido.cpp` | `string/suffixarray#becaido` **AC** 50 筆 · 0.167s/5s (3%) | — | ✅ | test by caido, Lib-Checker Suffix Array |
 | `5_String/SAIS-C++20.cpp` | `string/suffixarray` **AC** 50 筆 · 0.181s/5s (4%) | σ≤3 窮舉 + 隨機 n≤3000，共 30 252 組 | ✅ | test by Lib-Checker Suffix Array |
 | `5_String/Aho-Corasick_Automaton.cpp` | `string/aho_corasick` **AC** 72 筆 · 0.369s/5s (7%) | `fail[]` vs 最長後綴節點、沿 `to[]` 累加 `cnt[]` vs 樸素出現次數、`count()` vs 每個節點字串的樸素出現次數，100 000 組（含 `reset()` 重用） | 需要外部 `N`、`C`；字元以 `'a'` 為基底；根是 0 | std_abs 原檔 + macro 契約（2026-09-30 取代舊版，檔名改正為 Automaton）；`cnt[]` 在 `build_fail()` 後是「以該節點結尾的 pattern 數」；另加 `count(s)` 回傳每個節點字串在 `s` 裡的出現次數（取代舊版的 `ord[]`/`solve()`） |
-| `5_String/Smallest_Rotation.cpp` | — 無對應題 | 79 523 組（σ=3 n≤9 窮舉 + 週期串） | ✅ | test by CSES Minimal Rotation |
+| `5_String/MinimumRotation.cpp` | — 無對應題 | 79 523 組（σ=3 n≤9 窮舉 + 週期串） | ✅ | test by CSES Minimal Rotation |
 | `5_String/LyndonFactorization.cpp` | `string/lyndon_factorization` **AC** 23 筆 · 0.032s/5s (1%) | 79 524 組（σ=3 n≤9 窮舉 + 週期串），依定義檢查：接起來是 s、每段嚴格小於自己的真後綴、各段不遞增 | ✅ | std_abs 原檔 + macro 契約（Duval，2026-09-30 加入） |
 | `5_String/De_Bruijn_sequence.cpp` | — 無對應題 | 416 組 (C,N,K)，每個長 N 字只出現一次 | ✅ | test by CF 102001 C |
 | `5_String/exSAM.cpp` | `string/number_of_substrings` **AC** 24 筆 · 0.065s/5s (1%) | — | 需要外部 `N` | test by CF 616 C, Lib-Checker Number of Substrings |
@@ -219,3 +219,4 @@
 ## 2026-09-30：加入 Lyndon Factorization
 
 - 新增 `5_String/LyndonFactorization.cpp`（std_abs 的 `duval`，只把 `sz(s)` 換成 `s.size()`）。Library Checker **AC** 0.032s，本地對拍 79 524 組，PDF 仍是 25 頁。
+- `Smallest_Rotation.cpp` 改名 `MinimumRotation.cpp`，函式 `mcp` 改名 `min_rotation`（只改名字）。

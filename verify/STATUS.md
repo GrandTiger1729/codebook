@@ -80,7 +80,7 @@
 | `5_String/Manacher.cpp` | `string/enumerate_palindromes` **AC** 24 筆 · 0.068s/5s (1%) | — | 需要外部 `SIZE` | test by Lib-Checker Enumerate Palindromes |
 | `5_String/SA_LCP_becaido.cpp` | `string/suffixarray#becaido` **AC** 50 筆 · 0.167s/5s (3%) | — | ✅ | test by caido, Lib-Checker Suffix Array |
 | `5_String/SAIS-C++20.cpp` | `string/suffixarray` **AC** 50 筆 · 0.181s/5s (4%) | σ≤3 窮舉 + 隨機 n≤3000，共 30 252 組 | ✅ | test by Lib-Checker Suffix Array |
-| `5_String/Aho-Corasick_Automatan.cpp` | `string/aho_corasick` **AC** 72 筆 · 0.818s/5s (16%) | `fail[]` vs 最長後綴節點、沿 `to[]` 累加 `cnt[]` vs 樸素出現次數，100 000 組（含 `reset()` 重用） | 需要外部 `N`、`C`；字元以 `'a'` 為基底；根是 0 | std_abs 原檔 + macro 契約（2026-09-30 取代舊版）；`cnt[]` 在 `build_fail()` 後是「以該節點結尾的 pattern 數」，舊版的逐 pattern 出現次數（`ord[]`/`solve()`）沒有了 |
+| `5_String/Aho-Corasick_Automaton.cpp` | `string/aho_corasick` **AC** 72 筆 · 0.369s/5s (7%) | `fail[]` vs 最長後綴節點、沿 `to[]` 累加 `cnt[]` vs 樸素出現次數、`count()` vs 每個節點字串的樸素出現次數，100 000 組（含 `reset()` 重用） | 需要外部 `N`、`C`；字元以 `'a'` 為基底；根是 0 | std_abs 原檔 + macro 契約（2026-09-30 取代舊版，檔名改正為 Automaton）；`cnt[]` 在 `build_fail()` 後是「以該節點結尾的 pattern 數」；另加 `count(s)` 回傳每個節點字串在 `s` 裡的出現次數（取代舊版的 `ord[]`/`solve()`） |
 | `5_String/Smallest_Rotation.cpp` | — 無對應題 | 79 523 組（σ=3 n≤9 窮舉 + 週期串） | ✅ | test by CSES Minimal Rotation |
 | `5_String/De_Bruijn_sequence.cpp` | — 無對應題 | 416 組 (C,N,K)，每個長 N 字只出現一次 | ✅ | test by CF 102001 C |
 | `5_String/exSAM.cpp` | `string/number_of_substrings` **AC** 24 筆 · 0.065s/5s (1%) | — | 需要外部 `N` | test by CF 616 C, Lib-Checker Number of Substrings |
@@ -210,5 +210,7 @@
 
 ## 2026-09-30：AC 自動機換成 std_abs
 
-- `Aho-Corasick_Automatan.cpp` 換成 std_abs 的 `AC`（只套 macro 契約）：需要 `N`、`C`，根是 0，字元以 `'a'` 為基底，`insert` / `build_fail` / `reset`。Library Checker **AC** 0.818s（舊版 0.320s），新增本地對拍 100 000 組。
-- 行為差異：`cnt[]` 在 `build_fail()` 後沿 fail 累加成「以該節點結尾的 pattern 數」，走 `to[]` 加總就是總出現次數；舊版用 `ord[]` + `solve()` 算每個 pattern 各自的出現次數，新版沒有這個功能。
+- `Aho-Corasick_Automatan.cpp` 換成 std_abs 的 `AC`（套 macro 契約），檔名改正為 `Aho-Corasick_Automaton.cpp`：需要 `N`、`C`，根是 0，字元以 `'a'` 為基底，`insert` / `build_fail` / `reset`。Library Checker **AC** 0.369s，速度和舊版相同（同一批輸入逐一執行，最大測資兩者都約 0.16s）。
+- `cnt[]` 在 `build_fail()` 後沿 fail 累加成「以該節點結尾的 pattern 數」，走 `to[]` 加總就是總出現次數（註解裡的 `match`）。
+- 在 std_abs 原檔之外加了 `ord`（BFS 順序）和 `count(s)`：回傳 `occ[v]` = 節點 `v` 的字串在 `s` 裡的出現次數，pattern 的 `v` 就是 `insert()` 的回傳值；對應舊版的 `ord[]` + `solve()`。
+- 新增本地對拍 100 000 組（fail、match、count）。

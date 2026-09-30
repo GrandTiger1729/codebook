@@ -1,6 +1,6 @@
 #include "../prelude.h"
 const int N = 1000006, C = 26;
-#include "../../codebook/5_String/Aho-Corasick_Automatan.cpp"
+#include "../../codebook/5_String/Aho-Corasick_Automaton.cpp"
 
 int par[N];
 

@@ -1,12 +1,13 @@
 #include "prelude.h"
 #include "stress.h"
 const int N = 405, C = 3;
-#include "5_String/Aho-Corasick_Automatan.cpp"
+#include "5_String/Aho-Corasick_Automaton.cpp"
 // cnt[] after build_fail() = how many patterns (with multiplicity) end at
 // that node's string, so walking a text along to[] and summing cnt counts
 // every (pattern, position) occurrence. Compared with the naive count;
 // fail[] is compared with the longest proper suffix that is a trie node.
-// reset() between cases checks that the object can be reused.
+// count() is compared with the naive occurrence count of every node's
+// string. reset() between cases checks that the object can be reused.
 int main() {
   int cases = 0;
   FOR (it, 1, 100000) {
@@ -49,7 +50,17 @@ int main() {
     int now = 0;
     for (char c : t) now = ac.to[now][c - 'a'], got += ac.cnt[now];
     assert(got == want);
+    // count(): occurrences of every trie node's string, not only patterns
+    vector<int> occ = ac.count(t);
+    assert((int)occ.size() == ac._id);
+    for (auto &[s, v] : node) {
+      int w = 0;
+      if (s.empty()) w = occ[v]; // the root's entry is not meaningful
+      else for (int i = 0; i + s.size() <= t.size(); i++)
+        w += t.compare(i, s.size(), s) == 0;
+      assert(occ[v] == w);
+    }
     cases++;
   }
-  printf("AC ok: %d random cases (sigma<=3, <=8 patterns, |t|<=40)\n", cases);
+  printf("AC ok: %d random cases (sigma<=3, <=8 patterns, |t|<=40; fail, match, count)\n", cases);
 }

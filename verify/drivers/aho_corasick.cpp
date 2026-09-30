@@ -1,29 +1,25 @@
 #include "../prelude.h"
-const int len = 1000006, sigma = 26;
-#include "../../codebook/5_String/Aho-Corasick_Automatan.cpp"
+const int N = 1000006, C = 26;
+#include "../../codebook/5_String/Aho-Corasick_Automaton.cpp"
 
-int par[len];
+int par[N];
 
 int main() {
   Waimai;
   int n; cin >> n;
-  ac.init();
   vector<int> end(n);
-  vector<string> s(n);
   for (int i = 0; i < n; i++) {
-    cin >> s[i];
-    // the template hardcodes c - 'A', so shift the lowercase input
-    for (char &c : s[i]) c = char(c - 'a' + 'A');
-    end[i] = ac.input(s[i]);
+    string s; cin >> s;
+    end[i] = ac.insert(s);
   }
-  ac.make_fl();
-  // the trie parent is not stored; recover it from nx[]
-  for (int u = 1; u < ac.top; u++)
-    for (int c = 0; c < sigma; c++)
-      if (~ac.nx[u][c]) par[ac.nx[u][c]] = u;
-  // codebook node v  <->  LC vertex v - 1 (root is node 1)
-  cout << ac.top - 1 << '\n';
-  for (int v = 2; v < ac.top; v++)
-    cout << par[v] - 1 << ' ' << ac.fl[v] - 1 << '\n';
-  for (int i = 0; i < n; i++) cout << end[i] - 1 << " \n"[i + 1 == n];
+  ac.build_fail();
+  // the trie parent is not stored; recover it from ch[]
+  for (int u = 0; u < ac._id; u++)
+    for (int c = 0; c < C; c++)
+      if (ac.ch[u][c]) par[ac.ch[u][c]] = u;
+  // node ids are already LC's: root 0, numbered in insertion order
+  cout << ac._id << '\n';
+  for (int v = 1; v < ac._id; v++)
+    cout << par[v] << ' ' << ac.fail[v] << '\n';
+  for (int i = 0; i < n; i++) cout << end[i] << " \n"[i + 1 == n];
 }

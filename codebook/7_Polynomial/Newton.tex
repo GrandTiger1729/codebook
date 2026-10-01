@@ -2,9 +2,12 @@ Given $F(x) = \sum_{i=0}^{\infty} \alpha_i (x - \beta)^i$ for some constant $\be
 
 $$ Q_{k+1} = Q_k - \frac{F(Q_k)}{F^\prime(Q_k)} \pmod {x^{2^{k+1}}} $$
 
-\begin{itemize}
-    \item $A^{-1}$: $B_{k+1} = B_k(2-AB_k) \pmod{x^{2^{k+1}}}$; $A_0 \ne 0$, $B_0 = A_0^{-1}$
-    \item $\ln A$: $(\ln A)' = \frac{A'}{A}$; $A_0 = 1$
-    \item $\exp A$: $B_{k+1} = B_k(1 + A - \ln B_k) \pmod{x^{2^{k+1}}}$; $A_0 = 0$, $B_0 = 1$
-    \item $\sqrt A$: $B_{k+1} = \frac 1 2 (B_k + AB_k^{-1}) \pmod{x^{2^{k+1}}}$; $B_0 = \sqrt{A_0}$
-\end{itemize}
+{\setlength{\tabcolsep}{4pt}
+\noindent
+\begin{tabular}{l|l|l|l}
+ & $B_{k+1} \pmod{x^{2^{k+1}}}$ & needs & $B_0$ \\ \hline
+$A^{-1}$ & $B_k(2 - AB_k)$ & $A_0 \ne 0$ & $A_0^{-1}$ \\
+$\ln A$ & $\int \frac{A'}{A}$ (no iteration) & $A_0 = 1$ & \\
+$\exp A$ & $B_k(1 + A - \ln B_k)$ & $A_0 = 0$ & $1$ \\
+$\sqrt A$ & $\frac 1 2 (B_k + A B_k^{-1})$ & & $\sqrt{A_0}$ \\
+\end{tabular}}

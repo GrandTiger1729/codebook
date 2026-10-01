@@ -1,6 +1,6 @@
 # 模版測試狀態
 
-產生於 2026-09-16，最後更新 2026-09-30（本地對拍共 77 個、修 14 個 bug；見文末）。
+產生於 2026-09-16，最後更新 2026-10-01（本地對拍共 77 個、修 14 個 bug；見文末）。
 資料來源：`content.tex`、`MAP.tsv`、`RESULT.md`、`stress/`。怎麼跑見 `verify/README.md`。
 
 > **2026-09-16 修正**：`run.py` 原本用 `checker <in> <jury> <ours>` 呼叫官方 checker，
@@ -188,7 +188,7 @@
 
 ## 總計
 
-- 收錄模版：**108**（上面各章主表中在書裡的列；不含 `hash.sh`、`Primes`、`misc.py` 與支線）
+- 收錄模版：**108**（上面各章主表中在書裡的列；不含 `hash.sh`、`stress.sh`、`Primes`、`misc.py` 與支線）
 - 有 Library Checker AC 的：**51**（另有支線 2 個）
 - 有本地對拍的：**77**（`verify/stress/`，77 個測試）
 - 兩種自動測試都沒有的：**4**（black_magic、Pragma、sanitize_fixer、simulated_annealing；都是片段或工具檔）
@@ -216,6 +216,7 @@
 - `cnt[]` 在 `build_fail()` 後沿 fail 累加成「以該節點結尾的 pattern 數」，走 `to[]` 加總就是總出現次數（std_abs 註解掉的 `match` 縮成一行註解）。
 - 在 std_abs 原檔之外加了 `ord`（BFS 順序）和 `count(s)`：回傳 `occ[v]` = 節點 `v` 的字串在 `s` 裡的出現次數，pattern 的 `v` 就是 `insert()` 的回傳值；對應舊版的 `ord[]` + `solve()`。
 - 新增本地對拍 100 000 組（fail、match、count）。
+- 之後依使用者修改：`reset()` 移到最前面並一併清空 `ord`（`build_fail()` 不再清），所以兩次 `build_fail()` 之間要 `reset()`（`cnt` 本來就不能重複累加）。
 
 ## 2026-09-30：加入 Lyndon Factorization
 
@@ -230,3 +231,9 @@
 - **修正**：Erdős–Gallai 的求和下標、Du's sieve 的 `f(i)` 與 `N/i`、Tutte's matrix 的定義、Kirchhoff 的用詞、Spherical cap 的 θ 改成 `cos θ = (r−h)/r`、Lagrange multiplier 改寫成一般形式。Erdős–Gallai、Gale–Ryser、Fulkerson–Chen–Anstee、Landau 合併成 Degree sequences 一條。
 - 備選四項（Narayana、Generalized Euler、Landau、Misère Nim）在拿掉 Pell 之後都放得下，全部加入。HPI Alternative Form 等隊伍確認後再決定，沒有動。
 - Pell equation（定理條目和 `misc.py` 的 `pell(D)`）加了之後又拿掉。PDF 25 頁。
+
+## 2026-10-01：數學章後續修改（PR #19 內，上一節沒記到的）
+
+- **內容修正**：Min-Max inclusion–exclusion 的求和改成非空子集 $\emptyset \ne T \subseteq S$；Bernoulli 統一成 $B_1 = +\tfrac12$ 一種慣例（遞迴式改為 $\sum_{j\le m}\binom{m+1}{j}B_j = m+1$，對所有 $m \ge 0$ 成立；EGF 改為 $x/(1-e^{-x})$）。原本的遞迴式和 EGF 只在 $B_1=-\tfrac12$ 時成立，遞迴式在 $m=0$ 也不成立。
+- **使用者改寫並補充**（都已查證或驗證）：BEST 加上「從 $s$ 出發的乘 $d(s)$」；Tutte matrix 註明錯誤率 $\le n/p$、只會低估；Dirac/Ore 加 Palmer $O(n^2)$ 構造；Pick 加 $B=\sum\gcd$ 與有洞版本；Hook length 加 $2\times n$ 為 Catalan；Pisano 註明純週期；Misère Nim 標題註明規則；導數表加 $\int x\sin ax$。
+- **排版**：Degree sequences 有上下限的求和用 `\displaystyle`；skew lines 改成左右兩欄列點並保留在書中；Bell 的 EGF 寫成 $\exp(e^x-1)$；`numbers.tex` 各條公式改成列點，Eulerian、Narayana 改寫；為了放下列點，Newton's method 的 $F(x)$ 改成行內。PDF 仍是 25 頁且沒有餘裕。

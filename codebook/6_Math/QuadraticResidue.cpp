@@ -11,7 +11,6 @@ int Jacobi(int a, int m) {
   }
   return s;
 }
-
 int QuadraticResidue(int a, int p) {
   if (p == 2) return a & 1;
   const int jc = Jacobi(a, p);

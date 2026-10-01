@@ -1,39 +1,46 @@
 \begin{itemize}
-\item Cramer's rule
-$$
-\begin{aligned}ax+by=e\\cx+dy=f\end{aligned}
-\;\Rightarrow\;
-x=\dfrac{ed-bf}{ad-bc},\quad y=\dfrac{af-ec}{ad-bc}
-$$
-
-\item Vandermonde's Identity
-$$
-C(n + m, k) = \sum_{i=0}^k C(n, i)C(m, k - i)
-$$
+\item Vandermonde's Identity $\binom{n+m}{k} = \sum_{i=0}^{k} \binom{n}{i}\binom{m}{k-i}$
 
 \item Kirchhoff's Theorem
 
-Denote $L$ be a $n \times n$ matrix as the Laplacian matrix of graph $G$, where $L_{ii} = d(i)$ (in-degree for directed case), $L_{ij} = -c$ where $c$ is the number of edge $(i, j)$ in $G$.
+Let $L$ be the $n \times n$ Laplacian matrix of $G$, where $L_{ii} = d(i)$ (in-degree for directed case), $L_{ij} = -c$ where $c$ is the number of edges $(i, j)$ in $G$.
 \begin{itemize}
-    %\itemsep-0.5em
-    \item The number of undirected spanning in $G$ is $\lvert \det(\tilde{L}_{11}) \rvert$.
-    \item The number of directed spanning tree rooted at $r$ in $G$ is $\lvert \det(\tilde{L}_{rr}) \rvert$.
+  \item The number of undirected spanning trees in $G$ is $\lvert \det(\tilde{L}_{11}) \rvert$.
+  \item The number of directed spanning trees rooted at $r$ in $G$ is $\lvert \det(\tilde{L}_{rr}) \rvert$.
+\end{itemize}
+
+\item BEST Theorem
+
+Let $G$ be a directed Eulerian graph with no isolated vertices, $d(v)$ = in-degree, and $t_w(G)$ the number of directed spanning trees rooted at $w$ (Kirchhoff; the same for every $w$).
+\begin{itemize}
+  \item The number of Eulerian circuits is $t_w(G) \prod_v (d(v) - 1)!$.
+  \item Circuits are counted up to rotation; multiply by $d(s)$ for those starting at $s$.
 \end{itemize}
 
 \item Tutte's Matrix
 
-Let $D$ be a $n \times n$ matrix, where $d_{ij} = x_{ij}$ ($x_{ij}$ is chosen uniformly at random) if $i < j$ and $(i, j) \in E$, otherwise $d_{ij} = -d_{ji}$. $\frac{rank(D)}{2}$ is the maximum matching on $G$.
+Let $D$ be an $n \times n$ matrix with $d_{ij} = x_{ij}$ ($x_{ij}$ random in $\mathbb{F}_p$) if $i < j$ and $(i, j) \in E$, $d_{ij} = -d_{ji}$ if $i > j$, and $0$ otherwise. $\frac{rank(D)}{2}$ is the maximum matching on $G$ (error $\le n/p$, only underestimates).
+
+\item Tutte–Berge Formula
+
+Maximum matching $= \frac 1 2 \min_{U \subseteq V} \big(|V| + |U| - \mathrm{odd}(G - U)\big)$, where $\mathrm{odd}$ counts the components with an odd number of vertices.
 
 \item Lindström–Gessel–Viennot Lemma
 
 In a DAG with sources $a_1, \ldots, a_n$ and sinks $b_1, \ldots, b_n$, let $e(a, b)$ be the number of paths $a \to b$ (or the sum of their weights) and $M_{ij} = e(a_i, b_j)$. Then $\det M = \sum_{\sigma} \operatorname{sgn}(\sigma) \cdot \#\{\text{vertex-disjoint paths } a_i \to b_{\sigma(i)}\}$. If only $\sigma = \mathrm{id}$ can be disjoint (e.g. a grid with sources and sinks in the same order), $\det M$ counts the non-intersecting path systems.
 
+\item Labeled graph counts
+
+\begin{itemize}
+  \item Connected graphs: EGF $C(x) = \ln G(x)$, $G(x) = \sum_n 2^{\binom n 2} \frac{x^n}{n!}$
+  \item DAGs: $a_n = \sum_{k=1}^{n} (-1)^{k+1} \binom nk 2^{k(n-k)} a_{n-k}$, $a_0 = 1$.
+\end{itemize}
+
 \item Cayley's Formula
 
 \begin{itemize}
-    %\itemsep-0.5em
-  \item Given a degree sequence $d_1, d_2, \ldots, d_n$ for each \textit{labeled} vertices, there are $\frac{(n - 2)!}{(d_1 - 1)!(d_2 - 1)!\cdots(d_n - 1)!}$ spanning trees.
-  \item Let $T_{n, k}$ be the number of \textit{labeled} forests on $n$ vertices with $k$ components, such that vertex $1, 2, \ldots, k$ belong to different components. Then $T_{n, k} = kn^{n - k - 1}$.
+  \item Given a degree sequence $d_1, d_2, \ldots, d_n$ of \textit{labeled} vertices, there are $\frac{(n - 2)!}{(d_1 - 1)!(d_2 - 1)!\cdots(d_n - 1)!}$ spanning trees.
+  \item Let $T_{n, k}$ be the number of \textit{labeled} forests on $n$ vertices with $k$ components, such that vertices $1, 2, \ldots, k$ are in different components. Then $T_{n, k} = kn^{n - k - 1}$.
 \end{itemize}
 
 \item Cycle Lemma
@@ -44,139 +51,161 @@ If integers $x_1, \ldots, x_N$ are all $\le 1$ and sum to $k > 0$, exactly $k$ o
   \item Rooted unlabeled trees (whose children have a left-to-right order): two trees are equal iff their roots have the same number of children and all of their $i$-th subtrees are equal (defined recursively). Given $N = \sum n_d$ nodes, $n_d$ of which have $d$ children, write $1 - (\#\text{children})$ for each node; the sequences whose prefix sums are all $\ge 1$ are exactly the post-order traversals. The number of distinct trees is $\frac{1}{N}\binom{N}{n_0, n_1, \ldots}$.
 \end{itemize}
 
-\item Erdős–Gallai theorem
+\item Degree sequences (all entries nonnegative integers; each inequality for every $1 \le k \le n$)
+\begin{itemize}
+  \item Erdős–Gallai: $d_1 \ge \cdots \ge d_n$ is the degree sequence of a simple graph iff $\sum_i d_i$ is even and $\displaystyle\sum_{i=1}^k d_i \le k(k-1) + \displaystyle\sum_{i=k+1}^n \min(d_i, k)$.
+  \item Gale–Ryser: $a_1 \ge \cdots \ge a_n$ and $b_1, \ldots, b_m$ are the degrees of the two sides of a simple bipartite graph ($0/1$ matrix with row sums $a$, column sums $b$) iff $\sum_i a_i = \sum_j b_j$ and $\displaystyle\sum_{i=1}^k a_i \le \displaystyle\sum_{j=1}^m \min(b_j, k)$.
+  \item Fulkerson–Chen–Anstee: pairs $(a_i, b_i)$ with $a_1 \ge \cdots \ge a_n$ are the (out, in)-degrees of a simple directed graph iff $\sum_i a_i = \sum_i b_i$ and $\displaystyle\sum_{i=1}^k a_i \le \displaystyle\sum_{i=1}^k \min(b_i, k-1) + \displaystyle\sum_{i=k+1}^n \min(b_i, k)$.
+  \item Landau: $s_1 \le \cdots \le s_n$ are the out-degrees (scores) of a tournament iff $\displaystyle\sum_{i=1}^k s_i \ge \binom{k}{2}$, with equality at $k = n$.
+\end{itemize}
 
-A sequence of nonnegative integers $d_1\ge\cdots\ge d_n$ can be represented as the degree sequence of a finite simple graph on $n$ vertices if and only if $d_1+\cdots+d_n$ is even and $\displaystyle\sum_{i-1}^kd_i\le k(k-1)+\displaystyle\sum_{i=k+1}^n\min(d_i,k)$ holds for every $1\le k\le n$.
+\item Dilworth / Mirsky
 
-\item Gale–Ryser theorem
+\begin{itemize}
+  \item Minimum number of chains covering a poset $=$ maximum antichain; minimum number of antichains $=$ longest chain.
+  \item Minimum vertex-disjoint path cover of a DAG $= n\, -$ maximum matching in the bipartite graph with an edge $u_{out} - v_{in}$ for each edge $u \to v$.
+  \item If paths may share vertices, do the same on the transitive closure (add $u \to v$ whenever $v$ is reachable from $u$).
+\end{itemize}
 
-A pair of sequences of nonnegative integers $a_1\ge\cdots\ge a_n$ and $b_1,\ldots,b_n$ is bigraphic if and only if $\displaystyle\sum_{i=1}^n a_i=\displaystyle\sum_{i=1}^n b_i$ and $\displaystyle\sum_{i=1}^k a_i\le \displaystyle\sum_{i=1}^n\min(b_i,k)$ holds for every $1\le k\le n$.
+\item Graph facts
 
-\item Fulkerson–Chen–Anstee theorem
+\begin{itemize}
+  \item Hall: a bipartite graph has a matching saturating $L$ iff $|N(S)| \ge |S|$ for all $S \subseteq L$; maximum matching $= |L| - \max_{S \subseteq L} (|S| - |N(S)|)$.
+  \item Gallai: maximum independent set $+$ minimum vertex cover $= n$; with no isolated vertices, maximum matching $+$ minimum edge cover $= n$.
+  \item Dirac / Ore ($n \ge 3$): if $\deg(u) + \deg(v) \ge n$ for all non-adjacent $u, v$ (e.g.\ every $\deg \ge n/2$), a Hamiltonian cycle exists. Palmer, $O(n^2)$: put all vertices on a circle in any order; repeatedly find a non-adjacent $v_i, v_{i+1}$ on it, find $j$ with $v_i v_j, v_{i+1} v_{j+1} \in E$ and reverse $v_{i+1}, \ldots, v_j$, until none remain.
+\end{itemize}
 
-A sequence $(a_1,b_1),\ldots,(a_n,b_n)$ of nonnegative integer pairs with $a_1\ge\cdots\ge a_n$ is digraphic if and only if $\displaystyle\sum_{i=1}^n a_i=\displaystyle\sum_{i=1}^n b_i$ and $\displaystyle\sum_{i=1}^k a_i\le \displaystyle\sum_{i=1}^k\min(b_i,k-1)+\displaystyle\sum_{i=k+1}^n\min(b_i,k)$ holds for every $1\le k\le n$.
+\item Burnside's Lemma
+
+Number of orbits $= \frac{1}{|G|} \sum_{g \in G} |X^g|$, $X^g$: elements fixed by $g$.
+\begin{itemize}
+  \item Necklaces ($n$ beads, $k$ colors, equal up to rotation): $N = \frac 1 n \sum_{d \mid n} \varphi(d)\, k^{n/d}$.
+  \item Bracelets (equal up to rotation and reflection): $\frac N 2 + \frac 1 2 k^{(n+1)/2}$ for odd $n$; $\frac N 2 + \frac 1 4 (k+1) k^{n/2}$ for even $n$.
+\end{itemize}
+
+\item Hook length formula
+
+The number of ways to fill a Young diagram $\lambda$ (left-aligned rows of non-increasing length, $n$ cells) with $1, \ldots, n$ such that rows and columns increase is $\frac{n!}{\prod_{c} h(c)}$, where $h(c)$ = cells right of $c$ + cells below $c$ + 1. For a $2 \times n$ rectangle this is the Catalan number $C_n$.
+
+\item Fibonacci
+
+\begin{itemize}
+  \item $M = \begin{bmatrix}1&1\\1&0\end{bmatrix}$, $M^n = \begin{bmatrix}F_{n+1}&F_n\\F_n&F_{n-1}\end{bmatrix}$; the next line follows from $M^{m+n} = M^m M^n$ and $\det M^n = (-1)^n$.
+  \item $F_{m+n} = F_m F_{n+1} + F_{m-1} F_n$, \quad $F_{n-1}F_{n+1} - F_n^2 = (-1)^n$
+  \item $\gcd(F_m, F_n) = F_{\gcd(m,n)}$; $F_m \mid F_n \iff m \mid n$ ($m \ge 3$). Same shape: $\gcd(a^m - 1, a^n - 1) = a^{\gcd(m,n)} - 1$.
+  \item Pisano period: $F_n \bmod m$ is purely periodic with period $\pi(m) \le 6m$.
+  \item Zeckendorf: every $n$ is uniquely a sum of non-adjacent Fibonacci numbers (greedy).
+\end{itemize}
+
+\item Generalized Euler
+
+For any $a$ and $b \ge \varphi(m)$: $a^b \equiv a^{\,b \bmod \varphi(m) + \varphi(m)} \pmod m$ (the condition on $b$ is required).
+
+\item Mis\`ere Nim (whoever takes the last stone loses)
+
+The first player wins iff (some pile $> 1$ and $\bigoplus a_i \ne 0$) or (all piles $\le 1$ and $\bigoplus a_i = 0$).
+
+\item Sum of squares
+
+\begin{itemize}
+  \item Two: $n = a^2 + b^2$ iff every prime $p \equiv 3 \pmod 4$ divides $n$ to an even power. The number of $(a, b) \in \mathbb{Z}^2$ is $4(d_1(n) - d_3(n))$, $d_i(n)$: divisors of $n$ that are $\equiv i \pmod 4$.
+  \item Three: $n = a^2 + b^2 + c^2$ iff $n \ne 4^a(8b + 7)$.
+  \item Four: every $n \ge 0$ is a sum of four squares.
+\end{itemize}
 
 \item Pick's theorem
 
-For simple polygon, when points are all integer, we have $A=\text{\#\{lattice points in the interior\}} + \frac{\text{\#\{lattice points on the boundary\}}}{2} - 1$.
+Simple polygon with lattice vertices: $A = I + \frac{B}{2} - 1$ ($I$: interior lattice points, $B$: boundary lattice points). $B = \sum_{\text{edges}} \gcd(|\Delta x|, |\Delta y|)$. Region with $h$ polygonal holes (disjoint from each other and from the outer boundary): $A = I + \frac{B}{2} + h - 1$.
 
 \item Möbius inversion formula
 
 \begin{itemize}
-    %\itemsep-0.5em
   \item $f(n)=\sum_{d\mid n}g(d)\Leftrightarrow g(n)=\sum_{d\mid n}\mu(d)f(\frac{n}{d})$
   \item $f(n)=\sum_{n\mid d}g(d)\Leftrightarrow g(n)=\sum_{n\mid d}\mu(\frac{d}{n})f(d)$
 \end{itemize}
 
-\item Spherical cap
+\item Du's Sieve
 
 \begin{itemize}
-    %\itemsep-0.5em
-  \item A portion of a sphere cut off by a plane.
-  \item $r$: sphere radius, $a$: radius of the base of the cap, $h$: height of the cap, $\theta$: $\arcsin(a/r)$.
+  \item To compute $S(N)=\sum_{i=1}^N f(i)$, find $g$ such that $f*g$ is easy to sum.
+  \item $\sum_{i=1}^N (f*g)(i)=\sum_{i=1}^N g(i)S(\lfloor\frac{N}{i}\rfloor)$
+  \item $\implies g(1)S(N)=\sum_{i=1}^N (f*g)(i)-\sum_{i=2}^N g(i)S(\lfloor\frac{N}{i}\rfloor)$
+\end{itemize}
+Use sqrt decomposition with memoization (precompute small prefixes if needed).
+
+\item Spherical cap (a portion of a sphere cut off by a plane)
+
+\begin{itemize}
+  \item $r$: sphere radius, $a$: radius of the base of the cap, $h$: height of the cap, $\cos\theta = (r-h)/r$.
   \item Volume $=\pi h^2(3r-h)/3=\pi h(3a^2+h^2)/6=\pi r^3(2+\cos\theta)(1-\cos\theta)^2/3$.
   \item Area $=2\pi rh=\pi(a^2+h^2)=2\pi r^2(1-\cos\theta)$.
 \end{itemize}
 
-\item Lagrange multiplier
-
-\begin{itemize}
-    %\itemsep-0.5em
-  \item Optimize $f(x_1, \ldots, x_n)$ when $k$ constraints $g_i(x_1, \ldots, x_n)=0$.
-  \item Lagrangian function $\mathcal{L}(x_1, \ldots, x_n, \lambda_1, \ldots, \lambda_k) = f(x_1, \ldots, x_n) - \sum^{k}_{i=1}\lambda_i g_i(x_1, \ldots, x_n)$.
-  \item The solution corresponding to the original constrained optimization is always a saddle point of the Lagrangian function.
-\end{itemize}
-
 \item Nearest points of two skew lines
 
+$\boldsymbol{n} = \boldsymbol{d}_1 \times \boldsymbol{d}_2$
+
+\noindent
+\begin{minipage}[t]{0.47\linewidth}
 \begin{itemize}
-\item $\text{Line 1}: \boldsymbol{v}_1 = \boldsymbol{p}_1 + t_1\boldsymbol{d}_1$
-\item $\text{Line 2}: \boldsymbol{v}_2 = \boldsymbol{p}_2 + t_2\boldsymbol{d}_2$
-\item $\boldsymbol{n} = \boldsymbol{d}_1\times \boldsymbol{d}_2$
-\item $\boldsymbol{n}_1 = \boldsymbol{d}_1 \times \boldsymbol{n}$
-\item $\boldsymbol{n}_2 = \boldsymbol{d}_2 \times \boldsymbol{n}$
-\item $\boldsymbol{c}_1 = \boldsymbol{p}_1 + \frac{(\boldsymbol{p}_2 - \boldsymbol{p}_1)\cdot\boldsymbol{n}_2}{\boldsymbol{d}_1\cdot\boldsymbol{n}_2}\boldsymbol{d}_1$
-\item $\boldsymbol{c}_2 = \boldsymbol{p}_2 + \frac{(\boldsymbol{p}_1 - \boldsymbol{p}_2)\cdot\boldsymbol{n}_1}{\boldsymbol{d}_2\cdot\boldsymbol{n}_1}\boldsymbol{d}_2$
+  \item Line 1: $\boldsymbol{v}_1 = \boldsymbol{p}_1 + t_1\boldsymbol{d}_1$
+  \item $\boldsymbol{n}_1 = \boldsymbol{d}_1 \times \boldsymbol{n}$
+  \item $\boldsymbol{c}_1 = \boldsymbol{p}_1 + \frac{(\boldsymbol{p}_2 - \boldsymbol{p}_1)\cdot\boldsymbol{n}_2}{\boldsymbol{d}_1\cdot\boldsymbol{n}_2}\boldsymbol{d}_1$
 \end{itemize}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.47\linewidth}
+\begin{itemize}
+  \item Line 2: $\boldsymbol{v}_2 = \boldsymbol{p}_2 + t_2\boldsymbol{d}_2$
+  \item $\boldsymbol{n}_2 = \boldsymbol{d}_2 \times \boldsymbol{n}$
+  \item $\boldsymbol{c}_2 = \boldsymbol{p}_2 + \frac{(\boldsymbol{p}_1 - \boldsymbol{p}_2)\cdot\boldsymbol{n}_1}{\boldsymbol{d}_2\cdot\boldsymbol{n}_1}\boldsymbol{d}_2$
+\end{itemize}
+\end{minipage}
+
+\item Lagrange multiplier
+
+To optimize $f(x_1, \ldots, x_n)$ subject to $g_i(x) = 0$ ($1 \le i \le k$): at an optimum (with linearly independent $\nabla g_i$), $\nabla f = \sum_i \lambda_i \nabla g_i$. Solve together with all $g_i = 0$; check the boundary separately.
 
 \item Derivatives/Integrals
 
 Integration by parts:
 \(\int_a^bf(x)g(x)dx = [F(x)g(x)]_a^b-\int_a^bF(x)g'(x)dx\)
 {
-  \setlength{\tabcolsep}{1pt}
-  \setlength{\columnsep}{0pt}
+\setlength{\arraycolsep}{1pt}
+\noindent
+$\begin{array}{|*{3}{>{\displaystyle}c|}}
+\frac{d}{dx}\sin^{-1} x = \frac{1}{\sqrt{1-x^2}}
+    &
+\frac{d}{dx}\cos^{-1} x = -\frac{1}{\sqrt{1-x^2}}
+    &
+\frac{d}{dx}\tan^{-1} x = \frac{1}{1+x^2}
+\\
+\frac{d}{dx}\tan x = 1+\tan^2 x
+    &
+\int\tan ax = -\frac{\ln|\cos ax|}{a}
+    &
+\int x\sin ax = \frac{\sin ax-ax \cos ax}{a^2}
+\\
+\int e^{-x^2} = \frac{\sqrt \pi}{2} \text{erf}(x)
+    &
+\int xe^{ax} dx = \frac{e^{ax}}{a^2}(ax-1)
+    &
+\\
+\end{array}$
 
-  \noindent
-  \begin{tabular}{|*{20}{>{$\displaystyle}c<{$}|}}
-    \frac{d}{dx}\sin^{-1} x = \frac{1}{\sqrt{1-x^2}}
-    &
-    \frac{d}{dx}\cos^{-1} x = -\frac{1}{\sqrt{1-x^2}}
-    &
-    \frac{d}{dx}\tan^{-1} x = \frac{1}{1+x^2}
-    \\
-    \frac{d}{dx}\tan x = 1+\tan^2 x
-    &
-    \int\tan ax = -\frac{\ln|\cos ax|}{a}
-    &
-    % \int x\sin ax = \frac{\sin ax-ax \cos ax}{a^2}
-    % &
-    \\
-    \int e^{-x^2} = \frac{\sqrt \pi}{2} \text{erf}(x)
-    &
-    \int xe^{ax} dx = \frac{e^{ax}}{a^2}(ax-1)
-    \\
-  \end{tabular}
-
-  \(
-    \displaystyle
-    \int \sqrt{a^2 + x^2} = \frac{1}{2} \left(x\sqrt{a^2+x^2} + a^2 \operatorname{asinh}(x/a) \right)
-  \)
+\(
+\displaystyle
+\int \sqrt{a^2 + x^2} = \frac{1}{2} \left(x\sqrt{a^2+x^2} + a^2 \operatorname{asinh}(x/a) \right)
+\)
 }
-
-\item Spherical Coordinate
-
-$$
-(x, y, z) = (r\sin\theta\cos\phi, r\sin\theta\sin\phi, r\cos\theta)
-$$
-
-$$
-(r, \theta, \phi) = (\sqrt{x^2+y^2+z^2}, \textrm{acos}(z/\sqrt{x^2+y^2+z^2}), \textrm{atan2}(y,x))
-$$
-
-\item Rotation Matrix
-
-$$
-M(\theta)=
-\begin{bmatrix}
-\cos\theta & -\sin\theta\\
-\sin\theta & \cos\theta
-\end{bmatrix},
-R_x(\theta_x)=
-\begin{bmatrix}
-1 & 0 & 0\\
-0 & \cos\theta_x & -\sin\theta_x \\
-0 & \sin\theta & \cos\theta
-\end{bmatrix}
-$$
 
 \item Min-Max Inclusion Exclusion Principle
 
-(Works in expect values version, i.e., $E[\min]$, too)
-$$
-\operatorname*{kthmax}_{i \in S} x_i = \sum_{T \subset S} (-1)^{|T|-k} \binom{|T|-1}{k-1} \min_{j \in T} x_j
-$$
-$$
-\operatorname*{kthmin}_{i \in S} x_i = \sum_{T \subset S} (-1)^{|T|-k} \binom{|T|-1}{k-1} \max_{j \in T} x_j
-$$
-
-\item Du's Sieve
-
-\begin{itemize}
-  \item compute $S(N)=\sum_{i=1}^N f(N)$, find a function $g$ such that $f*g$ is easy to compute
-  \item $\sum_{i=1}^N (f*g)(i)=\sum_{i=1}^N g(i)S(\lfloor\frac{N}{d}\rfloor)$
-  \item $\implies g(1)S(N)=\sum_{i=1}^N (f*g)(i)-\sum_{i=2}^N g(i)S(\lfloor\frac{N}{i}\rfloor)$
-  \item use sqrt decomposition and memoization (sometimes need to precompute small prefix)
-\end{itemize}
+(Also holds for expected values, i.e.\ $E[\min]$.)
+\[
+\operatorname*{kthmax}_{i \in S} x_i = \sum_{\emptyset \ne T \subseteq S} (-1)^{|T|-k} \binom{|T|-1}{k-1} \min_{j \in T} x_j
+\]
+\[
+\operatorname*{kthmin}_{i \in S} x_i = \sum_{\emptyset \ne T \subseteq S} (-1)^{|T|-k} \binom{|T|-1}{k-1} \max_{j \in T} x_j
+\]
 
 \end{itemize}

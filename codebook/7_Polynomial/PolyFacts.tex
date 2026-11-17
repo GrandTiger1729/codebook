@@ -1,0 +1,24 @@
+\begin{itemize}
+\item Newton's identities
+
+For $a_1, \ldots, a_m$ with elementary symmetric sums $e_k$ and power sums $p_k = \sum_i a_i^k$: $k e_k = \sum_{i=1}^{k} (-1)^{i-1} e_{k-i} p_i$. Equivalently $\sum_{k \ge 1} \frac{p_k}{k} x^k = -\ln \prod_i (1 - a_i x)$, so one \texttt{Ln} gives all $p_k$ and one \texttt{Exp} goes back.
+
+\item Euler transform
+
+If $A(x) = \sum_k a_k x^k$ counts the kinds of objects of size $k$, multisets of them are counted by $\prod_k (1 - x^k)^{-a_k} = \exp \sum_{j \ge 1} \frac{A(x^j)}{j}$, and sets (no kind twice) by $\prod_k (1 + x^k)^{a_k} = \exp \sum_{j \ge 1} (-1)^{j+1} \frac{A(x^j)}{j}$; the sum has $O(n \log n)$ terms. E.g.\ $a_k = 1$ gives partitions; unlabeled rooted trees satisfy $T(x) = x \exp \sum_j \frac{T(x^j)}{j}$ (solve online).
+
+\item Lagrange inversion
+
+If $F(G(x)) = x$ with $F(0) = 0$, $F'(0) \ne 0$, then for $n \ge 1$: $[x^n]\, G(x)^k = \frac{k}{n} [x^{n-k}] \left(\frac{x}{F(x)}\right)^n$ and $[x^n]\, H(G(x)) = \frac 1 n [x^{n-1}]\, H'(x) \left(\frac{x}{F(x)}\right)^n$.
+
+\item Bases and evaluation
+\begin{itemize}
+  \item Falling factorials: $f(x) = \sum_k c_k x^{\underline k}$ iff $\sum_i f(i) \frac{x^i}{i!} = e^x \sum_k c_k x^k$; one convolution each way.
+  \item Chirp-z: $f(r^j) = r^{-\binom j 2} \sum_i a_i r^{-\binom i 2} r^{\binom{i+j}{2}}$ since $ij = \binom{i+j}{2} - \binom i 2 - \binom j 2$; one convolution evaluates $f$ at $1, r, \ldots, r^{m-1}$.
+  \item $\sum_{i < n} i^k$ is a polynomial of degree $k + 1$ in $n$: interpolate it from $k + 2$ values (\texttt{Value Polynomial}).
+\end{itemize}
+
+\item Linear recurrences
+
+$a$ satisfies $a_n = \sum_{i=1}^{d} c_i a_{n-i}$ iff $\sum a_n x^n = \frac{P(x)}{Q(x)}$ with $Q = 1 - \sum c_i x^i$, $\deg P < d$. Termwise sums of two recurrences have order $\le d_1 + d_2$, termwise products $\le d_1 d_2$, prefix sums $d + 1$: so Berlekamp–Massey on enough terms finds them.
+\end{itemize}

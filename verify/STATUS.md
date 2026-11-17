@@ -49,14 +49,11 @@
 | 模版 | Library Checker | 本地對拍 | 單檔編譯 | 書上標註 |
 |---|---|---|---|---|
 | `3_Data_Structure/min_heap.cpp` | `graph/directedmst` **AC** 12 筆 · 0.122s/5s (2%) | leftist tree：3 000 組共 42.7 萬次 push/pop/join/add_lazy vs `multiset`，並檢查左偏性質 | ✅ | test by Lib-Checker Directed MST (through Minimum Arborescence) |
-| `3_Data_Structure/BIT_kth.cpp` | `data_structure/ordered_set` **AC** 37 筆 · 0.268s/10s (3%) | — | 需要外部 `N` | test by CSES 1076, Lib-Checker Ordered Set |
 | `3_Data_Structure/IntervalContainer.cpp`（不在書中） | — 無對應題 | — | ✅ | test by kactl stress test |
-| `3_Data_Structure/Heavy_light_Decomposition.cpp`（不在書中） | `tree/vertex_add_path_sum` **AC** 19 筆 · 0.468s/5s (9%) | — | 需要外部 `N` | test by CSES Path Queries II, Lib-Checker Vertex Add Path Sum |
 | `3_Data_Structure/Centroid_Decomposition.cpp` | `tree/frequency_table_of_tree_distance` 無法驅動 | 3 000 棵樹重用同一物件，28 萬次操作（**修 bug**：多測資沒清） | 需要外部 `N` | test by TIOJ 1171 |
 | `3_Data_Structure/Treap.cpp` | `data_structure/ordered_set#treap` **AC** 37 筆 · 0.817s/10s (8%) | — | ✅ | test by Lib-Checker Ordered Set |
 | `3_Data_Structure/LiChaoST.cpp`（不在書中） | `data_structure/line_add_get_min#lichao` 無法驅動 | 3 000 組共 976 772 次查詢 vs 窮舉 | 需要外部 `INF` | test by Library Checker Line Add Get Min |
 | `3_Data_Structure/link_cut_tree.cpp` | `tree/dynamic_tree_vertex_add_path_sum` **AC** 15 筆 · 0.515s/5s (10%) | — | ✅ | test by luogu P3690, Lib-Checker Dynamic Tree Vertex Add Path Sum |
-| `3_Data_Structure/KDTree.cpp` | — 無對應題 | 3 000 組 n≤2000，座標 ±1e9（**修 bug**：初值 `LLONG_MAX`） | 需要外部 `maxn` | — |
 
 ## Flow/Matching
 
@@ -79,8 +76,8 @@
 | `5_String/KMP.cpp` | — 無對應題 | 200 000 組 σ≤3（空 pattern 不可） | 需要外部 `MAXN` | — |
 | `5_String/Z-value.cpp` | `string/zalgorithm` **AC** 29 筆 · 0.040s/5s (1%) | — | 需要外部 `SIZE` | test by Lib-Checker Z Algorithm |
 | `5_String/Manacher.cpp` | `string/enumerate_palindromes` **AC** 24 筆 · 0.068s/5s (1%) | — | 需要外部 `SIZE` | test by Lib-Checker Enumerate Palindromes |
-| `5_String/SA_LCP_becaido.cpp` | `string/suffixarray#becaido` **AC** 50 筆 · 0.167s/5s (3%) | — | ✅ | test by caido, Lib-Checker Suffix Array |
 | `5_String/SAIS-C++20.cpp` | `string/suffixarray` **AC** 50 筆 · 0.181s/5s (4%) | σ≤3 窮舉 + 隨機 n≤3000，共 30 252 組 | ✅ | test by Lib-Checker Suffix Array |
+| `5_String/LCP_Array.cpp` | `string/number_of_substrings#lcp` **AC** 24 筆 · 0.065s/5s (1%) | 30 000 組 n≤2000（含週期串）vs 直接比相鄰後綴 | ✅ | SA 由 SAIS 產生；2026-11-17 從 SA_LCP_becaido 拆出（倍增 SA 刪掉） |
 | `5_String/Aho-Corasick_Automaton.cpp` | `string/aho_corasick` **AC** 72 筆 · 0.369s/5s (7%) | `fail[]` vs 最長後綴節點、沿 `to[]` 累加 `cnt[]` vs 樸素出現次數、`count()` vs 每個節點字串的樸素出現次數，100 000 組（含 `reset()` 重用） | 需要外部 `N`、`C`；字元以 `'a'` 為基底；根是 0 | std_abs 原檔 + macro 契約（2026-09-30 取代舊版，檔名改正為 Automaton）；`cnt[]` 在 `build_fail()` 後是「以該節點結尾的 pattern 數」；另加 `count(s)` 回傳每個節點字串在 `s` 裡的出現次數（取代舊版的 `ord[]`/`solve()`） |
 | `5_String/MinimumRotation.cpp` | — 無對應題 | 79 523 組（σ=3 n≤9 窮舉 + 週期串） | ✅ | test by CSES Minimal Rotation |
 | `5_String/LyndonFactorization.cpp` | `string/lyndon_factorization` **AC** 23 筆 · 0.032s/5s (1%) | 79 524 組（σ=3 n≤9 窮舉 + 週期串），依定義檢查：接起來是 s、每段嚴格小於自己的真後綴、各段不遞增 | ✅ | std_abs 原檔 + macro 契約（Duval，2026-09-30 加入） |

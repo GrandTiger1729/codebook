@@ -25,9 +25,7 @@ graph/dominatortree	dominatortree.cpp	2_Graph/Dominator_Tree.cpp
 graph/directedmst	directedmst.cpp	2_Graph/Minimum_Arborescence_fast.cpp + 3_Data_Structure/min_heap.cpp	driver supplies DSU only (not in content.tex, memorised); min_heap now is
 graph/minimum_steiner_tree	minimum_steiner_tree.cpp	2_Graph/MinimumSteinerTree.cpp	
 data_structure/line_add_get_min	line_add_get_min.cpp	9_Else/DynamicConvexTrick.cpp	driver negates: the template maintains max
-data_structure/ordered_set	ordered_set.cpp	3_Data_Structure/BIT_kth.cpp	driver supplies the BIT add/prefix-sum; the template is descent only
 data_structure/ordered_set#treap	ordered_set_treap.cpp	3_Data_Structure/Treap.cpp	Treap driven as an ordered set (split/merge/kth/Rank/insert/erase); its node has no lazy/aggregate, so the affine/reverse LC problems need the template extended first
-tree/vertex_add_path_sum	vertex_add_path_sum.cpp	3_Data_Structure/Heavy_light_Decomposition.cpp	query() is a skeleton (segment-tree calls left as comments), so the driver walks the path with its own BIT; this covers the decomposition, not the query body
 tree/dynamic_tree_vertex_add_path_sum	dynamic_tree_vertex_add_path_sum.cpp	3_Data_Structure/link_cut_tree.cpp	
 tree/frequency_table_of_tree_distance	-	3_Data_Structure/Centroid_Decomposition.cpp	the template's info/upinfo answer "sum of distances to marked vertices", not a distance frequency table; no LC problem matches this API.
 number_theory/enumerate_quotients	enumerate_quotients.cpp	6_Math/floor_enumeration.cpp	snippet is int-typed; N goes to 1e12, so the driver widens int and inlines the loop body to observe x
@@ -37,7 +35,6 @@ number_theory/primality_test	primality_test.cpp	6_Math/Miller_Rabin.cpp	driver s
 other/find_linear_recurrence	find_linear_recurrence.cpp	6_Math/Berlekamp-Massey.cpp	driver supplies a modint T
 number_theory/min_of_mod_of_linear	min_of_mod_of_linear.cpp	6_Math/ModMin.cpp	driver binary searches on top of mod_min (mod_min itself patched: `; ~y`)
 tree/rooted_tree_isomorphism_classification	rooted_tree_isomorphism_classification.cpp	9_Else/tree_hash.cpp	
-string/suffixarray#becaido	suffixarray_becaido.cpp	5_String/SA_LCP_becaido.cpp	
 string/number_of_substrings	number_of_substrings.cpp	5_String/exSAM.cpp	driver supplies N and CNUM
 geo/static_convex_hull	static_convex_hull.cpp	8_Geometry/Convex_hull.cpp	works on pll but 8_Geometry/Default_code.cpp only defines the pdd primitives, so ori/sign/cross come from the driver
 geo/sort_points_by_argument	sort_points_by_argument.cpp	8_Geometry/Polar_Angle_Sort.cpp	integer sign/cross/abs2 from the driver; the template starts at the +x axis so the driver rotates to LC's atan2 convention
@@ -65,3 +62,4 @@ polynomial/pow_of_formal_power_series#ours	fps_ours.cpp -DOP_POW	7_Polynomial/Po
 polynomial/sqrt_of_formal_power_series#ours	fps_ours.cpp -DOP_SQRT	7_Polynomial/Polynomial_Operation.cpp	side branch, not in content.tex
 other/kth_term_of_linearly_recurrent_sequence#ours	kth_term_ours.cpp	7_Polynomial/Polynomial_Operation.cpp	side branch
 graph/enumerate_triangles	enumerate_triangles.cpp	2_Graph/C3C4.cpp	driver sums x_a x_b x_c in the C3 callback
+string/number_of_substrings#lcp	number_of_substrings_lcp.cpp	5_String/SAIS-C++20.cpp + 5_String/LCP_Array.cpp	answer = n(n+1)/2 - sum of lcp

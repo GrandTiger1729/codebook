@@ -33,8 +33,15 @@ int main() {
     ll m = rnd(1, 1LL << 40) << rnd(0, 20);
     if (m > 0) check(m), c++;
   }
+  auto nextPrime = [](ll x) { while (!prime(x)) x++; return x; };
+  FOR (it, 1, 300) {                      // p*q, p^2, p^3 with large primes; Carmichael numbers
+    ll p = nextPrime(rnd(2, 1e9)), q = nextPrime(rnd(2, 1e9)), r = nextPrime(rnd(2, 1e6));
+    check(p * q), check(p * p), check(r * r * r), check(r * p), c += 4;
+  }
+  for (ll n : {561LL, 41041LL, 825265LL, 321197185LL, 5394826801LL, 232250619601LL, 9746347772161LL})
+    check(n), c++;
   map<ll, int> acc; cnt.clear();          // two calls accumulate into cnt
   PollardRho(12), PollardRho(1LL << 40);
   assert(cnt[2] == 42 && cnt[3] == 1 && cnt.size() == 2);
-  printf("Pollard_Rho: %d cases OK (n<=2e5 exhaustive vs trial div, 2^k*p up to 2^62, random 1e18)\n", c);
+  printf("Pollard_Rho: %d cases OK (n<=2e5 exhaustive vs trial div, 2^k*p up to 2^62, random 1e18, large semiprimes and prime powers, Carmichael)\n", c);
 }

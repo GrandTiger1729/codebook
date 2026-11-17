@@ -97,7 +97,7 @@
 | `6_Math/Gaussian_gcd.cpp` | `number_theory/gcd_of_gaussian_integers` **AC** 12 筆 · 0.065s/5s (1%) | — | 需要外部 `cpx` | test by Lib-Checker GCD of Gaussian Integers |
 | `6_Math/Miller_Rabin.cpp` | `number_theory/factorize` **AC** 31 筆 · 1.167s/10s (12%)<br>`number_theory/primality_test` **AC** 12 筆 · 0.265s/5s (5%) | 經 Pollard_Rho 的對拍（每個因數都要通過 `prime()`） | ✅ | test by NTUJ 1237, Lib-Checker Primality Test |
 | `6_Math/Linear_Equations.cpp` | `linear_algebra/system_of_linear_equations` **AC** 27 筆 · 0.515s/5s (10%) | 有理數、modint 各 3 000 組，驗 A·sol = b 且 basis 在核空間（1 239 + 1 322 組無解） | 需要外部 `MAXN` 與域型別 `T` | test by Lib-Checker System of Linear Equations (modint), local brute force (fraction) |
-| `6_Math/Pollard_Rho.cpp` | `number_theory/factorize` **AC** 31 筆 · 1.167s/10s (12%) | 24 萬組：n ≤ 2·10⁵ 窮舉 vs 試除法、2ᵏ·p、隨機至 10¹⁸、連續呼叫累加 | 需要外部 `prime` | test by Lib-Checker Factorize |
+| `6_Math/Pollard_Rho.cpp` | `number_theory/factorize` **AC** 31 筆 · 0.069s/10s (1%)（2026-11-17 改 kactl 式批次 gcd，原本 1.167s） | 24 萬組：n ≤ 2·10⁵ 窮舉 vs 試除法、2ᵏ·p、隨機至 10¹⁸、兩個約 10⁹ 質數之積、質數平方與立方、Carmichael 數、連續呼叫累加 | 需要外部 `prime` | test by Lib-Checker Factorize |
 | `6_Math/Simplex_Algorithm.cpp` | — 無對應題 | 11 889 組 vs 頂點枚舉（最佳/無界/不可行）+ 274 組對偶 | ✅ | — |
 | `6_Math/chineseRemainder.cpp` | — 無對應題 | 424 575 組含非互質、無解、lcm≈1e18（**修溢位**） | 需要外部 `exgcd` | — |
 | `6_Math/fac_no_p.cpp` | `enumerative_combinatorics/binomial_coefficient` 無法驅動 | 44 960 組 vs 直接計算 | 需要外部 `MAXP` | test by luogu P4720 |

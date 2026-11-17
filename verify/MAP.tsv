@@ -69,3 +69,6 @@ number_theory/nim_product_64	nim_product_64.cpp	6_Math/NimProduct.cpp
 linear_algebra/characteristic_polynomial	characteristic_polynomial.cpp	6_Math/CharPoly.cpp	
 linear_algebra/matrix_det_arbitrary_mod	matrix_det_arbitrary_mod.cpp	6_Math/DeterminantAnyMod.cpp	
 linear_algebra/matrix_det	matrix_det.cpp	6_Math/DeterminantAnyMod.cpp	same template with m = 998244353 (n = 500, so the log m factor shows)
+graph/eulerian_trail_directed	eulerian_trail.cpp -DDIRECTED	2_Graph/EulerTrail.cpp	driver checks degrees and picks the start
+graph/eulerian_trail_undirected	eulerian_trail.cpp	2_Graph/EulerTrail.cpp	driver checks degrees and picks the start
+geo/furthest_pair	furthest_pair.cpp	8_Geometry/FarthestPair.cpp + 8_Geometry/Convex_hull.cpp	integers from Default_code_int (not in the book)

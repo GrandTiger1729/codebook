@@ -21,6 +21,7 @@
 \inputcode{VBCC*}{2_Graph/VBCC.cpp} % test by caido, Lib-Checker Biconnected Components
 \inputcode{SCC*}{2_Graph/SCC.cpp} % test by caido, Lib-Checker Strongly Connected Components
 \inputcode{2SAT*}{2_Graph/2SAT.cpp} % needs SCC; test by Lib-Checker Two SAT, local brute force (either/set_value/at_most_one)
+\inputcode{Euler Trail*}{2_Graph/EulerTrail.cpp} % iterative; test by Lib-Checker Eulerian Trail (Directed, Undirected)
 \inputcode{MinimumMeanCycle*}{2_Graph/MinimumMeanCycle.cpp} % test by TIOJ 1934
 \inputcode{Virtual Tree*}{2_Graph/Virtual_Tree.cpp} % test by luogu P2495
 \inputcode{Maximum Clique Dyn*}{2_Graph/Maximum_Clique_Dyn.cpp} % test by TIOJ 1978, CF 101221 I (World Finals' problem)
@@ -69,6 +70,7 @@
 \section{String}
 \inputcode{KMP}{5_String/KMP.cpp}
 \inputcode{Z-value*}{5_String/Z-value.cpp} % test by Lib-Checker Z Algorithm
+\inputcode{Rolling Hash*}{5_String/RollingHash.cpp} % test by local brute force (all substring pairs)
 \inputcode{Manacher*}{5_String/Manacher.cpp} % test by Lib-Checker Enumerate Palindromes
 \inputcode{SAIS C++20*}{5_String/SAIS-C++20.cpp} % test by Lib-Checker Suffix Array
 \inputcode{LCP Array*}{5_String/LCP_Array.cpp} % SA from SAIS; test by Lib-Checker Number of Substrings, local brute force
@@ -148,7 +150,9 @@
 \inputcode{Heart}{8_Geometry/Heart.cpp} % circenter test by Lib-Checker Minimum Enclosing Circle
 \inputcode{point in circle}{8_Geometry/point_in_circle.cpp}
 \inputcode{Convex hull*}{8_Geometry/Convex_hull.cpp} % test by Zerojudge b398, Lib-Checker Static Convex Hull
+\inputcode{Farthest Pair*}{8_Geometry/FarthestPair.cpp} % test by Lib-Checker Furthest Pair, local brute force
 \inputcode{PointInConvex*}{8_Geometry/PointInConvex.cpp} % test by CF 104114 B, CF 101242 J (World Finals' problem)
+\inputcode{Point In Polygon*}{8_Geometry/PointInPolygon.cpp} % test by local brute force (winding number on star polygons)
 \inputcode{TangentPointToHull*}{8_Geometry/TangentPointToHull.cpp} % p may be on the hull (2026-11-17, local stress); test by CF 104114 B, CF 101242 J (World Finals' problem)
 \inputcode{Intersection of line and convex}{8_Geometry/Intersection_of_line_and_convex.cpp} % test by aizu CGL_4_C, probably not enough
 \inputcode{minMaxEnclosingRectangle*}{8_Geometry/minMaxEnclosingRectangle.cpp} % test by UVA 819
@@ -180,6 +184,7 @@
 \subsection{Additional Mo's Algorithm Trick}
 \input{9_Else/Mos_Algorithm.tex}
 \inputcode{Hilbert Curve}{9_Else/HilbertCurve.cpp}
+\inputcode{Josephus*}{9_Else/Josephus.cpp} % test by local brute force (simulation)
 \inputcode{DynamicConvexTrick*}{9_Else/DynamicConvexTrick.cpp} % test by TIOJ 1921, Lib-Checker Line Add Get Min
 %\inputcode{cyclicLCS}{9_Else/cyclicLCS.cpp}
 \inputcode{All LCS*}{9_Else/All_LCS.cpp} % test by Lib-Checker Prefix-Substring LCS

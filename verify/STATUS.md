@@ -138,7 +138,7 @@
 | `8_Geometry/point_in_circle.cpp` | — 無對應題 | 383 207 組，exact `__int128` 參考（p 須 CCW） | ✅ | — |
 | `8_Geometry/Convex_hull.cpp` | `geo/static_convex_hull` **AC** 25 筆 · 0.168s/5s (3%) | — | ✅ | test by Zerojudge b398, Lib-Checker Static Convex Hull |
 | `8_Geometry/PointInConvex.cpp` | — 無對應題 | 400 萬筆查詢（不可有共線頂點） | ✅ | test by CF 104114 B, CF 101242 J (World Finals' problem) |
-| `8_Geometry/TangentPointToHull.cpp` | — 無對應題 | 461 307 筆查詢 | 需要外部 `cyc_tsearch` | test by CF 104114 B, CF 101242 J (World Finals' problem) |
+| `8_Geometry/TangentPointToHull.cpp` | — 無對應題 | 537 397 筆查詢，座標到 ±1e9；其中 21.5 萬筆 p 在頂點、8.9 萬筆在邊上（2026-11-17 起可在凸包上） | 需要外部 `cyc_tsearch` | test by CF 104114 B, CF 101242 J (World Finals' problem) |
 | `8_Geometry/Intersection_of_line_and_convex.cpp` | — 無對應題 | 558 997 條線，含過頂點/貼邊 | 需要外部 `cyc_tsearch` | test by aizu CGL_4_C, probably not enough |
 | `8_Geometry/minMaxEnclosingRectangle.cpp` | — 無對應題 | 2 989 組（**修 bug**：acos NaN 丟掉最大值，改封閉式） | 需要外部 `hull` | test by UVA 819 |
 | `8_Geometry/Vector_in_poly.cpp` | — 無對應題 | 928 200 組含凹角/180° | ✅ | test by qoj 5479 |

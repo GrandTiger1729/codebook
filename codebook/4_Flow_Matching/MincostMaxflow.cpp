@@ -62,6 +62,6 @@ struct MinCostMaxFlow { // 0-base, need global N
         for (Edge &e : g[i]) if (e.cap)
           if ((v = pot[i] + e.cost) < pot[e.to])
             pot[e.to] = v, ch = 1;
-    assert(it >= 0); // negative cost cycle
+    assert(it >= 0); // negative cycle: see Flow Models
   }
 };

@@ -61,7 +61,7 @@
 |---|---|---|---|---|
 | `4_Flow_Matching/Bipartite_Matching.cpp` | `graph/bipartitematching` **AC** 44 筆 · 0.516s/5s (10%) | 30 000 組 L, R ≤ 6（含重邊）：`matching()` vs bitmask DP；`cover()` vs 2^(L+R) 窮舉 | 需要外部 `N` | test by Lib-Checker Matching on Bipartite Graph; cover() by local brute force |
 | `4_Flow_Matching/Kuhn_Munkres.cpp` | `graph/assignment` **AC** 14 筆 · 0.165s/5s (3%) | 20 000 組 n ≤ m ≤ 7 vs 窮舉（12 545 組矩形 n < m、6 666 組 perfect 模式含負權） | 需要外部 `N` | test by CF 101239 C (World Finals' problem), Lib-Checker Assignment Problem |
-| `4_Flow_Matching/MincostMaxflow.cpp` | `graph/assignment#mcmf` **AC** 14 筆 · 1.417s/5s (28%) | 4 000 組 n ≤ 8、m ≤ 20 vs SPFA 最短路增廣（1 545 組負權、走 setpi；同一物件重複 `init`）（**修 bug**：`par[s]` 沒重設，重用物件會沿舊邊回溯） | 需要外部 `N` | test by Lib-Checker Assignment Problem, local stress vs SPFA reference |
+| `4_Flow_Matching/MincostMaxflow.cpp` | `graph/assignment#mcmf` **AC** 14 筆 · 1.417s/5s (28%) | 4 000 組 n ≤ 8、m ≤ 20 vs SPFA 最短路增廣（1 545 組負權、走 setpi；同一物件重複 `init`）（**修 bug**：`par[s]` 沒重設，重用物件會沿舊邊回溯）；負環：Flow Models 的「先把負邊流滿」歸約，20 000 組 vs 窮舉所有整數流（任意流量 / 最大流兩種） | 需要外部 `N` | test by Lib-Checker Assignment Problem, local stress vs SPFA reference |
 | `4_Flow_Matching/Maximum_Simple_Graph_Matching.cpp` | `graph/general_matching` **AC** 12 筆 · 0.008s/5s (0%) | — | ✅ | test by Library Checker Matching on General Graph |
 | `4_Flow_Matching/Maximum_Weight_Matching.cpp` | `graph/general_weighted_matching` **AC** 24 筆 · 0.336s/5s (7%) | — | 需要外部 `INF` | test by Library Checker General Weighted Matching |
 | `4_Flow_Matching/SW-mincut.cpp` | — 無對應題 | 30 000 組 n≤11 vs 2^n 枚舉 | ✅ | — |

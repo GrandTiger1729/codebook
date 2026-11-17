@@ -1,0 +1,30 @@
+\begin{itemize}
+\item Periods ($s$ of length $n$; $p$ is a period iff $s_i = s_{i+p}$ for all $i$, iff $s$ has a border of length $n - p$)
+\begin{itemize}
+  \item Fine–Wilf: if $p$ and $q$ are periods and $p + q - \gcd(p, q) \le n$, so is $\gcd(p, q)$. Hence every period $\le n/2$ is a multiple of the smallest period $p$.
+  \item $s$ equals its rotation by $i$ ($0 < i < n$) iff $p \mid n$ and $p \mid i$; then $s$ is a power of its prefix of length $p$.
+  \item The borders (periods) of $s$ form $O(\log n)$ arithmetic progressions.
+\end{itemize}
+
+\item Counting
+\begin{itemize}
+  \item Runs theorem: fewer than $n$ runs (maximal repetitions), and their exponents sum to less than $3n$.
+  \item Distinct squares $ww$: fewer than $2n$. Distinct non-empty palindromes: at most $n$ (each position adds at most one; eertree has $\le n + 2$ nodes).
+  \item The palindromic suffixes of a string form $O(\log n)$ arithmetic progressions (series links), giving $O(n \log n)$ DP over palindromic factorizations.
+  \item De Bruijn sequences of order $n$ over $k$ letters, up to rotation: $\frac{(k!)^{k^{n-1}}}{k^n}$ (BEST theorem).
+\end{itemize}
+
+\item Suffix structures
+\begin{itemize}
+  \item Suffix automaton: $\le 2n - 1$ states, $\le 3n - 4$ transitions ($n \ge 3$). Suffix links form the suffix tree of the reversed string. Distinct substrings: $\sum_v (len(v) - len(link(v)))$. Occurrences of the substrings of state $v$: the number of prefix states (non-clones) in $v$'s link subtree.
+  \item Suffix array: $\mathrm{LCP}$ of suffixes $i$ and $j$ is the minimum of the LCP array between their ranks; distinct substrings: $\binom{n+1}{2} - \sum \mathrm{lcp}$.
+  \item Lyndon: $s$ factors uniquely as $w_1 \ge w_2 \ge \cdots$ with Lyndon words $w_i$ (strictly smaller than all their proper suffixes).
+\end{itemize}
+
+\item Automata
+\begin{itemize}
+  \item Minimal DFA (Myhill–Nerode): unique. Drop unreachable states, start from the partition $\{$accepting, rejecting$\}$, and split classes by the tuple (own class, class of $\delta(q, c)$ for each $c$) until stable: $O(n^2 \sigma)$ (Hopcroft: $O(n \sigma \log n)$).
+  \item NFA $\to$ DFA: subset construction (up to $2^n$ states, build only reachable ones). Intersection / union / difference: product automaton on pairs of states; complement: swap accepting states of a complete DFA.
+  \item The number of accepted words of length $L$ of a DFA with $k$ states is a linear recurrence of order $\le k$: DP the first $2k$ terms, then Berlekamp–Massey. Patterns to avoid: run the DP on the Aho–Corasick automaton without the terminal states.
+\end{itemize}
+\end{itemize}

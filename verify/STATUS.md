@@ -253,3 +253,4 @@
 - **新增程式**：Manhattan MST、Bipolar Orientation、Static Top Tree、SIMD、Nim Product（都有 LC 或本地對拍）。
 - **新增理論**：Game Theory 小節（Misère Nim 從 Theorem 移過來；每條都用 Python 暴力驗過小範圍）。
 - **新增理論**：Linear Algebra 小節（行列式、Cayley–Hamilton、有限體計數、隨機檢查）；計數公式與 Sherman–Morrison、Schur 用 Python 驗過。新增程式 DeterminantAnyMod、CharPoly、XorBasis。
+- **新增理論**：Polynomial Facts（Newton 恆等式、Euler transform、Lagrange inversion 等）、Theorem 的圖論補充（König、Menger、平面圖、Turán、Ramsey、競賽圖、著色、弦圖、隨機漫步、穩定婚姻）、String and Automaton Facts（週期、runs、SAM、DFA 最小化等）。可驗的都用 Python 暴力驗過（腳本不進 repo）。

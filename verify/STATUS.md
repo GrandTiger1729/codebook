@@ -99,6 +99,7 @@
 | `6_Math/floor_enumeration.cpp` | `number_theory/enumerate_quotients` **AC** 26 筆 · 0.121s/5s (2%) | — | 片段，非獨立編譯單元 | test by Lib-Checker Enumerate Quotients |
 | `6_Math/ModMin.cpp` | `number_theory/min_of_mod_of_linear` **AC** 17 筆 · 0.265s/10s (3%) | 1 734 355 組 vs 暴力（m ≤ 60 窮舉，88 406 組無解） | ✅ | test by Lib-Checker Min of Mod of Linear |
 | `6_Math/Gaussian_gcd.cpp` | `number_theory/gcd_of_gaussian_integers` **AC** 12 筆 · 0.065s/5s (1%) | — | 需要外部 `cpx` | test by Lib-Checker GCD of Gaussian Integers |
+| `6_Math/NimProduct.cpp` | `number_theory/nim_product_64` **AC** 10 筆 · 0.365s/10s (4%) | Turning Corners 32×32 的 SG 暴力表（Tartan）、2 萬組 64 位元隨機值的體公理（交換、結合、對 xor 分配、a^(2^64−1) = 1） | ✅ | 2026-11-17 加入 |
 | `6_Math/Miller_Rabin.cpp` | `number_theory/factorize` **AC** 31 筆 · 1.167s/10s (12%)<br>`number_theory/primality_test` **AC** 12 筆 · 0.265s/5s (5%) | 經 Pollard_Rho 的對拍（每個因數都要通過 `prime()`） | ✅ | test by NTUJ 1237, Lib-Checker Primality Test |
 | `6_Math/Linear_Equations.cpp` | `linear_algebra/system_of_linear_equations` **AC** 27 筆 · 0.515s/5s (10%) | 有理數、modint 各 3 000 組，驗 A·sol = b 且 basis 在核空間（1 239 + 1 322 組無解） | 需要外部 `MAXN` 與域型別 `T` | test by Lib-Checker System of Linear Equations (modint), local brute force (fraction) |
 | `6_Math/Pollard_Rho.cpp` | `number_theory/factorize` **AC** 31 筆 · 0.069s/10s (1%)（2026-11-17 改 kactl 式批次 gcd，原本 1.167s） | 24 萬組：n ≤ 2·10⁵ 窮舉 vs 試除法、2ᵏ·p、隨機至 10¹⁸、兩個約 10⁹ 質數之積、質數平方與立方、Carmichael 數、連續呼叫累加 | 需要外部 `prime` | test by Lib-Checker Factorize |
@@ -238,3 +239,13 @@
 - **內容修正**：Min-Max inclusion–exclusion 的求和改成非空子集 $\emptyset \ne T \subseteq S$；Bernoulli 統一成 $B_1 = +\tfrac12$ 一種慣例（遞迴式改為 $\sum_{j\le m}\binom{m+1}{j}B_j = m+1$，對所有 $m \ge 0$ 成立；EGF 改為 $x/(1-e^{-x})$）。原本的遞迴式和 EGF 只在 $B_1=-\tfrac12$ 時成立，遞迴式在 $m=0$ 也不成立。
 - **使用者改寫並補充**（都已查證或驗證）：BEST 加上「從 $s$ 出發的乘 $d(s)$」；Tutte matrix 註明錯誤率 $\le n/p$、只會低估；Dirac/Ore 加 Palmer $O(n^2)$ 構造；Pick 加 $B=\sum\gcd$ 與有洞版本；Hook length 加 $2\times n$ 為 Catalan；Pisano 註明純週期；Misère Nim 標題註明規則；導數表加 $\int x\sin ax$。
 - **排版**：Degree sequences 有上下限的求和用 `\displaystyle`；skew lines 改成左右兩欄列點並保留在書中；Bell 的 EGF 寫成 $\exp(e^x-1)$；`numbers.tex` 各條公式改成列點，Eulerian、Narayana 改寫；為了放下列點，Newton's method 的 $F(x)$ 改成行內。PDF 仍是 25 頁且沒有餘裕。
+
+## 2026-11-17：待辦清單
+
+- **刪除**：`KDTree`（含 `KDTree_useful`）、`BIT_kth`、`Heavy_light_Decomposition`、倍增 SA（`SA_LCP_becaido`）；LCP 拆成 `5_String/LCP_Array.cpp`，SA 改由 SAIS 提供。
+- **TangentPointToHull**：p 可以在凸包上（共線時當作 p 往凸包外移一點來決勝負）。
+- **MincostMaxflow**：Flow Models 加「有負環的最小費用流」（先把負邊流滿），本地窮舉驗證。
+- **Pollard rho**：kactl 式批次 gcd，Factorize 1.167s → 0.069s。
+- **Link cut tree**：改陣列版（0.56s → 0.33s），順便修了 `cut` 的 bug（見表）。
+- **新增程式**：Manhattan MST、Bipolar Orientation、Static Top Tree、SIMD、Nim Product（都有 LC 或本地對拍）。
+- **新增理論**：Game Theory 小節（Misère Nim 從 Theorem 移過來；每條都用 Python 暴力驗過小範圍）。

@@ -1,0 +1,47 @@
+\begin{itemize}
+\item Sprague–Grundy
+
+$SG(x) = \operatorname{mex}\{SG(y) : x \to y\}$ ($\le$ out-degree); the player to move loses iff $SG = 0$. A sum of games (each move is in one component), or a move that splits a game into independent parts, has $SG = \bigoplus SG_i$.
+
+\item Nim variants (the player to move loses iff \ldots)
+\begin{itemize}
+  \item Staircase Nim: coins on steps $1, \ldots, k$, a move moves any number of coins from step $i$ to step $i - 1$ (step $0$ is out of the game): Nim on the odd steps.
+  \item Moore's Nim$_k$ (take from up to $k$ piles at once): for every bit, the number of piles having that bit is divisible by $k + 1$.
+  \item Lasker's Nim (take, or split a pile into two non-empty piles): $SG(4k+1) = 4k+1$, $SG(4k+2) = 4k+2$, $SG(4k+3) = 4k+4$, $SG(4k+4) = 4k+3$.
+  \item Wythoff (take from one pile, or the same amount from both): $\{a, b\} = \{\lfloor k\varphi \rfloor, \lfloor k\varphi \rfloor + k\}$ for some $k \ge 0$, $\varphi = \frac{1+\sqrt5}{2}$.
+  \item Fibonacci Nim (one pile of $n \ge 2$; the first move takes $1, \ldots, n-1$, then each move at most twice the previous one): $n$ is a Fibonacci number. Otherwise take the smallest term of $n$'s Zeckendorf representation.
+  \item Subtraction and octal games are usually eventually periodic: brute force $SG$ and look for the period. E.g.\ Kayles (remove one pin or two adjacent pins from a row): $SG(n) = SG(n - 12)$ for $n \ge 83$.
+\end{itemize}
+
+\item Misère games (whoever makes the last move loses)
+\begin{itemize}
+  \item Misère Nim: the first player wins iff (some pile $> 1$ and $\bigoplus a_i \ne 0$) or (all piles $\le 1$ and $\bigoplus a_i = 0$).
+  \item SJ theorem: for a sum of games in which every position with $SG = 0$ is terminal, the first player wins iff ($\bigoplus SG_i \ne 0$ and some $SG_i > 1$) or ($\bigoplus SG_i = 0$ and every $SG_i \le 1$).
+\end{itemize}
+
+\item Undirected vertex geography
+
+A token starts on $v$; players alternately move it to an unvisited neighbour, and whoever cannot move loses. The first player wins iff $v$ is in every maximum matching, i.e.\ $\nu(G - v) < \nu(G)$; the winning move follows an edge of a maximum matching of $G$.
+
+\item Games with cycles (retrograde analysis)
+
+Terminal positions lose. Going backwards (BFS on reversed edges): a position with a losing successor wins; a position loses once all its successors are known to win (count down its out-degree). Positions never labelled are draws.
+
+\item Green Hackenbush (cut an edge; whatever is no longer connected to the ground disappears)
+\begin{itemize}
+  \item Colon principle: for a tree hanging from the ground, $SG(v) = \bigoplus_{c \text{ child of } v} (SG(c) + 1)$.
+  \item Fusion principle: the vertices of a cycle can be fused into one, its edges becoming loops. So fuse all ground vertices and contract every 2-edge-connected component; each loop counts as a child with $SG(c) + 1 = 1$, i.e.\ a component with $e$ edges adds $e \bmod 2$.
+\end{itemize}
+
+\item Blue–Red Hackenbush (Left cuts blue, Right cuts red)
+
+The value of a position is a number, values of a sum add up, and Left (Right) wins iff it is $> 0$ ($< 0$); at $0$ the second player wins.
+\begin{itemize}
+  \item Trees: branches at a vertex add up. A blue edge below a subtree of value $x$ is worth $\frac{x + n}{2^{n-1}}$, where $n \ge 1$ is the smallest integer with $x + n > 1$; a red edge is worth minus that for $-x$. E.g.\ the stalk blue, blue, red, red (from the ground) is $\frac 5 4$.
+  \item In general, $\{L \mid R\}$ with $\max L < \min R$ is the simplest number strictly between them: the integer of smallest absolute value if one exists, else the dyadic fraction with the smallest denominator.
+\end{itemize}
+
+\item Tartan theorem
+
+A product of two coin-turning games (turning a set of coins of the form $A \times B$, with $A$, $B$ moves of the two games) has $SG(x, y) = SG(x) \otimes SG(y)$ (nim product, below). E.g.\ Turning Corners (flip the corners of a rectangle whose far corner $(x, y)$ is heads) has $SG = x \otimes y$.
+\end{itemize}

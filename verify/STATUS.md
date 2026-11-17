@@ -24,6 +24,7 @@
 | `1_Basic/black_magic.cpp` | — 無對應題 | — | ✅ | — |
 | `1_Basic/Pragma.cpp` | — 無對應題 | — | 片段，非獨立編譯單元 | — |
 | `1_Basic/sanitize_fixer.cpp` | — 無對應題 | — | ✅ | — |
+| `1_Basic/SIMD.cpp` | — 無對應題 | 2 萬組隨機陣列與區間（各種對齊與尾端）vs 純量迴圈；註解列出的 intrinsic 都實際呼叫一次；count_less 約 3.5 倍快（-O2） | ✅ | 2026-11-17 加入（GCC vector extension + AVX2 intrinsic 速查） |
 
 ## Graph
 

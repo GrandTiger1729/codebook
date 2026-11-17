@@ -102,6 +102,9 @@
 | `6_Math/NimProduct.cpp` | `number_theory/nim_product_64` **AC** 10 筆 · 0.365s/10s (4%) | Turning Corners 32×32 的 SG 暴力表（Tartan）、2 萬組 64 位元隨機值的體公理（交換、結合、對 xor 分配、a^(2^64−1) = 1） | ✅ | 2026-11-17 加入 |
 | `6_Math/Miller_Rabin.cpp` | `number_theory/factorize` **AC** 31 筆 · 1.167s/10s (12%)<br>`number_theory/primality_test` **AC** 12 筆 · 0.265s/5s (5%) | 經 Pollard_Rho 的對拍（每個因數都要通過 `prime()`） | ✅ | test by NTUJ 1237, Lib-Checker Primality Test |
 | `6_Math/Linear_Equations.cpp` | `linear_algebra/system_of_linear_equations` **AC** 27 筆 · 0.515s/5s (10%) | 有理數、modint 各 3 000 組，驗 A·sol = b 且 basis 在核空間（1 239 + 1 322 組無解） | 需要外部 `MAXN` 與域型別 `T` | test by Lib-Checker System of Linear Equations (modint), local brute force (fraction) |
+| `6_Math/DeterminantAnyMod.cpp` | `linear_algebra/matrix_det_arbitrary_mod` **AC** 20 筆 · 0.165s/5s (3%)<br>`linear_algebra/matrix_det` **AC** 25 筆 · 0.165s/5s (3%) | — | ✅ | 2026-11-17 收進書（原 `Determinant.cpp` 改寫：回傳行列式而非交換次數，m 任意） |
+| `6_Math/CharPoly.cpp` | `linear_algebra/characteristic_polynomial` **AC** 28 筆 · 0.265s/10s (3%) | — | ✅ | 2026-11-17 加入（Hessenberg，O(n³)） |
+| `6_Math/XorBasis.cpp` | — 無對應題 | 3 000 組、55 093 個區間查詢 vs 枚舉子集：每個前綴一份 basis 的區間最大 xor（含起始值 x）、整個 span 的第 k 小 | ✅ | 2026-11-17 加入（插入時間戳記版） |
 | `6_Math/Pollard_Rho.cpp` | `number_theory/factorize` **AC** 31 筆 · 0.069s/10s (1%)（2026-11-17 改 kactl 式批次 gcd，原本 1.167s） | 24 萬組：n ≤ 2·10⁵ 窮舉 vs 試除法、2ᵏ·p、隨機至 10¹⁸、兩個約 10⁹ 質數之積、質數平方與立方、Carmichael 數、連續呼叫累加 | 需要外部 `prime` | test by Lib-Checker Factorize |
 | `6_Math/Simplex_Algorithm.cpp` | — 無對應題 | 11 889 組 vs 頂點枚舉（最佳/無界/不可行）+ 274 組對偶 | ✅ | — |
 | `6_Math/chineseRemainder.cpp` | — 無對應題 | 424 575 組含非互質、無解、lcm≈1e18（**修溢位**） | 需要外部 `exgcd` | — |
@@ -249,3 +252,4 @@
 - **Link cut tree**：改陣列版（0.56s → 0.33s），順便修了 `cut` 的 bug（見表）。
 - **新增程式**：Manhattan MST、Bipolar Orientation、Static Top Tree、SIMD、Nim Product（都有 LC 或本地對拍）。
 - **新增理論**：Game Theory 小節（Misère Nim 從 Theorem 移過來；每條都用 Python 暴力驗過小範圍）。
+- **新增理論**：Linear Algebra 小節（行列式、Cayley–Hamilton、有限體計數、隨機檢查）；計數公式與 Sherman–Morrison、Schur 用 Python 驗過。新增程式 DeterminantAnyMod、CharPoly、XorBasis。

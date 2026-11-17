@@ -53,7 +53,7 @@
 | `3_Data_Structure/Centroid_Decomposition.cpp` | `tree/frequency_table_of_tree_distance` 無法驅動 | 3 000 棵樹重用同一物件，28 萬次操作（**修 bug**：多測資沒清） | 需要外部 `N` | test by TIOJ 1171 |
 | `3_Data_Structure/Treap.cpp` | `data_structure/ordered_set#treap` **AC** 37 筆 · 0.817s/10s (8%) | — | ✅ | test by Lib-Checker Ordered Set |
 | `3_Data_Structure/LiChaoST.cpp`（不在書中） | `data_structure/line_add_get_min#lichao` 無法驅動 | 3 000 組共 976 772 次查詢 vs 窮舉 | 需要外部 `INF` | test by Library Checker Line Add Get Min |
-| `3_Data_Structure/link_cut_tree.cpp` | `tree/dynamic_tree_vertex_add_path_sum` **AC** 15 筆 · 0.515s/5s (10%) | — | ✅ | test by luogu P3690, Lib-Checker Dynamic Tree Vertex Add Path Sum |
+| `3_Data_Structure/link_cut_tree.cpp` | `tree/dynamic_tree_vertex_add_path_sum` **AC** 15 筆 · 0.33s/5s (7%)（指標版 0.56s） | 3 000 個森林 n ≤ 40、88 萬次操作 vs 暴力：link / cut（含 10 萬次切非邊，須為 no-op）/ change / query / conn，chroot 後的 lca 與 get_root（**修 bug**：舊版 `cut` 判斷 `size != 5`，幾乎不切；切相連但不相鄰的點會切錯邊；切完沒 `pull`） | 需要外部 `N` | 2026-11-17 改成陣列版 `struct LCT`（1-base，0 是 nil） |
 
 ## Flow/Matching
 

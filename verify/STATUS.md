@@ -39,6 +39,7 @@
 | `2_Graph/MinimumSteinerTree.cpp` | `graph/minimum_steiner_tree` **AC** 24 筆 · 0.114s/5s (2%) | 16 000 組多重圖 n ≤ 8、T ≤ 5 vs 枚舉點集 + Prim（8 047 組有 `vcst`、5 411 組 W=1e9、3 486 組不連通），並驗 `ans` 是連通所有 terminal 的樹 | 需要外部 `N`、`T`、`INF` | test by luogu P6192, Lib-Checker Minimum Steiner Tree, local brute force |
 | `2_Graph/Dominator_Tree.cpp` | `graph/dominatortree` **AC** 13 筆 · 0.115s/5s (2%) | — | 需要外部 `N` | test by CF 100513 L, Lib-Checker Dominator Tree |
 | `2_Graph/Minimum_Arborescence_fast.cpp` | `graph/directedmst` **AC** 12 筆 · 0.122s/5s (2%) | — | 需要外部 `min_heap` | test by luogu P4716, Lib-Checker Directed MST |
+| `2_Graph/ManhattanMST.cpp` | `geo/manhattanmst` **AC** 16 筆 · 0.314s/5s (6%) | 20 000 組 n ≤ 200（座標到 ±1e9、大量重點）+ Kruskal vs O(n²) Prim；每條邊權正確、至多 4n 條 | ✅ | 2026-11-17 加入（kactl 演算法；取代 `9_Else` 裡沒收錄、不能編譯的舊版） |
 | `2_Graph/Vizing.cpp` | — 無對應題 | 4 000 組 n≤104，合法著色且 ≤Δ+1 色 | ✅ | test by CF 101933 G |
 | `2_Graph/Minimum_Clique_Cover.cpp` | — 無對應題 | 3 000 組 n≤14 vs 子集 DP（**修 UB**：改 `unsigned`） | 需要外部 `N` | test by TIOJ 1472 |
 | `2_Graph/NumberofMaximalClique.cpp` | — 無對應題 | 4 000 組 n≤15 精確 + Moon–Moser n≤120（上限 1001） | 需要外部 `N` | test by POJ 2989 |

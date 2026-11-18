@@ -2,11 +2,8 @@ struct Q {
   ll p, q;
   Q go(Q b, ll k) { return {p + b.p * k, q + b.q * k}; }
 };
-// pred: 0..0 1..1, pred(1/0) = 1. e.g. p/q >= x/y:
-// bool pred(Q a) { return a.p * y >= x * a.q; }
-bool pred(Q);
-// smallest p/q with pred(p/q), 0 <= p, q <= N
-Q frac_bs(ll N) {
+bool pred(Q); // 0..0 1..1, e.g. a.p * y >= x * a.q
+Q frac_bs(ll N) { // min p/q with pred, p, q <= N
   Q lo{0, 1}, hi{1, 0}; // pred(lo) = 0, pred(hi) = 1
   if (pred(lo)) return lo;
   for (int r = 0; ; r++) { // move hi, lo, hi, ...

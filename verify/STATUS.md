@@ -73,7 +73,7 @@
 | `4_Flow_Matching/Maximum_Simple_Graph_Matching.cpp` | `graph/general_matching` **AC** 12 筆 · 0.008s/5s (0%) | — | ✅ | test by Library Checker Matching on General Graph |
 | `4_Flow_Matching/Maximum_Weight_Matching.cpp` | `graph/general_weighted_matching` **AC** 24 筆 · 0.336s/5s (7%) | — | 需要外部 `INF` | test by Library Checker General Weighted Matching |
 | `4_Flow_Matching/SW-mincut.cpp` | — 無對應題 | 30 000 組 n≤11 vs 2^n 枚舉 | ✅ | — |
-| `4_Flow_Matching/BoundedFlow.cpp` | — 無對應題 | 30 000 組 vs 枚舉整數流（可行/最大/最小，流量可為負）（`init` 補清匯點只是清理，不影響答案） | 需要外部 `N`、`INF` | Maximum boundedflow test by LOJ 116; Minimum boundedflow test by LOJ 117; Dinic test by NTUJ 184 |
+| `4_Flow_Matching/BoundedFlow.cpp` | — 無對應題 | 30 000 組 vs 枚舉整數流（可行/最大/最小，流量可為負）（`init` 補清匯點只是清理，不影響答案） | 需要外部 `N`、`INF` | Maximum boundedflow test by LOJ 116; Minimum boundedflow test by LOJ 117; Dinic test by NTUJ 184; local brute force (flows of either sign) |
 | `4_Flow_Matching/Gomory_Hu_tree.cpp` | — 無對應題 | 6 000 組 n≤8，全點對 min cut（**修越界**） | 需要外部 `MaxFlow` | test by LOJ 2042 |
 | `4_Flow_Matching/MinCostCirculation.cpp` | `graph/min_cost_b_flow` 無法驅動 | 23 000 組（含負環）vs 枚舉 / cycle-cancelling | 需要外部 `N` | test by uoj 487 |
 
@@ -115,7 +115,7 @@
 | `6_Math/Simplex_Algorithm.cpp` | — 無對應題 | 12 000 組 vs 頂點枚舉（最佳/無界/不可行）+ 275 組對偶 | 需要外部 `MAXN`、`MAXM`、`INF` | 2026-11-18 改寫（見最後一節） |
 | `6_Math/chineseRemainder.cpp` | — 無對應題 | 424 575 組含非互質、無解、lcm≈1e18（**修溢位**） | 需要外部 `exgcd` | — |
 | `6_Math/fac_no_p.cpp` | `enumerative_combinatorics/binomial_coefficient` 無法驅動 | 44 960 組 vs 直接計算 | 需要外部 `MAXP` | test by luogu P4720 |
-| `6_Math/QuadraticResidue.cpp` | `number_theory/sqrt_mod` **AC** 13 筆 · 0.064s/10s (1%) | 289 050 組（p < 2000 每個 a 窮舉 + 大質數植入解） | ✅ | test by Lib-Checker Sqrt Mod |
+| `6_Math/QuadraticResidue.cpp` | `number_theory/sqrt_mod` **AC** 13 筆 · 0.064s/10s (1%) | 289 050 組（p < 2000 每個 a 窮舉 + 大質數植入解） | ✅ | test by Lib-Checker Sqrt Mod, local brute force |
 | `6_Math/PiCount.cpp` | `number_theory/counting_primes` **AC** 31 筆 · 0.033s/5s (1%) | — | ✅ | test by luogu P7884, Lib-Checker Counting Primes |
 | `6_Math/DiscreteLog.cpp` | `number_theory/discrete_logarithm_mod` **AC** 20 筆 · 0.264s/10s (3%) | 585 220 組（m ≤ 120 窮舉 + 植入解到 1e9；443 296 組無解） | ✅ | test by Lib-Checker Discrete Logarithm |
 | `6_Math/Berlekamp-Massey.cpp` | `other/find_linear_recurrence` **AC** 18 筆 · 0.164s/5s (3%) | 經 FastLinearRecursion 的對拍（BM 的結果要能重播整段數列） | ✅ | test by Lib-Checker Find Linear Recurrence |
@@ -192,7 +192,7 @@
 | `9_Else/AdaptiveSimpson.cpp` | — 無對應題 | 40 000 個積分 | ✅ | test by CF 101193J, 100553D |
 | `9_Else/simulated_annealing.cpp` | — 無對應題 | — | 片段，非獨立編譯單元 | — |
 | `9_Else/tree_hash.cpp` | `tree/rooted_tree_isomorphism_classification` **AC** 17 筆 · 0.166s/5s (3%) | — | 需要外部 `G`、`N` | test by CSES Tree Isomorphism I, Lib-Checker Rooted Tree Isomorphism Classification |
-| `9_Else/BinarySearchOnFraction.cpp` | `number_theory/rational_approximation` **AC** 28 筆 · 0.123s/5s (2%) | 4 680 組 N ≤ 30 窮舉 + 10 萬組 N ≤ 1e18（Farey 相鄰檢查） | ✅ | test by ABC 333 G after adjusted to int128, Lib-Checker Rational Approximation |
+| `9_Else/BinarySearchOnFraction.cpp` | `number_theory/rational_approximation` **AC** 28 筆 · 0.123s/5s (2%) | 4 680 組 N ≤ 30 窮舉 + 10 萬組 N ≤ 1e18（Farey 相鄰檢查） | ✅ | test by ABC 333 G after adjusted to int128, Lib-Checker Rational Approximation, local brute force |
 | `9_Else/1d1d.cpp` | — 無對應題 | 區段 deque 版：convex、concave 各 20 000 組 vs O(n²)，n ≤ 400、大量平手 | 需要外部 `N`、`w` | — |
 | `9_Else/smawk.cpp` | `convolution/min_plus_convolution_convex_arbitrary#smawk` **AC** 41 筆 | 30 000 組完全單調矩陣求每列最小值 vs 暴力（Monge 型 + min-plus 斜帶） | ✅ | test by Lib-Checker Min Plus Convolution (Convex and Arbitrary) |
 | `9_Else/min_plus_convolution.cpp` | `convolution/min_plus_convolution_convex_arbitrary` **AC** 41 筆 · 0.119s/5s (2%) | 15 000 組 vs 暴力與 SMAWK 交叉比對（在 SMAWK 的對拍裡） | 需要外部 `INF` | test by Library Checker Min Plus Convolution (Convex and Arbitrary) |

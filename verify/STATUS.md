@@ -112,7 +112,7 @@
 | `6_Math/CharPoly.cpp` | `linear_algebra/characteristic_polynomial` **AC** 28 筆 · 0.265s/10s (3%) | — | ✅ | 2026-11-17 加入（Hessenberg，O(n³)） |
 | `6_Math/XorBasis.cpp` | — 無對應題 | 3 000 組、55 093 個區間查詢 vs 枚舉子集：每個前綴一份 basis 的區間最大 xor（含起始值 x）、整個 span 的第 k 小 | ✅ | 2026-11-17 加入（插入時間戳記版） |
 | `6_Math/Pollard_Rho.cpp` | `number_theory/factorize` **AC** 31 筆 · 0.069s/10s (1%)（2026-11-17 改 kactl 式批次 gcd，原本 1.167s） | 24 萬組：n ≤ 2·10⁵ 窮舉 vs 試除法、2ᵏ·p、隨機至 10¹⁸、兩個約 10⁹ 質數之積、質數平方與立方、Carmichael 數、連續呼叫累加 | 需要外部 `prime` | test by Lib-Checker Factorize |
-| `6_Math/Simplex_Algorithm.cpp` | — 無對應題 | 11 889 組 vs 頂點枚舉（最佳/無界/不可行）+ 274 組對偶 | ✅ | — |
+| `6_Math/Simplex_Algorithm.cpp` | — 無對應題 | 12 000 組 vs 頂點枚舉（最佳/無界/不可行）+ 275 組對偶 | 需要外部 `MAXN`、`MAXM` | 2026-11-18 改寫（見下） |
 | `6_Math/chineseRemainder.cpp` | — 無對應題 | 424 575 組含非互質、無解、lcm≈1e18（**修溢位**） | 需要外部 `exgcd` | — |
 | `6_Math/fac_no_p.cpp` | `enumerative_combinatorics/binomial_coefficient` 無法驅動 | 44 960 組 vs 直接計算 | 需要外部 `MAXP` | test by luogu P4720 |
 | `6_Math/QuadraticResidue.cpp` | `number_theory/sqrt_mod` **AC** 13 筆 · 0.064s/10s (1%) | 289 050 組（p < 2000 每個 a 窮舉 + 大質數植入解） | ✅ | test by Lib-Checker Sqrt Mod |
@@ -260,6 +260,7 @@
 - **Pollard rho**：kactl 式批次 gcd，Factorize 1.167s → 0.069s。
 - **QuadraticResidue**：Cipolla 重寫，拿掉 Jacobi（Euler 判別法），37 → 19 行。
 - **DiscreteLog**：BSGS 重寫成一個函式，用 gcd 判斷 y 在不在循環上，不再需要外部 `fpow`。
+- **Simplex**：改成跟 System of Linear Equations 一樣的 struct；無解回傳 `-INFINITY`、無界回傳 `INFINITY`（原本都回 -1，跟最佳值 -1 撞），2000×200 隨機 LP 9.4s → 0.17s。
 - **Link cut tree**：改陣列版（0.56s → 0.33s），順便修了 `cut` 的 bug（見表）。
 - **新增程式**：Manhattan MST、Bipolar Orientation、Static Top Tree、SIMD、Nim Product、Determinant Any Mod、Characteristic Polynomial、Xor Basis（都有 LC 或本地對拍）。
 - **對照 ckiseki 補的缺口**：Point In Polygon、Josephus（另寫了 Euler Trail、Rolling Hash、Farthest Pair，太基本，只留檔案；Xor Basis 同）。

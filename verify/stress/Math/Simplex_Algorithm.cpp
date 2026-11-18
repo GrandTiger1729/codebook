@@ -1,6 +1,8 @@
 #include "prelude.h"
 #include "stress.h"
+const int MAXN = 30, MAXM = 30; // the template needs external MAXN, MAXM
 #include "6_Math/Simplex_Algorithm.cpp"
+simplex lp;
 
 // Brute force: vertices of {Ax<=b, x>=0} (m vars, n rows) by choosing m tight
 // constraints out of the n+m, solving, and keeping the feasible points.
@@ -69,10 +71,11 @@ int main() {
       auto [f2, b2] = vertexMax(A2, B2, C);
       expect = b2 > 1e-7 ? 1 : 2;
     }
-    if (expect == 2 && fabs(best + 1) < 1e-6) continue; // -1 collides with the error code
-    FOR (i, 0, n - 1) { FOR (j, 0, m - 1) a[i][j] = A[i][j]; b[i] = B[i]; }
-    FOR (j, 0, m - 1) c[j] = C[j];
-    double got = simplex(n, m);
+    lp.n = n, lp.m = m;
+    FOR (i, 0, n - 1) { FOR (j, 0, m - 1) lp.A[i][j] = A[i][j]; lp.b[i] = B[i]; }
+    FOR (j, 0, m - 1) lp.c[j] = C[j];
+    double got = lp.solve();
+    double *x = lp.x;
     if (expect == 2) {
       assert(fabs(got - best) < 1e-6);
       // x[] must be a feasible optimal point
@@ -86,7 +89,7 @@ int main() {
       assert(fabs(v - best) < 1e-6);
       cntOpt++;
     } else {
-      assert(got == -1);
+      assert(got == (expect ? INFINITY : -INFINITY));
       (expect ? cntUnb : cntInf)++;
     }
     cases++;
@@ -99,14 +102,16 @@ int main() {
     vector<vd> A(n, vd(m)); vd B(n), C(m);
     FOR (i, 0, n - 1) { FOR (j, 0, m - 1) A[i][j] = rnd(-3, 9); B[i] = rnd(0, 50); }
     FOR (j, 0, m - 1) C[j] = rnd(-5, 10);
-    FOR (i, 0, n - 1) { FOR (j, 0, m - 1) a[i][j] = A[i][j]; b[i] = B[i]; }
-    FOR (j, 0, m - 1) c[j] = C[j];
-    double p = simplex(n, m);
-    FOR (j, 0, m - 1) { FOR (i, 0, n - 1) a[j][i] = -A[i][j]; b[j] = -C[j]; }
-    FOR (i, 0, n - 1) c[i] = -B[i];
-    double d = simplex(m, n);
-    if (fabs(p - 1) < 1e-9) continue; // dual optimum -1 collides with the error code
-    if (p == -1 || d == -1) { assert(p == -1 && d == -1); continue; } // unbounded <-> dual infeasible
+    lp.n = n, lp.m = m;
+    FOR (i, 0, n - 1) { FOR (j, 0, m - 1) lp.A[i][j] = A[i][j]; lp.b[i] = B[i]; }
+    FOR (j, 0, m - 1) lp.c[j] = C[j];
+    double p = lp.solve();
+    assert(p > -INFINITY); // b >= 0: x = 0 is feasible
+    lp.n = m, lp.m = n;
+    FOR (j, 0, m - 1) { FOR (i, 0, n - 1) lp.A[j][i] = -A[i][j]; lp.b[j] = -C[j]; }
+    FOR (i, 0, n - 1) lp.c[i] = -B[i];
+    double d = lp.solve();
+    if (p == INFINITY) { assert(d == -INFINITY); continue; } // unbounded <-> dual infeasible
     assert(fabs(p + d) < 1e-6 * max(1.0, fabs(p))), dual++;
   }
   printf("Simplex: %d cases OK (%d optimal, %d unbounded, %d infeasible; %d duality)\n", cases, cntOpt, cntUnb, cntInf, dual);

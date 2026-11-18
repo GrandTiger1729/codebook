@@ -1,6 +1,8 @@
-// g[v]: children, root 0. Define Path, Point, vertex(v),
-// add_vertex(Point, v), add_edge(Path), rake(Point,
-// Point), compress(top, bottom); update(v); path[root]
+// g[v]: children of v, rooted at 0. Define first:
+//   Path vertex(int v); Path add_vertex(Point, int v);
+//   Path compress(Path top, Path bottom);
+//   Point add_edge(Path); Point rake(Point, Point);
+// After v's data changes: update(v). Answer: path[root]
 struct StaticTopTree {
   using pii = pair<int, int>; // (node, size)
   enum Type

@@ -1,5 +1,4 @@
-// simple polygon P in any orientation: 1 if p is inside,
-// 0 outside, -1 on the boundary; O(n)
+// simple polygon: 1 inside, 0 outside, -1 on boundary
 int PointInPolygon(const vector<pll> &P, pll p) {
   int n = SZ(P), in = 0;
   FOR (i, 0, n - 1) {

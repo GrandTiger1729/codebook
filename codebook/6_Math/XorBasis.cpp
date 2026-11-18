@@ -1,7 +1,5 @@
-// xor basis of values in [0, 2^63). With insertion
-// times, keeps the latest vector per bit, so the max
-// xor of a subset of the values inserted at time >= l
-// is max_xor(l); keep a copy per prefix r for a[l..r]
+// max_xor(l): only values inserted at time >= l
+// (copy per prefix r for range a[l..r])
 struct XorBasis {
   ll b[63] = {};
   int t[63] = {};

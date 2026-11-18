@@ -1,7 +1,5 @@
-// g[u] = {(v, edge id)}, ids in [0, m); directed: only
-// in g[u], undirected: in both. Walk from s using every
-// edge once: (vertices, edge ids), or {} if impossible
-// from s. Check degrees first (Theorem: Euler)
+// g[u]: (v, edge id), undirected: both ways. Trail from
+// s using all m edges, {} if none; check degrees first
 pair<vector<int>, vector<int>> euler_trail(int s,
   const vector<vector<pair<int, int>>> &g, int m) {
   vector<int> it(g.size()), used(m), vs, es;

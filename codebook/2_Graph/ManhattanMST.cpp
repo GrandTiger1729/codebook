@@ -1,5 +1,4 @@
-// returns O(n) edges {w, i, j} containing a Manhattan
-// MST of the points; run Kruskal on them
+// O(n) edges {w, i, j} containing an MST; then Kruskal
 vector<array<ll, 3>> manhattan_mst(
   vector<pair<ll, ll>> p) {
   vector<int> id(p.size());

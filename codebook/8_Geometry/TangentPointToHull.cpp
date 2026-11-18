@@ -1,8 +1,5 @@
-/* C: hull() output; p is outside of or on the hull
-  return (a, b): ori(p, C[x], C[a]) <= 0 and
-  ori(p, C[x], C[b]) >= 0 for every x; collinear ties
-  are broken as if p moved slightly out of the hull, so
-  p on the hull gives the ends of its edge (or p) */
+// C: hull(), p outside or on it; ori(p, C[x], C[a]) <= 0
+// <= ori(p, C[x], C[b]) for all x. p on an edge: its ends
 pii get_tangent(vector<pll> &C, pll p) {
   int n = SZ(C);
   pll d = p * 3 - C[0] - C[1 % n] - C[2 % n];

@@ -1,5 +1,4 @@
-// sa: suffix array of s (no padding; for sais(),
-// drop sa[0]); lcp[i] = LCP of suffixes sa[i], sa[i+1]
+// sa without padding; lcp[i] = lcp(sa[i], sa[i + 1])
 vector<int> lcp_array(const auto &s, const auto &sa) {
   int n = s.size(), len = 0;
   vector<int> rnk(n), lcp(max(n - 1, 0));

@@ -1,8 +1,6 @@
-// 0-base, rooted at 0, g[v] = children of v. Define Path,
-// Point, vertex(v), add_vertex(Point, v), add_edge(Path),
-// rake(Point, Point), compress(Path top, Path bottom)
-// first. After changing v's data call update(v); the
-// answer is path[root]. Height O(log n)
+// g[v]: children, root 0. Define Path, Point, vertex(v),
+// add_vertex(Point, v), add_edge(Path), rake(Point,
+// Point), compress(top, bottom); update(v); path[root]
 struct StaticTopTree {
   using pii = pair<int, int>; // (node, size)
   enum Type

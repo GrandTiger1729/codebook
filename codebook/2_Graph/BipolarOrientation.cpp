@@ -1,7 +1,5 @@
-// st-numbering, 0-base: s first, t last, every other
-// vertex has neighbours both before and after it; orient
-// edges by it for a bipolar orientation (only source s,
-// only sink t). Exists iff G + (s, t) is biconnected.
+// vertex order: s first, t last, others have neighbours
+// on both sides; exists iff G + (s, t) is biconnected
 vector<int> st_numbering(vector<vector<int>> g,
   int s, int t) {
   int n = g.size(), tk = 0;

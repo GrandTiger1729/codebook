@@ -1,6 +1,4 @@
-// nim product: {[0, 2^64), xor, nim_mul} is a field.
-// Tartan: a product of two coin-turning games has
-// SG(x, y) = SG(x) * SG(y). Call nim_init() first
+// call nim_init() first
 typedef unsigned long long ull;
 ull nim8[256][256];
 bool nim_ready;

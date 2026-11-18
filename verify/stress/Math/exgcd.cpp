@@ -12,10 +12,10 @@ int main() {
     else if (k == 1) a = rnd(0, 1e9), b = rnd(0, 1e9);
     else if (k == 2) { ll g = rnd(1, 1e6); a = g * rnd(0, 1e12), b = g * rnd(0, 1e12); }
     else a = rnd(-(ll)1e18, (ll)1e18), b = rnd(-(ll)1e18, (ll)1e18);
-    auto [x, y] = exgcd(a, b);
+    ll x, y, r = exgcd(a, b, x, y);
     ll g = gcd(a, b);
-    L s = (L)a * x + (L)b * y;
-    assert(s == g || s == -g);
+    assert(r == g || r == -g);
+    assert((L)a * x + (L)b * y == r);
     // bounded coefficients (so a*x never overflows in normal use)
     if (g) assert(abs(x) <= max<ll>(1, abs(b) / g) && abs(y) <= max<ll>(1, abs(a) / g));
     cases++;
@@ -23,8 +23,8 @@ int main() {
   }
   // for a,b >= 0 the returned sign is always +g
   FOR (a, 0, 200) FOR (b, 0, 200) {
-    auto [x, y] = exgcd(a, b);
-    assert(a * x + b * y == gcd(a, b)), cases++;
+    ll x, y, r = exgcd(a, b, x, y);
+    assert(r == gcd(a, b) && a * x + b * y == r), cases++;
   }
   printf("exgcd: %d cases OK\n", cases);
 }

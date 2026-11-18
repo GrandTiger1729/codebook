@@ -1,10 +1,8 @@
 ll solve(ll x1, ll m1, ll x2, ll m2) { // lcm < 4e18
-  ll g = gcd(m1, m2);
+  ll p, q, g = exgcd(m1, m2, p, q);
   if ((x2 - x1) % g) return -1; // no sol
-  m1 /= g; m2 /= g;
-  pair<ll, ll> p = exgcd(m1, m2);
-  ll lcm = m1 * m2 * g;
-  ll k = (__int128)p.F * ((x2 - x1) / g) % m2;
-  ll res = k * m1 * g + x1;
+  m2 /= g;
+  ll k = (__int128)p * ((x2 - x1) / g) % m2;
+  ll lcm = m1 * m2, res = k * m1 + x1;
   return (res % lcm + lcm) % lcm;
 }

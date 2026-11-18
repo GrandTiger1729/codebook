@@ -29,7 +29,7 @@ struct simplex { // max cx s.t. Ax <= b, x >= 0
       pivot(r, s);
     }
   }
-  double solve() { // -INFINITY: infeasible
+  double solve() { // -INF: infeasible
     fill_n(A[n], m + 2, 0), fill_n(A[n + 1], m + 2, 0);
     FOR (i, 0, n - 1)
       B[i] = m + i, A[i][m] = -1, A[i][m + 1] = b[i];
@@ -40,7 +40,7 @@ struct simplex { // max cx s.t. Ax <= b, x >= 0
     if (A[r][m + 1] < -1e-9) {
       pivot(r, m);
       if (!run(2) || A[n + 1][m + 1] < -1e-9)
-        return -INFINITY;
+        return -INF;
       FOR (i, 0, n - 1) if (B[i] == -1) {
         int s = 0;
         FOR (j, 1, m) if (lt(A[i], j, s)) s = j;
@@ -50,6 +50,6 @@ struct simplex { // max cx s.t. Ax <= b, x >= 0
     bool ok = run(1);
     fill_n(x, m, 0);
     FOR (i, 0, n - 1) if (B[i] < m) x[B[i]] = A[i][m + 1];
-    return ok ? A[n][m + 1] : INFINITY;
+    return ok ? A[n][m + 1] : INF;
   }
 };

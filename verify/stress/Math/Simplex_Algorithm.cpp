@@ -1,6 +1,7 @@
 #include "prelude.h"
 #include "stress.h"
-const int MAXN = 30, MAXM = 30; // the template needs external MAXN, MAXM
+const int MAXN = 30, MAXM = 30; // the template needs external MAXN, MAXM, INF
+const ll INF = 1e18;
 #include "6_Math/Simplex_Algorithm.cpp"
 simplex lp;
 
@@ -89,7 +90,7 @@ int main() {
       assert(fabs(v - best) < 1e-6);
       cntOpt++;
     } else {
-      assert(got == (expect ? INFINITY : -INFINITY));
+      assert(got == (expect ? INF : -INF));
       (expect ? cntUnb : cntInf)++;
     }
     cases++;
@@ -106,12 +107,12 @@ int main() {
     FOR (i, 0, n - 1) { FOR (j, 0, m - 1) lp.A[i][j] = A[i][j]; lp.b[i] = B[i]; }
     FOR (j, 0, m - 1) lp.c[j] = C[j];
     double p = lp.solve();
-    assert(p > -INFINITY); // b >= 0: x = 0 is feasible
+    assert(p > -INF); // b >= 0: x = 0 is feasible
     lp.n = m, lp.m = n;
     FOR (j, 0, m - 1) { FOR (i, 0, n - 1) lp.A[j][i] = -A[i][j]; lp.b[j] = -C[j]; }
     FOR (i, 0, n - 1) lp.c[i] = -B[i];
     double d = lp.solve();
-    if (p == INFINITY) { assert(d == -INFINITY); continue; } // unbounded <-> dual infeasible
+    if (p == INF) { assert(d == -INF); continue; } // unbounded <-> dual infeasible
     assert(fabs(p + d) < 1e-6 * max(1.0, fabs(p))), dual++;
   }
   printf("Simplex: %d cases OK (%d optimal, %d unbounded, %d infeasible; %d duality)\n", cases, cntOpt, cntUnb, cntInf, dual);

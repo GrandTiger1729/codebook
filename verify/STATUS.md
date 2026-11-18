@@ -53,11 +53,14 @@
 | 模版 | Library Checker | 本地對拍 | 單檔編譯 | 書上標註 |
 |---|---|---|---|---|
 | `3_Data_Structure/min_heap.cpp` | `graph/directedmst` **AC** 12 筆 · 0.122s/5s (2%) | leftist tree：3 000 組共 42.7 萬次 push/pop/join/add_lazy vs `multiset`，並檢查左偏性質 | ✅ | test by Lib-Checker Directed MST (through Minimum Arborescence) |
+| `3_Data_Structure/BIT_kth.cpp` | `data_structure/ordered_set` **AC** 37 筆 · 0.268s/10s (3%) | — | 需要外部 `N` | test by CSES 1076, Lib-Checker Ordered Set |
 | `3_Data_Structure/IntervalContainer.cpp`（不在書中） | — 無對應題 | — | ✅ | test by kactl stress test |
+| `3_Data_Structure/Heavy_light_Decomposition.cpp`（不在書中） | `tree/vertex_add_path_sum` **AC** 19 筆 · 0.468s/5s (9%) | — | 需要外部 `N` | test by CSES Path Queries II, Lib-Checker Vertex Add Path Sum |
 | `3_Data_Structure/Centroid_Decomposition.cpp` | `tree/frequency_table_of_tree_distance` 無法驅動 | 3 000 棵樹重用同一物件，28 萬次操作（**修 bug**：多測資沒清） | 需要外部 `N` | test by TIOJ 1171 |
 | `3_Data_Structure/Treap.cpp` | `data_structure/ordered_set#treap` **AC** 37 筆 · 0.817s/10s (8%) | — | ✅ | test by Lib-Checker Ordered Set |
 | `3_Data_Structure/LiChaoST.cpp`（不在書中） | `data_structure/line_add_get_min#lichao` 無法驅動 | 3 000 組共 976 772 次查詢 vs 窮舉 | 需要外部 `INF` | test by Library Checker Line Add Get Min |
 | `3_Data_Structure/link_cut_tree.cpp` | `tree/dynamic_tree_vertex_add_path_sum` **AC** 15 筆 · 0.33s/5s (7%)（指標版 0.56s） | 3 000 個森林 n ≤ 40、88 萬次操作 vs 暴力：link / cut（含 10 萬次切非邊，須為 no-op）/ change / query / conn，chroot 後的 lca 與 get_root（**修 bug**：舊版 `cut` 判斷 `size != 5`，幾乎不切；切相連但不相鄰的點會切錯邊；切完沒 `pull`） | 需要外部 `N` | 2026-11-17 改成陣列版 `struct LCT`（1-base，0 是 nil） |
+| `3_Data_Structure/KDTree.cpp` | — 無對應題 | 3 000 組 n≤2000，座標 ±1e9（**修 bug**：初值 `LLONG_MAX`） | 需要外部 `maxn` | — |
 | `3_Data_Structure/StaticTopTree.cpp` | `tree/point_set_tree_path_composite_sum_fixed_root` **AC** 26 筆 · 0.465s/10s (5%) | 3 000 棵樹 n ≤ 5000（隨機、路徑、星、毛毛蟲）、55 萬次單點更新後 vs 暴力重算；高度 ≤ 6 log n + 6（實測最大 34） | 需要外部 `Path`、`Point` 與五個 DP 函式 | 2026-11-17 加入（ABC351G 解說的建法） |
 
 ## Flow/Matching
@@ -80,7 +83,9 @@
 |---|---|---|---|---|
 | `5_String/KMP.cpp` | — 無對應題 | 200 000 組 σ≤3（空 pattern 不可） | 需要外部 `MAXN` | — |
 | `5_String/Z-value.cpp` | `string/zalgorithm` **AC** 29 筆 · 0.040s/5s (1%) | — | 需要外部 `SIZE` | test by Lib-Checker Z Algorithm |
+| `5_String/RollingHash.cpp` | — 無對應題 | 400 個字串（σ ≤ 3）的所有等長子字串對（220 萬對）：雜湊相等 ⇔ 子字串相等；`string` 與 `vector<int>` 一致 | ✅ | 2026-11-17 加入（mod 2^61−1、隨機底數） |
 | `5_String/Manacher.cpp` | `string/enumerate_palindromes` **AC** 24 筆 · 0.068s/5s (1%) | — | 需要外部 `SIZE` | test by Lib-Checker Enumerate Palindromes |
+| `5_String/SA_LCP_becaido.cpp` | `string/suffixarray#becaido` **AC** 50 筆 · 0.167s/5s (3%) | — | ✅ | test by caido, Lib-Checker Suffix Array |
 | `5_String/SAIS-C++20.cpp` | `string/suffixarray` **AC** 50 筆 · 0.181s/5s (4%) | σ≤3 窮舉 + 隨機 n≤3000，共 30 252 組 | ✅ | test by Lib-Checker Suffix Array |
 | `5_String/LCP_Array.cpp` | `string/number_of_substrings#lcp` **AC** 24 筆 · 0.065s/5s (1%) | 30 000 組 n≤2000（含週期串）vs 直接比相鄰後綴 | ✅ | SA 由 SAIS 產生；2026-11-17 從 SA_LCP_becaido 拆出（倍增 SA 刪掉） |
 | `5_String/Aho-Corasick_Automaton.cpp` | `string/aho_corasick` **AC** 72 筆 · 0.369s/5s (7%) | `fail[]` vs 最長後綴節點、沿 `to[]` 累加 `cnt[]` vs 樸素出現次數、`count()` vs 每個節點字串的樸素出現次數，100 000 組（含 `reset()` 重用） | 需要外部 `N`、`C`；字元以 `'a'` 為基底；根是 0 | std_abs 原檔 + macro 契約（2026-09-30 取代舊版，檔名改正為 Automaton）；`cnt[]` 在 `build_fail()` 後是「以該節點結尾的 pattern 數」；另加 `count(s)` 回傳每個節點字串在 `s` 裡的出現次數（取代舊版的 `ord[]`/`solve()`） |
@@ -146,6 +151,7 @@
 | `8_Geometry/Heart.cpp` | `geo/minimum_enclosing_circle` **AC** 25 筆 · 0.033s/5s (1%) | 294 534 個三角形（外心/內心/重心/垂心性質） | ✅ | circenter test by Lib-Checker Minimum Enclosing Circle |
 | `8_Geometry/point_in_circle.cpp` | — 無對應題 | 383 207 組，exact `__int128` 參考（p 須 CCW） | ✅ | — |
 | `8_Geometry/Convex_hull.cpp` | `geo/static_convex_hull` **AC** 25 筆 · 0.168s/5s (3%) | — | ✅ | test by Zerojudge b398, Lib-Checker Static Convex Hull |
+| `8_Geometry/FarthestPair.cpp` | `geo/furthest_pair` **AC** 46 筆 · 0.366s/5s (7%) | 29 975 個凸包（座標到 1e9、含共線）vs O(n²) | 需要外部 `pll` primitives | 2026-11-17 加入（旋轉卡尺）；注意 `hull()` 對「全部同一點」會回傳重複點，driver 先去重 |
 | `8_Geometry/PointInConvex.cpp` | — 無對應題 | 400 萬筆查詢（不可有共線頂點） | ✅ | test by CF 104114 B, CF 101242 J (World Finals' problem) |
 | `8_Geometry/PointInPolygon.cpp` | — 無對應題 | 27 萬筆查詢，隨機星形簡單多邊形（兩種方向）vs 繞數（atan2）與邊上判斷 | 需要外部 `pll` primitives | 2026-11-17 加入（射線法，回傳 1 / 0 / −1） |
 | `8_Geometry/TangentPointToHull.cpp` | — 無對應題 | 537 397 筆查詢，座標到 ±1e9；其中 21.5 萬筆 p 在頂點、8.9 萬筆在邊上（2026-11-17 起可在凸包上） | 需要外部 `cyc_tsearch` | test by CF 104114 B, CF 101242 J (World Finals' problem) |
@@ -248,7 +254,7 @@
 
 ## 2026-11-17：待辦清單
 
-- **刪除**：`KDTree`（含 `KDTree_useful`）、`BIT_kth`、`Heavy_light_Decomposition`、倍增 SA（`SA_LCP_becaido`）；LCP 拆成 `5_String/LCP_Array.cpp`，SA 改由 SAIS 提供。
+- **移出 PDF（檔案保留，content.tex 註解掉）**：`KDTree`、`BIT_kth`、`Heavy_light_Decomposition`、倍增 SA（`SA_LCP_becaido`）、`RollingHash`、`FarthestPair`；LCP 拆成 `5_String/LCP_Array.cpp`，SA 改由 SAIS 提供。
 - **TangentPointToHull**：p 可以在凸包上（共線時當作 p 往凸包外移一點來決勝負）。
 - **MincostMaxflow**：Flow Models 加「有負環的最小費用流」（先把負邊流滿），本地窮舉驗證。
 - **Pollard rho**：kactl 式批次 gcd，Factorize 1.167s → 0.069s。
@@ -257,4 +263,4 @@
 - **新增理論**：Game Theory 小節（Misère Nim 從 Theorem 移過來；每條都用 Python 暴力驗過小範圍）。
 - **新增理論**：Linear Algebra 小節（行列式、Cayley–Hamilton、有限體計數、隨機檢查）；計數公式與 Sherman–Morrison、Schur 用 Python 驗過。新增程式 DeterminantAnyMod、CharPoly、XorBasis。
 - **新增理論**：Polynomial Facts（Newton 恆等式、Euler transform、Lagrange inversion 等）、Theorem 的圖論補充（König、Menger、平面圖、Turán、Ramsey、競賽圖、著色、弦圖、隨機漫步、穩定婚姻）、String and Automaton Facts（週期、runs、SAM、DFA 最小化等）。可驗的都用 Python 暴力驗過（腳本不進 repo）。
-- **對照 ckiseki 補的缺口**：Euler Trail、Point In Polygon、Josephus。
+- **對照 ckiseki 補的缺口**：Euler Trail、Point In Polygon、Josephus（另寫了 Rolling Hash、Farthest Pair，太基本，只留檔案）。

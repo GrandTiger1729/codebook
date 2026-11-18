@@ -6,7 +6,7 @@ vector<array<ll, 3>> manhattan_mst(
   vector<array<ll, 3>> edges;
   FOR (k, 0, 3) {
     sort(id.begin(), id.end(), [&](int i, int j) {
-      return p[i].F - p[j].F < p[j].S - p[i].S;
+      return p[i].F + p[i].S < p[j].F + p[j].S;
     });
     map<ll, int> sweep;
     for (int i : id) {

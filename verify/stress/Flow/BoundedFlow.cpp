@@ -3,10 +3,9 @@
 const int N = 105, INF = 1e9;
 #include "4_Flow_Matching/BoundedFlow.cpp"
 
-// LOJ 116/117 usage: x = solve(s,t) is some feasible s-t flow (-1 = none);
-// max = x + maxflow(s,t), min = x - maxflow(t,s).
-// Convention (from the INF t->s edge): "feasible" means a flow of value >= 0 exists;
-// the min flow is then the minimum over all feasible flows, which may be negative.
+// LOJ 116/117 usage: x = solve(s,t) is some feasible s-t flow (-INF = none);
+// max = x + maxflow(s,t), min = x - maxflow(t,s). Flow values may be negative
+// (s has in-edges / t has out-edges); INF edges t->s and s->t allow both signs.
 struct E { int u, v, l, r; };
 BoundedFlow bf; // one global object reused across cases with varying n (as in contest)
 
@@ -15,6 +14,16 @@ void build(int n, const vector<E> &es) {
   for (auto &e : es) bf.add_edge(e.u, e.v, e.l, e.r);
 }
 int main() {
+  { // the only feasible flow has value -1 (was reported as none)
+    build(2, {{1, 0, 1, 1}});
+    assert(bf.solve(0, 1) == -1);
+    build(2, {{0, 1, 1, 1}, {1, 0, 0, 5}}); // values -4..1
+    int x = bf.solve(0, 1);
+    assert(x + bf.maxflow(0, 1) == 1);
+    build(2, {{0, 1, 1, 1}, {1, 0, 0, 5}});
+    x = bf.solve(0, 1);
+    assert(x - bf.maxflow(1, 0) == -4);
+  }
   int cases = 0, feasCnt = 0;
   FOR (it, 1, 30000) {
     int n = rnd(2, 5), m = rnd(1, 6), s = rnd(0, n - 1), t = rnd(0, n - 2);
@@ -34,7 +43,7 @@ int main() {
       FOR (i, 0, m - 1) bal[es[i].u] -= f[i], bal[es[i].v] += f[i];
       bool ok = true;
       FOR (v, 0, n - 1) if (v != s && v != t && bal[v]) ok = false;
-      if (ok && -bal[s] >= 0) feas = true;
+      if (ok) feas = true;
       if (ok) mx = max(mx, -bal[s]), mn = min(mn, -bal[s]);
       if (ok && !bal[s] && !bal[t]) circ = true;
       int i = 0;
@@ -48,7 +57,7 @@ int main() {
     // max flow
     build(n, es);
     int x = bf.solve(s, t);
-    assert((x != -1) == feas);
+    assert((x != -INF) == feas);
     if (feas) {
       int got = x + bf.maxflow(s, t);
       assert(got == mx);

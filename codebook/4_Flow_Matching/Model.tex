@@ -36,6 +36,13 @@
         \item For each vertex $v$ with $d(v) < 0$, connect $v \rightarrow T$ with $(cost, cap) = (0, -d(v))$
         \item Flow from $S$ to $T$, the answer is the cost of the flow $C + K$
     \end{enumerate}
+    \item Minimum cost flow with negative cycles (\texttt{setpi} asserts)
+    \begin{enumerate}
+      \item For each edge $(u, v, cap, c)$ with $c < 0$: add $cap \cdot c$ to the answer, connect $v \to u$ with $(cap, -c)$ instead, $d(v) \mathrel{+}= cap$, $d(u) \mathrel{-}= cap$. A negative self-loop only adds $cap \cdot c$. Now every cost is $\ge 0$.
+      \item Connect $t \to s$ with $(\infty, 0)$, $S \to v$ with $(d(v), 0)$ if $d(v) > 0$, $v \to T$ with $(-d(v), 0)$ if $d(v) < 0$.
+      \item \texttt{maxflow}$(S, T)$ always saturates; add its cost. This is the minimum cost of an $s$--$t$ flow of any value (without $s, t$: of a circulation).
+      \item For the minimum cost \emph{maximum} flow, use $t \to s$ with $(U, -M)$ in step 2 instead ($U \ge$ max flow, $M > \sum |c|$), so step 1 saturates it as well. The flow is $U$ minus the flow on its reversed edge $s \to t$, and the cost is the answer $+ M \cdot \text{flow}$.
+    \end{enumerate}
     \item Maximum density induced subgraph
     %\vspace{-1em}
     \begin{enumerate}

@@ -1,18 +1,15 @@
-map<ll, int> cnt;
+map<ll, int> cnt; // needs prime(n)
 void PollardRho(ll n) {
   if (n == 1) return;
   if (prime(n)) return ++cnt[n], void();
-  if (n % 2 == 0) return ++cnt[2], PollardRho(n / 2);
-  ll x = 2, y = 2, d = 1, p = 1;
-  #define f(x, n, p) (((__int128)x * x + p) % n)
-  while (true) {
-    if (d != n && d != 1) {
-      PollardRho(n / d);
-      PollardRho(d);
-      return;
-    }
-    if (d == n) ++p;
-    x = f(x, n, p), y = f(f(y, n, p), n, p);
-    d = gcd(abs(x - y), n);
+  ll x = 0, y = 0, t = 30, prd = 2, c = 1, q;
+  auto f = [&](ll x)
+  { return ((__int128)x * x + c) % n; };
+  while (t++ % 40 || gcd(prd, n) == 1) {
+    if (x == y) x = ++c, y = f(x);
+    if ((q = (__int128)prd * abs(x - y) % n)) prd = q;
+    x = f(x), y = f(f(y));
   }
+  ll d = gcd(prd, n);
+  PollardRho(d), PollardRho(n / d);
 }

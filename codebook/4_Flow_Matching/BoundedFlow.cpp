@@ -69,10 +69,12 @@ struct BoundedFlow { // 0-base
         G[i].pop_back(), G[n + 2].pop_back();
     return sum != -1;
   }
-  int solve(int _s, int _t) {
-    add_edge(_t, _s, INF);
-    if (!solve()) return -1; // invalid flow
-    int x = G[_t].back().flow;
-    return G[_t].pop_back(), G[_s].pop_back(), x;
+  int solve(int _s, int _t) { // -INF: no feasible flow
+    add_edge(_t, _s, INF), add_edge(_s, _t, INF);
+    bool ok = solve();
+    int x = G[_t].end()[-2].flow - G[_s].back().flow;
+    G[_t].resize(SZ(G[_t]) - 2);
+    G[_s].resize(SZ(G[_s]) - 2);
+    return ok ? x : -INF;
   }
 };

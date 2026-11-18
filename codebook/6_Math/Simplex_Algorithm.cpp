@@ -1,63 +1,59 @@
-const int MAXN = 11000, MAXM = 405;
-const double eps = 1E-10;
-double a[MAXN][MAXM], b[MAXN], c[MAXM];
-double d[MAXN][MAXM], x[MAXM];
-int ix[MAXN + MAXM]; // !!! array all indexed from 0
-// max{cx} subject to {Ax<=b,x>=0}
-// n: constraints, m: vars !!!
-// x[] is the optimal solution vector
-// usage :
-// value = simplex(a, b, c, N, M);
-double simplex(int n, int m) {
-  ++m;
-  fill_n(d[n], m + 1, 0);
-  fill_n(d[n + 1], m + 1, 0);
-  iota(ix, ix + n + m, 0);
-  int r = n, s = m - 1;
-  FOR (i, 0, n - 1) {
-    FOR (j, 0, m - 2) d[i][j] = -a[i][j];
-    d[i][m - 1] = 1;
-    d[i][m] = b[i];
-    if (d[r][m] > d[i][m]) r = i;
+struct simplex { // max cx s.t. Ax <= b, x >= 0
+  int n, m, B[MAXN], N[MAXM + 1]; // n rows, m vars
+  double A[MAXN + 2][MAXM + 2], b[MAXN], c[MAXM], x[MAXM];
+  void pivot(int r, int s) {
+    double inv = 1 / A[r][s];
+    FOR (i, 0, n + 1) if (i != r) {
+      double t = -A[i][s] * inv;
+      if (abs(A[i][s]) > 1e-9) FOR (j, 0, m + 1)
+        if (j != s) A[i][j] += A[r][j] * t;
+      A[i][s] = t;
+    }
+    FOR (j, 0, m + 1) if (j != s) A[r][j] *= inv;
+    A[r][s] = inv;
+    swap(B[r], N[s]);
   }
-  copy_n(c, m - 1, d[n]);
-  d[n + 1][m - 1] = -1;
-  for (double dd;; ) {
-    if (r < n) {
-      swap(ix[s], ix[r + m]);
-      d[r][s] = 1.0 / d[r][s];
-      FOR (j, 0, m) if (j != s) d[r][j] *= -d[r][s];
-      FOR (i, 0, n + 1) if (i != r) {
-        FOR (j, 0, m)
-          if (j != s) d[i][j] += d[r][j] * d[i][s];
-        d[i][s] *= d[r][s];
+  bool lt(double *a, int j, int s, bool bl = 0) {
+    auto k = [&](int i) {
+      return pair(bl ? -(a[i] < -1e-9) : a[i], N[i]);
+    };
+    return s < 0 || k(j) < k(s);
+  }
+  bool run(int phase) { // 0: unbounded
+    for (int z = n + phase - 1, bl = 0; ; ) {
+      int s = -1, r = -1;
+      FOR (j, 0, m)
+        if (N[j] != -phase && lt(A[z], j, s, bl)) s = j;
+      if (A[z][s] >= -1e-9) return 1;
+      FOR (i, 0, n - 1) if (A[i][s] > 1e-9 && (r < 0 ||
+          pair(A[i][m + 1] / A[i][s], B[i]) <
+          pair(A[r][m + 1] / A[r][s], B[r]))) r = i;
+      if (r < 0) return 0;
+      bl = A[r][m + 1] < 1e-9; // stuck: Bland's rule
+      pivot(r, s);
+    }
+  }
+  double solve() { // -INF: infeasible
+    fill_n(A[n], m + 2, 0), fill_n(A[n + 1], m + 2, 0);
+    FOR (i, 0, n - 1)
+      B[i] = m + i, A[i][m] = -1, A[i][m + 1] = b[i];
+    FOR (j, 0, m - 1) N[j] = j, A[n][j] = -c[j];
+    N[m] = -1, A[n + 1][m] = 1;
+    int r = 0;
+    FOR (i, 1, n - 1) if (b[i] < b[r]) r = i;
+    if (A[r][m + 1] < -1e-9) {
+      pivot(r, m);
+      if (!run(2) || A[n + 1][m + 1] < -1e-9)
+        return -INF;
+      FOR (i, 0, n - 1) if (B[i] == -1) {
+        int s = 0;
+        FOR (j, 1, m) if (lt(A[i], j, s)) s = j;
+        pivot(i, s);
       }
     }
-    r = s = -1;
-    FOR (j, 0, m - 1) if (s < 0 || ix[s] > ix[j]) {
-      if (d[n + 1][j] > eps ||
-          (d[n + 1][j] > -eps && d[n][j] > eps))
-        s = j;
-    }
-    if (s < 0) break;
-    FOR (i, 0, n - 1) if (d[i][s] < -eps) {
-      if (r < 0 ||
-        (dd = d[r][m] / d[r][s] -
-            d[i][m] / d[i][s]) < -eps ||
-        (dd < eps && ix[r + m] > ix[i + m]))
-        r = i;
-    }
-    if (r < 0) return -1; // not bounded
+    bool ok = run(1);
+    fill_n(x, m, 0);
+    FOR (i, 0, n - 1) if (B[i] < m) x[B[i]] = A[i][m + 1];
+    return ok ? A[n][m + 1] : INF;
   }
-  if (d[n + 1][m] < -eps) return -1; // not executable
-  double ans = 0;
-  fill_n(x, m, 0);
-  FOR (i, m,
-    n + m - 1) { // the missing enumerated x[i] = 0
-    if (ix[i] < m - 1) {
-      ans += d[i - m][m] * c[ix[i]];
-      x[ix[i]] = d[i-m][m];
-    }
-  }
-  return ans;
-}
+};

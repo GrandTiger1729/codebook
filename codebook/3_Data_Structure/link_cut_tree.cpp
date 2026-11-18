@@ -1,102 +1,71 @@
-struct Splay { // path sum; swap + for ^ to get xor
-  static Splay nil;
-  Splay *ch[2], *f;
-  int rev, size;
-  ll val, sum;
-  Splay(ll v = 0) : rev(0), size(1), val(v), sum(v)
-  { f = ch[0] = ch[1] = &nil; }
-  bool isr()
-  { return f->ch[0] != this && f->ch[1] != this; }
-  int dir()
-  { return f->ch[0] == this ? 0 : 1; }
-  void setCh(Splay *c, int d) {
-    ch[d] = c;
-    if (c != &nil) c->f = this;
-    pull();
+struct LCT { // 1-base, node 0 is nil; needs global N
+  int ch[N][2], fa[N], rev[N], sz[N]; // path sum;
+  ll val[N], sum[N];                  // + -> ^ for xor
+  void init(int n) {
+    FOR (i, 0, n) {
+      ch[i][0] = ch[i][1] = fa[i] = rev[i] = 0;
+      val[i] = sum[i] = 0, sz[i] = i > 0;
+    }
   }
-  void give_tag(int r) {
-    if (r) swap(ch[0], ch[1]), rev ^= 1;
+  bool isr(int x)
+  { return ch[fa[x]][0] != x && ch[fa[x]][1] != x; }
+  int dir(int x) { return ch[fa[x]][1] == x; }
+  void pull(int x) {
+    sz[x] = sz[ch[x][0]] + sz[ch[x][1]] + 1;
+    sum[x] = sum[ch[x][0]] + sum[ch[x][1]] + val[x];
   }
-  void push() {
-    if (ch[0] != &nil) ch[0]->give_tag(rev);
-    if (ch[1] != &nil) ch[1]->give_tag(rev);
-    rev = 0;
+  void flip(int x)
+  { if (x) swap(ch[x][0], ch[x][1]), rev[x] ^= 1; }
+  void push(int x) {
+    if (rev[x]) flip(ch[x][0]), flip(ch[x][1]);
+    rev[x] = 0;
   }
-  void pull() {
-    // take care of the nil!
-    size = ch[0]->size + ch[1]->size + 1;
-    sum = ch[0]->sum + ch[1]->sum + val;
-    if (ch[0] != &nil) ch[0]->f = this;
-    if (ch[1] != &nil) ch[1]->f = this;
+  void rotate(int x) {
+    int p = fa[x], g = fa[p], d = dir(x), c = ch[x][!d];
+    if (!isr(p)) ch[g][dir(p)] = x;
+    fa[x] = g, ch[p][d] = c;
+    if (c) fa[c] = p;
+    ch[x][!d] = p, fa[p] = x;
+    pull(p), pull(x);
   }
-} Splay::nil;
-Splay *nil = &Splay::nil;
-void rotate(Splay *x) {
-  Splay *p = x->f;
-  int d = x->dir();
-  if (!p->isr()) p->f->setCh(x, p->dir());
-  else x->f = p->f;
-  p->setCh(x->ch[!d], d);
-  x->setCh(p, !d);
-  p->pull(), x->pull();
-}
-void splay(Splay *x) {
-  vector<Splay*> splayVec;
-  for (Splay *q = x;; q = q->f) {
-    splayVec.pb(q);
-    if (q->isr()) break;
+  void splay(int x) {
+    static int stk[N];
+    int top = 0;
+    for (int q = x;; q = fa[q]) {
+      stk[top++] = q;
+      if (isr(q)) break;
+    }
+    while (top) push(stk[--top]);
+    for (; !isr(x); rotate(x))
+      if (!isr(fa[x]))
+        rotate(dir(x) == dir(fa[x]) ? fa[x] : x);
   }
-  reverse(splayVec.begin(), splayVec.end());
-  for (auto it : splayVec) it->push();
-  while (!x->isr()) {
-    if (x->f->isr()) rotate(x);
-    else if (x->dir() == x->f->dir())
-      rotate(x->f), rotate(x);
-    else rotate(x), rotate(x);
+  int access(int x) { // returns the last splay root
+    int q = 0;
+    for (; x; q = x, x = fa[x])
+      splay(x), ch[x][1] = q, pull(x);
+    return q;
   }
-}
-Splay* access(Splay *x) {
-  Splay *q = nil;
-  for (; x != nil; x = x->f)
-    splay(x), x->setCh(q, 1), q = x;
-  return q;
-}
-void root_path(Splay *x) { access(x), splay(x); }
-void chroot(Splay *x) {
-  root_path(x), x->give_tag(1);
-  x->push(), x->pull();
-}
-void split(Splay *x, Splay *y) {
-  chroot(x), root_path(y);
-}
-void link(Splay *x, Splay *y) {
-  root_path(x), chroot(y);
-  x->setCh(y, 1);
-}
-void cut(Splay *x, Splay *y) {
-  split(x, y);
-  if (y->size != 5) return;
-  y->push();
-  y->ch[0] = y->ch[0]->f = nil;
-}
-Splay* get_root(Splay *x) {
-  for (root_path(x); x->ch[0] != nil; x = x->ch[0])
-    x->push();
-  splay(x);
-  return x;
-}
-bool conn(Splay *x, Splay *y) {
-  return get_root(x) == get_root(y);
-}
-Splay* lca(Splay *x, Splay *y) {
-  access(x), root_path(y);
-  if (y->f == nil) return y;
-  return y->f;
-}
-void change(Splay *x, ll val) {
-  splay(x), x->val = val, x->pull();
-}
-ll query(Splay *x, Splay *y) {
-  split(x, y);
-  return y->sum;
-}
+  void chroot(int x) { access(x), splay(x), flip(x); }
+  void split(int x, int y) // y: root of the x-y path
+  { chroot(x), access(y), splay(y); }
+  int get_root(int x) {
+    access(x), splay(x);
+    while (ch[x][0]) push(x), x = ch[x][0];
+    return splay(x), x;
+  }
+  bool conn(int x, int y)
+  { return get_root(x) == get_root(y); }
+  void link(int x, int y) // x, y not connected
+  { chroot(x), fa[x] = y; }
+  void cut(int x, int y) { // no-op unless an edge
+    split(x, y);
+    if (ch[y][0] == x && sz[x] == 1)
+      ch[y][0] = fa[x] = 0, pull(y);
+  }
+  int lca(int x, int y) // under the current root
+  { return access(x), access(y); }
+  void change(int x, ll v)
+  { splay(x), val[x] = v, pull(x); }
+  ll query(int x, int y) { return split(x, y), sum[y]; }
+};

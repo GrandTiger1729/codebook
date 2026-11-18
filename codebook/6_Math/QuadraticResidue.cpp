@@ -1,37 +1,21 @@
-int Jacobi(int a, int m) {
-  int s = 1;
-  for (; m > 1; ) {
-    a %= m;
-    if (a == 0) return 0;
-    const int r = __builtin_ctz(a);
-    if ((r & 1) && ((m + 2) & 4)) s = -s;
-    a >>= r;
-    if (a & m & 2) s = -s;
-    swap(a, m);
-  }
-  return s;
-}
+// p prime; -1 if none
 int QuadraticResidue(int a, int p) {
-  if (p == 2) return a & 1;
-  const int jc = Jacobi(a, p);
-  if (jc == 0) return 0;
-  if (jc == -1) return -1;
-  int b, d;
-  for (; ; ) {
-    b = rand() % p;
-    d = (1LL * b * b + p - a) % p;
-    if (Jacobi(d, p) == -1) break;
-  }
-  ll f0 = b, f1 = 1, g0 = 1, g1 = 0, tmp;
-  for (int e = (1LL + p) >> 1; e; e >>= 1) {
-    if (e & 1) {
-      tmp = (g0 * f0 + d * (g1 * f1 % p)) % p;
-      g1 = (g0 * f1 + g1 * f0) % p;
-      g0 = tmp;
-    }
-    tmp = (f0 * f0 + d * (f1 * f1 % p)) % p;
-    f1 = 2 * f0 * f1 % p;
-    f0 = tmp;
-  }
-  return g0;
+  if (a == 0 || p == 2) return a;
+  ll w = 0;
+  using P = pair<ll, ll>; // F + S sqrt(w)
+  auto mul = [&](P x, P y) -> P {
+    return {(x.F * y.F + x.S * y.S % p * w) % p,
+            (x.F * y.S + x.S * y.F) % p};
+  };
+  auto pw = [&](P x, int e) {
+    P r(1, 0);
+    for (; e; e >>= 1, x = mul(x, x))
+      if (e & 1) r = mul(r, x);
+    return r.F;
+  };
+  if (pw({a, 0}, p / 2) != 1) return -1;
+  ll b;
+  do b = rand() % p, w = (b * b + p - a) % p;
+  while (pw({w, 0}, p / 2) != p - 1);
+  return pw({b, 1}, p / 2 + 1);
 }

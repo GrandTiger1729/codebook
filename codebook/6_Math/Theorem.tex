@@ -72,36 +72,8 @@ If integers $x_1, \ldots, x_N$ are all $\le 1$ and sum to $k > 0$, exactly $k$ o
 \begin{itemize}
   \item Hall: a bipartite graph has a matching saturating $L$ iff $|N(S)| \ge |S|$ for all $S \subseteq L$; maximum matching $= |L| - \max_{S \subseteq L} (|S| - |N(S)|)$.
   \item Gallai: maximum independent set $+$ minimum vertex cover $= n$; with no isolated vertices, maximum matching $+$ minimum edge cover $= n$.
-  \item König: in a bipartite graph, maximum matching $=$ minimum vertex cover, and the edge chromatic number is $\Delta$.
-  \item Menger: the maximum number of edge-disjoint (internally vertex-disjoint) $s$--$t$ paths equals the minimum $s$--$t$ edge (vertex) cut.
   \item Dirac / Ore ($n \ge 3$): if $\deg(u) + \deg(v) \ge n$ for all non-adjacent $u, v$ (e.g.\ every $\deg \ge n/2$), a Hamiltonian cycle exists. Palmer, $O(n^2)$: put all vertices on a circle in any order; repeatedly find a non-adjacent $v_i, v_{i+1}$ on it, find $j$ with $v_i v_j, v_{i+1} v_{j+1} \in E$ and reverse $v_{i+1}, \ldots, v_j$, until none remain.
 \end{itemize}
-
-\item More graph facts
-\begin{itemize}
-  \item Planar: $V - E + F = 1 + C$ ($C$ components); simple with $V \ge 3$: $E \le 3V - 6$, and $E \le 2V - 4$ if also triangle-free; some vertex has degree $\le 5$.
-  \item Spanning trees: $K_n$ has $n^{n-2}$, $K_{m,n}$ has $m^{n-1} n^{m-1}$.
-  \item Euler: a connected multigraph has an Euler circuit iff every degree is even, an Euler path iff $0$ or $2$ degrees are odd. Directed: in $=$ out everywhere (circuit), or one vertex with out $-$ in $= 1$ and one with in $-$ out $= 1$ (path), and the edges are connected.
-  \item Turán: a graph on $n$ vertices without $K_{r+1}$ has at most as many edges as the complete $r$-partite graph with parts as equal as possible, about $(1 - \frac 1 r) \frac{n^2}{2}$; Mantel ($r = 2$): $\lfloor n^2/4 \rfloor$.
-  \item Ramsey numbers: $R(3,3) = 6$, $R(3,4) = 9$, $R(3,5) = 14$, $R(3,6) = 18$, $R(3,7) = 23$, $R(3,8) = 28$, $R(3,9) = 36$, $R(4,4) = 18$, $R(4,5) = 25$.
-  \item Erdős–Szekeres: any sequence of $(r-1)(s-1)+1$ distinct numbers has an increasing subsequence of length $r$ or a decreasing one of length $s$.
-  \item Tournaments: every tournament has a Hamiltonian path (insert vertices one by one, binary search the position); a strongly connected one with $n \ge 3$ has a Hamiltonian cycle; a vertex of maximum out-degree reaches every vertex within $2$ steps.
-\end{itemize}
-
-\item Colouring
-\begin{itemize}
-  \item Brooks: a connected graph that is neither complete nor an odd cycle has $\chi \le \Delta$; Vizing: the edge chromatic number is $\Delta$ or $\Delta + 1$.
-  \item $\chi(G) \le k$ iff $\sum_{S \subseteq V} (-1)^{|V \setminus S|}\, I(S)^k > 0$, where $I(S)$ is the number of independent sets inside $S$ (with $\emptyset$); $I$ by subset DP, $O(2^n n)$ for all $k$.
-  \item Chordal graphs (every cycle of length $\ge 4$ has a chord): maximum cardinality search (repeatedly visit the unvisited vertex with the most visited neighbours) gives a reversed perfect elimination order; greedy colouring in visiting order is optimal, and $\chi = \omega$ = the largest number of visited neighbours $+ 1$.
-\end{itemize}
-
-\item Random walks
-
-Expected steps to reach a target set: solve $E_v = 1 + \sum_u P_{vu} E_u$ ($E = 0$ on targets) by Gaussian elimination. On a tree, from $v$ to its parent: $2\,\mathrm{size}(v) - 1$. In a connected graph with $m$ edges, the commute time $u \to v \to u$ is $2m R_{uv}$ ($R$: effective resistance, unit resistors).
-
-\item Stable marriage (Gale–Shapley)
-
-Every free man proposes to the best woman he has not proposed to; she keeps the better of him and her current partner. Ends in $O(n^2)$ with a stable matching that is the best possible for every man and the worst possible for every woman.
 
 \item Burnside's Lemma
 
@@ -128,6 +100,10 @@ The number of ways to fill a Young diagram $\lambda$ (left-aligned rows of non-i
 \item Generalized Euler
 
 For any $a$ and $b \ge \varphi(m)$: $a^b \equiv a^{\,b \bmod \varphi(m) + \varphi(m)} \pmod m$ (the condition on $b$ is required).
+
+\item Mis\`ere Nim (whoever takes the last stone loses)
+
+The first player wins iff (some pile $> 1$ and $\bigoplus a_i \ne 0$) or (all piles $\le 1$ and $\bigoplus a_i = 0$).
 
 \item Sum of squares
 

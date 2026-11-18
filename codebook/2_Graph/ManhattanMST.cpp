@@ -1,4 +1,4 @@
-// O(n) edges {w, i, j} containing an MST; then Kruskal
+// O(n) edges {w, i, j} containing an MST
 vector<array<ll, 3>> manhattan_mst(
   vector<pair<ll, ll>> p) {
   vector<int> id(p.size());
@@ -23,5 +23,5 @@ vector<array<ll, 3>> manhattan_mst(
       if (k & 1) x = -x;
       else swap(x, y);
   }
-  return edges;
+  return edges; // then run Kruskal with these edges
 }

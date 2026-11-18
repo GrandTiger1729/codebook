@@ -283,3 +283,4 @@
 ## 2026-11-19
 
 - **Fast_Walsh_Transform**：`FOR (j, i, j + (L >> 1) - 1)` 改成 `i + (L >> 1) - 1`。原本不是 bug（`FOR` 展開後 `j` 先初始化成 `i` 才算上界），只是容易看錯；FWT 與 Minimum_Clique_Cover 的對拍都過。
+- **ManhattanMST**：「then Kruskal」從開頭註解移到 `return edges;` 那行，不重複。程式碼不變。

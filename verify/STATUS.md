@@ -275,3 +275,7 @@
 - **ManhattanMST**：排序比較式改成直接比 x + y（原本是 kactl 的移項寫法，等價）。
 - **StaticTopTree**：補一段用法註解（g 是子節點、要定義哪些函式、答案在哪、修改後呼叫 update）。
 - 標題拿掉 `*`（程式已不是實際送過的版本）：QuadraticResidue、DiscreteLog、BoundedFlow（Dinic 保留）、BinarySearchOnFraction。
+
+## 2026-11-18：頁首
+
+- 隊名移到右上角（regional 規定），頁碼改到左上角。

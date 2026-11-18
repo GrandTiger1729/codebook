@@ -8,5 +8,5 @@ vector<pll> Minkowski(vector<pll> A, vector<pll> B) {
     if (j >= m || (i < n && cross(s1[i], s2[j]) >= 0))
       C.pb(B[j % m] + A[i++]);
     else C.pb(A[i % n] + B[j++]);
-  return hull(C), C;
+  return hull(C), C; // needs input |coord| <= 7.5e8
 }

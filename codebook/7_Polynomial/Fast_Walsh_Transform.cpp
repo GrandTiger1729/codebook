@@ -5,7 +5,7 @@ invop: or, and, xor = -1, -1, 1/2 */
 void fwt(int *a, int n, int op) { //or
   for (int L = 2; L <= n; L <<= 1)
     for (int i = 0; i < n; i += L)
-      FOR (j, i, j + (L >> 1) - 1)
+      FOR (j, i, i + (L >> 1) - 1)
         a[j + (L >> 1)] += a[j] * op;
 }
 const int N = 18; // L <= N, 3 (N + 1) 2^N ints

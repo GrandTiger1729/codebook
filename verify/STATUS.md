@@ -279,3 +279,7 @@
 ## 2026-11-18：頁首
 
 - 隊名移到右上角（regional 規定），頁碼改到左上角。
+
+## 2026-11-19
+
+- **Fast_Walsh_Transform**：`FOR (j, i, j + (L >> 1) - 1)` 改成 `i + (L >> 1) - 1`。原本不是 bug（`FOR` 展開後 `j` 先初始化成 `i` 才算上界），只是容易看錯；FWT 與 Minimum_Clique_Cover 的對拍都過。

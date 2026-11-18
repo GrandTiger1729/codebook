@@ -8,7 +8,7 @@ vector<array<ll, 3>> manhattan_mst(
     sort(id.begin(), id.end(), [&](int i, int j) {
       return p[i].F - p[j].F < p[j].S - p[i].S;
     });
-    map<ll, int> sweep; // -y -> index
+    map<ll, int> sweep;
     for (int i : id) {
       auto it = sweep.lower_bound(-p[i].S);
       for (; it != sweep.end(); it = sweep.erase(it)) {

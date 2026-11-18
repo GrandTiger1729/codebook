@@ -13,7 +13,7 @@ struct StaticTopTree {
     vector<int> sz(n, 1), ord{0};
     FOR (i, 0, n - 1) for (int v : g[ord[i]]) ord.pb(v);
     for (int i = n - 1; i >= 0; i--) {
-      auto &c = g[ord[i]]; // heavy child first
+      auto &c = g[ord[i]];
       for (int v : c) sz[ord[i]] += sz[v];
       FOR (j, 1, (int)c.size() - 1)
         if (sz[c[j]] > sz[c[0]]) swap(c[0], c[j]);
@@ -35,14 +35,14 @@ struct StaticTopTree {
     if (a.size() == 1) return a[0];
     int u = 0;
     for (auto [i, s] : a) u += s;
-    vector<pii> b, c; // split by size, keep order
+    vector<pii> b, c;
     for (auto [i, s] : a)
       (u > s ? b : c).pb(i, s), u -= 2 * s;
     auto [i, si] = merge(b, t);
     auto [j, sj] = merge(c, t);
     return {add(-1, i, j, t), si + sj};
   }
-  pii heavy(int v) { // the heavy path from v down
+  pii heavy(int v) {
     vector<pii> a{vert(v)};
     while (!g[v].empty()) a.pb(vert(v = g[v][0]));
     return merge(a, Compress);

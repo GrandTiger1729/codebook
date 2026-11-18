@@ -18,8 +18,8 @@ vector<int> st_numbering(vector<vector<int>> g,
   nxt[s] = t, prv[t] = s, sgn[s] = -1;
   for (int v : ord) if (v != s && v != t) {
     int p = pa[v], l = ord[low[v] - 1];
-    if (sgn[l] > 0) prv[v] = p, nxt[v] = nxt[p]; // after
-    else nxt[v] = p, prv[v] = prv[p]; // before
+    if (sgn[l] > 0) prv[v] = p, nxt[v] = nxt[p];
+    else nxt[v] = p, prv[v] = prv[p];
     nxt[prv[v]] = prv[nxt[v]] = v, sgn[p] = -sgn[l];
   }
   for (int v = s; v != n; v = nxt[v]) res.pb(v);

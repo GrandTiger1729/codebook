@@ -4,7 +4,7 @@ int PointInPolygon(const vector<pll> &P, pll p) {
   FOR (i, 0, n - 1) {
     pll a = P[i], b = P[(i + 1) % n];
     if (btw(a, b, p)) return -1;
-    if (a.Y > b.Y) swap(a, b); // ray from p towards +x
+    if (a.Y > b.Y) swap(a, b);
     if (a.Y <= p.Y && p.Y < b.Y && ori(a, b, p) > 0)
       in ^= 1;
   }

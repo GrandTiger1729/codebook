@@ -100,7 +100,7 @@
 
 | 模版 | Library Checker | 本地對拍 | 單檔編譯 | 書上標註 |
 |---|---|---|---|---|
-| `6_Math/ax+by=gcd.cpp` | — 無對應題 | 204 萬組含負數與 ±1e18 | ✅ | exgcd test by NTUJ 110 |
+| `6_Math/exgcd.cpp` | — 無對應題 | 204 萬組含負數與 ±1e18；`a >= 0, b > 0` 時 `|x| <= b / g` | ✅ | test by NTUJ 110 (old version), local brute force |
 | `6_Math/floor_ceil.cpp` | — 無對應題 | 101 萬組含 INT 邊界 | ✅ | — |
 | `6_Math/floor_enumeration.cpp` | `number_theory/enumerate_quotients` **AC** 26 筆 · 0.121s/5s (2%) | — | 片段，非獨立編譯單元 | test by Lib-Checker Enumerate Quotients |
 | `6_Math/ModMin.cpp` | `number_theory/min_of_mod_of_linear` **AC** 17 筆 · 0.265s/10s (3%) | 1 734 355 組 vs 暴力（m ≤ 60 窮舉，88 406 組無解） | ✅ | test by Lib-Checker Min of Mod of Linear |
@@ -284,3 +284,4 @@
 
 - **Fast_Walsh_Transform**：`FOR (j, i, j + (L >> 1) - 1)` 改成 `i + (L >> 1) - 1`。原本不是 bug（`FOR` 展開後 `j` 先初始化成 `i` 才算上界），只是容易看錯；FWT 與 Minimum_Clique_Cover 的對拍都過。
 - **ManhattanMST**：「then Kruskal」從開頭註解移到 `return edges;` 那行，不重複。程式碼不變。
+- **exgcd**：`ax+by=gcd.cpp` 改名 `exgcd.cpp`，遞迴改成 structured binding、拿掉 `pll` typedef 與「最小非負 x」的註解食譜（exgcd 屬太基礎）；註解只寫 CRT 依賴的條件與界 `|x| <= b / gcd`，對拍加驗這個界。標題去掉 `*`。exgcd、CRT 對拍都過。

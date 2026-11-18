@@ -1,6 +1,6 @@
 #include "prelude.h"
 #include "stress.h"
-#include "6_Math/ax+by=gcd.cpp" // exgcd, as in the book
+#include "6_Math/exgcd.cpp" // exgcd, as in the book
 #include "6_Math/chineseRemainder.cpp"
 typedef __int128 L;
 

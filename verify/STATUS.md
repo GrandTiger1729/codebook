@@ -113,7 +113,7 @@
 | `6_Math/XorBasis.cpp` | — 無對應題 | 3 000 組、55 093 個區間查詢 vs 枚舉子集：每個前綴一份 basis 的區間最大 xor（含起始值 x）、整個 span 的第 k 小 | ✅ | 2026-11-17 加入（插入時間戳記版） |
 | `6_Math/Pollard_Rho.cpp` | `number_theory/factorize` **AC** 31 筆 · 0.069s/10s (1%)（2026-11-17 改 kactl 式批次 gcd，原本 1.167s） | 24 萬組：n ≤ 2·10⁵ 窮舉 vs 試除法、2ᵏ·p、隨機至 10¹⁸、兩個約 10⁹ 質數之積、質數平方與立方、Carmichael 數、連續呼叫累加 | 需要外部 `prime` | test by Lib-Checker Factorize |
 | `6_Math/Simplex_Algorithm.cpp` | — 無對應題 | 12 000 組 vs 頂點枚舉（最佳/無界/不可行）+ 275 組對偶 | 需要外部 `MAXN`、`MAXM`、`INF` | 2026-11-18 改寫（見最後一節） |
-| `6_Math/chineseRemainder.cpp` | — 無對應題 | 424 575 組含非互質、無解、lcm≈1e18（**修溢位**） | 需要外部 `exgcd` | — |
+| `6_Math/chineseRemainder.cpp` | — 無對應題 | 724 575 組含非互質、無解、lcm 到 4e18（大 gcd、單一模數近 4e18）（**修溢位**） | 需要外部 `exgcd` | — |
 | `6_Math/fac_no_p.cpp` | `enumerative_combinatorics/binomial_coefficient` 無法驅動 | 44 960 組 vs 直接計算 | 需要外部 `MAXP`、`mpow(a, e, m)` | test by luogu P4720 |
 | `6_Math/QuadraticResidue.cpp` | `number_theory/sqrt_mod` **AC** 13 筆 · 0.064s/10s (1%) | 289 050 組（p < 2000 每個 a 窮舉 + 大質數植入解） | ✅ | test by Lib-Checker Sqrt Mod, local brute force |
 | `6_Math/PiCount.cpp` | `number_theory/counting_primes` **AC** 31 筆 · 0.033s/5s (1%) | — | ✅ | test by luogu P7884, Lib-Checker Counting Primes |
@@ -289,3 +289,4 @@
 - **exgcd**：底部加一行解 `ax = c (mod m)` 的用法：`x * (c / g) + k * (m / g)`。
 - **chineseRemainder**：函式名 `solve` 改 `crt`。
 - **fac_no_p**：STATUS 補上外部需求 `mpow(a, e, m)`（模板沒定義，對拍自備）。
+- **chineseRemainder**：對拍補上 lcm 接近宣稱上限 4e18 的情形（原本模數只到 1e9）；新舊版都過。

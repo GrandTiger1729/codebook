@@ -1,4 +1,4 @@
-ll solve(ll x1, ll m1, ll x2, ll m2) { // lcm < 4e18
+ll crt(ll x1, ll m1, ll x2, ll m2) { // lcm < 4e18
   ll p, q, g = exgcd(m1, m2, p, q);
   if ((x2 - x1) % g) return -1; // no sol
   m2 /= g;

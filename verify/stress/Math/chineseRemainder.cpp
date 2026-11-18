@@ -6,7 +6,7 @@ typedef __int128 L;
 
 void check(ll x1, ll m1, ll x2, ll m2) {
   ll g = gcd(m1, m2), lcm = m1 / g * m2;
-  ll r = solve(x1, m1, x2, m2);
+  ll r = crt(x1, m1, x2, m2);
   if ((x2 - x1) % g) { assert(r == -1); return; }
   assert(0 <= r && r < lcm);
   assert(r % m1 == x1 && r % m2 == x2);
@@ -15,7 +15,7 @@ int main() {
   int cases = 0;
   // exhaustive tiny
   FOR (m1, 1, 24) FOR (m2, 1, 24) FOR (x1, 0, m1 - 1) FOR (x2, 0, m2 - 1) {
-    ll r = solve(x1, m1, x2, m2), best = -1;
+    ll r = crt(x1, m1, x2, m2), best = -1;
     FOR (x, 0, m1 * m2 - 1) if (x % m1 == x1 && x % m2 == x2) { best = x; break; }
     assert(r == best), cases++;
   }
@@ -30,7 +30,7 @@ int main() {
     ll X = rnd(0, 1e11), M = 1, cur = 0;
     FOR (k, 1, 5) {
       ll m = rnd(1, 300);
-      ll r = solve(cur, M, X % m, m);
+      ll r = crt(cur, M, X % m, m);
       assert(r != -1);
       M = M / gcd(M, m) * m, cur = r;
       if (M > 1e11) break;

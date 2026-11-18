@@ -1,5 +1,4 @@
-// C: hull(), p outside or on it; ori(p, C[x], C[a]) <= 0
-// <= ori(p, C[x], C[b]) for all x. p on an edge: its ends
+// C: hull(); p outside or on the hull
 pii get_tangent(vector<pll> &C, pll p) {
   int n = SZ(C);
   pll d = p * 3 - C[0] - C[1 % n] - C[2 % n];

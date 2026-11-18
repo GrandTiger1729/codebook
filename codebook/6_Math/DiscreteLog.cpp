@@ -1,27 +1,19 @@
-int DiscreteLog(int s, int x, int y, int m) {
-  int kStep = sqrt(m) + 1;
-  unordered_map<int, int> p;
-  int b = 1;
-  FOR (i, 0, kStep - 1) {
-    p[y] = i;
-    y = 1LL * y * x % m;
-    b = 1LL * b * x % m;
+// min k >= 0 with x^k = y (mod m), or -1
+int DiscreteLog(ll x, ll y, int m) {
+  int n = sqrt(m) + 1;
+  ll s = 1 % m;
+  x %= m, y %= m;
+  FOR (k, 0, n - 1) {
+    if (s == y) return k;
+    s = s * x % m;
   }
-  for (ll i = 0; i <= m; i += kStep) {
-    s = 1LL * s * b % m;
-    if (p.find(s) != p.end()) return i + kStep - p[s];
+  if (__gcd(s, (ll)m) != __gcd(y, (ll)m)) return -1;
+  unordered_map<ll, int> baby; // y x^j -> largest j
+  FOR (j, 1, n) baby[y = y * x % m] = j;
+  ll g = s;
+  FOR (i, 2, n + 1) {
+    g = g * s % m;
+    if (baby.count(g)) return 1LL * i * n - baby[g];
   }
   return -1;
 }
-int DiscreteLog(int x, int y, int m) {
-  if (m == 1) return 0;
-  int s = 1;
-  FOR (i, 0, 99) {
-    if (s == y) return i;
-    s = 1LL * s * x % m;
-  }
-  if (s == y) return 100;
-  int p = 100 + DiscreteLog(s, x, y, m);
-  if (fpow(x, p, m) != y) return -1;
-  return p;
-} // find minimum k such that x^k == y (mod m)

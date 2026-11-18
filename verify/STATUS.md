@@ -115,9 +115,9 @@
 | `6_Math/Simplex_Algorithm.cpp` | — 無對應題 | 11 889 組 vs 頂點枚舉（最佳/無界/不可行）+ 274 組對偶 | ✅ | — |
 | `6_Math/chineseRemainder.cpp` | — 無對應題 | 424 575 組含非互質、無解、lcm≈1e18（**修溢位**） | 需要外部 `exgcd` | — |
 | `6_Math/fac_no_p.cpp` | `enumerative_combinatorics/binomial_coefficient` 無法驅動 | 44 960 組 vs 直接計算 | 需要外部 `MAXP` | test by luogu P4720 |
-| `6_Math/QuadraticResidue.cpp` | `number_theory/sqrt_mod` **AC** 13 筆 · 0.065s/10s (1%) | — | ✅ | test by Lib-Checker Sqrt Mod |
+| `6_Math/QuadraticResidue.cpp` | `number_theory/sqrt_mod` **AC** 13 筆 · 0.064s/10s (1%) | 289 050 組（p < 2000 每個 a 窮舉 + 大質數植入解） | ✅ | test by Lib-Checker Sqrt Mod |
 | `6_Math/PiCount.cpp` | `number_theory/counting_primes` **AC** 31 筆 · 0.033s/5s (1%) | — | ✅ | test by luogu P7884, Lib-Checker Counting Primes |
-| `6_Math/DiscreteLog.cpp` | `number_theory/discrete_logarithm_mod` **AC** 20 筆 · 0.265s/10s (3%) | 585 220 組（m ≤ 120 窮舉 + 植入解到 1e9；443 296 組無解） | 需要外部 `fpow` | test by Lib-Checker Discrete Logarithm |
+| `6_Math/DiscreteLog.cpp` | `number_theory/discrete_logarithm_mod` **AC** 20 筆 · 0.264s/10s (3%) | 585 220 組（m ≤ 120 窮舉 + 植入解到 1e9；443 296 組無解） | ✅ | test by Lib-Checker Discrete Logarithm |
 | `6_Math/Berlekamp-Massey.cpp` | `other/find_linear_recurrence` **AC** 18 筆 · 0.164s/5s (3%) | 經 FastLinearRecursion 的對拍（BM 的結果要能重播整段數列） | ✅ | test by Lib-Checker Find Linear Recurrence |
 
 ## Polynomial
@@ -258,6 +258,8 @@
 - **TangentPointToHull**：p 可以在凸包上（共線時當作 p 往凸包外移一點來決勝負）。
 - **MincostMaxflow**：Flow Models 加「有負環的最小費用流」（先把負邊流滿），本地窮舉驗證。
 - **Pollard rho**：kactl 式批次 gcd，Factorize 1.167s → 0.069s。
+- **QuadraticResidue**：Cipolla 重寫，拿掉 Jacobi（Euler 判別法），37 → 19 行。
+- **DiscreteLog**：BSGS 重寫成一個函式，用 gcd 判斷 y 在不在循環上，不再需要外部 `fpow`。
 - **Link cut tree**：改陣列版（0.56s → 0.33s），順便修了 `cut` 的 bug（見表）。
 - **新增程式**：Manhattan MST、Bipolar Orientation、Static Top Tree、SIMD、Nim Product、Determinant Any Mod、Characteristic Polynomial、Xor Basis（都有 LC 或本地對拍）。
 - **對照 ckiseki 補的缺口**：Point In Polygon、Josephus（另寫了 Euler Trail、Rolling Hash、Farthest Pair，太基本，只留檔案；Xor Basis 同）。

@@ -4,7 +4,7 @@ string/enumerate_palindromes	enumerate_palindromes.cpp	5_String/Manacher.cpp
 string/suffixarray	suffixarray_sais.cpp	5_String/SAIS-C++20.cpp	
 number_theory/factorize	factorize.cpp	6_Math/Pollard_Rho.cpp, 6_Math/Miller_Rabin.cpp	driver supplies mul(); codebook defines none
 number_theory/sqrt_mod	sqrt_mod.cpp	6_Math/QuadraticResidue.cpp	
-number_theory/discrete_logarithm_mod	discrete_logarithm_mod.cpp	6_Math/DiscreteLog.cpp	driver supplies fpow()
+number_theory/discrete_logarithm_mod	discrete_logarithm_mod.cpp	6_Math/DiscreteLog.cpp	
 convolution/min_plus_convolution_convex_arbitrary	min_plus_convolution_convex_arbitrary.cpp	9_Else/min_plus_convolution.cpp	
 convolution/convolution_mod	convolution_mod.cpp	7_Polynomial/NTT_stdabs.cpp	
 graph/bipartitematching	bipartitematching.cpp	4_Flow_Matching/Bipartite_Matching.cpp	cover() (Konig min vertex cover) verified separately against exhaustive search on 30000 random graphs

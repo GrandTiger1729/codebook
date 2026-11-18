@@ -260,3 +260,4 @@
 - **新增理論**：Linear Algebra 小節（行列式、Cayley–Hamilton、有限體計數、隨機檢查）；計數公式與 Sherman–Morrison、Schur 用 Python 驗過。新增程式 DeterminantAnyMod、CharPoly、XorBasis。
 - **新增理論**：Polynomial Facts（Newton 恆等式、Euler transform、Lagrange inversion 等）、Theorem 的圖論補充（König、Menger、平面圖、Turán、Ramsey、競賽圖、著色、弦圖、隨機漫步、穩定婚姻）、String and Automaton Facts（週期、runs、SAM、DFA 最小化等）。可驗的都用 Python 暴力驗過（腳本不進 repo）。
 - **對照 ckiseki 補的缺口**：Euler Trail、Point In Polygon、Farthest Pair、Rolling Hash、Josephus。
+- **Known Tricks**（`9_Else/Tricks.tex`）：太基本、不值得放程式碼的技巧，一行一個（含刪掉的 BIT kth、HLD 的要點）。有公式的（slope trick、DFS 序 LCA、BIT 下降、Gosper、逆元遞推等）都用 Python 暴力驗過。

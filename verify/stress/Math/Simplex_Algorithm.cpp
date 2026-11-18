@@ -55,6 +55,14 @@ pair<bool, double> vertexMax(const vector<vd> &A, const vd &B, const vd &C) {
   return {feas, best};
 }
 int main() {
+  { // Beale (1955): cycles under Dantzig's rule alone; optimum 5/4
+    double A[3][4] = {{0.25, -8, -1, 9}, {0.5, -12, -0.5, 3}, {0, 0, 1, 0}};
+    double B[3] = {0, 0, 1}, C[4] = {0.75, -20, 0.5, -6};
+    lp.n = 3, lp.m = 4;
+    FOR (i, 0, 2) { FOR (j, 0, 3) lp.A[i][j] = A[i][j]; lp.b[i] = B[i]; }
+    FOR (j, 0, 3) lp.c[j] = C[j];
+    assert(fabs(lp.solve() - 1.25) < 1e-9);
+  }
   int cases = 0, cntInf = 0, cntUnb = 0, cntOpt = 0;
   FOR (it, 1, 12000) {
     int n = rnd(1, 4), m = rnd(1, 3), R = it % 2 ? 3 : 10;

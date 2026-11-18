@@ -260,7 +260,7 @@
 - **Pollard rho**：kactl 式批次 gcd，Factorize 1.167s → 0.069s。
 - **QuadraticResidue**：Cipolla 重寫，拿掉 Jacobi（Euler 判別法），37 → 19 行。
 - **DiscreteLog**：BSGS 重寫成一個函式，用 gcd 判斷 y 在不在循環上，不再需要外部 `fpow`。
-- **Simplex**：改成跟 System of Linear Equations 一樣的 struct；無解回傳 `-INF`、無界回傳 `INF`（原本都回 -1，跟最佳值 -1 撞），2000×200 隨機 LP 9.4s → 0.17s。
+- **Simplex**：改成跟 System of Linear Equations 一樣的 struct；無解回傳 `-INF`、無界回傳 `INF`（原本都回 -1，跟最佳值 -1 撞），2000×200 隨機 LP 9.4s → 0.17s（Dantzig 規則，pivot 數 44 617 → 937；遇到退化 pivot 改用 Bland 規則防循環，Beale 的例子在對拍裡）。
 - **Link cut tree**：改陣列版（0.56s → 0.33s），順便修了 `cut` 的 bug（見表）。
 - **新增程式**：Manhattan MST、Bipolar Orientation、Static Top Tree、SIMD、Nim Product、Determinant Any Mod、Characteristic Polynomial、Xor Basis（都有 LC 或本地對拍）。
 - **對照 ckiseki 補的缺口**：Point In Polygon、Josephus（另寫了 Euler Trail、Rolling Hash、Farthest Pair，太基本，只留檔案；Xor Basis 同）。

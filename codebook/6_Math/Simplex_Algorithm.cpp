@@ -13,19 +13,23 @@ struct simplex { // max cx s.t. Ax <= b, x >= 0
     A[r][s] = inv;
     swap(B[r], N[s]);
   }
-  bool lt(double *a, int j, int s) {
-    return s < 0 || pair(a[j], N[j]) < pair(a[s], N[s]);
+  bool lt(double *a, int j, int s, bool bl = 0) {
+    auto k = [&](int i) {
+      return pair(bl ? -(a[i] < -1e-9) : a[i], N[i]);
+    };
+    return s < 0 || k(j) < k(s);
   }
   bool run(int phase) { // 0: unbounded
-    for (int z = n + phase - 1; ; ) {
+    for (int z = n + phase - 1, bl = 0; ; ) {
       int s = -1, r = -1;
       FOR (j, 0, m)
-        if (N[j] != -phase && lt(A[z], j, s)) s = j;
+        if (N[j] != -phase && lt(A[z], j, s, bl)) s = j;
       if (A[z][s] >= -1e-9) return 1;
       FOR (i, 0, n - 1) if (A[i][s] > 1e-9 && (r < 0 ||
           pair(A[i][m + 1] / A[i][s], B[i]) <
           pair(A[r][m + 1] / A[r][s], B[r]))) r = i;
       if (r < 0) return 0;
+      bl = A[r][m + 1] < 1e-9; // stuck: Bland's rule
       pivot(r, s);
     }
   }

@@ -286,4 +286,4 @@
 - **ManhattanMST**：「then Kruskal」從開頭註解移到 `return edges;` 那行，不重複。程式碼不變。
 - **exgcd**：`ax+by=gcd.cpp` 改名 `exgcd.cpp`，遞迴改成 structured binding、拿掉 `pll` typedef 與「最小非負 x」的註解食譜（exgcd 屬太基礎）；註解只寫 CRT 依賴的條件與界 `|x| <= b / gcd`，對拍加驗這個界。標題去掉 `*`。exgcd、CRT 對拍都過。
 - **exgcd / chineseRemainder**：exgcd 改成 `ll exgcd(a, b, &x, &y)` 回傳 gcd，CRT 不再另外呼叫 `gcd`、也不先除 g（兩組輸入的 Euclid 商序列相同，x 一樣，界仍是 `|x| <= m2 / g`）。未收錄的 `ax=b%n.cpp` 跟著改介面，輸出與舊版相同。對拍都過。
-- **exgcd**：拿掉兩行註解（`ax + by = gcd` 重述名稱；`|x|` 界），底部加一行解 `ax = c (mod m)` 的用法（週期 `m / g`）。
+- **exgcd**：底部加一行解 `ax = c (mod m)` 的用法（週期 `m / g`）。

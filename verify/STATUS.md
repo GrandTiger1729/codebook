@@ -80,7 +80,6 @@
 |---|---|---|---|---|
 | `5_String/KMP.cpp` | — 無對應題 | 200 000 組 σ≤3（空 pattern 不可） | 需要外部 `MAXN` | — |
 | `5_String/Z-value.cpp` | `string/zalgorithm` **AC** 29 筆 · 0.040s/5s (1%) | — | 需要外部 `SIZE` | test by Lib-Checker Z Algorithm |
-| `5_String/RollingHash.cpp` | — 無對應題 | 400 個字串（σ ≤ 3）的所有等長子字串對（220 萬對）：雜湊相等 ⇔ 子字串相等；`string` 與 `vector<int>` 一致 | ✅ | 2026-11-17 加入（mod 2^61−1、隨機底數） |
 | `5_String/Manacher.cpp` | `string/enumerate_palindromes` **AC** 24 筆 · 0.068s/5s (1%) | — | 需要外部 `SIZE` | test by Lib-Checker Enumerate Palindromes |
 | `5_String/SAIS-C++20.cpp` | `string/suffixarray` **AC** 50 筆 · 0.181s/5s (4%) | σ≤3 窮舉 + 隨機 n≤3000，共 30 252 組 | ✅ | test by Lib-Checker Suffix Array |
 | `5_String/LCP_Array.cpp` | `string/number_of_substrings#lcp` **AC** 24 筆 · 0.065s/5s (1%) | 30 000 組 n≤2000（含週期串）vs 直接比相鄰後綴 | ✅ | SA 由 SAIS 產生；2026-11-17 從 SA_LCP_becaido 拆出（倍增 SA 刪掉） |
@@ -147,7 +146,6 @@
 | `8_Geometry/Heart.cpp` | `geo/minimum_enclosing_circle` **AC** 25 筆 · 0.033s/5s (1%) | 294 534 個三角形（外心/內心/重心/垂心性質） | ✅ | circenter test by Lib-Checker Minimum Enclosing Circle |
 | `8_Geometry/point_in_circle.cpp` | — 無對應題 | 383 207 組，exact `__int128` 參考（p 須 CCW） | ✅ | — |
 | `8_Geometry/Convex_hull.cpp` | `geo/static_convex_hull` **AC** 25 筆 · 0.168s/5s (3%) | — | ✅ | test by Zerojudge b398, Lib-Checker Static Convex Hull |
-| `8_Geometry/FarthestPair.cpp` | `geo/furthest_pair` **AC** 46 筆 · 0.366s/5s (7%) | 29 975 個凸包（座標到 1e9、含共線）vs O(n²) | 需要外部 `pll` primitives | 2026-11-17 加入（旋轉卡尺）；注意 `hull()` 對「全部同一點」會回傳重複點，driver 先去重 |
 | `8_Geometry/PointInConvex.cpp` | — 無對應題 | 400 萬筆查詢（不可有共線頂點） | ✅ | test by CF 104114 B, CF 101242 J (World Finals' problem) |
 | `8_Geometry/PointInPolygon.cpp` | — 無對應題 | 27 萬筆查詢，隨機星形簡單多邊形（兩種方向）vs 繞數（atan2）與邊上判斷 | 需要外部 `pll` primitives | 2026-11-17 加入（射線法，回傳 1 / 0 / −1） |
 | `8_Geometry/TangentPointToHull.cpp` | — 無對應題 | 537 397 筆查詢，座標到 ±1e9；其中 21.5 萬筆 p 在頂點、8.9 萬筆在邊上（2026-11-17 起可在凸包上） | 需要外部 `cyc_tsearch` | test by CF 104114 B, CF 101242 J (World Finals' problem) |
@@ -259,4 +257,4 @@
 - **新增理論**：Game Theory 小節（Misère Nim 從 Theorem 移過來；每條都用 Python 暴力驗過小範圍）。
 - **新增理論**：Linear Algebra 小節（行列式、Cayley–Hamilton、有限體計數、隨機檢查）；計數公式與 Sherman–Morrison、Schur 用 Python 驗過。新增程式 DeterminantAnyMod、CharPoly、XorBasis。
 - **新增理論**：Polynomial Facts（Newton 恆等式、Euler transform、Lagrange inversion 等）、Theorem 的圖論補充（König、Menger、平面圖、Turán、Ramsey、競賽圖、著色、弦圖、隨機漫步、穩定婚姻）、String and Automaton Facts（週期、runs、SAM、DFA 最小化等）。可驗的都用 Python 暴力驗過（腳本不進 repo）。
-- **對照 ckiseki 補的缺口**：Euler Trail、Point In Polygon、Farthest Pair、Rolling Hash、Josephus。
+- **對照 ckiseki 補的缺口**：Euler Trail、Point In Polygon、Josephus。

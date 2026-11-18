@@ -192,7 +192,7 @@
 | `9_Else/AdaptiveSimpson.cpp` | — 無對應題 | 40 000 個積分 | ✅ | test by CF 101193J, 100553D |
 | `9_Else/simulated_annealing.cpp` | — 無對應題 | — | 片段，非獨立編譯單元 | — |
 | `9_Else/tree_hash.cpp` | `tree/rooted_tree_isomorphism_classification` **AC** 17 筆 · 0.166s/5s (3%) | — | 需要外部 `G`、`N` | test by CSES Tree Isomorphism I, Lib-Checker Rooted Tree Isomorphism Classification |
-| `9_Else/BinarySearchOnFraction.cpp` | `number_theory/rational_approximation` **AC** 28 筆 · 0.117s/5s (2%) | — | ✅ | test by ABC 333 G after adjusted to int128, Lib-Checker Rational Approximation |
+| `9_Else/BinarySearchOnFraction.cpp` | `number_theory/rational_approximation` **AC** 28 筆 · 0.115s/5s (2%) | 4 680 組 N ≤ 30 窮舉 + 10 萬組 N ≤ 1e18（Farey 相鄰檢查） | ✅ | test by ABC 333 G after adjusted to int128, Lib-Checker Rational Approximation |
 | `9_Else/1d1d.cpp` | — 無對應題 | 區段 deque 版：convex、concave 各 20 000 組 vs O(n²)，n ≤ 400、大量平手 | 需要外部 `N`、`w` | — |
 | `9_Else/smawk.cpp` | `convolution/min_plus_convolution_convex_arbitrary#smawk` **AC** 41 筆 | 30 000 組完全單調矩陣求每列最小值 vs 暴力（Monge 型 + min-plus 斜帶） | ✅ | test by Lib-Checker Min Plus Convolution (Convex and Arbitrary) |
 | `9_Else/min_plus_convolution.cpp` | `convolution/min_plus_convolution_convex_arbitrary` **AC** 41 筆 · 0.119s/5s (2%) | 15 000 組 vs 暴力與 SMAWK 交叉比對（在 SMAWK 的對拍裡） | 需要外部 `INF` | test by Library Checker Min Plus Convolution (Convex and Arbitrary) |
@@ -262,6 +262,7 @@
 - **DiscreteLog**：BSGS 重寫成一個函式，用 gcd 判斷 y 在不在循環上，不再需要外部 `fpow`。
 - **Simplex**：改成跟 System of Linear Equations 一樣的 struct；無解回傳 `-INF`、無界回傳 `INF`（原本都回 -1，跟最佳值 -1 撞），2000×200 隨機 LP 9.4s → 0.17s（Dantzig 規則，pivot 數 44 617 → 937；遇到退化 pivot 改用 Bland 規則防循環，Beale 的例子在對拍裡）。
 - **BoundedFlow**（**修 bug**）：`solve(s, t)` 只加 t→s 的 INF 邊，所以只找得到流量 ≥ 0 的可行流；可行流全是負流量時（s 有入邊或 t 有出邊）誤報無解，最小流卻又可能回傳負數。改成 t→s、s→t 各一條 INF 邊；無解改回傳 `-INF`（-1 現在可能是答案）。
+- **BinarySearchOnFraction**：倍增改成標準寫法（原本減半階段失敗一次就停，少走的步數要多兩輪補）；lo 固定為 false 側、hi 為 true 側，輪流移動，拿掉 swap 和 L/H 旗標；加 pred 範例。
 - **Link cut tree**：改陣列版（0.56s → 0.33s），順便修了 `cut` 的 bug（見表）。
 - **新增程式**：Manhattan MST、Bipolar Orientation、Static Top Tree、SIMD、Nim Product、Determinant Any Mod、Characteristic Polynomial、Xor Basis（都有 LC 或本地對拍）。
 - **對照 ckiseki 補的缺口**：Point In Polygon、Josephus（另寫了 Euler Trail、Rolling Hash、Farthest Pair，太基本，只留檔案；Xor Basis 同）。

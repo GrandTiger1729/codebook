@@ -200,3 +200,26 @@ bool prime(ll n) { // n < 2^64
 
 支線 `Number_Theory_Transform.cpp` / `Polynomial_Operation.cpp` 不在 `content.tex`，
 由 `verify/MAP.tsv` 的六列 `#ours` 保護，不會腐爛。
+
+## I. 待辦：大輸入對拍找到的限制（2026-11-19 暫緩）
+
+12 個只靠本地對拍的模板改測比賽規模後（commit `b63b818`）找到的，**模板程式碼都還沒改**。
+證據都在 `verify/stress/` 對應的檔案裡（雙前置的測法、反例）。
+
+1. **[BF] HPIGeneralLine：`cov()` 把 `__int128` 傳給 `sign(ll)`，靜默截斷** —— 真 bug。
+   - 整數前置下反例：`{-212863333,741907385,-709121586} {-365462946,-451949997,304752521951466610}
+     {136818330,-851903263,163920210960433714}` 加 |x|,|y| ≤ 1e9 的框，應為空，回傳 4 條。
+   - ckiseki 的原版一樣有（`int sgn(lld)`），應該是從那裡抄來的。
+   - 修法：加 `int sign(__int128)`，或直接比 `> 0` / `< 0`。幾乎不花行數。
+2. **[BF] 幾何前置是 double，但這些模板要整數精確**：Half_plane_intersection、HPIGeneralLine、
+   DelaunayTriangulation_dq、Triangulation_Vonoroi 在書中 `Default_code.cpp` 下只到 |coord| ≈ 3.3e7
+   （cross 超過 2^53 就不精確）；1e9 時近平行線被當平行、近共圓判錯。換 `Default_code_int.cpp` 都到 1e9。
+   - 別隊：kactl、ckiseki、std_abs、PCkomachi 的判斷都用整數點（std_abs 的 `sign(double)` 和我們一樣會丟精度）。
+   - PCkomachi 每個幾何模板第一行標 `// (int)` 或 `// (FP)` 加依賴，便宜又清楚。
+   - 選項：書裡放整數前置（約 13 行，頁數吃緊）＋每個模板標 int / FP。
+3. **[BF] Minkowski_Sum：輸入 |coord| > 759 250 124 會在內部 `hull(C)` 溢位** —— 已加註解，
+   std_abs / PCkomachi 同樣寫法也有同樣限制但沒寫。
+4. **[BF] Convexhull3D：double、eps 1e-8，|coord| ≤ 6.5e4 才保證精確**（1e5、2e5 實測還過，1e6 錯）。
+   kactl / PCkomachi 也是 double，都沒寫上限。選項：加一行上限註解。
+5. **[BF] Josephus：k > n 時遞迴深 n**，-O2、8 MB 棧在 n ≈ 3e5 爆（例：`josephus(300000, 300001)`）。
+   小 k 到 n = 1e18 都沒問題。ckiseki 也沒寫。選項：註解或把 k > n 改迴圈。

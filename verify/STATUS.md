@@ -292,3 +292,4 @@
 - **chineseRemainder**：對拍補上 lcm 接近宣稱上限 4e18 的情形（原本模數只到 1e9）；新舊版都過。
 - **對拍加大輸入**：12 個只靠本地對拍的模板改測比賽規模（幾何 |coord| 到 1e9、Josephus n 到 1e18、MinimumMeanCycle 權重 1e9），暴力參考全改 exact。發現：Minkowski_Sum 輸入 |coord| > 759 250 124 會在內部 `hull(C)` 溢位（加註解）；HPI / Delaunay / Voronoi 在書中 double 前置下只到 ≈ 3.3e7；HPIGeneralLine 用整數前置時 `sign(ll)` 截斷 `__int128`；Convexhull3D 只到 6.5e4；Josephus 在 k > n 時遞迴深 n。模板程式碼未改。
 - **content.tex**：chineseRemainder 移到 exgcd 正下方。
+- **排版改橫式三欄**：A4 landscape、`multicols*{3}`、欄距 6pt、頁首距紙邊 15pt；目錄縮成第一欄裡的兩小欄（去掉 Contents 標題）；最後一頁不平衡分欄。Theorem 的微積分表改兩欄；Nim Product 移到 Berlekamp Massey 後（修 Theorem 的怪間距）；readchar 拿出書。`check_layout.py` 上限改 56 欄——目前 52 行超過，定稿前再重排（CI 的排版檢查會先失敗）。目前 26 頁。

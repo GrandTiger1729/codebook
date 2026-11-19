@@ -1,12 +1,12 @@
 #include "prelude.h"
 #include "stress.h"
-#include "6_Math/ax+by=gcd.cpp" // exgcd, as in the book
+#include "6_Math/exgcd.cpp" // exgcd, as in the book
 #include "6_Math/chineseRemainder.cpp"
 typedef __int128 L;
 
 void check(ll x1, ll m1, ll x2, ll m2) {
   ll g = gcd(m1, m2), lcm = m1 / g * m2;
-  ll r = solve(x1, m1, x2, m2);
+  ll r = crt(x1, m1, x2, m2);
   if ((x2 - x1) % g) { assert(r == -1); return; }
   assert(0 <= r && r < lcm);
   assert(r % m1 == x1 && r % m2 == x2);
@@ -15,7 +15,7 @@ int main() {
   int cases = 0;
   // exhaustive tiny
   FOR (m1, 1, 24) FOR (m2, 1, 24) FOR (x1, 0, m1 - 1) FOR (x2, 0, m2 - 1) {
-    ll r = solve(x1, m1, x2, m2), best = -1;
+    ll r = crt(x1, m1, x2, m2), best = -1;
     FOR (x, 0, m1 * m2 - 1) if (x % m1 == x1 && x % m2 == x2) { best = x; break; }
     assert(r == best), cases++;
   }
@@ -30,7 +30,7 @@ int main() {
     ll X = rnd(0, 1e11), M = 1, cur = 0;
     FOR (k, 1, 5) {
       ll m = rnd(1, 300);
-      ll r = solve(cur, M, X % m, m);
+      ll r = crt(cur, M, X % m, m);
       assert(r != -1);
       M = M / gcd(M, m) * m, cur = r;
       if (M > 1e11) break;
@@ -42,6 +42,19 @@ int main() {
     ll m1 = rnd(5e8, 1e9), m2 = rnd(5e8, 1e9);
     ll x1 = rnd(0, m1 - 1), x2 = rnd(0, m2 - 1);
     if ((x2 - x1) % gcd(m1, m2)) continue;
+    check(x1, m1, x2, m2), cases++;
+  }
+  // lcm up to the advertised 4e18: big gcd, one huge modulus, huge x small
+  FOR (it, 1, 300000) {
+    ll m1, m2, LIM = 4e18 - 1;
+    if (it % 3 == 0) {
+      ll a = rnd(1, 2e9), b = rnd(1, 2e9), g = rnd(1, LIM / a / b);
+      m1 = a * g, m2 = b * g;
+    } else if (it % 3 == 1) m1 = rnd(1, LIM), m2 = 1;
+    else m2 = rnd(1, 1e6), m1 = rnd(1, LIM / m2);
+    if ((L)m1 / gcd(m1, m2) * m2 >= (L)4e18) continue;
+    ll g = gcd(m1, m2), x1 = rnd(0, m1 - 1);
+    ll x2 = rnd(0, 1) ? rnd(0, m2 - 1) : (L)(x1 % g + g * rnd(0, (m2 - 1) / g)) % m2;
     check(x1, m1, x2, m2), cases++;
   }
   printf("CRT: %d cases OK\n", cases);

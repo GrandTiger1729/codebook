@@ -7,7 +7,7 @@
 \lstinputlisting{1_Basic/hash.sh}
 \subsection{Stress.sh}
 \lstinputlisting{1_Basic/stress.sh}
-\inputcode{readchar}{1_Basic/readchar.cpp}
+% \inputcode{readchar}{1_Basic/readchar.cpp}
 \inputcode{Black Magic}{1_Basic/black_magic.cpp}
 \inputcode{Pragma Optimization}{1_Basic/Pragma.cpp}
 \inputcode{SIMD}{1_Basic/SIMD.cpp} % test by local stress (vs scalar loops; every listed intrinsic compiles)
@@ -89,7 +89,8 @@
 
 
 \section{Math}
-\inputcode{ax+by=gcd(only exgcd *)}{6_Math/ax+by=gcd.cpp} % exgcd test by NTUJ 110
+\inputcode{exgcd}{6_Math/exgcd.cpp} % test by NTUJ 110 (old version), local brute force
+\inputcode{chineseRemainder}{6_Math/chineseRemainder.cpp}
 \inputcode{Floor and Ceil}{6_Math/floor_ceil.cpp}
 \inputcode{Floor Enumeration}{6_Math/floor_enumeration.cpp} % test by Lib-Checker Enumerate Quotients
 \inputcode{Mod Min}{6_Math/ModMin.cpp} % test by Lib-Checker Min of Mod of Linear
@@ -107,17 +108,16 @@
 \subsubsection{Construction}
 \input{6_Math/SimplexConstruction.tex}
 %\inputcode{Schreier-Sims Algorithm*}{6_Math/SchreierSims.cpp} % test by XVI Opencup GP of Ekaterinburg H
-\inputcode{chineseRemainder}{6_Math/chineseRemainder.cpp}
 \inputcode{Factorial without prime factor*}{6_Math/fac_no_p.cpp} % test by luogu P4720
 \inputcode{Quadratic Residue}{6_Math/QuadraticResidue.cpp} % test by Lib-Checker Sqrt Mod, local brute force
 \inputcode{PiCount*}{6_Math/PiCount.cpp} % test by luogu P7884, Lib-Checker Counting Primes
 \inputcode{Discrete Log}{6_Math/DiscreteLog.cpp} % test by Lib-Checker Discrete Logarithm
 \inputcode{Berlekamp Massey}{6_Math/Berlekamp-Massey.cpp} % returns c 0-based, feeds FastLinearRecursion directly; test by Lib-Checker Find Linear Recurrence, local round trip through FastLinearRecursion
+\inputcode{Nim Product}{6_Math/NimProduct.cpp} % test by Lib-Checker Nim Product (64 bit), local brute force (Turning Corners SG, field axioms)
 \subsection{Primes}
 \lstinputlisting{6_Math/Primes.cpp}
 \subsection{Theorem}
 \input{6_Math/Theorem.tex}
-\inputcode{Nim Product}{6_Math/NimProduct.cpp} % test by Lib-Checker Nim Product (64 bit), local brute force (Turning Corners SG, field axioms)
 \subsection{Euclidean Algorithms}
 \input{6_Math/Euclidean.tex}
 \subsection{Estimation}

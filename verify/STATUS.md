@@ -35,7 +35,7 @@
 | `2_Graph/SCC.cpp` | `graph/scc` **AC** 12 筆 · 0.316s/5s (6%)<br>`other/two_sat` **AC** 18 筆 · 0.317s/5s (6%) | 30 000 組隨機有向圖 vs 可達性閉包（含反向拓撲序編號、scc_adj） | 需要外部 `adj` | test by caido, Lib-Checker Strongly Connected Components |
 | `2_Graph/2SAT.cpp` | `other/two_sat` **AC** 18 筆 · 0.317s/5s (6%) | 20 000 組 n ≤ 10 vs 2^n 窮舉（either / set_value / at_most_one，14 101 組可滿足），並驗 `ans` | 需要外部 `adj` | needs SCC; test by Lib-Checker Two SAT, local brute force (either/set_value/at_most_one) |
 | `2_Graph/EulerTrail.cpp` | `graph/eulerian_trail_directed` **AC** 27 筆 · 0.114s/5s (2%)<br>`graph/eulerian_trail_undirected` **AC** 27 筆 · 0.115s/5s (2%) | — | ✅ | 2026-11-17 加入（迭代版 Hierholzer；度數檢查與起點由呼叫端負責） |
-| `2_Graph/MinimumMeanCycle.cpp` | — 無對應題 | 20 000 組 n≤8 vs 枚舉簡單環（**修 bug**：Karp 少算 k=n−1） | 需要外部 `N` | test by TIOJ 1934 |
+| `2_Graph/MinimumMeanCycle.cpp` | — 無對應題 | 20 200 組：n≤8 vs 枚舉簡單環，n ≤ 300、權重 ≤ 1e9 vs 恰 q 邊閉走最小值（**修 bug**：Karp 少算 k=n−1） | 需要外部 `N`；權重須為正 | test by TIOJ 1934 |
 | `2_Graph/Virtual_Tree.cpp` | — 無對應題 | 150 000 筆查詢 n≤40 vs 暴力（**修 bug**：`reset(st[0])`） | 需要外部 `N` | test by luogu P2495 |
 | `2_Graph/Maximum_Clique_Dyn.cpp` | — 無對應題 | 6 000 組 n≤60，答案 + `sol[]` 驗證 | 需要外部 `N` | test by TIOJ 1978, CF 101221 I (World Finals' problem) |
 | `2_Graph/MinimumSteinerTree.cpp` | `graph/minimum_steiner_tree` **AC** 24 筆 · 0.114s/5s (2%) | 16 000 組多重圖 n ≤ 8、T ≤ 5 vs 枚舉點集 + Prim（8 047 組有 `vcst`、5 411 組 W=1e9、3 486 組不連通），並驗 `ans` 是連通所有 terminal 的樹 | 需要外部 `N`、`T`、`INF` | test by luogu P6192, Lib-Checker Minimum Steiner Tree, local brute force |
@@ -100,7 +100,7 @@
 
 | 模版 | Library Checker | 本地對拍 | 單檔編譯 | 書上標註 |
 |---|---|---|---|---|
-| `6_Math/ax+by=gcd.cpp` | — 無對應題 | 204 萬組含負數與 ±1e18 | ✅ | exgcd test by NTUJ 110 |
+| `6_Math/exgcd.cpp` | — 無對應題 | 204 萬組含負數與 ±1e18；`a >= 0, b > 0` 時 `|x| <= b / g` | ✅ | test by NTUJ 110 (old version), local brute force |
 | `6_Math/floor_ceil.cpp` | — 無對應題 | 101 萬組含 INT 邊界 | ✅ | — |
 | `6_Math/floor_enumeration.cpp` | `number_theory/enumerate_quotients` **AC** 26 筆 · 0.121s/5s (2%) | — | 片段，非獨立編譯單元 | test by Lib-Checker Enumerate Quotients |
 | `6_Math/ModMin.cpp` | `number_theory/min_of_mod_of_linear` **AC** 17 筆 · 0.265s/10s (3%) | 1 734 355 組 vs 暴力（m ≤ 60 窮舉，88 406 組無解） | ✅ | test by Lib-Checker Min of Mod of Linear |
@@ -113,8 +113,8 @@
 | `6_Math/XorBasis.cpp` | — 無對應題 | 3 000 組、55 093 個區間查詢 vs 枚舉子集：每個前綴一份 basis 的區間最大 xor（含起始值 x）、整個 span 的第 k 小 | ✅ | 2026-11-17 加入（插入時間戳記版） |
 | `6_Math/Pollard_Rho.cpp` | `number_theory/factorize` **AC** 31 筆 · 0.069s/10s (1%)（2026-11-17 改 kactl 式批次 gcd，原本 1.167s） | 24 萬組：n ≤ 2·10⁵ 窮舉 vs 試除法、2ᵏ·p、隨機至 10¹⁸、兩個約 10⁹ 質數之積、質數平方與立方、Carmichael 數、連續呼叫累加 | 需要外部 `prime` | test by Lib-Checker Factorize |
 | `6_Math/Simplex_Algorithm.cpp` | — 無對應題 | 12 000 組 vs 頂點枚舉（最佳/無界/不可行）+ 275 組對偶 | 需要外部 `MAXN`、`MAXM`、`INF` | 2026-11-18 改寫（見最後一節） |
-| `6_Math/chineseRemainder.cpp` | — 無對應題 | 424 575 組含非互質、無解、lcm≈1e18（**修溢位**） | 需要外部 `exgcd` | — |
-| `6_Math/fac_no_p.cpp` | `enumerative_combinatorics/binomial_coefficient` 無法驅動 | 44 960 組 vs 直接計算 | 需要外部 `MAXP` | test by luogu P4720 |
+| `6_Math/chineseRemainder.cpp` | — 無對應題 | 724 575 組含非互質、無解、lcm 到 4e18（大 gcd、單一模數近 4e18）（**修溢位**） | 需要外部 `exgcd` | — |
+| `6_Math/fac_no_p.cpp` | `enumerative_combinatorics/binomial_coefficient` 無法驅動 | 44 960 組 vs 直接計算 | 需要外部 `MAXP`、`mpow(a, e, m)` | test by luogu P4720 |
 | `6_Math/QuadraticResidue.cpp` | `number_theory/sqrt_mod` **AC** 13 筆 · 0.064s/10s (1%) | 289 050 組（p < 2000 每個 a 窮舉 + 大質數植入解） | ✅ | test by Lib-Checker Sqrt Mod, local brute force |
 | `6_Math/PiCount.cpp` | `number_theory/counting_primes` **AC** 31 筆 · 0.033s/5s (1%) | — | ✅ | test by luogu P7884, Lib-Checker Counting Primes |
 | `6_Math/DiscreteLog.cpp` | `number_theory/discrete_logarithm_mod` **AC** 20 筆 · 0.264s/10s (3%) | 585 220 組（m ≤ 120 窮舉 + 植入解到 1e9；443 296 組無解） | ✅ | test by Lib-Checker Discrete Logarithm |
@@ -149,19 +149,19 @@
 | `8_Geometry/Default_code.cpp` | — 無對應題 | projection/reflection/linearTransformation 30 萬組 vs complex | 片段，非獨立編譯單元 | — |
 | `8_Geometry/PointSegDist.cpp` | — 無對應題 | 400 000 組 vs long double 投影 | ✅ | test by aizu oj CGL_2_D |
 | `8_Geometry/Heart.cpp` | `geo/minimum_enclosing_circle` **AC** 25 筆 · 0.033s/5s (1%) | 294 534 個三角形（外心/內心/重心/垂心性質） | ✅ | circenter test by Lib-Checker Minimum Enclosing Circle |
-| `8_Geometry/point_in_circle.cpp` | — 無對應題 | 383 207 組，exact `__int128` 參考（p 須 CCW） | ✅ | — |
+| `8_Geometry/point_in_circle.cpp` | — 無對應題 | 686 947 組，exact `__int128` 參考，含 |coord| ≤ 1e9 與恰好共圓（p 須 CCW） | ✅ | — |
 | `8_Geometry/Convex_hull.cpp` | `geo/static_convex_hull` **AC** 25 筆 · 0.168s/5s (3%) | — | ✅ | test by Zerojudge b398, Lib-Checker Static Convex Hull |
 | `8_Geometry/FarthestPair.cpp` | `geo/furthest_pair` **AC** 46 筆 · 0.366s/5s (7%) | 29 975 個凸包（座標到 1e9、含共線）vs O(n²) | 需要外部 `pll` primitives | 2026-11-17 加入（旋轉卡尺）；注意 `hull()` 對「全部同一點」會回傳重複點，driver 先去重 |
-| `8_Geometry/PointInConvex.cpp` | — 無對應題 | 400 萬筆查詢（不可有共線頂點） | ✅ | test by CF 104114 B, CF 101242 J (World Finals' problem) |
-| `8_Geometry/PointInPolygon.cpp` | — 無對應題 | 27 萬筆查詢，隨機星形簡單多邊形（兩種方向）vs 繞數（atan2）與邊上判斷 | 需要外部 `pll` primitives | 2026-11-17 加入（射線法，回傳 1 / 0 / −1） |
+| `8_Geometry/PointInConvex.cpp` | — 無對應題 | 1 988 萬筆查詢（不可有共線頂點），含 |coord| ≤ 1e9、凸包到 95 786 點 | ✅ | test by CF 104114 B, CF 101242 J (World Finals' problem) |
+| `8_Geometry/PointInPolygon.cpp` | — 無對應題 | 131 萬筆查詢，隨機星形簡單多邊形（兩種方向），含 |coord| ≤ 1e9、n 到 1e5，vs exact 繞數與邊上判斷 | 需要外部 `pll` primitives | 2026-11-17 加入（射線法，回傳 1 / 0 / −1） |
 | `8_Geometry/TangentPointToHull.cpp` | — 無對應題 | 537 397 筆查詢，座標到 ±1e9；其中 21.5 萬筆 p 在頂點、8.9 萬筆在邊上（2026-11-17 起可在凸包上） | 需要外部 `cyc_tsearch` | test by CF 104114 B, CF 101242 J (World Finals' problem) |
 | `8_Geometry/Intersection_of_line_and_convex.cpp` | — 無對應題 | 558 997 條線，含過頂點/貼邊 | 需要外部 `cyc_tsearch` | test by aizu CGL_4_C, probably not enough |
 | `8_Geometry/minMaxEnclosingRectangle.cpp` | — 無對應題 | 2 989 組（**修 bug**：acos NaN 丟掉最大值，改封閉式） | 需要外部 `hull` | test by UVA 819 |
-| `8_Geometry/Vector_in_poly.cpp` | — 無對應題 | 928 200 組含凹角/180° | ✅ | test by qoj 5479 |
+| `8_Geometry/Vector_in_poly.cpp` | — 無對應題 | 1 832 940 組含凹角/180°，其中 904 740 組 |coord| ≤ 1e9 | ✅ | test by qoj 5479 |
 | `8_Geometry/PolyUnion.cpp` | — 無對應題 | 20 000 組 vs 精確 slab 分解（含重複多邊形） | ✅ | test by CF 101673 A |
 | `8_Geometry/Polar_Angle_Sort.cpp`（不在書中） | `geo/sort_points_by_argument` **AC** 21 筆 · 0.117s/5s (2%) | — | ✅ | test by NTUJ 2270, Lib-Checker Sort Points by Argument |
-| `8_Geometry/Half_plane_intersection.cpp` | — 無對應題 | 25 000 組 vs O(n³) 暴力（含空/零面積） | 需要外部 `cmp` | test by qoj 2162 (World Finals' problem) |
-| `8_Geometry/HPIGeneralLine.cpp` | — 無對應題 | 25 000 組 vs O(n³) 暴力 | 需要外部 `cmp` | — |
+| `8_Geometry/Half_plane_intersection.cpp` | — 無對應題 | 56 016 組 vs exact 有理數暴力（含空/零面積），n 到 1e5 | 需要外部 `cmp`；書中 double 前置只到 |coord| ≈ 3.3e7（1e9 會把近平行線當平行），整數前置到 1e9 | test by qoj 2162 (World Finals' problem) |
+| `8_Geometry/HPIGeneralLine.cpp` | — 無對應題 | 56 012 組 vs exact 有理數暴力，格點直線到 1e9、n 到 1e5 | 需要外部 `cmp`；書中 double 前置只到 ≈ 3.3e7；整數前置下 `sign(ll)` 會截斷 `cov()` 的 `__int128`（**bug，未修**） | — |
 | `8_Geometry/rotatingSweepLine.cpp` | — 無對應題 | 2 173 組一般位置（前提：無三點共線） | 需要外部 `cmp` | — |
 | `8_Geometry/Minimum_Enclosing_Circle.cpp` | `geo/minimum_enclosing_circle` **AC** 25 筆 · 0.033s/5s (1%) | — | 需要外部 `circenter` | test by TIOJ 1093, Lib-Checker Minimum Enclosing Circle |
 | `8_Geometry/Intersection_of_two_circles.cpp` | — 無對應題 | 398 738 組含精確相切（同圓回傳 NaN） | ✅ | test by TIOJ 1503 |
@@ -170,10 +170,10 @@
 | `8_Geometry/Tangent_line_of_two_circles.cpp` | — 無對應題 | 300 000 組 | ✅ | — |
 | `8_Geometry/CircleCover.cpp` | — 無對應題 | 1 500 組 vs 數值積分（修未定義 `pi`） | 需要外部 `CCinter` | test by TIOJ 1503 |
 | `8_Geometry/3Dpoint.cpp` | — 無對應題 | 200 000 組 | ✅ | test by HDU 3662 |
-| `8_Geometry/Convexhull3D.cpp` | — 無對應題 | 5 765 個凸包 vs O(n⁴) 暴力（**修編譯錯誤**） | 需要外部 `Point` | test by HDU 3662, Ptz. Summer 2023 olmrgcsi And His Friends' Contest K |
-| `8_Geometry/DelaunayTriangulation_dq.cpp` | — 無對應題 | 2 500 組 exact 驗空圓性質（需外部 `seg_strict_intersect`） | 需要外部 `N` | test by Zerojudge b370, TIOJ 1310 |
-| `8_Geometry/Triangulation_Vonoroi.cpp` | — 無對應題 | 1 500 組 / 27 396 個 cell | 需要外部 `tool` | test by CF 104555 J, NPSC 2018 territory |
-| `8_Geometry/Minkowski_Sum.cpp` | — 無對應題 | 9 634 組 vs 所有和的凸包（hull 不可退化） | 需要外部 `hull` | test by Zerojudge b398 |
+| `8_Geometry/Convexhull3D.cpp` | — 無對應題 | 8 693 個凸包：|coord| ≤ 65 000 vs O(n⁴) 暴力，n ≤ 2000 驗結構（**修編譯錯誤**） | 需要外部 `Point`；double、eps 1e-8，|coord| ≤ 6.5e4 才保證精確（1e6 會錯） | test by HDU 3662, Ptz. Summer 2023 olmrgcsi And His Friends' Contest K |
+| `8_Geometry/DelaunayTriangulation_dq.cpp` | — 無對應題 | 5 012 組 exact 驗空圓性質，n 到 1e5、近共圓（需外部 `seg_strict_intersect`） | 需要外部 `N`；書中 double 前置只到 |coord| ≈ 3.3e7，整數前置到 1e9 | test by Zerojudge b370, TIOJ 1310 |
+| `8_Geometry/Triangulation_Vonoroi.cpp` | — 無對應題 | 1 902 組 / 239 202 個 cell vs 全部中垂線裁切，n 到 1e5 | 需要外部 `tool`；書中 double 前置只到 |coord| ≈ 3.3e7，整數前置到 1e9 | test by CF 104555 J, NPSC 2018 territory |
+| `8_Geometry/Minkowski_Sum.cpp` | — 無對應題 | 9 735 組 vs 所有和的凸包（hull 不可退化），含 101 組 |coord| ≤ 7.5e8、1e5 點 | 需要外部 `hull`；輸入 |coord| ≤ 759 250 124（內部 `hull(C)` 的 cross 會溢位） | test by Zerojudge b398 |
 | `8_Geometry/ClosestPair.cpp` | `geo/closest_pair` **AC** 29 筆 · 0.467s/5s (9%) | — | ✅ | test by Lib-Checker Closest Pair |
 
 ## Else
@@ -184,7 +184,7 @@
 | `9_Else/Mos_Algorithm_With_modification.cpp` | — 無對應題 | 3 000 組 6 萬筆查詢（**原本編不過** + `R = -1`） | 需要外部 `blk` | — |
 | `9_Else/Mos_Algorithm_On_Tree.cpp` | — 無對應題 | 3 000 棵樹 6 萬筆查詢（**原本編不過** + `R = -1`） | 需要外部 `LCA` | — |
 | `9_Else/HilbertCurve.cpp` | — 無對應題 | n≤2^10 窮舉 + 2^30 隨機 | ✅ | — |
-| `9_Else/Josephus.cpp` | — 無對應題 | n ≤ 300、k ≤ 400 vs 模擬；n ≤ 1e5 vs O(n) 遞迴，共 21 000 組 | ✅ | 2026-11-17 加入 |
+| `9_Else/Josephus.cpp` | — 無對應題 | n ≤ 300、k ≤ 400 vs 模擬；n ≤ 1e7 vs O(n) 遞迴；n 到 1e18（k ≤ 1000）vs 獨立實作與 k = 2 公式，共 123 300 組 | k > n 時遞迴深 n：n ≈ 3e5 會爆棧 | 2026-11-17 加入 |
 | `9_Else/DynamicConvexTrick.cpp` | `data_structure/line_add_get_min` **AC** 15 筆 · 0.167s/5s (3%) | — | ✅ | test by TIOJ 1921, Lib-Checker Line Add Get Min |
 | `9_Else/All_LCS.cpp` | `string/prefix_substring_lcs` **AC** 11 筆 · 0.115s/5s (2%) | — | ✅ | test by Lib-Checker Prefix-Substring LCS |
 | `9_Else/DLX.cpp`（不在書中） | — 無對應題 | — | 需要外部 `NN` | test by TIOJ 1333, 1381 |
@@ -275,3 +275,22 @@
 - **ManhattanMST**：排序比較式改成直接比 x + y（原本是 kactl 的移項寫法，等價）。
 - **StaticTopTree**：補一段用法註解（g 是子節點、要定義哪些函式、答案在哪、修改後呼叫 update）。
 - 標題拿掉 `*`（程式已不是實際送過的版本）：QuadraticResidue、DiscreteLog、BoundedFlow（Dinic 保留）、BinarySearchOnFraction。
+
+## 2026-11-18：頁首
+
+- 隊名移到右上角（regional 規定），頁碼改到左上角。
+
+## 2026-11-19
+
+- **Fast_Walsh_Transform**：`FOR (j, i, j + (L >> 1) - 1)` 改成 `i + (L >> 1) - 1`。原本不是 bug（`FOR` 展開後 `j` 先初始化成 `i` 才算上界），只是容易看錯；FWT 與 Minimum_Clique_Cover 的對拍都過。
+- **ManhattanMST**：「then Kruskal」從開頭註解移到 `return edges;` 那行，不重複。程式碼不變。
+- **exgcd**：`ax+by=gcd.cpp` 改名 `exgcd.cpp`，遞迴改成 structured binding、拿掉 `pll` typedef 與「最小非負 x」的註解食譜（exgcd 屬太基礎）；註解只寫 CRT 依賴的條件與界 `|x| <= b / gcd`，對拍加驗這個界。標題去掉 `*`。exgcd、CRT 對拍都過。
+- **exgcd / chineseRemainder**：exgcd 改成 `ll exgcd(a, b, &x, &y)` 回傳 gcd，CRT 不再另外呼叫 `gcd`、也不先除 g（兩組輸入的 Euclid 商序列相同，x 一樣，界仍是 `|x| <= m2 / g`）。未收錄的 `ax=b%n.cpp` 跟著改介面，輸出與舊版相同。對拍都過。
+- **exgcd**：底部加一行解 `ax = c (mod m)` 的用法：`x * (c / g) + k * (m / g)`。
+- **chineseRemainder**：函式名 `solve` 改 `crt`。
+- **fac_no_p**：STATUS 補上外部需求 `mpow(a, e, m)`（模板沒定義，對拍自備）。
+- **chineseRemainder**：對拍補上 lcm 接近宣稱上限 4e18 的情形（原本模數只到 1e9）；新舊版都過。
+- **對拍加大輸入**：12 個只靠本地對拍的模板改測比賽規模（幾何 |coord| 到 1e9、Josephus n 到 1e18、MinimumMeanCycle 權重 1e9），暴力參考全改 exact。發現：Minkowski_Sum 輸入 |coord| > 759 250 124 會在內部 `hull(C)` 溢位（加註解）；HPI / Delaunay / Voronoi 在書中 double 前置下只到 ≈ 3.3e7；HPIGeneralLine 用整數前置時 `sign(ll)` 截斷 `__int128`；Convexhull3D 只到 6.5e4；Josephus 在 k > n 時遞迴深 n。模板程式碼未改。
+- **content.tex**：chineseRemainder 移到 exgcd 正下方。
+- **排版改橫式三欄**：A4 landscape、`multicols*{3}`、欄距 6pt、頁首距紙邊 15pt；目錄縮成第一欄裡的兩小欄（去掉 Contents 標題）；最後一頁不平衡分欄。Theorem 的微積分表改兩欄；Nim Product 移到 Berlekamp Massey 後（修 Theorem 的怪間距）；readchar 拿出書。`check_layout.py` 上限改 56 欄——目前 52 行超過，定稿前再重排（CI 的排版檢查會先失敗）。目前 26 頁。
+- **listings 字寬**：`basewidth=0.55em`（listings 預設 0.6em 是給 Courier 的，Ubuntu Mono 本身 0.5em，原本字距被撐開）。每欄 56 → 61 字，原本 52 行折行全部消失，回到 25 頁；`check_layout.py` 上限改 61，CI 排版檢查恢復通過。

@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Fail if any listing in the PDF would wrap.
 
-listings at \\footnotesize in the two-column layout fits 58 columns (tab = 2);
-column 59 on is pushed onto a second line. Checks every file content.tex
+listings at \\footnotesize in the landscape three-column layout (6pt gap,
+269pt columns, basewidth 0.55em = 4.4pt per character) fits 61 columns
+(tab = 2); column 62 on is pushed onto a second line. Checks every file content.tex
 pulls in with \\inputcode or \\lstinputlisting (commented-out lines skipped).
 
     python3 verify/check_layout.py        # exit 1 and list offenders if any
@@ -11,7 +12,7 @@ import re
 import sys
 from pathlib import Path
 
-LIMIT = 58
+LIMIT = 61
 BOOK = Path(__file__).resolve().parent.parent / "codebook"
 INPUT = re.compile(r"\\(?:inputcode\{[^}]*\}|lstinputlisting(?:\[[^]]*\])?)\{([^}]+)\}")
 

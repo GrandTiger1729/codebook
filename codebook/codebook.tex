@@ -1,5 +1,5 @@
-\documentclass[a4paper,10pt,twocolumn,oneside]{article}
-\setlength{\columnsep}{10pt}                                                                    %兩欄模式的間距
+\documentclass[a4paper,10pt,oneside]{article}
+\setlength{\columnsep}{6pt} % 欄距
 \setlength{\columnseprule}{0pt}                                                                %兩欄模式間格線粗細
 
 \usepackage{amsthm}								%定義，例題
@@ -20,6 +20,7 @@
 \usepackage{savetrees}
 \usepackage{array}
 \usepackage{xparse}
+\usepackage{etoolbox}
 % \usepackage{CJKulem}
 
 % \usepackage{listings}
@@ -29,18 +30,8 @@
 
 %\usepackage[T1]{fontenc}
 \usepackage{amsmath, courier, listings, fancyhdr, graphicx}
-\topmargin=0pt
-\headsep=1pt
-\textheight=800pt
-\textwidth=570pt
-\footskip=0pt
-\marginparsep=0pt
-\marginparwidth=0pt
-\marginparpush=0pt
-\oddsidemargin=0pt
-\evensidemargin=0pt
-\voffset=-57pt
-\hoffset=-58pt
+\geometry{a4paper,landscape,left=14pt,right=11pt,top=15pt,headheight=12pt,
+  headsep=1pt,includehead,bottom=14pt,footskip=0pt} % savetrees loads geometry
 
 \titlespacing\section{0pt}{0pt}{2pt}
 \titlespacing\subsection{0pt}{0pt}{2pt}
@@ -101,6 +92,7 @@
 language=C++,										% the language of the code
 aboveskip=-2pt,										% cancel the 2pt under headings: code sits right under
 belowskip=0pt,										% no extra gap before the next heading
+basewidth=0.55em,										% Ubuntu Mono is 0.5em wide; a little air (listings default: 0.6em)
 basicstyle=\footnotesize\ttfamily, 						% the size of the fonts that are used for the code
 %numbers=left,										% where to put the line-numbers
 numberstyle=\footnotesize,						% the size of the fonts that are used for the line-numbers
@@ -156,26 +148,27 @@ stringstyle=\itshape\color{Green4},
 \pagestyle{fancy}
 \fancyfoot{}
 %\fancyfoot[R]{\includegraphics[width=20pt]{ironwood.jpg}}
-\fancyhead[L]{National Taiwan University YajuKingFlag}
-\fancyhead[R]{\thepage}
+\fancyhead[L]{\thepage}
+\fancyhead[R]{National Taiwan University YajuKingFlag}
 \renewcommand{\headrulewidth}{0.2pt}
 \renewcommand{\contentsname}{Contents}
+\makeatletter % TOC must fit one column: less space before sections
+\patchcmd{\l@section}{\addvspace{1.0em \@plus\p@}}{\addvspace{2pt}}{}{\fail}
+\renewcommand\@tocrmarg{1.8em} % fewer wrapped titles (default 2.55em)
+\renewcommand*\l@subsection{\@dottedtocline{2}{0.8em}{2.3em}} % indent 1.5em
+\makeatother
 \newcommand{\inputcode}[2]{
     \subsection[#1]{#1 \footnotesize{[\texttt{\captureshell{cpp #2 -dD -P -fpreprocessed | tr -d '[:space:]' | md5sum | cut -c-6}}]}}
     \lstinputlisting{#2}
 }
 
-% \textbf{
-\scriptsize
-\begin{multicols}{2}
-  \tableofcontents
-\end{multicols}
-% }
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%\newpage
-
 \footnotesize
+\begin{multicols*}{3} % *: fill columns in order, last page unbalanced
+{\scriptsize
+\begin{multicols}{2}
+  \makeatletter\@starttoc{toc}\makeatother % no "Contents" heading
+\end{multicols}}
 \input{content.tex}
+\end{multicols*}
 
 \end{document}

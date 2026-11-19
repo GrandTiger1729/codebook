@@ -291,3 +291,4 @@
 - **fac_no_p**：STATUS 補上外部需求 `mpow(a, e, m)`（模板沒定義，對拍自備）。
 - **chineseRemainder**：對拍補上 lcm 接近宣稱上限 4e18 的情形（原本模數只到 1e9）；新舊版都過。
 - **對拍加大輸入**：12 個只靠本地對拍的模板改測比賽規模（幾何 |coord| 到 1e9、Josephus n 到 1e18、MinimumMeanCycle 權重 1e9），暴力參考全改 exact。發現：Minkowski_Sum 輸入 |coord| > 759 250 124 會在內部 `hull(C)` 溢位（加註解）；HPI / Delaunay / Voronoi 在書中 double 前置下只到 ≈ 3.3e7；HPIGeneralLine 用整數前置時 `sign(ll)` 截斷 `__int128`；Convexhull3D 只到 6.5e4；Josephus 在 k > n 時遞迴深 n。模板程式碼未改。
+- **content.tex**：chineseRemainder 移到 exgcd 正下方。

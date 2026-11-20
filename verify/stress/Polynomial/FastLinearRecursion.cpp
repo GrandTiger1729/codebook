@@ -7,12 +7,12 @@
 #include "7_Polynomial/FastLinearRecursion.cpp"
 struct mi { // field type for BerlekampMassey
   int v = 0;
-  mi(ll x = 0) : v((x % mod + mod) % mod) {}
+  mi(ll x = 0) : v((x % MOD + MOD) % MOD) {}
   mi operator-() const { return mi(sub(0, v)); }
   mi &operator+=(mi o) { v = add(v, o.v); return *this; }
   mi &operator-=(mi o) { v = sub(v, o.v); return *this; }
   mi operator*(mi o) const { return mi(mul(v, o.v)); }
-  mi operator/(mi o) const { return mi(mul(v, Pow(o.v, mod - 2))); }
+  mi operator/(mi o) const { return mi(mul(v, Pow(o.v, MOD - 2))); }
   bool operator==(int x) const { return v == x; }
 };
 #include "6_Math/Berlekamp-Massey.cpp"
@@ -20,7 +20,7 @@ struct mi { // field type for BerlekampMassey
 // Random order-d recurrence -> 2d-term prefix -> BerlekampMassey (1-based c) ->
 // shift to BostanMori's 0-based c -> must replay every term of a longer
 // run, and agree with a naive O(d^2 log k) Kitamasa for huge k.
-int R() { return rnd(0, mod - 1); }
+int R() { return rnd(0, MOD - 1); }
 int kitamasa(const vector<int> &a, const vector<int> &c1, ll k) { // c1 1-based
   int d = SZ(a);
   auto mulmod = [&](const vector<int> &p, const vector<int> &q) {

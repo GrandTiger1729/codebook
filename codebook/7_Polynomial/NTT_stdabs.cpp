@@ -1,12 +1,12 @@
 #define SZ(a) ((int)a.size())
 #define ALL(v) v.begin(), v.end()
-// needs mod, G (a primitive root), N = 2^k, and
+// needs MOD, G (a primitive root), N = 2^k, and
 // add, sub, mul, Pow -- Pow's exponent must be ll,
 // PolyPow passes k. Operation wants fac[], ifac[] too
 struct NTT {
   int w[N];
   NTT() {
-    int dw = Pow(G, (mod - 1) / N);
+    int dw = Pow(G, (MOD - 1) / N);
     w[0] = 1;
     FOR (i, 1, N - 1) w[i] = mul(w[i - 1], dw);
   } // 0 <= a[i] < P
@@ -28,7 +28,7 @@ struct NTT {
     }
     if (inv) {
       reverse(a.begin() + 1, a.end());
-      int invn = Pow(n, mod - 2);
+      int invn = Pow(n, MOD - 2);
       FOR (i, 0, n - 1) a[i] = mul(a[i], invn);
     }
   }

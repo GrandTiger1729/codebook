@@ -18,8 +18,8 @@ int main() {
   FOR (t, 1, 20000) {
     int n = rnd(1, t <= 10000 ? 8 : 40);
     Poly f(n);
-    FOR (i, 1, n - 1) f[i] = rnd(0, 1) ? rnd(0, 3) : rnd(0, mod - 1);
-    if (n > 1 && !f[1]) f[1] = rnd(1, mod - 1);
+    FOR (i, 1, n - 1) f[i] = rnd(0, 1) ? rnd(0, 3) : rnd(0, MOD - 1);
+    if (n > 1 && !f[1]) f[1] = rnd(1, MOD - 1);
     Poly g = CompInv(f), c(n);
     assert(SZ(g) == n && g[0] == 0);
     for (int i = n - 1; i >= 0; i--) c = naiveMul(c, g, n), c[0] = add(c[0], f[i]);

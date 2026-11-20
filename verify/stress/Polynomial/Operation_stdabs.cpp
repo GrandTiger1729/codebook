@@ -7,7 +7,7 @@
 
 // Divide / Evaluate / Interpolate / TaylorShift / SamplingShift / power_proj
 // against O(n^2)-ish brute force, all mod 998244353.
-int R() { return rnd(0, mod - 1); }
+int R() { return rnd(0, MOD - 1); }
 Poly rpoly(int n) { Poly a(n); for (int &x : a) x = R(); return a; }
 Poly naiveMul(const Poly &a, const Poly &b) {
   Poly c(SZ(a) + SZ(b) - 1);
@@ -30,7 +30,7 @@ int lagrange(const vector<int> &y, int c) { // f(0..n-1) = y, return f(c)
   FOR (i, 0, n - 1) {
     int num = 1, den = 1;
     FOR (j, 0, n - 1) if (j != i) num = mul(num, sub(c, j)), den = mul(den, sub(i, j));
-    res = add(res, mul(y[i], mul(num, Pow(den, mod - 2))));
+    res = add(res, mul(y[i], mul(num, Pow(den, MOD - 2))));
   }
   return res;
 }

@@ -2,8 +2,8 @@
 #include "stress.h"
 #include "6_Math/QuadraticResidue.cpp"
 #include "mod_helpers.h"
-#include "7_Polynomial/NTT_stdabs.cpp"
-#include "7_Polynomial/Operation_stdabs.cpp" // supplies Mul, Divide
+#include "7_Polynomial/Number_Theory_Transform.cpp"
+#include "7_Polynomial/Polynomial_Operation.cpp" // supplies Mul, Divide
 #include "7_Polynomial/FastLinearRecursion.cpp"
 struct mi { // field type for BerlekampMassey
   int v = 0;

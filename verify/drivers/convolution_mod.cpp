@@ -1,6 +1,6 @@
 #include "../prelude.h"
 #include "../mod_helpers.h"
-#include "../../codebook/7_Polynomial/NTT_stdabs.cpp"
+#include "../../codebook/7_Polynomial/Number_Theory_Transform.cpp"
 
 int main() {
   Waimai;

@@ -2,8 +2,8 @@
 #include "stress.h"
 #include "6_Math/QuadraticResidue.cpp"
 #include "mod_helpers.h"
-#include "7_Polynomial/NTT_stdabs.cpp"
-#include "7_Polynomial/Operation_stdabs.cpp"
+#include "7_Polynomial/Number_Theory_Transform.cpp"
+#include "7_Polynomial/Polynomial_Operation.cpp"
 
 // Divide / Evaluate / Interpolate / TaylorShift / SamplingShift / power_proj
 // against O(n^2)-ish brute force, all mod 998244353.
@@ -15,6 +15,12 @@ Poly naiveMul(const Poly &a, const Poly &b) {
   return c;
 }
 int horner(const Poly &a, int x) { int r = 0; for (int i = SZ(a) - 1; i >= 0; i--) r = add(mul(r, x), a[i]); return r; }
+Poly truncMul(const Poly &a, const Poly &b, int n) {
+  Poly c(n);
+  FOR (i, 0, SZ(a) - 1) FOR (j, 0, min(SZ(b), n - i) - 1)
+    c[i + j] = add(c[i + j], mul(a[i], b[j]));
+  return c;
+}
 bool samePoly(Poly a, Poly b) { // equal up to trailing zeros
   while (SZ(a) && !a.back()) a.pop_back();
   while (SZ(b) && !b.back()) b.pop_back();
@@ -37,7 +43,7 @@ int lagrange(const vector<int> &y, int c) { // f(0..n-1) = y, return f(c)
 
 int main() {
   build();
-  int cnt[8] = {};
+  int cnt[9] = {};
   // Divide: a = b q + r, deg r < deg b
   FOR (it, 1, 500) {
     int n = rnd(1, 60), m = rnd(1, 40);
@@ -123,6 +129,18 @@ int main() {
     s = naiveMul(s, s), s.resize(n);
     assert(s == a), cnt[7]++;
   }
-  printf("Operation_stdabs: Divide %d, Evaluate %d, Interpolate %d, TaylorShift %d, SamplingShift %d, power_proj %d, PolyPow %d, Sqrt %d OK\n",
-    cnt[0], cnt[1], cnt[2], cnt[3], cnt[4], cnt[5], cnt[6], cnt[7]);
+  // CompInv: f(g(x)) == x mod x^n by naive composition (Horner)
+  FOR (t, 1, 20000) {
+    int n = rnd(1, t <= 10000 ? 8 : 40);
+    Poly f(n);
+    FOR (i, 1, n - 1) f[i] = rnd(0, 1) ? rnd(0, 3) : rnd(0, MOD - 1);
+    if (n > 1 && !f[1]) f[1] = rnd(1, MOD - 1);
+    Poly g = CompInv(f), c(n), x(n);
+    assert(SZ(g) == n && g[0] == 0);
+    for (int i = n - 1; i >= 0; i--) c = truncMul(c, g, n), c[0] = add(c[0], f[i]);
+    if (n > 1) x[1] = 1;
+    assert(c == x), cnt[8]++;
+  }
+  printf("Polynomial_Operation: Divide %d, Evaluate %d, Interpolate %d, TaylorShift %d, SamplingShift %d, power_proj %d, PolyPow %d, Sqrt %d, CompInv %d OK\n",
+    cnt[0], cnt[1], cnt[2], cnt[3], cnt[4], cnt[5], cnt[6], cnt[7], cnt[8]);
 }

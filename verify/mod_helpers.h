@@ -1,6 +1,6 @@
 const int MOD = 998244353, G = 3;
 const int N = 1 << 20; // must be 2^k
-// The arithmetic NTT_stdabs.cpp no longer ships -- "can be memorised",
+// The arithmetic Number_Theory_Transform.cpp no longer ships -- "can be memorised",
 // so the drivers write it out the way a contestant would.
 int add(int a, int b) { a += b; if (a >= MOD) a -= MOD; return a; }
 int sub(int a, int b) { a -= b; if (a < 0) a += MOD; return a; }

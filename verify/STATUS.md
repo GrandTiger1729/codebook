@@ -126,11 +126,10 @@
 |---|---|---|---|---|
 | `7_Polynomial/Fast_Fourier_Transform.cpp` | `convolution/convolution_mod_1000000007` **AC** 48 筆 · 0.369s/10s (4%) | `conv()`：500 組 vs 樸素卷積，最大誤差 1.5e-8（\|a_i\| ≤ 1e3）、1.1e-5（\|a_i\| ≤ 3e4） | ✅ | test by Lib-Checker Convolution mod 1e9+7 (through FFT Mod) |
 | `7_Polynomial/Fast_Fourier_Transform_Mod.cpp` | `convolution/convolution_mod_1000000007` **AC** 48 筆 · 0.369s/10s (4%) | — | 需要外部 `cplx` | test by Lib-Checker Convolution mod 1e9+7 |
-| `7_Polynomial/NTT_stdabs.cpp` | `convolution/convolution_mod` **AC** 53 筆 · 0.379s/5s (8%) | — | 需要外部 `MOD`/`G`/`N` 和 `add`/`sub`/`mul`/`Pow`（`Pow` 的指數要 `ll`，`PolyPow` 會傳 k）；可用的 (mod, G, 2^k) 見下面的 NTT Primes 表 | std_abs 原檔 + macro 契約；test by Lib-Checker Convolution |
+| `7_Polynomial/Number_Theory_Transform.cpp` | `convolution/convolution_mod` **AC** 53 筆 · 0.379s/5s (8%) | — | 需要外部 `MOD`/`G`/`N` 和 `add`/`sub`/`mul`/`Pow`（`Pow` 的指數要 `ll`，`PolyPow` 會傳 k）；可用的 (mod, G, 2^k) 見下面的 NTT Primes 表 | std_abs 原檔 + macro 契約；test by Lib-Checker Convolution |
 | `7_Polynomial/Fast_Walsh_Transform.cpp` | — 無對應題 | `subset_convolution`：2 000 組 vs 樸素 $O(4^L)$，L = 1..5、共用同一組全域 | ✅ | test by luogu P6097, local brute force |
-| `7_Polynomial/Operation_stdabs.cpp` | `polynomial/inv_of_formal_power_series` **AC** 25 筆 · 0.418s/10s (4%)<br>`polynomial/exp_of_formal_power_series` **AC** 26 筆 · 1.619s/10s (16%)<br>`polynomial/log_of_formal_power_series` **AC** 25 筆 · 0.668s/10s (7%)<br>`polynomial/pow_of_formal_power_series` **AC** 37 筆 · 2.227s/10s (22%)<br>`polynomial/sqrt_of_formal_power_series` **AC** 35 筆 · 1.120s/10s (11%)<br>`polynomial/polynomial_taylor_shift` **AC** 38 筆 · 0.268s/5s (5%)<br>`polynomial/shift_of_sampling_points_of_polynomial` **AC** 32 筆 · 0.668s/5s (13%) | `Divide`（$bq+r=a$）500 組、`Evaluate` vs Horner 300 組、`Interpolate` 來回 300 組、`TaylorShift` vs 直接代入 300 組、`SamplingShift` vs Lagrange 200 組、`power_proj` vs $O(n^2m)$ 樸素 250 組、`PolyPow` vs 連乘 3 000 組（含 $k = 0$、$a_0 = 0$）、`Sqrt` 平方回去 1 073 組 | 需要外部 NTT、`QuadraticResidue`；`TaylorShift`/`SamplingShift` 要 `fac[]`/`ifac[]` | 從 std_abs 改短（2026-11-20） |
-| `7_Polynomial/CompositionalInverse.cpp` | `polynomial/compositional_inverse_of_formal_power_series` **AC** 23 筆 · 0.215s/10s (2%)<br>`polynomial/compositional_inverse_of_formal_power_series_large` **AC** 28 筆 · 3.674s/10s (37%) | $f(g(x)) = x$ 用樸素合成驗證，20 000 組（$n$ = 1..40） | 需要 `power_proj`、`PolyPow`（`Operation_stdabs`）；$f_0 = 0$、$f_1 \ne 0$ | Lagrange 反演：power projection 取 $[x^{n-1}]f^i$ |
-| `7_Polynomial/FastLinearRecursion.cpp` | `other/kth_term_of_linearly_recurrent_sequence` **AC** 20 筆 · 3.573s/10s (36%) | BM → BostanMori 重播整段前綴，290 組（d = 1..20）共 9 166 項 | 需要外部 `Mul`、`ntt`（`Operation_stdabs`、`NTT_stdabs`） | Bostan–Mori（2026-09-28 取代 std_abs 的 Kitamasa，原本 TLE 19.442s）；`c` 是 **0-based**，BM 的輸出可直接餵入 |
+| `7_Polynomial/Polynomial_Operation.cpp` | `polynomial/inv_of_formal_power_series` **AC** 25 筆 · 0.418s/10s (4%)<br>`polynomial/exp_of_formal_power_series` **AC** 26 筆 · 1.619s/10s (16%)<br>`polynomial/log_of_formal_power_series` **AC** 25 筆 · 0.668s/10s (7%)<br>`polynomial/pow_of_formal_power_series` **AC** 37 筆 · 2.227s/10s (22%)<br>`polynomial/sqrt_of_formal_power_series` **AC** 35 筆 · 1.120s/10s (11%)<br>`polynomial/polynomial_taylor_shift` **AC** 38 筆 · 0.268s/5s (5%)<br>`polynomial/shift_of_sampling_points_of_polynomial` **AC** 32 筆 · 0.668s/5s (13%)<br>`polynomial/compositional_inverse_of_formal_power_series` **AC** 23 筆 · 0.215s/10s (2%)<br>`polynomial/compositional_inverse_of_formal_power_series_large` **AC** 28 筆 · 3.674s/10s (37%) | `Divide`（$bq+r=a$）500 組、`Evaluate` vs Horner 300 組、`Interpolate` 來回 300 組、`TaylorShift` vs 直接代入 300 組、`SamplingShift` vs Lagrange 200 組、`power_proj` vs $O(n^2m)$ 樸素 250 組、`PolyPow` vs 連乘 3 000 組（含 $k = 0$、$a_0 = 0$）、`Sqrt` 平方回去 1 073 組、`CompInv` $f(g(x)) = x$ 樸素合成 20 000 組（$n$ = 1..40） | 需要外部 NTT、`QuadraticResidue`；`TaylorShift`/`SamplingShift` 要 `fac[]`/`ifac[]` | 從 std_abs 改短（2026-11-20） |
+| `7_Polynomial/FastLinearRecursion.cpp` | `other/kth_term_of_linearly_recurrent_sequence` **AC** 20 筆 · 3.573s/10s (36%) | BM → BostanMori 重播整段前綴，290 組（d = 1..20）共 9 166 項 | 需要外部 `Mul`、`ntt`（`Polynomial_Operation`、`Number_Theory_Transform`） | Bostan–Mori（2026-09-28 取代 std_abs 的 Kitamasa，原本 TLE 19.442s）；`c` 是 **0-based**，BM 的輸出可直接餵入 |
 | `7_Polynomial/Value_Poly.cpp` | — 無對應題 | 431 189 組 vs 前綴和表 | 需要外部 `mint` | — |
 
 ## Geometry
@@ -193,8 +192,8 @@
 
 ## 總計
 
-- 收錄模版：**116**（上面各章主表中在書裡的列；不含 `hash.sh`、`stress.sh`、`Primes`、`misc.py`）
-- 有 Library Checker AC 的：**56**
+- 收錄模版：**115**（上面各章主表中在書裡的列；不含 `hash.sh`、`stress.sh`、`Primes`、`misc.py`）
+- 有 Library Checker AC 的：**55**
 - 有本地對拍的：**88**（主表「本地對拍」欄有內容的列；`verify/stress/` 共 92 個測試）
 - 兩種自動測試都沒有的：**4**（black_magic、Pragma、sanitize_fixer、simulated_annealing；都是片段或工具檔）
 
@@ -299,3 +298,4 @@
 - **SamplingShift 改回獨立版本**：`TaylorShift` 不再帶 `fall` 參數；只需要 SamplingShift 時不必連 TaylorShift 一起抄。
 - **新增 CompositionalInverse**（`CompInv`，16 行）：Lagrange 反演，LC 兩題 AC（large 3.674s/10s）；仍是 25 頁。
 - **`mod` 改名 `MOD`**（照隊上習慣）：`NTT_stdabs`、`Operation_stdabs`、`CompositionalInverse` 和 `verify/mod_helpers.h`、相關驅動程式與對拍；註解裡數學意義的 mod 不動。
+- **檔名去掉 `_stdabs`**：`NTT_stdabs.cpp` → `Number_Theory_Transform.cpp`、`Operation_stdabs.cpp` → `Polynomial_Operation.cpp`（跟同章 `Fast_Fourier_Transform.cpp` 一致）；`CompInv` 併到 `Polynomial_Operation.cpp` 最後，不再單獨成檔，對拍也併進去。

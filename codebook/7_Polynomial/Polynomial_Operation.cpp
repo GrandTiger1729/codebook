@@ -85,7 +85,7 @@ Poly Exp(Poly a) {
   }
   return q.resize(n), q;
 } // 1b07ee
-Poly PolyPow(Poly a, ll k) {
+Poly PolyPow(Poly a, ll k) { // needs Pow(int, ll)
   int n = SZ(a), m = 0;
   Poly ans(n, 0);
   while (m < n && a[m] == 0) m++;

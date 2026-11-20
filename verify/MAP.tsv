@@ -69,3 +69,5 @@ linear_algebra/matrix_det	matrix_det.cpp	6_Math/DeterminantAnyMod.cpp	same templ
 graph/eulerian_trail_directed	eulerian_trail.cpp -DDIRECTED	2_Graph/EulerTrail.cpp	driver checks degrees and picks the start
 graph/eulerian_trail_undirected	eulerian_trail.cpp	2_Graph/EulerTrail.cpp	driver checks degrees and picks the start
 geo/furthest_pair	furthest_pair.cpp	8_Geometry/FarthestPair.cpp + 8_Geometry/Convex_hull.cpp	integers from Default_code_int (not in the book)
+polynomial/compositional_inverse_of_formal_power_series	compositional_inverse.cpp	7_Polynomial/CompositionalInverse.cpp	
+polynomial/compositional_inverse_of_formal_power_series_large	compositional_inverse.cpp	7_Polynomial/CompositionalInverse.cpp	

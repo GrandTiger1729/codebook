@@ -192,8 +192,8 @@
 
 ## 總計
 
-- 收錄模版：**115**（上面各章主表中在書裡的列；不含 `hash.sh`、`stress.sh`、`Primes`、`misc.py` 與支線）
-- 有 Library Checker AC 的：**55**（另有支線 2 個）
+- 收錄模版：**115**（上面各章主表中在書裡的列；不含 `hash.sh`、`stress.sh`、`Primes`、`misc.py`）
+- 有 Library Checker AC 的：**55**
 - 有本地對拍的：**88**（主表「本地對拍」欄有內容的列；`verify/stress/` 共 92 個測試）
 - 兩種自動測試都沒有的：**4**（black_magic、Pragma、sanitize_fixer、simulated_annealing；都是片段或工具檔）
 

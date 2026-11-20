@@ -300,3 +300,4 @@
 - **`mod` 改名 `MOD`**（照隊上習慣）：`NTT_stdabs`、`Operation_stdabs`、`CompositionalInverse` 和 `verify/mod_helpers.h`、相關驅動程式與對拍；註解裡數學意義的 mod 不動。
 - **檔名去掉 `_stdabs`**：`NTT_stdabs.cpp` → `Number_Theory_Transform.cpp`、`Operation_stdabs.cpp` → `Polynomial_Operation.cpp`（跟同章 `Fast_Fourier_Transform.cpp` 一致）；`CompInv` 併到 `Polynomial_Operation.cpp` 最後，不再單獨成檔，對拍也併進去。
 - **註解搬家**：`Pow` 指數要 `ll` 的說明從 NTT 檔頭移到 `PolyPow` 那一行（只有它會傳 `ll`）；NTT 檔頭縮成一行。`fac[]`/`ifac[]` 的說明本來就在 `TaylorShift`。
+- **`power_proj`／`CompInv` 註明 $N \ge 4|f|$**：`power_proj` 把 $|f|$ 補到 $2^k$ 後做長度 $2 \cdot 2^k$ 的乘法，NTT 長度到 $4 \cdot 2^k$；$N$ 是 2 的冪，所以 $N \ge 4|f|$ 剛好等價。其他函式只要 $N \ge 2|f|$。

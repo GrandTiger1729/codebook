@@ -118,8 +118,8 @@ bool prime(ll n) { // n < 2^64
 
 **不建議新增**（原以為缺、實際上有）：
 
-- **Linear recurrence 第 k 項** — `7_Polynomial/Polynomial_Operation.cpp` 的
-  `LinearRecursion()` 已經做掉了，而且是 $O(n \log n \log k)$，比 kactl
+- **Linear recurrence 第 k 項** — `7_Polynomial/FastLinearRecursion.cpp`（Bostan–Mori，原本是已刪的 `Polynomial_Operation.cpp` 的
+  `LinearRecursion()`）已經做掉了，而且是 $O(n \log n \log k)$，比 kactl
   `LinearRecurrence.h` 的 $O(n^2 \log k)$ 好。搭 `Berlekamp-Massey.cpp` 就完整了。
 - **Subset transform / FWT** — `7_Polynomial/Fast_Walsh_Transform.cpp` 有。
 - **Mo's algorithm、Hilbert order** — `9_Else/` 兩個 Mo + `HilbertCurve.cpp` 都有。
@@ -198,8 +198,7 @@ bool prime(ll n) { // n < 2^64
 - `inv` 用線性表取代 `po(x, mod-2)` —— `Sx()` 每個 $i$ 呼叫一次，`Ln()` 每次都跑 `Sx()`
 - 已經排除的假設：蝶形寫兩次、`int&` 介面、local 變數暫存，全部無影響
 
-支線 `Number_Theory_Transform.cpp` / `Polynomial_Operation.cpp` 不在 `content.tex`，
-由 `verify/MAP.tsv` 的六列 `#ours` 保護，不會腐爛。
+支線 `Number_Theory_Transform.cpp` / `Polynomial_Operation.cpp` 已於 2026-11-20 刪除。
 
 ## I. 待辦：大輸入對拍找到的限制（2026-11-19 暫緩）
 

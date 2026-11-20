@@ -58,12 +58,6 @@ geo/minimum_enclosing_circle	minimum_enclosing_circle.cpp	8_Geometry/Minimum_Enc
 polynomial/polynomial_taylor_shift	fps.cpp -DOP_SHIFT	7_Polynomial/Operation_stdabs.cpp	
 polynomial/shift_of_sampling_points_of_polynomial	fps.cpp -DOP_SAMPLE	7_Polynomial/Operation_stdabs.cpp	
 other/kth_term_of_linearly_recurrent_sequence	kth_term_of_linearly_recurrent_sequence.cpp	7_Polynomial/Operation_stdabs.cpp	
-convolution/convolution_mod#ours	convolution_mod_ours.cpp	7_Polynomial/Number_Theory_Transform.cpp	side branch, not in content.tex
-polynomial/inv_of_formal_power_series#ours	fps_ours.cpp -DOP_INV	7_Polynomial/Polynomial_Operation.cpp	side branch, not in content.tex
-polynomial/exp_of_formal_power_series#ours	fps_ours.cpp -DOP_EXP	7_Polynomial/Polynomial_Operation.cpp	side branch, not in content.tex
-polynomial/pow_of_formal_power_series#ours	fps_ours.cpp -DOP_POW	7_Polynomial/Polynomial_Operation.cpp	side branch, not in content.tex
-polynomial/sqrt_of_formal_power_series#ours	fps_ours.cpp -DOP_SQRT	7_Polynomial/Polynomial_Operation.cpp	side branch, not in content.tex
-other/kth_term_of_linearly_recurrent_sequence#ours	kth_term_ours.cpp	7_Polynomial/Polynomial_Operation.cpp	side branch
 graph/enumerate_triangles	enumerate_triangles.cpp	2_Graph/C3C4.cpp	driver sums x_a x_b x_c in the C3 callback
 string/number_of_substrings#lcp	number_of_substrings_lcp.cpp	5_String/SAIS-C++20.cpp + 5_String/LCP_Array.cpp	answer = n(n+1)/2 - sum of lcp
 geo/manhattanmst	manhattanmst.cpp	2_Graph/ManhattanMST.cpp	driver supplies Kruskal (DSU)

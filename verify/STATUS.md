@@ -132,16 +132,6 @@
 | `7_Polynomial/FastLinearRecursion.cpp` | `other/kth_term_of_linearly_recurrent_sequence` **AC** 20 筆 · 3.573s/10s (36%) | BM → BostanMori 重播整段前綴，290 組（d = 1..20）共 9 166 項 | 需要外部 `Mul`、`ntt`（`Operation_stdabs`、`NTT_stdabs`） | Bostan–Mori（2026-09-28 取代 std_abs 的 Kitamasa，原本 TLE 19.442s）；`c` 是 **0-based**，BM 的輸出可直接餵入 |
 | `7_Polynomial/Value_Poly.cpp` | — 無對應題 | 431 189 組 vs 前綴和表 | 需要外部 `mint` | — |
 
-### 支線（不在 `content.tex`，不進 PDF）
-
-我們自己改寫的自由函式版，留著當備用。
-六列 `#ours` 保護它不腐爛。
-
-| 模版 | Library Checker | 本地對拍 |
-|---|---|---|
-| `7_Polynomial/Number_Theory_Transform.cpp` | `convolution/convolution_mod#ours` **AC** 53 筆 · 0.574s/5s (11%) | — |
-| `7_Polynomial/Polynomial_Operation.cpp` | `inv#ours` **AC** 25 筆 (6%)<br>`exp#ours` **AC** 26 筆 (20%)<br>`pow#ours` **AC** 37 筆 (28%)<br>`sqrt#ours` **AC** 35 筆 (12%)<br>`kth_term#ours` **AC** 20 筆 · 9.740s/10s (97%) | `LinearRecursion`（經 BM）554 組共 14 785 項、`PowerProj` 400 組、`Evaluate`/`Interpolate` 400 組、`Divide` 600 組、`TaylorShift`/`SamplingShift` 300 組
-
 ## Geometry
 
 | 模版 | Library Checker | 本地對拍 | 單檔編譯 | 書上標註 |
@@ -298,3 +288,7 @@
 ## 2026-11-19（二）
 
 - **Convexhull3D 對拍**：`assert` 內 `edges[{e.S, e.F}]` 的逗號在 CI 的單參數 `assert` 巨集下被拆成兩個參數，編譯失敗；外層加括號。
+
+## 2026-11-20
+
+- **刪掉 NTT 支線**：`Number_Theory_Transform.cpp`、`Polynomial_Operation.cpp`（不在 `content.tex`，已由 `NTT_stdabs`／`Operation_stdabs`／`FastLinearRecursion` 取代），連同 `#ours` 驅動程式、MAP 六列和對拍。

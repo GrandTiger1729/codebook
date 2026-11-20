@@ -112,9 +112,10 @@ vector<int> Evaluate(Poly a, vector<int> x) {
   down[0] = a;
   FOR (i, 1, n * 2 - 1)
     down[i] = Divide(down[i >> 1], up[i]).second;
-  FOR (i, 0, n - 1) x[i] = down[i + n][0];
-  return x;
-} // 1aa0b8
+  Poly y(n);
+  FOR (i, 0, n - 1) y[i] = down[i + n][0];
+  return y;
+} // 379520
 Poly Interpolate(vector<int> x, vector<int> y) {
   int n = SZ(x);
   vector<Poly> up(n * 2);

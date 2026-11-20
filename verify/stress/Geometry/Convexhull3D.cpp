@@ -93,7 +93,7 @@ void checkStructure(convex_hull_3D &h) {
     vol6 += dt(crs(w3(P[f.a]), w3(P[f.b])), w3(P[f.c]));
     sa += sqrtl((long double)dt(nm, nm)) * g / 2;
   }
-  for (auto [e, c] : edges) assert(c == 1 && edges.count({e.S, e.F}) && edges[{e.S, e.F}] == 1);
+  for (auto [e, c] : edges) assert((c == 1 && edges.count({e.S, e.F}) && edges[{e.S, e.F}] == 1));
   assert(h.polygon_face_num() == SZ(planes));
   assert(fabsl(h.get_volume() - fabsl((long double)vol6) / 6) < 1e-9 * fabsl((long double)vol6));
   long double sa2 = 0;

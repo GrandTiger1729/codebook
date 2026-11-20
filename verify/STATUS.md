@@ -294,3 +294,7 @@
 - **content.tex**：chineseRemainder 移到 exgcd 正下方。
 - **排版改橫式三欄**：A4 landscape、`multicols*{3}`、欄距 6pt、頁首距紙邊 15pt；目錄縮成第一欄裡的兩小欄（去掉 Contents 標題）；最後一頁不平衡分欄。Theorem 的微積分表改兩欄；Nim Product 移到 Berlekamp Massey 後（修 Theorem 的怪間距）；readchar 拿出書。`check_layout.py` 上限改 56 欄——目前 52 行超過，定稿前再重排（CI 的排版檢查會先失敗）。目前 26 頁。
 - **listings 字寬**：`basewidth=0.55em`（listings 預設 0.6em 是給 Courier 的，Ubuntu Mono 本身 0.5em，原本字距被撐開）。每欄 56 → 61 字，原本 52 行折行全部消失，回到 25 頁；`check_layout.py` 上限改 61，CI 排版檢查恢復通過。
+
+## 2026-11-19（二）
+
+- **Convexhull3D 對拍**：`assert` 內 `edges[{e.S, e.F}]` 的逗號在 CI 的單參數 `assert` 巨集下被拆成兩個參數，編譯失敗；外層加括號。

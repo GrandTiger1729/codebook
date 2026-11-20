@@ -37,7 +37,7 @@ int lagrange(const vector<int> &y, int c) { // f(0..n-1) = y, return f(c)
 
 int main() {
   build();
-  int cnt[6] = {};
+  int cnt[8] = {};
   // Divide: a = b q + r, deg r < deg b
   FOR (it, 1, 500) {
     int n = rnd(1, 60), m = rnd(1, 40);
@@ -108,6 +108,21 @@ int main() {
     }
     cnt[5]++;
   }
-  printf("Operation_stdabs: Divide %d, Evaluate %d, Interpolate %d, TaylorShift %d, SamplingShift %d, power_proj %d OK\n",
-    cnt[0], cnt[1], cnt[2], cnt[3], cnt[4], cnt[5]);
+  // PolyPow (incl. k = 0 with a[0] = 0) vs repeated multiplication; Sqrt by squaring
+  FOR (t, 1, 3000) {
+    int n = rnd(1, 12), z = rnd(0, 3);
+    Poly a = rpoly(n);
+    FOR (i, 0, min(z, n) - 1) a[i] = 0;
+    int k = rnd(0, 20);
+    Poly p(n), got = PolyPow(a, k);
+    p[0] = 1;
+    FOR (i, 1, k) p = naiveMul(p, a), p.resize(n);
+    assert(got == p), cnt[6]++;
+    Poly s = Sqrt(a);
+    if (s == Poly{-1}) continue;
+    s = naiveMul(s, s), s.resize(n);
+    assert(s == a), cnt[7]++;
+  }
+  printf("Operation_stdabs: Divide %d, Evaluate %d, Interpolate %d, TaylorShift %d, SamplingShift %d, power_proj %d, PolyPow %d, Sqrt %d OK\n",
+    cnt[0], cnt[1], cnt[2], cnt[3], cnt[4], cnt[5], cnt[6], cnt[7]);
 }

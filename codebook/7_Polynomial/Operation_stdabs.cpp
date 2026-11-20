@@ -133,34 +133,44 @@ Poly Interpolate(vector<int> x, vector<int> y) {
   }
   return down[1];
 } // 8d9813
-Poly TaylorShift(Poly a, int c, bool fall = 0) {
-  // return sum a_i(x + c)^i; fall: x^i means x(x-1)..(x-i+1)
+Poly TaylorShift(Poly a, int c) {
+  // return sum a_i(x + c)^i;
   // fac[i] = i!, ifac[i] = inv(i!)
   int n = SZ(a);
   FOR (i, 0, n - 1) a[i] = mul(a[i], fac[i]);
   reverse(a.begin(), a.end());
   Poly b(n);
   int w = 1;
-  FOR (i, 0, n - 1)
-    b[i] = mul(ifac[i], w), w = mul(w, fall ? sub(c, i) : c);
+  FOR (i, 0, n - 1) b[i] = mul(ifac[i], w), w = mul(w, c);
   a = Mul(a, b, n), reverse(a.begin(), a.end());
   FOR (i, 0, n - 1) a[i] = mul(a[i], ifac[i]);
   return a;
-} // f12430
+} // 41783b
 vector<int> SamplingShift(vector<int> a, int c, int m) {
   // given f(0), f(1), ..., f(n - 1)
   // return f(c), f(c + 1), ..., f(c + m - 1)
   int n = SZ(a);
-  Poly b(n);
   FOR (i, 0, n - 1) a[i] = mul(a[i], ifac[i]);
-  FOR (i, 0, n - 1) b[i] = i & 1 ? sub(0, ifac[i]) : ifac[i];
-  a = TaylorShift(Mul(a, b, n), c, 1);
+  Poly b(n);
+  FOR (i, 0, n - 1) {
+    b[i] = ifac[i];
+    if (i & 1) b[i] = sub(0, b[i]);
+  }
+  a = Mul(a, b, n);
+  FOR (i, 0, n - 1) a[i] = mul(a[i], fac[i]);
+  reverse(a.begin(), a.end());
+  int w = 1;
+  FOR (i, 0, n - 1)
+    b[i] = mul(ifac[i], w), w = mul(w, sub(c, i));
+  a = Mul(a, b, n);
+  reverse(a.begin(), a.end());
+  FOR (i, 0, n - 1) a[i] = mul(a[i], ifac[i]);
   a.resize(m), b.resize(m);
   FOR (i, 0, m - 1) b[i] = ifac[i];
   a = Mul(a, b, m);
   FOR (i, 0, m - 1) a[i] = mul(a[i], fac[i]);
   return a;
-} // 5d9c57
+} // b63d3a
 Poly power_proj(vector<int> w, Poly f, int m) {
   // return sum_j w_j[x^j]f^i for i=0,1,...,m
   int n = 1;

@@ -292,6 +292,7 @@
 ## 2026-11-20
 
 - **刪掉 NTT 支線**：`Number_Theory_Transform.cpp`、`Polynomial_Operation.cpp`（不在 `content.tex`，已由 `NTT_stdabs`／`Operation_stdabs`／`FastLinearRecursion` 取代），連同 `#ours` 驅動程式、MAP 六列和對拍。
-- **Operation_stdabs 縮短**：225 → 191 行，30 000 組小輸入的輸出跟舊版逐位元組相同，LC 7 題 AC、時間不變；`Sqrt` 併掉 `SqrtImpl`、迭代改 $q \gets (q + a/q)/2$（每輪少一次 `Mul`，1.526s → 1.120s）；`Integral` 併進 `Ln`；`SamplingShift` 改用 `TaylorShift` 的下降階乘版本（新參數 `fall`）；`Inverse`/`Exp`/`Divide`/`Evaluate`/`Interpolate` 小幅合併；各函式結尾的 hash 重算（原本已經跟程式碼對不上）。
+- **Operation_stdabs 縮短**：225 → 203 行，30 000 組小輸入的輸出跟舊版逐位元組相同，LC 7 題 AC、時間不變；`Sqrt` 併掉 `SqrtImpl`、迭代改 $q \gets (q + a/q)/2$（每輪少一次 `Mul`，1.526s → 1.120s）；`Integral` 併進 `Ln`；`Inverse`/`Exp`/`Divide`/`Evaluate`/`Interpolate` 小幅合併；各函式結尾的 hash 重算（原本已經跟程式碼對不上）。
 - **PolyPow 修 bug**：$k = 0$ 且 $a_0 = 0$ 時讀到 `b` 的範圍外（`b` 只有 $n - m$ 項），改成 $k = 0$ 直接回傳 1；對拍補上這個情形，舊版會失敗。
 - **Evaluate**：結果改回放在新的 `y`，不覆寫輸入的 `x`（每個變數只有一個用途）。
+- **SamplingShift 改回獨立版本**：`TaylorShift` 不再帶 `fall` 參數；只需要 SamplingShift 時不必連 TaylorShift 一起抄。

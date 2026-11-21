@@ -1,21 +1,12 @@
 #include "prelude.h"
 #include "stress.h"
 #include "6_Math/QuadraticResidue.cpp"
-// Side branch (not in the book): our own NTT + free-function Poly.
+#include "mod_helpers.h"
 #include "7_Polynomial/Number_Theory_Transform.cpp"
 #include "7_Polynomial/Polynomial_Operation.cpp"
-struct mi { // field type for BerlekampMassey
-  int v = 0;
-  mi(ll x = 0) : v((x % MOD + MOD) % MOD) {}
-  mi operator-() const { return mi(sub(0, v)); }
-  mi &operator+=(mi o) { v = add(v, o.v); return *this; }
-  mi &operator-=(mi o) { v = sub(v, o.v); return *this; }
-  mi operator*(mi o) const { return mi(mul(v, o.v)); }
-  mi operator/(mi o) const { return mi(mul(v, inv(o.v))); }
-  bool operator==(int x) const { return v == x; }
-};
-#include "6_Math/Berlekamp-Massey.cpp"
 
+// Divide / Evaluate / Interpolate / TaylorShift / SamplingShift / power_proj
+// against O(n^2)-ish brute force, all mod 998244353.
 int R() { return rnd(0, MOD - 1); }
 Poly rpoly(int n) { Poly a(n); for (int &x : a) x = R(); return a; }
 Poly naiveMul(const Poly &a, const Poly &b) {
@@ -24,68 +15,50 @@ Poly naiveMul(const Poly &a, const Poly &b) {
   return c;
 }
 int horner(const Poly &a, int x) { int r = 0; for (int i = SZ(a) - 1; i >= 0; i--) r = add(mul(r, x), a[i]); return r; }
+Poly truncMul(const Poly &a, const Poly &b, int n) {
+  Poly c(n);
+  FOR (i, 0, SZ(a) - 1) FOR (j, 0, min(SZ(b), n - i) - 1)
+    c[i + j] = add(c[i + j], mul(a[i], b[j]));
+  return c;
+}
 bool samePoly(Poly a, Poly b) { // equal up to trailing zeros
   while (SZ(a) && !a.back()) a.pop_back();
   while (SZ(b) && !b.back()) b.pop_back();
   return a == b;
 }
-int kitamasa(const Poly &a, const Poly &c1, ll k) { // naive O(d^2 log k), c1 1-based
-  int d = SZ(a);
-  auto mulmod = [&](const Poly &p, const Poly &q) {
-    Poly r(2 * d - 1);
-    FOR (i, 0, d - 1) FOR (j, 0, d - 1) r[i + j] = add(r[i + j], mul(p[i], q[j]));
-    for (int i = 2 * d - 2; i >= d; i--) FOR (j, 1, d) r[i - j] = add(r[i - j], mul(r[i], c1[j]));
-    r.resize(d);
-    return r;
-  };
-  Poly res(d), x(d);
-  res[0] = 1;
-  if (d == 1) x[0] = c1[1]; else x[1] = 1;
-  for (; k; k >>= 1, x = mulmod(x, x)) if (k & 1) res = mulmod(res, x);
-  int s = 0;
-  FOR (i, 0, d - 1) s = add(s, mul(res[i], a[i]));
-  return s;
+vector<int> distinctPts(int n) {
+  set<int> s; vector<int> x;
+  while (SZ(x) < n) { int v = rnd(0, 2) ? R() : rnd(0, 50); if (s.insert(v).S) x.pb(v); }
+  return x;
+}
+int lagrange(const vector<int> &y, int c) { // f(0..n-1) = y, return f(c)
+  int n = SZ(y), res = 0;
+  FOR (i, 0, n - 1) {
+    int num = 1, den = 1;
+    FOR (j, 0, n - 1) if (j != i) num = mul(num, sub(c, j)), den = mul(den, sub(i, j));
+    res = add(res, mul(y[i], mul(num, Pow(den, MOD - 2))));
+  }
+  return res;
 }
 
 int main() {
-  int cnt[6] = {}, terms = 0;
-  // LinearRecursion (1-based c) fed from BerlekampMassey (0-based); d = 1 often
-  FOR (it, 1, 600) {
-    int d = it % 3 == 0 ? 1 : rnd(1, 20), T = 2 * d + rnd(1, 20);
-    Poly c(d + 1), s(T);
-    FOR (j, 1, d) c[j] = rnd(0, 3) ? R() : rnd(0, 2);
-    FOR (i, 0, T - 1) {
-      if (i < d) s[i] = rnd(0, 4) ? R() : 0;
-      else FOR (j, 1, d) s[i] = add(s[i], mul(c[j], s[i - j]));
-    }
-    vector<mi> pre(s.begin(), s.begin() + 2 * d);
-    vector<mi> bm = BerlekampMassey(pre);
-    int e = SZ(bm);
-    if (e == 0) continue; // all-zero sequence, nothing to recurse on
-    Poly a(s.begin(), s.begin() + e), c1(e + 1);
-    FOR (j, 1, e) c1[j] = bm[j - 1].v;
-    FOR (k, 0, T - 1) assert(LinearRecursion(a, c1, k) == s[k]), terms++;
-    ll k = rnd(0, 1) ? rnd(T, 10000) : rnd(0, (ll)1e18);
-    assert(LinearRecursion(a, c1, k) == kitamasa(a, c1, k)), terms++;
+  build();
+  int cnt[9] = {};
+  // Divide: a = b q + r, deg r < deg b
+  FOR (it, 1, 500) {
+    int n = rnd(1, 60), m = rnd(1, 40);
+    Poly a = rpoly(n), b = rpoly(m);
+    if (!b.back()) b.back() = 1;
+    auto [q, r] = Divide(a, b);
+    assert(SZ(r) <= m - 1 || (n < m && r == a));
+    Poly t = naiveMul(b, q);
+    t.resize(max(SZ(t), n));
+    FOR (i, 0, SZ(r) - 1) t[i] = add(t[i], r[i]);
+    assert(samePoly(t, a));
     cnt[0]++;
   }
-  // PowerProj: ret[i] = sum_j w_j [x^j] f^i, i = 0..m, f[0] = 0
-  FOR (it, 1, 400) {
-    int n = rnd(1, 40), m = rnd(0, 60);
-    Poly f = rpoly(n), w = rpoly(n);
-    f[0] = 0;
-    Poly got = PowerProj(w, f, m), p = {1};
-    assert(SZ(got) == m + 1);
-    FOR (i, 0, m) {
-      int s = 0;
-      FOR (j, 0, min(n, SZ(p)) - 1) s = add(s, mul(w[j], p[j]));
-      assert(got[i] == s);
-      p = naiveMul(p, f), p.resize(n);
-    }
-    cnt[1]++;
-  }
-  // Evaluate vs Horner, then Interpolate back at distinct points
-  FOR (it, 1, 400) {
+  // Evaluate vs Horner
+  FOR (it, 1, 300) {
     int n = rnd(1, 60), k = rnd(1, 60);
     Poly a = rpoly(n);
     vector<int> x(k);
@@ -93,45 +66,81 @@ int main() {
     vector<int> y = Evaluate(a, x);
     assert(SZ(y) == k);
     FOR (i, 0, k - 1) assert(y[i] == horner(a, x[i]));
-    set<int> seen; vector<int> xs, ys;
-    while (SZ(xs) < n) { int v = rnd(0, 2) ? R() : rnd(0, 50); if (seen.insert(v).S) xs.pb(v); }
-    ys = Evaluate(a, xs);
-    assert(samePoly(Interpolate(xs, ys), a));
+    cnt[1]++;
+  }
+  // Interpolate: deg < n poly -> values at n distinct points -> same poly back
+  FOR (it, 1, 300) {
+    int n = rnd(1, 60);
+    Poly a = rpoly(n);
+    vector<int> x = distinctPts(n), y(n);
+    FOR (i, 0, n - 1) y[i] = horner(a, x[i]);
+    assert(samePoly(Interpolate(x, y), a));
     cnt[2]++;
   }
-  // Divide: a = b q + r, deg r < deg b (r is padded to max(1, m - 1))
-  FOR (it, 1, 600) {
-    int n = rnd(1, 60), m = rnd(1, 40);
-    Poly a = rpoly(n), b = rpoly(m);
-    if (!b.back()) b.back() = 1;
-    auto [q, r] = Divide(a, b);
-    assert(SZ(r) <= max(1, m - 1) || (n < m && r == a));
-    if (m == 1) assert(samePoly(r, {}));
-    Poly t = naiveMul(b, q);
-    t.resize(max(SZ(t), n));
-    FOR (i, 0, SZ(r) - 1) t[i] = add(t[i], r[i]);
-    assert(samePoly(t, a));
-    cnt[3]++;
-  }
-  // TaylorShift (c may be negative / huge) and SamplingShift vs direct evaluation
+  // TaylorShift vs sum a_i (x + c)^i expanded directly
   FOR (it, 1, 300) {
-    int n = rnd(1, 50);
-    ll c = rnd(0, 1) ? rnd(-(ll)4e18, (ll)4e18) : rnd(-5, 5);
-    int cm = (c % MOD + MOD) % MOD;
+    int n = rnd(1, 60), c = rnd(0, 1) ? R() : rnd(0, 3);
     Poly a = rpoly(n), want(n), pw = {1};
     FOR (i, 0, n - 1) {
       FOR (j, 0, SZ(pw) - 1) want[j] = add(want[j], mul(a[i], pw[j]));
-      pw = naiveMul(pw, {cm, 1});
+      pw = naiveMul(pw, {c, 1});
     }
     assert(TaylorShift(a, c) == want);
-    int m = rnd(1, 50);
+    cnt[3]++;
+  }
+  // SamplingShift vs Lagrange
+  FOR (it, 1, 200) {
+    int n = rnd(1, 40), m = rnd(1, 40), c = rnd(0, 2) ? R() : rnd(0, 60);
+    Poly f = rpoly(n);
     vector<int> y(n);
-    FOR (i, 0, n - 1) y[i] = horner(a, i);
+    FOR (i, 0, n - 1) y[i] = horner(f, i);
     vector<int> got = SamplingShift(y, c, m);
     assert(SZ(got) == m);
-    FOR (i, 0, m - 1) assert(got[i] == horner(a, add(cm, i)));
+    FOR (i, 0, m - 1) assert(got[i] == horner(f, add(c, i)) && got[i] == lagrange(y, add(c, i)));
     cnt[4]++;
   }
-  printf("Polynomial_Operation: LinearRecursion %d (%d terms), PowerProj %d, Evaluate/Interpolate %d, Divide %d, Taylor/SamplingShift %d OK\n",
-    cnt[0], terms, cnt[1], cnt[2], cnt[3], cnt[4]);
+  // power_proj: ret[i] = sum_j w_j [x^j] f^i, i = 0..m, |w| = |f|, f[0] = 0
+  FOR (it, 1, 250) {
+    int n = rnd(1, 40), m = rnd(0, 60);
+    Poly f = rpoly(n), w = rpoly(n);
+    f[0] = 0;
+    Poly got = power_proj(w, f, m), p = {1};
+    assert(SZ(got) == m + 1);
+    FOR (i, 0, m) {
+      int s = 0;
+      FOR (j, 0, min(n, SZ(p)) - 1) s = add(s, mul(w[j], p[j]));
+      assert(got[i] == s);
+      p = naiveMul(p, f), p.resize(n);
+    }
+    cnt[5]++;
+  }
+  // PolyPow (incl. k = 0 with a[0] = 0) vs repeated multiplication; Sqrt by squaring
+  FOR (t, 1, 3000) {
+    int n = rnd(1, 12), z = rnd(0, 3);
+    Poly a = rpoly(n);
+    FOR (i, 0, min(z, n) - 1) a[i] = 0;
+    int k = rnd(0, 20);
+    Poly p(n), got = PolyPow(a, k);
+    p[0] = 1;
+    FOR (i, 1, k) p = naiveMul(p, a), p.resize(n);
+    assert(got == p), cnt[6]++;
+    Poly s = Sqrt(a);
+    if (s == Poly{-1}) continue;
+    s = naiveMul(s, s), s.resize(n);
+    assert(s == a), cnt[7]++;
+  }
+  // CompInv: f(g(x)) == x mod x^n by naive composition (Horner)
+  FOR (t, 1, 20000) {
+    int n = rnd(1, t <= 10000 ? 8 : 40);
+    Poly f(n);
+    FOR (i, 1, n - 1) f[i] = rnd(0, 1) ? rnd(0, 3) : rnd(0, MOD - 1);
+    if (n > 1 && !f[1]) f[1] = rnd(1, MOD - 1);
+    Poly g = CompInv(f), c(n), x(n);
+    assert(SZ(g) == n && g[0] == 0);
+    for (int i = n - 1; i >= 0; i--) c = truncMul(c, g, n), c[0] = add(c[0], f[i]);
+    if (n > 1) x[1] = 1;
+    assert(c == x), cnt[8]++;
+  }
+  printf("Polynomial_Operation: Divide %d, Evaluate %d, Interpolate %d, TaylorShift %d, SamplingShift %d, power_proj %d, PolyPow %d, Sqrt %d, CompInv %d OK\n",
+    cnt[0], cnt[1], cnt[2], cnt[3], cnt[4], cnt[5], cnt[6], cnt[7], cnt[8]);
 }

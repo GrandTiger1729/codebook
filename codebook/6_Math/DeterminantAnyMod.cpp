@@ -1,4 +1,4 @@
-// any m, entries in [0, m); O(n^3 + n^2 log m)
+// any m <= 3e9, entries in [0, m); O(n^3 + n^2 log m)
 ll det(vector<vector<ll>> a, ll m) {
   int n = a.size();
   ll res = 1 % m;

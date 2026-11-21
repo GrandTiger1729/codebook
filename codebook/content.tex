@@ -101,7 +101,7 @@
 %\inputcode{Fraction}{6_Math/Fraction.cpp}
 \inputcode{System of Linear Equations}{6_Math/Linear_Equations.cpp} % needs MAXN and a field type T; test by Lib-Checker System of Linear Equations (modint), local brute force (fraction)
 \inputcode{Determinant Any Mod}{6_Math/DeterminantAnyMod.cpp} % test by Lib-Checker Determinant of Matrix (Arbitrary Mod), Determinant of Matrix
-\inputcode{Characteristic Polynomial}{6_Math/CharPoly.cpp} % test by Lib-Checker Characteristic Polynomial
+% \inputcode{Characteristic Polynomial}{6_Math/CharPoly.cpp} % test by Lib-Checker Characteristic Polynomial
 % \inputcode{Xor Basis}{6_Math/XorBasis.cpp} % test by local brute force (range max xor via insertion times, kth)
 \inputcode{Pollard Rho}{6_Math/Pollard_Rho.cpp} % test by Lib-Checker Factorize
 \inputcode{Simplex Algorithm}{6_Math/Simplex_Algorithm.cpp} % needs MAXN (rows), MAXM (vars) and INF; test by local brute force (vertex enumeration, duality)
@@ -112,7 +112,7 @@
 \inputcode{Quadratic Residue}{6_Math/QuadraticResidue.cpp} % test by Lib-Checker Sqrt Mod, local brute force
 \inputcode{PiCount*}{6_Math/PiCount.cpp} % test by luogu P7884, Lib-Checker Counting Primes
 \inputcode{Discrete Log}{6_Math/DiscreteLog.cpp} % test by Lib-Checker Discrete Logarithm
-\inputcode{Berlekamp Massey}{6_Math/Berlekamp-Massey.cpp} % returns c 0-based, feeds FastLinearRecursion directly; test by Lib-Checker Find Linear Recurrence, local round trip through FastLinearRecursion
+\inputcode{Berlekamp Massey}{6_Math/Berlekamp-Massey.cpp} % kactl-style on int with MOD/add/sub/mul/Pow; returns c 0-based, feeds FastLinearRecursion directly; test by Lib-Checker Find Linear Recurrence, local round trip through FastLinearRecursion
 \inputcode{Nim Product}{6_Math/NimProduct.cpp} % test by Lib-Checker Nim Product (64 bit), local brute force (Turning Corners SG, field axioms)
 \subsection{Primes}
 \lstinputlisting{6_Math/Primes.cpp}
@@ -130,11 +130,11 @@
 \section{Polynomial}
 \inputcode{Fast Fourier Transform}{7_Polynomial/Fast_Fourier_Transform.cpp} % test by Lib-Checker Convolution mod 1e9+7 (through FFT Mod)
 \inputcode{FFT Arbitrary Mod}{7_Polynomial/Fast_Fourier_Transform_Mod.cpp} % test by Lib-Checker Convolution mod 1e9+7
-\inputcode{Number Theory Transform*}{7_Polynomial/NTT_stdabs.cpp} % std_abs verbatim; supply mod/G/N and add/sub/mul/Pow yourself (Pow's exponent must be ll); test by Lib-Checker Convolution
+\inputcode{Number Theory Transform*}{7_Polynomial/Number_Theory_Transform.cpp} % from std_abs; supply MOD/G/N and add/sub/mul/Pow yourself; test by Lib-Checker Convolution
 \subsection{NTT Primes}
 \input{7_Polynomial/NTTprime.tex}
 \inputcode{Fast Walsh Transform*}{7_Polynomial/Fast_Walsh_Transform.cpp} % test by luogu P6097, local brute force (2000 subset convolutions under ASan/UBSan)
-\inputcode{Polynomial Operation}{7_Polynomial/Operation_stdabs.cpp} % std_abs verbatim; needs NTT, QuadraticResidue, and fac[]/ifac[] for TaylorShift/SamplingShift; test by Lib-Checker Inv/Exp/Log/Pow/Sqrt of FPS, Polynomial Taylor Shift, Shift of Sampling Points
+\inputcode{Polynomial Operation}{7_Polynomial/Polynomial_Operation.cpp} % from std_abs, shortened; needs NTT, QuadraticResidue, Pow(int, ll) for PolyPow, and fac[]/ifac[] for TaylorShift/SamplingShift; test by Lib-Checker Inv/Exp/Log/Pow/Sqrt of FPS, Polynomial Taylor Shift, Shift of Sampling Points, Compositional Inverse of FPS (+ Large)
 \inputcode{Linear Recursion}{7_Polynomial/FastLinearRecursion.cpp} % Bostan-Mori; c is 0-based, same as BerlekampMassey; test by Lib-Checker Kth Term of Linearly Recurrent Sequence
 \inputcode{Value Polynomial}{7_Polynomial/Value_Poly.cpp}
 \subsection{Newton's Method}

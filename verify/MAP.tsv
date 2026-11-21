@@ -6,15 +6,15 @@ number_theory/factorize	factorize.cpp	6_Math/Pollard_Rho.cpp, 6_Math/Miller_Rabi
 number_theory/sqrt_mod	sqrt_mod.cpp	6_Math/QuadraticResidue.cpp	
 number_theory/discrete_logarithm_mod	discrete_logarithm_mod.cpp	6_Math/DiscreteLog.cpp	
 convolution/min_plus_convolution_convex_arbitrary	min_plus_convolution_convex_arbitrary.cpp	9_Else/min_plus_convolution.cpp	
-convolution/convolution_mod	convolution_mod.cpp	7_Polynomial/NTT_stdabs.cpp	
+convolution/convolution_mod	convolution_mod.cpp	7_Polynomial/Number_Theory_Transform.cpp	
 graph/bipartitematching	bipartitematching.cpp	4_Flow_Matching/Bipartite_Matching.cpp	cover() (Konig min vertex cover) verified separately against exhaustive search on 30000 random graphs
 graph/general_matching	general_matching.cpp	4_Flow_Matching/Maximum_Simple_Graph_Matching.cpp	
 graph/general_weighted_matching	general_weighted_matching.cpp	4_Flow_Matching/Maximum_Weight_Matching.cpp	driver supplies INF
-polynomial/inv_of_formal_power_series	fps.cpp -DOP_INV	7_Polynomial/Operation_stdabs.cpp	
-polynomial/exp_of_formal_power_series	fps.cpp -DOP_EXP	7_Polynomial/Operation_stdabs.cpp	
-polynomial/log_of_formal_power_series	fps.cpp -DOP_LOG	7_Polynomial/Operation_stdabs.cpp	
-polynomial/pow_of_formal_power_series	fps.cpp -DOP_POW	7_Polynomial/Operation_stdabs.cpp	
-polynomial/sqrt_of_formal_power_series	fps.cpp -DOP_SQRT	7_Polynomial/Operation_stdabs.cpp	Sqrt() needs QuadraticResidue
+polynomial/inv_of_formal_power_series	fps.cpp -DOP_INV	7_Polynomial/Polynomial_Operation.cpp	
+polynomial/exp_of_formal_power_series	fps.cpp -DOP_EXP	7_Polynomial/Polynomial_Operation.cpp	
+polynomial/log_of_formal_power_series	fps.cpp -DOP_LOG	7_Polynomial/Polynomial_Operation.cpp	
+polynomial/pow_of_formal_power_series	fps.cpp -DOP_POW	7_Polynomial/Polynomial_Operation.cpp	
+polynomial/sqrt_of_formal_power_series	fps.cpp -DOP_SQRT	7_Polynomial/Polynomial_Operation.cpp	Sqrt() needs QuadraticResidue
 data_structure/line_add_get_min#lichao	-	3_Data_Structure/LiChaoST.cpp	not a defect: LiChao is written over an integer domain x in [0, n) and is correct there (verified by brute force). LC gives x in [-1e9,1e9], which this template can only take after coordinate compression -- and that needs at() evaluated at xs[l] rather than at the node index l, so it cannot be driven unmodified.
 string/prefix_substring_lcs	prefix_substring_lcs.cpp	9_Else/All_LCS.cpp	
 graph/two_edge_connected_components	two_edge_connected_components.cpp	2_Graph/EBCC.cpp	driver supplies the global adj[]
@@ -55,15 +55,9 @@ graph/min_cost_b_flow	-	4_Flow_Matching/MinCostCirculation.cpp	LC additionally r
 string/runenumerate	runenumerate.cpp	5_String/MainLorentz.cpp	template calls a Zalgo(s) returning a vector, which the codebook does not have (Z-value.cpp fills a global instead); driver supplies it plus the run post-processing and minimal-period filter
 geo/closest_pair	closest_pair.cpp	8_Geometry/ClosestPair.cpp	
 geo/minimum_enclosing_circle	minimum_enclosing_circle.cpp	8_Geometry/Minimum_Enclosing_Circle.cpp + 8_Geometry/Heart.cpp	driver marks a point as on the boundary when |p-c| > r-1e-6
-polynomial/polynomial_taylor_shift	fps.cpp -DOP_SHIFT	7_Polynomial/Operation_stdabs.cpp	
-polynomial/shift_of_sampling_points_of_polynomial	fps.cpp -DOP_SAMPLE	7_Polynomial/Operation_stdabs.cpp	
-other/kth_term_of_linearly_recurrent_sequence	kth_term_of_linearly_recurrent_sequence.cpp	7_Polynomial/Operation_stdabs.cpp	
-convolution/convolution_mod#ours	convolution_mod_ours.cpp	7_Polynomial/Number_Theory_Transform.cpp	side branch, not in content.tex
-polynomial/inv_of_formal_power_series#ours	fps_ours.cpp -DOP_INV	7_Polynomial/Polynomial_Operation.cpp	side branch, not in content.tex
-polynomial/exp_of_formal_power_series#ours	fps_ours.cpp -DOP_EXP	7_Polynomial/Polynomial_Operation.cpp	side branch, not in content.tex
-polynomial/pow_of_formal_power_series#ours	fps_ours.cpp -DOP_POW	7_Polynomial/Polynomial_Operation.cpp	side branch, not in content.tex
-polynomial/sqrt_of_formal_power_series#ours	fps_ours.cpp -DOP_SQRT	7_Polynomial/Polynomial_Operation.cpp	side branch, not in content.tex
-other/kth_term_of_linearly_recurrent_sequence#ours	kth_term_ours.cpp	7_Polynomial/Polynomial_Operation.cpp	side branch
+polynomial/polynomial_taylor_shift	fps.cpp -DOP_SHIFT	7_Polynomial/Polynomial_Operation.cpp	
+polynomial/shift_of_sampling_points_of_polynomial	fps.cpp -DOP_SAMPLE	7_Polynomial/Polynomial_Operation.cpp	
+other/kth_term_of_linearly_recurrent_sequence	kth_term_of_linearly_recurrent_sequence.cpp	7_Polynomial/Polynomial_Operation.cpp	
 graph/enumerate_triangles	enumerate_triangles.cpp	2_Graph/C3C4.cpp	driver sums x_a x_b x_c in the C3 callback
 string/number_of_substrings#lcp	number_of_substrings_lcp.cpp	5_String/SAIS-C++20.cpp + 5_String/LCP_Array.cpp	answer = n(n+1)/2 - sum of lcp
 geo/manhattanmst	manhattanmst.cpp	2_Graph/ManhattanMST.cpp	driver supplies Kruskal (DSU)
@@ -75,3 +69,5 @@ linear_algebra/matrix_det	matrix_det.cpp	6_Math/DeterminantAnyMod.cpp	same templ
 graph/eulerian_trail_directed	eulerian_trail.cpp -DDIRECTED	2_Graph/EulerTrail.cpp	driver checks degrees and picks the start
 graph/eulerian_trail_undirected	eulerian_trail.cpp	2_Graph/EulerTrail.cpp	driver checks degrees and picks the start
 geo/furthest_pair	furthest_pair.cpp	8_Geometry/FarthestPair.cpp + 8_Geometry/Convex_hull.cpp	integers from Default_code_int (not in the book)
+polynomial/compositional_inverse_of_formal_power_series	compositional_inverse.cpp	7_Polynomial/Polynomial_Operation.cpp	
+polynomial/compositional_inverse_of_formal_power_series_large	compositional_inverse.cpp	7_Polynomial/Polynomial_Operation.cpp	

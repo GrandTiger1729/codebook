@@ -1,243 +1,219 @@
-#define SZ(a) ((int)a.size())
-typedef vector<int> Poly; // needs NTT, coefs in [0, MOD)
-Poly cut(const Poly &a, int m) { // first m coefs
-  Poly r(a.begin(), a.begin() + min(m, SZ(a)));
-  return r.resize(m), r;
-}
-Poly rev(const Poly &a) {
-  return Poly(a.rbegin(), a.rend());
-}
-Poly Mul(Poly a, Poly b) {
+typedef vector<int> Poly;
+Poly Mul(Poly a, Poly b, int bound = N) {
   int m = SZ(a) + SZ(b) - 1, n = 1;
   while (n < m) n <<= 1;
   a.resize(n), b.resize(n);
   ntt(a), ntt(b);
   FOR (i, 0, n - 1) a[i] = mul(a[i], b[i]);
-  ntt(a, true);
-  return a.resize(m), a;
-}
-Poly Inverse(Poly a) { // a[0] != 0, 1e5/50ms
-  if (SZ(a) == 1) return {inv(a[0])};
-  int n = SZ(a), m = 1;
-  while (m < n * 2) m <<= 1;
-  Poly x = cut(Inverse(cut(a, (n + 1) / 2)), m);
-  a.resize(m);
-  ntt(x), ntt(a);
-  FOR (i, 0, m - 1)
-    x[i] = mul(x[i], sub(2, mul(x[i], a[i])));
-  ntt(x, true);
-  return x.resize(n), x;
-}
-Poly sqrtQR(const Poly &a) { // a[0] is a QR, 1e5/150ms
-  if (SZ(a) == 1) return {QuadraticResidue(a[0], MOD)};
+  ntt(a, true), a.resize(min(m, bound));
+  return a;
+} // 4f412f
+Poly Inverse(Poly a) {
+  // O(NlogN), a[0] != 0
   int n = SZ(a);
-  Poly x = cut(sqrtQR(cut(a, (n + 1) / 2)), n);
-  Poly y = cut(Mul(a, Inverse(x)), n);
-  FOR (i, 0, n - 1)
-    x[i] = mul(add(x[i], y[i]), (MOD + 1) / 2);
-  return x;
-}
-Poly Sqrt(const Poly &a) { // {} when no square root exists
-  int n = SZ(a), z = 0;
-  while (z < n && !a[z]) z++;
-  if (z == n) return Poly(n);
-  if (z & 1 || QuadraticResidue(a[z], MOD) < 0) return {};
-  Poly x = sqrtQR(Poly(a.begin() + z, a.end())), r(n);
-  FOR (i, 0, SZ(x) - 1) r[i + z / 2] = x[i];
-  return r;
-}
-pair<Poly, Poly> Divide(Poly a, Poly b) { // b.back() != 0
+  Poly res(1, Pow(a[0], MOD - 2));
+  for (int m = 1; m < n; m <<= 1) {
+    Poly v1(a.begin(), a.begin() + min(n, m * 2)), v2 = res;
+    v1.resize(m * 4), v2.resize(m * 4);
+    ntt(v1), ntt(v2);
+    FOR (i, 0, m * 4 - 1)
+      v1[i] = mul(mul(v1[i], v2[i]), v2[i]);
+    ntt(v1, true), res.resize(m * 2);
+    FOR (i, 0, m * 2 - 1)
+      res[i] = sub(i < m ? add(res[i], res[i]) : 0, v1[i]);
+  }
+  return res.resize(n), res;
+} // 2c013e
+pair<Poly, Poly> Divide(Poly a, Poly b) {
+  // a = bQ + R, O(NlogN), b.back() != 0
   int n = SZ(a), m = SZ(b), k = n - m + 1;
   if (n < m) return {{0}, a};
   Poly ra(a.rbegin(), a.rend()), rb(b.rbegin(), b.rend());
   ra.resize(k), rb.resize(k);
-  Poly q = cut(Mul(ra, Inverse(rb)), k);
-  reverse(q.begin(), q.end());
-  Poly t = Mul(b, q), r(max(1, m - 1));
-  FOR (i, 0, SZ(r) - 1) r[i] = sub(a[i], t[i]);
-  return {q, r};
-}
-Poly Derivative(const Poly &a) {
-  Poly r(max(1, SZ(a) - 1));
-  FOR (i, 0, SZ(a) - 2) r[i] = mul(i + 1, a[i + 1]);
-  return r;
-}
-Poly Integral(const Poly &a) {
-  Poly r(SZ(a) + 1);
-  FOR (i, 0, SZ(a) - 1) r[i + 1] = mul(inv(i + 1), a[i]);
-  return r;
-}
-Poly Ln(const Poly &a) { // a[0] == 1, 1e5/95ms
-  return cut(Integral(Mul(Derivative(a), Inverse(a))),
-    SZ(a));
-}
-Poly Exp(const Poly &a) { // a[0] == 0, 1e5/240ms
-  int n = SZ(a);
-  if (n == 1) return {1};
-  Poly x = cut(Exp(cut(a, (n + 1) / 2)), n), y = Ln(x);
-  y[0] = MOD - 1;
-  FOR (i, 0, n - 1) y[i] = sub(a[i], y[i]);
-  return cut(Mul(x, y), n);
-}
-// M := MOD(MOD - 1). If k >= M, k := k % M + M.
-Poly PolyPow(const Poly &a, ll k) { // 1e5/340ms
-  int n = SZ(a), z = 0;
-  while (z < n && !a[z]) z++;
-  if (z * min(k, (ll)n) >= n) return Poly(n);
-  if (!k) return cut(Poly {1}, n);
-  Poly x(a.begin() + z, a.begin() + z + n - z * k);
-  int c = pw(x[0], k % (MOD - 1));
-  x = Ln(x);
-  FOR (i, 0, SZ(x) - 1) x[i] = mul(x[i], k % MOD);
-  x = Exp(x);
-  FOR (i, 0, SZ(x) - 1) x[i] = mul(x[i], c);
-  reverse(x.begin(), x.end()), x.resize(n);
-  return reverse(x.begin(), x.end()), x;
-}
-Poly tmul(const Poly &a, int m, const Poly &b) { // mid
-  Poly y = cut(Mul(a, b), SZ(a) + m - 1);
-  return Poly(y.begin() + SZ(a) - 1, y.end());
-}
-vector<Poly> subTree(const vector<int> &x) {
-  int m = SZ(x);
-  vector<Poly> up(m * 2);
-  FOR (i, 0, m - 1) up[m + i] = {sub(0, x[i]), 1};
-  for (int i = m - 1; i > 0; i--)
-    up[i] = Mul(up[i * 2], up[i * 2 + 1]);
-  return up;
-}
-vector<int> evalOn(Poly a, const vector<int> &x,
-  const vector<Poly> &up) {
-  int m = SZ(x);
-  if (!m) return {};
-  vector<Poly> dn(m * 2);
-  // dn[1] = Divide(a, up[1]).S;
-  // FOR (i, 2, m*2-1) dn[i] = Divide(dn[i/2], up[i]).S;
-  dn[1] = tmul(rev(Inverse(cut(rev(up[1]), SZ(a)))), m, a);
-  FOR (i, 2, m * 2 - 1)
-    dn[i] = tmul(up[i ^ 1], SZ(up[i]) - 1, dn[i / 2]);
-  vector<int> y(m);
-  FOR (i, 0, m - 1) y[i] = dn[m + i][0];
-  return y;
-}
-vector<int> Evaluate(Poly a, const vector<int> &x) {
-  return evalOn(a, x, subTree(x)); // 1e5/0.8s
-}
-Poly Interpolate(const vector<int> &x,
-  const vector<int> &y) { // 1e5/1.2s
-  int m = SZ(x);
-  vector<Poly> up = subTree(x), dn(m * 2);
-  vector<int> z = evalOn(Derivative(up[1]), x, up);
-  FOR (i, 0, m - 1) dn[m + i] = {mul(y[i], inv(z[i]))};
-  for (int i = m - 1; i > 0; i--) {
-    Poly l = Mul(dn[i * 2], up[i * 2 + 1]);
-    Poly r = Mul(dn[i * 2 + 1], up[i * 2]);
-    dn[i].resize(SZ(l));
-    FOR (j, 0, SZ(l) - 1) dn[i][j] = add(l[j], r[j]);
+  Poly Q = Mul(ra, Inverse(rb), k);
+  reverse(Q.begin(), Q.end());
+  Poly res = Mul(b, Q), R(m - 1);
+  FOR (i, 0, m - 2) R[i] = sub(a[i], res[i]);
+  return {Q, R};
+} // ef890f
+Poly Sqrt(Poly a) {
+  // O(NlogN), return {-1} if not exists
+  int n = SZ(a), m = 0, inv2 = (MOD + 1) / 2;
+  while (m < n && a[m] == 0) m++;
+  if (m == n) return a;
+  if (m & 1) return {-1};
+  a.erase(a.begin(), a.begin() + m);
+  int k = n - m, z = QuadraticResidue(a[0], MOD);
+  if (z == -1) return {-1};
+  Poly q(1, z), res(n);
+  for (int l = 1; l < k; l <<= 1) { // q = (q + a / q) / 2
+    q.resize(l * 2);
+    Poly t(a.begin(), a.begin() + min(k, l * 2));
+    t = Mul(t, Inverse(q), l * 2);
+    FOR (i, 0, l * 2 - 1)
+      q[i] = mul(add(q[i], t[i]), inv2);
   }
-  return dn[1];
-}
-pair<Poly, Poly> facs(int m) { // i! and 1 / i!
-  Poly f(m), g(m);
-  f[0] = 1;
-  FOR (i, 1, m - 1) f[i] = mul(f[i - 1], i);
-  g[m - 1] = inv(f[m - 1]);
-  for (int i = m - 1; i > 0; i--) g[i - 1] = mul(g[i], i);
-  return {f, g};
-}
-Poly TaylorShift(Poly a, ll c) { // a(x) -> a(x + c)
-  int n = SZ(a), w = 1, d = (c % MOD + MOD) % MOD;
-  auto [f, g] = facs(n);
+  FOR (i, 0, k - 1) res[i + m / 2] = q[i];
+  return res;
+} // 150cca
+Poly Derivative(Poly a) {
+  int n = SZ(a);
+  Poly res(n - 1);
+  FOR (i, 0, n - 2) res[i] = mul(a[i + 1], i + 1);
+  return res;
+} // 6964ac
+Poly Ln(Poly a) {
+  // O(NlogN), a[0] = 1
+  int n = SZ(a);
+  if (n == 1) return {0};
+  Poly d = Derivative(a);
+  a.pop_back(), d = Mul(d, Inverse(a), n - 1);
+  d.insert(d.begin(), 0);
+  FOR (i, 1, n - 1) d[i] = mul(d[i], Pow(i, MOD - 2));
+  return d;
+} // 788c9d
+Poly Exp(Poly a) {
+  // O(NlogN), a[0] = 0
+  int n = SZ(a);
+  Poly q(1, 1);
+  a[0] = add(a[0], 1), a.resize(n * 2);
+  for (int m = 1; m < n; m <<= 1) {
+    q.resize(m * 2);
+    Poly h = Ln(q);
+    FOR (i, 0, m * 2 - 1) h[i] = sub(a[i], h[i]);
+    q = Mul(h, q, m * 2);
+  }
+  return q.resize(n), q;
+} // 1b07ee
+Poly PolyPow(Poly a, ll k) { // needs Pow(int, ll)
+  int n = SZ(a), m = 0;
+  Poly ans(n, 0);
+  while (m < n && a[m] == 0) m++;
+  if (k && m && (k >= n || k * m >= n)) return ans;
+  if (m == n || !k) return ans[0] = 1, ans;
+  int lead = m * k;
+  Poly b(a.begin() + m, a.end());
+  int base = Pow(b[0], k), inv = Pow(b[0], MOD - 2);
+  FOR (i, 0, n - m - 1) b[i] = mul(b[i], inv);
+  b = Ln(b);
+  FOR (i, 0, n - m - 1) b[i] = mul(b[i], k % MOD);
+  b = Exp(b);
+  FOR (i, lead, n - 1) ans[i] = mul(b[i - lead], base);
+  return ans;
+} // 856487
+vector<int> Evaluate(Poly a, vector<int> x) {
+  if (x.empty()) return {};
+  int n = SZ(x);
+  vector<Poly> up(n * 2);
+  FOR (i, 0, n - 1) up[i + n] = {sub(0, x[i]), 1};
+  for (int i = n - 1; i > 0; i--)
+    up[i] = Mul(up[i * 2], up[i * 2 + 1]);
+  vector<Poly> down(n * 2);
+  down[0] = a;
+  FOR (i, 1, n * 2 - 1)
+    down[i] = Divide(down[i >> 1], up[i]).second;
+  Poly y(n);
+  FOR (i, 0, n - 1) y[i] = down[i + n][0];
+  return y;
+} // 379520
+Poly Interpolate(vector<int> x, vector<int> y) {
+  int n = SZ(x);
+  vector<Poly> up(n * 2);
+  FOR (i, 0, n - 1) up[i + n] = {sub(0, x[i]), 1};
+  for (int i = n - 1; i > 0; i--)
+    up[i] = Mul(up[i * 2], up[i * 2 + 1]);
+  Poly a = Evaluate(Derivative(up[1]), x);
+  FOR (i, 0, n - 1) a[i] = mul(y[i], Pow(a[i], MOD - 2));
+  vector<Poly> down(n * 2);
+  FOR (i, 0, n - 1) down[i + n] = {a[i]};
+  for (int i = n - 1; i > 0; i--) {
+    Poly r = Mul(down[i * 2 + 1], up[i * 2]);
+    down[i] = Mul(down[i * 2], up[i * 2 + 1]);
+    FOR (j, 0, SZ(r) - 1) down[i][j] = add(down[i][j], r[j]);
+  }
+  return down[1];
+} // 7d6991
+Poly TaylorShift(Poly a, int c) {
+  // return sum a_i(x + c)^i;
+  // fac[i] = i!, ifac[i] = inv(i!)
+  int n = SZ(a);
+  FOR (i, 0, n - 1) a[i] = mul(a[i], fac[i]);
+  reverse(a.begin(), a.end());
+  Poly b(n);
+  int w = 1;
+  FOR (i, 0, n - 1) b[i] = mul(ifac[i], w), w = mul(w, c);
+  a = Mul(a, b, n), reverse(a.begin(), a.end());
+  FOR (i, 0, n - 1) a[i] = mul(a[i], ifac[i]);
+  return a;
+} // 41783b
+vector<int> SamplingShift(vector<int> a, int c, int m) {
+  // given f(0), f(1), ..., f(n - 1)
+  // return f(c), f(c + 1), ..., f(c + m - 1)
+  int n = SZ(a);
+  FOR (i, 0, n - 1) a[i] = mul(a[i], ifac[i]);
   Poly b(n);
   FOR (i, 0, n - 1) {
-    a[i] = mul(a[i], f[i]);
-    b[i] = mul(g[i], w), w = mul(w, d);
+    b[i] = ifac[i];
+    if (i & 1) b[i] = sub(0, b[i]);
   }
+  a = Mul(a, b, n);
+  FOR (i, 0, n - 1) a[i] = mul(a[i], fac[i]);
   reverse(a.begin(), a.end());
-  a = cut(Mul(a, b), n);
+  int w = 1;
+  FOR (i, 0, n - 1)
+    b[i] = mul(ifac[i], w), w = mul(w, sub(c, i));
+  a = Mul(a, b, n);
   reverse(a.begin(), a.end());
-  FOR (i, 0, n - 1) a[i] = mul(a[i], g[i]);
-  return a;
-}
-// a(0), .., a(k-1) -> a(c), .., a(c+m-1), deg a < k
-vector<int> SamplingShift(Poly a, ll c, int m) {
-  int k = SZ(a), w = 1;
-  auto [f, g] = facs(max(k, m));
-  Poly b(k);
-  FOR (i, 0, k - 1) {
-    a[i] = mul(a[i], g[i]);
-    b[i] = i & 1 ? sub(0, g[i]) : g[i];
-  }
-  a = cut(Mul(a, b), k);
-  FOR (i, 0, k - 1) a[i] = mul(a[i], f[i]);
-  reverse(a.begin(), a.end());
-  FOR (i, 0, k - 1) {
-    b[i] = mul(g[i], w);
-    w = mul(w, ((c - i) % MOD + MOD) % MOD);
-  }
-  a = cut(Mul(a, b), k);
-  reverse(a.begin(), a.end());
-  FOR (i, 0, k - 1) a[i] = mul(a[i], g[i]);
+  FOR (i, 0, n - 1) a[i] = mul(a[i], ifac[i]);
   a.resize(m), b.resize(m);
-  FOR (i, 0, m - 1) b[i] = g[i];
-  a = cut(Mul(a, b), m);
-  FOR (i, 0, m - 1) a[i] = mul(a[i], f[i]);
+  FOR (i, 0, m - 1) b[i] = ifac[i];
+  a = Mul(a, b, m);
+  FOR (i, 0, m - 1) a[i] = mul(a[i], fac[i]);
   return a;
-}
-// ret[i] = \sum_j w_j [x^j] f^i, f[0] == 0, 2^17/2.0s
-Poly PowerProj(vector<int> w, Poly f, int m) {
-  int k = 1, nn = 1;
-  while (nn < SZ(f)) nn <<= 1;
-  const int n2 = nn * 2;
-  f.resize(nn), w.resize(nn);
-  reverse(w.begin(), w.end());
-  Poly p(n2), q(n2);
-  FOR (i, 0, nn - 1) p[i] = w[i], q[i] = sub(0, f[i]);
-  while (nn > 1) {
-    Poly r(n2);
+} // b63d3a
+Poly power_proj(vector<int> w, Poly f, int m) {
+  // return sum_j w_j[x^j]f^i for i=0,1,...,m; N >= 4|f|
+  int n = 1;
+  while (n < SZ(f)) n <<= 1;
+  f.resize(n), w.resize(n), reverse(w.begin(), w.end());
+  int k = 1, n2 = 2 * n, n4 = 4 * n;
+  Poly _P(n2), _Q(n2);
+  FOR (i, 0, n - 1) _P[i] = w[i], _Q[i] = sub(0, f[i]);
+  while (n > 1) {
+    Poly R(n2);
     FOR (i, 0, n2 - 1)
-      r[i] = i & 1 ? sub(0, q[i]) : q[i];
-    Poly a = cut(Mul(p, r), n2 * 2);
-    Poly b = cut(Mul(q, r), n2 * 2);
-    FOR (i, 0, n2 - 1) {
-      a[n2 + i] = add(a[n2 + i], p[i]);
-      b[n2 + i] = add(b[n2 + i], add(q[i], r[i]));
+      R[i] = (i & 1 ? sub(0, _Q[i]) : _Q[i]);
+    Poly PQ = Mul(_P, R), QQ = Mul(_Q, R);
+    PQ.resize(n4), QQ.resize(n4);
+    for (int i = 0, j = n2; i < n2; i++, j++) {
+      PQ[j] = add(PQ[j], _P[i]);
+      QQ[j] = add(QQ[j], add(_Q[i], R[i]));
     }
-    fill(p.begin(), p.end(), 0);
-    fill(q.begin(), q.end(), 0);
-    FOR (j, 0, k * 2 - 1) FOR (i, 0, nn / 2 - 1) {
-      p[nn * j + i] = a[nn * j * 2 + i * 2 + 1];
-      q[nn * j + i] = b[nn * j * 2 + i * 2];
+    fill(ALL(_P), 0), fill(ALL(_Q), 0);
+    FOR (j, 0, 2 * k - 1) FOR (i, 0, n / 2 - 1) {
+      _P[n * j + i] = PQ[2 * n * j + 2 * i + 1];
+      _Q[n * j + i] = QQ[2 * n * j + 2 * i + 0];
     }
-    nn /= 2, k *= 2;
+    n /= 2, k *= 2;
   }
-  Poly ret(k);
-  FOR (i, 0, k - 1) ret[i] = p[i * 2];
-  reverse(ret.begin(), ret.end());
-  return ret.resize(m + 1), ret;
-}
-// a_n = \sum_{j=1}^{k} c_j a_(n-j), c is 1-based
-int LinearRecursion(const Poly &a, const Poly &c, ll n) {
-  int k = SZ(a);
-  Poly C(k + 1), W = cut(Poly {1}, k), M = {0, 1};
-  FOR (i, 1, k) C[k - i] = sub(0, c[i]);
-  C[k] = 1;
-  // C is fixed: invert reverse(C) once, not inside
-  // each Divide. max(2, k) >= every quotient length
-  Poly Ci = Inverse(cut(rev(C), max(2, k)));
-  auto rem = [&](Poly x) { // x mod C, SZ(x) <= 2k - 1
-    if (SZ(x) < SZ(C)) return x;
-    int m = SZ(x) - SZ(C) + 1;
-    Poly q = rev(cut(Mul(cut(rev(x), m), cut(Ci, m)), m));
-    Poly t = Mul(C, q);
-    FOR (i, 0, SZ(x) - 1) x[i] = sub(x[i], t[i]);
-    return x.resize(k), x;
-  };
-  while (n) {
-    if (n % 2) W = rem(Mul(W, M));
-    n /= 2, M = rem(Mul(M, M));
-  }
-  int ret = 0;
-  FOR (i, 0, k - 1) ret = add(ret, mul(W[i], a[i]));
-  return ret;
-}
+  Poly p(k);
+  FOR (i, 0, k - 1) p[i] = _P[2 * i];
+  reverse(p.begin(), p.end()), p.resize(m + 1);
+  return p;
+} // 531321
+Poly CompInv(Poly f) { // N >= 4|f| (power_proj)
+  // O(Nlog^2N), f[0] = 0, f[1] != 0, return g: f(g(x)) = x
+  int n = SZ(f);
+  if (n == 1) return {0};
+  Poly w(n), h(n - 1), g(n);
+  w[n - 1] = 1;
+  Poly a = power_proj(w, f, n - 1); // a[i] = [x^(n-1)] f^i
+  FOR (i, 1, n - 1)
+    h[n - 1 - i] = mul(a[i], Pow(i, MOD - 2));
+  int ih0 = Pow(h[0], MOD - 2), g1 = Pow(f[1], MOD - 2);
+  FOR (i, 0, n - 2) h[i] = mul(h[i], ih0);
+  // h = (x/(f[1]g))^(n-1), h[0] = 1: PolyPow takes k mod p
+  h = PolyPow(h, sub(0, Pow(n - 1, MOD - 2)));
+  FOR (i, 0, n - 2) g[i + 1] = mul(h[i], g1);
+  return g;
+} // 3b527e

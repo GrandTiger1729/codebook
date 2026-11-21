@@ -40,7 +40,7 @@ struct Delaunay { // 0-base
       }
       return false;
     };
-    while (gao(0) || gao(1));
+    while (gao(0) || gao(1)) {}
     addEdge(nw[0], nw[1]); // add tangent
     while (true) {
       pll pt[2] = {p[nw[0]], p[nw[1]]};

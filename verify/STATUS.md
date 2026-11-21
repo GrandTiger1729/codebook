@@ -315,3 +315,4 @@
 - **Value Polynomial → Lagrange Interpolation**：舊版要自己寫支援比較與轉整數的 `mint`、外加 `inegfac[]`；換成 16 行的 `Lagrange(y, x)`（$f(0..d)$ 求 $f(x)$，$O(d)$，`int` + `add`/`sub`/`mul` + `ifac`，跟多項式章一致）。舊檔留著、從書中註解掉。
 - **Lagrange**：`x %= MOD` 改成 `x = (x % MOD + MOD) % MOD`，負的 $x$ 也安全（平移起點時呼叫 `Lagrange(y, x - a)` 可能是負數）。
 - **Lagrange Interpolation**：使用者在 CF 622F（$\sum_{i=1}^n i^k$，$k \le 10^6$）送出 AC，記進 content.tex 與 STATUS。
+- **拿掉所有標題的 `*`**（72 個，含註解掉的）：`*` 原本表示「真的在 OJ 送過」，現在書裡每個模板都有 LC 或對拍，測試紀錄在 content.tex 的 `test by` 註解和這份表裡，`*` 只剩雜訊。

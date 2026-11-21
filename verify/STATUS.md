@@ -130,7 +130,8 @@
 | `7_Polynomial/Fast_Walsh_Transform.cpp` | — 無對應題 | `subset_convolution`：2 000 組 vs 樸素 $O(4^L)$，L = 1..5、共用同一組全域 | ✅ | test by luogu P6097, local brute force |
 | `7_Polynomial/Polynomial_Operation.cpp` | `polynomial/inv_of_formal_power_series` **AC** 25 筆 · 0.418s/10s (4%)<br>`polynomial/exp_of_formal_power_series` **AC** 26 筆 · 1.619s/10s (16%)<br>`polynomial/log_of_formal_power_series` **AC** 25 筆 · 0.668s/10s (7%)<br>`polynomial/pow_of_formal_power_series` **AC** 37 筆 · 2.227s/10s (22%)<br>`polynomial/sqrt_of_formal_power_series` **AC** 35 筆 · 1.120s/10s (11%)<br>`polynomial/polynomial_taylor_shift` **AC** 38 筆 · 0.268s/5s (5%)<br>`polynomial/shift_of_sampling_points_of_polynomial` **AC** 32 筆 · 0.668s/5s (13%)<br>`polynomial/compositional_inverse_of_formal_power_series` **AC** 23 筆 · 0.215s/10s (2%)<br>`polynomial/compositional_inverse_of_formal_power_series_large` **AC** 28 筆 · 3.674s/10s (37%) | `Divide`（$bq+r=a$）500 組、`Evaluate` vs Horner 300 組、`Interpolate` 來回 300 組、`TaylorShift` vs 直接代入 300 組、`SamplingShift` vs Lagrange 200 組、`power_proj` vs $O(n^2m)$ 樸素 250 組、`PolyPow` vs 連乘 3 000 組（含 $k = 0$、$a_0 = 0$）、`Sqrt` 平方回去 1 073 組、`CompInv` $f(g(x)) = x$ 樸素合成 20 000 組（$n$ = 1..40） | 需要外部 NTT、`QuadraticResidue`；`PolyPow` 要 `Pow(int, ll)`；`TaylorShift`/`SamplingShift` 要 `fac[]`/`ifac[]` | 從 std_abs 改短（2026-11-20） |
 | `7_Polynomial/FastLinearRecursion.cpp` | `other/kth_term_of_linearly_recurrent_sequence` **AC** 20 筆 · 3.573s/10s (36%) | BM → BostanMori 重播整段前綴，290 組（d = 1..20）共 9 166 項 | 需要外部 `Mul`、`ntt`（`Polynomial_Operation`、`Number_Theory_Transform`） | Bostan–Mori（2026-09-28 取代 std_abs 的 Kitamasa，原本 TLE 19.442s）；`c` 是 **0-based**，BM 的輸出可直接餵入 |
-| `7_Polynomial/Value_Poly.cpp` | — 無對應題 | 431 189 組 vs 前綴和表 | 需要外部 `mint` | — |
+| `7_Polynomial/Lagrange_Interpolation.cpp` | — 無對應題 | 400 000 次求值 vs Horner（$d \le 300$；$x$ 含 $0..d$、近 $p$、到 $10^{18}$）、62 031 個 $\sum i^k$ vs 直接累加；$d = 10^6$ 0.013s | 需要外部 `MOD`/`add`/`sub`/`mul`、`ifac[]` 到 $d$ | 2026-11-22 取代 Value Polynomial |
+| `7_Polynomial/Value_Poly.cpp`（不在書中） | — 無對應題 | 431 189 組 vs 前綴和表 | 需要外部 `mint` | — |
 
 ## Geometry
 
@@ -311,3 +312,4 @@
 ## 2026-11-22
 - **HPIGeneralLine 修 bug**：`cov()` 把 `__int128` 傳給 `sign(ll)`，超過 $2^{63}$ 會截斷（|coord| 到 1e9 時近平行線判錯，該空的回傳 4 條）。改成直接比較 `__int128` 的正負，不多佔行。對拍拿掉原本補的 `sign(__int128)`（它把 bug 遮住了），舊版現在會失敗、新版 56 012 組通過。
 - **DelaunayTriangulation_dq**：`while (gao(0) || gao(1));` 改成 `{}`，空迴圈主體看得出來是故意的。
+- **Value Polynomial → Lagrange Interpolation**：舊版要自己寫支援比較與轉整數的 `mint`、外加 `inegfac[]`；換成 16 行的 `Lagrange(y, x)`（$f(0..d)$ 求 $f(x)$，$O(d)$，`int` + `add`/`sub`/`mul` + `ifac`，跟多項式章一致）。舊檔留著、從書中註解掉。

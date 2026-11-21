@@ -23,6 +23,11 @@ int main() {
            : q == 2 ? rnd(0, (ll)1e18) : rnd(0, 1000);
       assert(Lagrange(y, x) == horner(c, x)), cases++;
     }
+    int a = rnd(-1000, 1000); // y[i] = f(a + i), query Lagrange(y, x - a)
+    vector<int> z(d + 1);
+    FOR (i, 0, d) z[i] = horner(c, ((a + i) % MOD + MOD) % MOD);
+    ll x = rnd(-2000, 2000);
+    assert(Lagrange(z, x - a) == horner(c, (x % MOD + MOD) % MOD)), cases++;
   }
   int sums = 0;
   FOR (k, 0, 30) {

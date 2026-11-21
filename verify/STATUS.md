@@ -320,3 +320,4 @@
 - **SAIS.cpp 改寫**：原本是全域陣列版（含 LCP，沒用到），換成教科書式 SA-IS：輸入尾端唯一最小 0、其餘在 $[1, K)$，回傳 `sa[0] = n - 1`，和 SAIS-C++20 介面相同。型別陣列命名 `ty`（`S` 是巨集）。LC AC 0.064s（C++20 版 0.066s），n = 5e6 兩者 0.448s 相同。還沒放進書。
 - **SAIS.cpp**：`same()` 只比字元、不比 S/L 型（兩段都在同一個位移結束於 LMS 時，型別由字元和後一格的型別決定，字元相同就推得型別相同）。少一行；對拍與 LC 照樣通過。
 - **書中 SAIS C++20 → SAIS**：SAIS-C++20 註解掉（檔案、driver、對拍保留）。LCP Array 的 LC 驅動（Number of Substrings，AC 0.064s）和對拍改用 SAIS.cpp。
+- **Tips for Generating Functions** 移到 Polynomial 章（`7_Polynomial/Generating_function.tex`，接在 Newton's Method 後）。刪掉基本性質（和、OGF 乘積與 $A^k$、$A(rx)$、EGF $A^k$、$(1+x)^n$）；修 EGF 定義 $x_i \to x^i$、$xA(x) \Rightarrow na_{n-1}$（原寫 $na_n$ 是錯的）；加 $\ln(1\pm x)$ 展開、$-\ln(1-x)$ 的 $k$ 階導數、$(\ln A)' = A'/A$、$(-\ln(1-x))^k/k!$ 是第一類 Stirling 的 EGF。

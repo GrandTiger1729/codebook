@@ -323,3 +323,4 @@
 - **Tips for Generating Functions** 移到 Polynomial 章（`7_Polynomial/Generating_function.tex`，接在 Newton's Method 後）。刪掉基本性質（和、OGF 乘積與 $A^k$、$A(rx)$、EGF $A^k$、$(1+x)^n$）；修 EGF 定義 $x_i \to x^i$、$xA(x) \Rightarrow na_{n-1}$（原寫 $na_n$ 是錯的）；加 $\ln(1\pm x)$ 展開、$-\ln(1-x)$ 的 $k$ 階導數、$(\ln A)' = A'/A$、$(-\ln(1-x))^k/k!$ 是第一類 Stirling 的 EGF。
 - **Tips for Generating Functions**：加單位根濾波 $\sum_{m \mid n} a_nx^n = \frac1m\sum_j A(\omega^jx)$（取代 $A(rx)$ 的用途）。
 - **Tips for Generating Functions**：單位根濾波註明 mod $p$ 需要 $m \mid p - 1$（998244353 下 $m = 3$ 不行）。
+- **理論文字行距** 9.5pt → 10.5pt（字仍是 8pt；`codebook.tex` 的 `\footnotesize` 改成 `\fontsize{8}{10.5}`，程式碼列表自己設 `\footnotesize` 不受影響）。成本約 0.63 欄，第 25 頁用到 0.65/3 欄。比較過 `\small`（9pt，1.26 欄且 5 行溢出）。

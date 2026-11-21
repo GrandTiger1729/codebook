@@ -13,7 +13,7 @@ struct node {
 int sz(node *a) { return a ? a->sz : 0; }
 node *merge(node *a, node *b) {
   if (!a || !b) return a ? a : b;
-  // by size, no stored priority: safe when nodes are copied
+  // random by size: also balanced for persistent treap
   if (rng() % (sz(a) + sz(b)) < sz(a))
     return a->down(), a->r = merge(a->r, b), a->up(), a;
   return b->down(), b->l = merge(a, b->l), b->up(), b;

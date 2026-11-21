@@ -31,8 +31,7 @@ vector<int> sais(const vector<int> &s, int K) {
   induce(pos);
   auto same = [&](int x, int y) { // equal LMS substrings
     for (int k = 0;; k++) {
-      if (s[x + k] != s[y + k] || ty[x + k] != ty[y + k])
-        return false;
+      if (s[x + k] != s[y + k]) return false;
       if (k && (lms(x + k) || lms(y + k)))
         return lms(x + k) && lms(y + k);
     }

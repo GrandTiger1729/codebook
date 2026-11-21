@@ -5,20 +5,10 @@
 #include "7_Polynomial/Number_Theory_Transform.cpp"
 #include "7_Polynomial/Polynomial_Operation.cpp" // supplies Mul, Divide
 #include "7_Polynomial/FastLinearRecursion.cpp"
-struct mi { // field type for BerlekampMassey
-  int v = 0;
-  mi(ll x = 0) : v((x % MOD + MOD) % MOD) {}
-  mi operator-() const { return mi(sub(0, v)); }
-  mi &operator+=(mi o) { v = add(v, o.v); return *this; }
-  mi &operator-=(mi o) { v = sub(v, o.v); return *this; }
-  mi operator*(mi o) const { return mi(mul(v, o.v)); }
-  mi operator/(mi o) const { return mi(mul(v, Pow(o.v, MOD - 2))); }
-  bool operator==(int x) const { return v == x; }
-};
 #include "6_Math/Berlekamp-Massey.cpp"
 
-// Random order-d recurrence -> 2d-term prefix -> BerlekampMassey (1-based c) ->
-// shift to BostanMori's 0-based c -> must replay every term of a longer
+// Random order-d recurrence -> 2d-term prefix -> BerlekampMassey (0-based c) ->
+// BostanMori -> must replay every term of a longer
 // run, and agree with a naive O(d^2 log k) Kitamasa for huge k.
 int R() { return rnd(0, MOD - 1); }
 int kitamasa(const vector<int> &a, const vector<int> &c1, ll k) { // c1 1-based
@@ -49,13 +39,12 @@ int main() {
       if (i < d) s[i] = rnd(0, 4) ? R() : 0;
       else FOR (j, 1, d) s[i] = add(s[i], mul(c[j], s[i - j]));
     }
-    vector<mi> pre(2 * d);
-    FOR (i, 0, 2 * d - 1) pre[i] = s[i];
-    vector<mi> bm = BerlekampMassey(pre);
+    vector<int> pre(s.begin(), s.begin() + 2 * d);
+    vector<int> bm = BerlekampMassey(pre);
     int e = SZ(bm);
     if (e == 0) continue; // all-zero sequence: BostanMori needs |a| >= 1
     vector<int> a(s.begin(), s.begin() + e), c0(e), c1(e + 1);
-    FOR (j, 0, e - 1) c0[j] = c1[j + 1] = bm[j].v; // both 0-based
+    FOR (j, 0, e - 1) c0[j] = c1[j + 1] = bm[j]; // both 0-based
     FOR (k, 0, T - 1) assert(BostanMori(a, c0, k) == s[k]), terms++;
     FOR (q, 1, 1) {
       ll k = rnd(0, 1) ? rnd(T, 10000) : rnd(0, (ll)1e18);

@@ -118,7 +118,7 @@
 | `6_Math/QuadraticResidue.cpp` | `number_theory/sqrt_mod` **AC** 13 筆 · 0.064s/10s (1%) | 289 050 組（p < 2000 每個 a 窮舉 + 大質數植入解） | ✅ | test by Lib-Checker Sqrt Mod, local brute force |
 | `6_Math/PiCount.cpp` | `number_theory/counting_primes` **AC** 31 筆 · 0.033s/5s (1%) | — | ✅ | test by luogu P7884, Lib-Checker Counting Primes |
 | `6_Math/DiscreteLog.cpp` | `number_theory/discrete_logarithm_mod` **AC** 20 筆 · 0.264s/10s (3%) | 585 220 組（m ≤ 120 窮舉 + 植入解到 1e9；443 296 組無解） | ✅ | test by Lib-Checker Discrete Logarithm |
-| `6_Math/Berlekamp-Massey.cpp` | `other/find_linear_recurrence` **AC** 18 筆 · 0.164s/5s (3%) | 經 FastLinearRecursion 的對拍（BM 的結果要能重播整段數列） | ✅ | test by Lib-Checker Find Linear Recurrence |
+| `6_Math/Berlekamp-Massey.cpp` | `other/find_linear_recurrence` **AC** 18 筆 · 0.214s/5s (4%) | 經 FastLinearRecursion 的對拍（BM 的結果要能重播整段數列）；與舊版比 200 000 組任意數列（含大量 0）：長度相同、新版都能重播 | ✅ | 照 kactl 改成 `int` + `add`/`sub`/`mul`/`Pow`（2026-11-21）；test by Lib-Checker Find Linear Recurrence |
 
 ## Polynomial
 
@@ -301,3 +301,7 @@
 - **檔名去掉 `_stdabs`**：`NTT_stdabs.cpp` → `Number_Theory_Transform.cpp`、`Operation_stdabs.cpp` → `Polynomial_Operation.cpp`（跟同章 `Fast_Fourier_Transform.cpp` 一致）；`CompInv` 併到 `Polynomial_Operation.cpp` 最後，不再單獨成檔，對拍也併進去。
 - **註解搬家**：`Pow` 指數要 `ll` 的說明從 NTT 檔頭移到 `PolyPow` 那一行（只有它會傳 `ll`）；NTT 檔頭縮成一行。`fac[]`/`ifac[]` 的說明本來就在 `TaylorShift`。
 - **`power_proj`／`CompInv` 註明 $N \ge 4|f|$**：`power_proj` 把 $|f|$ 補到 $2^k$ 後做長度 $2 \cdot 2^k$ 的乘法，NTT 長度到 $4 \cdot 2^k$；$N$ 是 2 的冪，所以 $N \ge 4|f|$ 剛好等價。其他函式只要 $N \ge 2|f|$。
+
+## 2026-11-21
+
+- **Berlekamp–Massey 改寫**：原本是 template `T`，要自己寫支援除法的 `mint`（書裡沒有），而傳 `vector<int>` 會靜靜算錯（整數除法、不取模）。改照 kactl，吃 `vector<int>`、用 NTT 那套 `MOD`/`add`/`sub`/`mul`/`Pow`，回傳 0-based `c` 可以直接餵 `BostanMori`。23 → 22 行；LC AC；對拍的 `mi` 結構拿掉。

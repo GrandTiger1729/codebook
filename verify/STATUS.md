@@ -151,7 +151,7 @@
 | `8_Geometry/PolyUnion.cpp` | — 無對應題 | 20 000 組 vs 精確 slab 分解（含重複多邊形） | ✅ | test by CF 101673 A |
 | `8_Geometry/Polar_Angle_Sort.cpp`（不在書中） | `geo/sort_points_by_argument` **AC** 21 筆 · 0.117s/5s (2%) | — | ✅ | test by NTUJ 2270, Lib-Checker Sort Points by Argument |
 | `8_Geometry/Half_plane_intersection.cpp` | — 無對應題 | 56 016 組 vs exact 有理數暴力（含空/零面積），n 到 1e5 | 需要外部 `cmp`；書中 double 前置只到 |coord| ≈ 3.3e7（1e9 會把近平行線當平行），整數前置到 1e9 | test by qoj 2162 (World Finals' problem) |
-| `8_Geometry/HPIGeneralLine.cpp` | — 無對應題 | 56 012 組 vs exact 有理數暴力，格點直線到 1e9、n 到 1e5 | 需要外部 `cmp`；書中 double 前置只到 ≈ 3.3e7；整數前置下 `sign(ll)` 會截斷 `cov()` 的 `__int128`（**bug，未修**） | — |
+| `8_Geometry/HPIGeneralLine.cpp` | — 無對應題 | 56 012 組 vs exact 有理數暴力，格點直線到 1e9、n 到 1e5 | 需要外部 `cmp`；書中 double 前置只到 ≈ 3.3e7；`cov()` 直接比較 `__int128`（2026-11-22 修：原本 `sign(ll)` 會截斷） | — |
 | `8_Geometry/rotatingSweepLine.cpp` | — 無對應題 | 2 173 組一般位置（前提：無三點共線） | 需要外部 `cmp` | — |
 | `8_Geometry/Minimum_Enclosing_Circle.cpp` | `geo/minimum_enclosing_circle` **AC** 25 筆 · 0.033s/5s (1%) | — | 需要外部 `circenter` | test by TIOJ 1093, Lib-Checker Minimum Enclosing Circle |
 | `8_Geometry/Intersection_of_two_circles.cpp` | — 無對應題 | 398 738 組含精確相切（同圓回傳 NaN） | ✅ | test by TIOJ 1503 |
@@ -307,3 +307,6 @@
 - **Berlekamp–Massey 改寫**：原本是 template `T`，要自己寫支援除法的 `mint`（書裡沒有），而傳 `vector<int>` 會靜靜算錯（整數除法、不取模）。改照 kactl，吃 `vector<int>`、用 NTT 那套 `MOD`/`add`/`sub`/`mul`/`Pow`，回傳 0-based `c` 可以直接餵 `BostanMori`。23 → 22 行；LC AC；對拍的 `mi` 結構拿掉。
 - **DeterminantAnyMod**：註解補上 $m \le 3 \cdot 10^9$（`(m - q) * a[j][k]` 接近 $m^2$）。
 - **Characteristic Polynomial 拿出書**（`content.tex` 註解掉，檔案與 LC 驗證保留）：ICPC 少用；$A^k$、$u^\mathsf{T}A^kv$ 用 Berlekamp–Massey + BostanMori，$\det(A + xB)$ 用 $n+1$ 個點的 `det` 再插值。
+
+## 2026-11-22
+- **HPIGeneralLine 修 bug**：`cov()` 把 `__int128` 傳給 `sign(ll)`，超過 $2^{63}$ 會截斷（|coord| 到 1e9 時近平行線判錯，該空的回傳 4 條）。改成直接比較 `__int128` 的正負，不多佔行。對拍拿掉原本補的 `sign(__int128)`（它把 bug 遮住了），舊版現在會失敗、新版 56 012 組通過。

@@ -6,11 +6,10 @@
 // With the book's prelude cross(pll, pll) converts to pdd, so LN(p, q).c, cmp() and cov()'s
 // cross(A.dir(), B.dir()) are doubles: exact only while |a|, |b| <= ~6.7e7 (2ab < 2^53),
 // i.e. lattice |coord| <= ~3.3e7. Second config: the integer prelude (Default_code_int, not
-// in the book) PLUS a sign(__int128): its sign(ll) would truncate cov()'s __int128 sum and
-// give wrong answers once that sum exceeds 2^63 (e.g. lattice |coord| ~ 1e9).
+// in the book), exact to lattice |coord| ~ 1e9. cov() compares its __int128 directly: it used
+// to call sign(ll), which truncated sums above 2^63 (fixed 2026-11-22).
 namespace ints {
 #include "8_Geometry/Default_code_int.cpp"
-int sign(__int128 a) { return a == 0 ? 0 : a > 0 ? 1 : -1; }
 #include "8_Geometry/Polar_Angle_Sort.cpp"
 #include "8_Geometry/HPIGeneralLine.cpp"
 int cmpDir(LN a, LN b) { return cmp(a.dir(), b.dir(), 0); }

@@ -16,7 +16,8 @@ bool cov(LN l, LN A, LN B) {
   i128 c = cross(A.dir(), B.dir());
   i128 a = i128(A.c) * B.a - i128(B.c) * A.a;
   i128 b = i128(A.c) * B.b - i128(B.c) * A.b;
-  return sign(a * l.b - b * l.a + c * l.c) * sign(c) >= 0;
+  i128 v = a * l.b - b * l.a + c * l.c; // not sign(ll)
+  return !v || !c || (v > 0) == (c > 0);
 }
 bool operator<(LN a, LN b) {
   if (int c = cmp(a.dir(), b.dir(), false); ~c) return c;

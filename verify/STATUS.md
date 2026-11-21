@@ -86,8 +86,8 @@
 | `5_String/RollingHash.cpp` | — 無對應題 | 400 個字串（σ ≤ 3）的所有等長子字串對（220 萬對）：雜湊相等 ⇔ 子字串相等；`string` 與 `vector<int>` 一致 | ✅ | 2026-11-17 加入（mod 2^61−1、隨機底數） |
 | `5_String/Manacher.cpp` | `string/enumerate_palindromes` **AC** 24 筆 · 0.068s/5s (1%) | — | 需要外部 `SIZE` | test by Lib-Checker Enumerate Palindromes |
 | `5_String/SA_LCP_becaido.cpp` | `string/suffixarray#becaido` **AC** 50 筆 · 0.167s/5s (3%) | — | ✅ | test by caido, Lib-Checker Suffix Array |
-| `5_String/SAIS-C++20.cpp` | `string/suffixarray` **AC** 50 筆 · 0.181s/5s (4%) | σ≤3 窮舉 + 隨機 n≤3000，共 30 252 組 | ✅ | test by Lib-Checker Suffix Array |
-| `5_String/SAIS.cpp`（不在書中） | `string/suffixarray#sais` **AC** 50 筆 · 0.064s/5s (1%) | σ≤3 窮舉 + 隨機 n≤3000，共 30 252 組；另 10 萬組 vs 暴力排序 | ✅ | 2026-11-22 改寫：教科書式 SA-IS（S/L 型、LMS、induce、命名遞迴），不用 C++20 ranges；n = 5e6 速度與 SAIS-C++20 相同 |
+| `5_String/SAIS-C++20.cpp` | `string/suffixarray` **AC** 50 筆 · 0.181s/5s (4%) | σ≤3 窮舉 + 隨機 n≤3000，共 30 252 組 | ✅ | 2026-11-22 書中改用 SAIS.cpp（註解掉） |
+| `5_String/SAIS.cpp` | `string/suffixarray#sais` **AC** 50 筆 · 0.064s/5s (1%) | σ≤3 窮舉 + 隨機 n≤3000，共 30 252 組；另 10 萬組 vs 暴力排序 | ✅ | 2026-11-22 改寫：教科書式 SA-IS（S/L 型、LMS、induce、命名遞迴），不用 C++20 ranges；n = 5e6 速度與 SAIS-C++20 相同 |
 | `5_String/LCP_Array.cpp` | `string/number_of_substrings#lcp` **AC** 24 筆 · 0.065s/5s (1%) | 30 000 組 n≤2000（含週期串）vs 直接比相鄰後綴 | ✅ | SA 由 SAIS 產生；2026-11-17 從 SA_LCP_becaido 拆出（倍增 SA 刪掉） |
 | `5_String/Aho-Corasick_Automaton.cpp` | `string/aho_corasick` **AC** 72 筆 · 0.369s/5s (7%) | `fail[]` vs 最長後綴節點、沿 `to[]` 累加 `cnt[]` vs 樸素出現次數、`count()` vs 每個節點字串的樸素出現次數，100 000 組（含 `reset()` 重用） | 需要外部 `N`、`C`；字元以 `'a'` 為基底；根是 0 | std_abs 原檔 + macro 契約（2026-09-30 取代舊版，檔名改正為 Automaton）；`cnt[]` 在 `build_fail()` 後是「以該節點結尾的 pattern 數」；另加 `count(s)` 回傳每個節點字串在 `s` 裡的出現次數（取代舊版的 `ord[]`/`solve()`） |
 | `5_String/MinimumRotation.cpp` | — 無對應題 | 79 523 組（σ=3 n≤9 窮舉 + 週期串） | ✅ | test by CSES Minimal Rotation |
@@ -319,3 +319,4 @@
 - **拿掉所有標題的 `*`**（72 個，含註解掉的）：`*` 原本表示「真的在 OJ 送過」，現在書裡每個模板都有 LC 或對拍，測試紀錄在 content.tex 的 `test by` 註解和這份表裡，`*` 只剩雜訊。
 - **SAIS.cpp 改寫**：原本是全域陣列版（含 LCP，沒用到），換成教科書式 SA-IS：輸入尾端唯一最小 0、其餘在 $[1, K)$，回傳 `sa[0] = n - 1`，和 SAIS-C++20 介面相同。型別陣列命名 `ty`（`S` 是巨集）。LC AC 0.064s（C++20 版 0.066s），n = 5e6 兩者 0.448s 相同。還沒放進書。
 - **SAIS.cpp**：`same()` 只比字元、不比 S/L 型（兩段都在同一個位移結束於 LMS 時，型別由字元和後一格的型別決定，字元相同就推得型別相同）。少一行；對拍與 LC 照樣通過。
+- **書中 SAIS C++20 → SAIS**：SAIS-C++20 註解掉（檔案、driver、對拍保留）。LCP Array 的 LC 驅動（Number of Substrings，AC 0.064s）和對拍改用 SAIS.cpp。

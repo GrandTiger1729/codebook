@@ -1,6 +1,6 @@
 #include "prelude.h"
 #include "stress.h"
-#include "5_String/SAIS-C++20.cpp"
+#include "5_String/SAIS.cpp"
 #include "5_String/LCP_Array.cpp"
 
 // SA from sais() (padding dropped), LCP vs direct comparison of adjacent suffixes
@@ -12,7 +12,7 @@ int main() {
     for (auto &c : s) c = rnd(1, sig);
     if (it % 3 == 0) { int p = rnd(1, n); FOR (i, p, n - 1) s[i] = s[i - p]; }
     vector<int> t = s; t.pb(0);
-    vector<int> sa = sais(t); sa.erase(sa.begin());
+    vector<int> sa = sais(t, sig + 1); sa.erase(sa.begin());
     vector<int> lcp = lcp_array(s, sa);
     assert((int)lcp.size() == n - 1);
     FOR (i, 0, n - 2) {

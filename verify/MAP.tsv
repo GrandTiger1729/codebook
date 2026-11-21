@@ -59,7 +59,7 @@ polynomial/polynomial_taylor_shift	fps.cpp -DOP_SHIFT	7_Polynomial/Polynomial_Op
 polynomial/shift_of_sampling_points_of_polynomial	fps.cpp -DOP_SAMPLE	7_Polynomial/Polynomial_Operation.cpp	
 other/kth_term_of_linearly_recurrent_sequence	kth_term_of_linearly_recurrent_sequence.cpp	7_Polynomial/Polynomial_Operation.cpp	
 graph/enumerate_triangles	enumerate_triangles.cpp	2_Graph/C3C4.cpp	driver sums x_a x_b x_c in the C3 callback
-string/number_of_substrings#lcp	number_of_substrings_lcp.cpp	5_String/SAIS-C++20.cpp + 5_String/LCP_Array.cpp	answer = n(n+1)/2 - sum of lcp
+string/number_of_substrings#lcp	number_of_substrings_lcp.cpp	5_String/SAIS.cpp + 5_String/LCP_Array.cpp	answer = n(n+1)/2 - sum of lcp
 geo/manhattanmst	manhattanmst.cpp	2_Graph/ManhattanMST.cpp	driver supplies Kruskal (DSU)
 tree/point_set_tree_path_composite_sum_fixed_root	point_set_tree_path_composite_sum_fixed_root.cpp	3_Data_Structure/StaticTopTree.cpp	driver supplies the Path/Point DP (linear maps on the path)
 number_theory/nim_product_64	nim_product_64.cpp	6_Math/NimProduct.cpp	

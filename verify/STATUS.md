@@ -356,3 +356,5 @@
 - **SIMD**：對拍檢查速查表上每個 intrinsic 的語意，不只是能編譯；確認 prefix max 技巧只在值 ≥ 0 時對（左移補 0）。
 - **Minimum Arborescence**：註解改成「有解 iff `size() == n - 1`」（n = 1 的 `{}` 也符合），取代原本含糊的寫法；新增本地對拍（含無解與 n = 1）。
 - **fac_no_p**：複雜度註解跟著拿掉 `mpow` 改成 `O(p^k + log_p n)`。
+- **Segment Tree Beats**：新增純文字筆記（節點要維護什麼、chmin 三種情況、合併、tag 順序、複雜度），程式碼不放進書。
+- **Centroid Decomposition**：移出書（comment out）。

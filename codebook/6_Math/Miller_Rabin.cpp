@@ -15,3 +15,10 @@ bool Miller_Rabin(ll a, ll n) {
     if ((x = (__int128)x * x % n) == n - 1) return 1;
   return 0;
 }
+bool prime(ll n) {
+  if (n < 2) return 0;
+  for (ll a : {2, 325, 9375, 28178, 450775, 9780504,
+         1795265022})
+    if (!Miller_Rabin(a, n)) return 0;
+  return 1;
+}

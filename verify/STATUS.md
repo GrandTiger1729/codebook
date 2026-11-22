@@ -333,3 +333,4 @@
 - **Miller Rabin**：用 `__builtin_ctzll` 取 $n-1$ 的 2 的次方，取代 `(n-1) & (1-n)` 的寫法。
 - **PalTree**：建構子改呼叫 `clear()`、拿掉多餘的 `inline`、`count()` 改用下標迴圈（少 4 行）；`St` 加註解說明 0、1 號節點是根（len 0、-1）。
 - **NumberofMaximalClique**：pivot 改用 Tomita（在 `some ∪ none` 中選 `some` 鄰居最多的點），最壞 $O(3^{n/3})$；稠密隨機圖 n=80, p=0.9 從 10.5s 變 0.91s。拿掉 `cnt > 1000` 的剪枝（POJ 2989 專用，計數會被截斷）。加註解：時間與答案成正比（約 7e7 個/秒），Moon–Moser n=48 約 0.6s。
+- **Miller Rabin**：加 `prime(n)` 包裝（7 個 base，`n < 2` 回傳 false；直接呼叫 `Miller_Rabin(a, 1)` 會誤判 1 是質數）。Pollard Rho 需要的 `prime()` 終於在書裡；測試的 driver 改用書上的版本。對篩法 0..2e6 全對。

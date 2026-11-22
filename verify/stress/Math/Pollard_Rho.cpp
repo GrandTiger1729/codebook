@@ -1,12 +1,6 @@
 #include "prelude.h"
 #include "stress.h"
 #include "6_Math/Miller_Rabin.cpp"
-bool prime(ll n) { // the bridge the book leaves to the contestant
-  if (n < 2) return false;
-  for (ll a : {2, 325, 9375, 28178, 450775, 9780504, 1795265022})
-    if (!Miller_Rabin(a, n)) return false;
-  return true;
-}
 #include "6_Math/Pollard_Rho.cpp"
 // cnt must equal the true factorization, and must accumulate across calls
 map<ll, int> trial(ll n) {

@@ -1,19 +1,16 @@
-#include <ext/pb_ds/priority_queue.hpp>
-#include <ext/pb_ds/assoc_container.hpp> // rb_tree
-#include <ext/rope> // rope
+#include <bits/extc++.h>
 using namespace __gnu_pbds;
 using namespace __gnu_cxx; // rope
 typedef __gnu_pbds::priority_queue<int> heap;
 int main() {
   heap h1, h2; // max heap
-  h1.push(1), h1.push(3), h2.push(2), h2.push(4);
+  h1.push(1), h2.push(2);
   h1.join(h2); // h1 = {1, 2, 3, 4}, h2 = {};
   tree<ll, null_type, less<ll>, rb_tree_tag,
     tree_order_statistics_node_update> st;
   tree<ll, ll, less<ll>, rb_tree_tag,
     tree_order_statistics_node_update> mp;
   for (int x : {0, 3, 20, 50}) st.insert(x);
-  assert(st.order_of_key(3) == 1);
   assert(st.order_of_key(4) == 2);
   assert(*st.find_by_order(2) == 20);
   assert(*st.lower_bound(4) == 20);

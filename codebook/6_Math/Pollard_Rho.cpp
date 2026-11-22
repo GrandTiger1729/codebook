@@ -1,4 +1,4 @@
-map<ll, int> cnt; // needs prime(n) from Miller Rabin
+map<ll, int> cnt; // needs prime(n)
 void PollardRho(ll n) {
   if (n == 1) return;
   if (prime(n)) return ++cnt[n], void();

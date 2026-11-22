@@ -12,7 +12,7 @@ void add(int *a, int l, int r, int x) { // [l, r)
 int cnt_lt(const int *a, int n, int y) {
   v8i c{}; int i = 0, r = 0;
   for (; i + 8 <= n; i += 8) c -= ld(a + i) < y;
-  for (int j = 0; j < 8; j++) r += c[j];
+  FOR (j, 0, 7) r += c[j];
   for (; i < n; i++) r += a[i] < y;
   return r;
 }

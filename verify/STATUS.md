@@ -331,3 +331,4 @@
 - **Treap**：`up()` 寫成一行。
 - **LCP Array**：`len = 0; continue;` 寫成一行。
 - **Miller Rabin**：用 `__builtin_ctzll` 取 $n-1$ 的 2 的次方，取代 `(n-1) & (1-n)` 的寫法。
+- **PalTree**：建構子改呼叫 `clear()`、拿掉多餘的 `inline`、`count()` 改用下標迴圈（少 4 行）；`St` 加註解說明 0、1 號節點是根（len 0、-1）。

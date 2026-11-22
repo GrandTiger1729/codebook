@@ -14,11 +14,8 @@ struct EBCC { // 1-base, need adj; bcc[v] = component id
     }
     if (low[u] == dfn[u]) { // fa-u is a bridge
       bccnt++;
-      while (1) {
-        int x = st.back();
-        st.pop_back(), bcc[x] = bccnt;
-        if (x == u) break;
-      }
+      for (int x = -1; x != u; st.pop_back())
+        bcc[x = st.back()] = bccnt;
     }
   }
   void work() { FOR (i, 1, n) if (!dfn[i]) tarjan(i, 0); }

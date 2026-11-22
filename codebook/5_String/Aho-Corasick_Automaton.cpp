@@ -27,9 +27,7 @@ struct AC { // remember to build_fail!!!
       FOR (i, 0, C - 1) {
         if (!ch[v][i]) to[v][i] = to[fail[v]][i];
         else {
-          int u = ch[v][i], k = fail[v];
-          while (k && !ch[k][i]) k = fail[k];
-          if (ch[k][i]) k = ch[k][i];
+          int u = ch[v][i], k = to[fail[v]][i];
           fail[u] = k, cnt[u] += cnt[k], to[v][i] = u;
           q.push(u);
         }

@@ -326,3 +326,8 @@
 - **理論文字行距** 9.5pt → 10.5pt（字仍是 8pt；`codebook.tex` 的 `\footnotesize` 改成 `\fontsize{8}{10.5}`，程式碼列表自己設 `\footnotesize` 不受影響）。成本約 0.63 欄，第 25 頁用到 0.65/3 欄。比較過 `\small`（9pt，1.26 欄且 5 行溢出）。
 - **Treap**：merge 的 `rand()` 換成 `mt19937`（Windows 的 `RAND_MAX` = 32767，子樹超過 32768 個節點時機率偏掉，樹會退化）。保留依大小隨機的 merge（不存 priority），複製節點（可持久化）時仍然平衡，加一行註解說明。LC AC 0.766s。
 - **Adaptive Simpson**：`make_simpson`（4 行）換成 deduction guide（2 行），用 `Simpson S{f};` 建構；guide 是給 C++17 用的（C++20 不需要）。
+- **EBCC / SCC / VBCC**：出棧的 `while (1)` 五行改成兩行 `for (int x = -1; x != u; st.pop_back())`。
+- **Aho-Corasick**：fail link 直接取 `to[fail[v]][i]`，不再往上跳 `while`（少 2 行，LC 0.369 → 0.266s）。
+- **Treap**：`up()` 寫成一行。
+- **LCP Array**：`len = 0; continue;` 寫成一行。
+- **Miller Rabin**：用 `__builtin_ctzll` 取 $n-1$ 的 2 的次方，取代 `(n-1) & (1-n)` 的寫法。

@@ -6,10 +6,10 @@
 bool Miller_Rabin(ll a, ll n) {
   if ((a = a % n) == 0) return 1;
   if (n % 2 == 0) return n == 2;
-  ll tmp = (n - 1) / ((n - 1) & (1 - n));
-  ll t = __lg(((n - 1) & (1 - n))), x = 1;
-  for (; tmp; tmp >>= 1, a = (__int128)a * a % n)
-    if (tmp & 1) x = (__int128)x * a % n;
+  int t = __builtin_ctzll(n - 1);
+  ll d = (n - 1) >> t, x = 1;
+  for (; d; d >>= 1, a = (__int128)a * a % n)
+    if (d & 1) x = (__int128)x * a % n;
   if (x == 1 || x == n - 1) return 1;
   while (--t)
     if ((x = (__int128)x * x % n) == n - 1) return 1;

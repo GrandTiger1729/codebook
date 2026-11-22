@@ -15,10 +15,9 @@ bool Miller_Rabin(ll a, ll n) {
     if ((x = (__int128)x * x % n) == n - 1) return 1;
   return 0;
 }
-bool prime(ll n) {
+bool prime(ll n) { // primes <= 37: any 64-bit n
   if (n < 2) return 0;
-  for (ll a : {2, 325, 9375, 28178, 450775, 9780504,
-         1795265022})
+  for (ll a : {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37})
     if (!Miller_Rabin(a, n)) return 0;
   return 1;
 }

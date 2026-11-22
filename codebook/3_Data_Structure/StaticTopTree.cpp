@@ -37,7 +37,8 @@ struct StaticTopTree {
     }
     P = L = R = vector<int>(n, -1), T.resize(n);
     root = heavy(0).F;
-    path.resize(P.size()), rpath.resize(P.size()), point.resize(P.size());
+    path.resize(P.size()), rpath.resize(P.size());
+    point.resize(P.size());
     build(root);
   }
   int add(int k, int l, int r, Type t) {
@@ -95,7 +96,8 @@ struct StaticTopTree {
   void update(int v) { for (; v >= 0; v = P[v]) calc(v); }
   Path query_subtree(int v) {
     Path res = path[v];
-    for (int u = v, p = P[u]; p >= 0 && T[p] == Compress; u = p, p = P[u])
+    for (int u = v, p = P[u]; p >= 0 && T[p] == Compress;
+      u = p, p = P[u])
       if (u == L[p]) res = compress(res, path[R[p]]);
     return res;
   }
@@ -104,12 +106,19 @@ struct StaticTopTree {
     for (int u = v; u >= 0; u = P[u]) stk.pb(u);
     Path up, down; Point rk;
     bool hu = 0, hd = 0, hr = 0; int w = -1;
-    auto add_rk = [&](Point x) { rk = hr ? rake(rk, x) : x, hr = 1; };
+    auto add_rk = [&](Point x) {
+      rk = hr ? rake(rk, x) : x, hr = 1;
+    };
     for (int i = (int) stk.size() - 1; i > 0; i--) {
       int p = stk[i], u = stk[i - 1];
       if (T[p] == Compress) {
-        if (u == L[p]) down = hd ? compress(path[R[p]], down) : path[R[p]], hd = 1;
-        else up = hu ? compress(rpath[L[p]], up) : rpath[L[p]], hu = 1;
+        if (u == L[p]) {
+          Path x = path[R[p]];
+          down = hd ? compress(x, down) : x, hd = 1;
+        } else {
+          Path x = rpath[L[p]];
+          up = hu ? compress(x, up) : x, hu = 1;
+        }
       } else if (T[p] == AddVertex) {
         w = p, hr = 0;
         if (hu) add_rk(add_edge(up));

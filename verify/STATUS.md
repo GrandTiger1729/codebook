@@ -24,7 +24,7 @@
 | `1_Basic/black_magic.cpp` | — 無對應題 | — | ✅ | — |
 | `1_Basic/Pragma.cpp` | — 無對應題 | — | 片段，非獨立編譯單元 | — |
 | `1_Basic/sanitize_fixer.cpp` | — 無對應題 | — | ✅ | — |
-| `1_Basic/SIMD.cpp` | — 無對應題 | 2 萬組隨機陣列與區間（各種對齊與尾端）vs 純量迴圈；註解列出的 intrinsic 都實際呼叫一次；count_less 約 3.5 倍快（-O2） | ✅ | 2026-11-17 加入（GCC vector extension + AVX2 intrinsic 速查） |
+| `1_Basic/SIMD.cpp` | — 無對應題 | 2 萬組隨機陣列與區間（各種對齊與尾端）vs 純量迴圈；註解列出的 intrinsic 都實際呼叫一次；cnt_lt 約 3.5 倍快（-O2） | ✅ | 2026-11-17 加入（GCC vector extension + AVX2 intrinsic 速查） |
 
 ## Graph
 
@@ -61,7 +61,7 @@
 | `3_Data_Structure/LiChaoST.cpp`（不在書中） | `data_structure/line_add_get_min#lichao` 無法驅動 | 3 000 組共 976 772 次查詢 vs 窮舉 | 需要外部 `INF` | test by Library Checker Line Add Get Min |
 | `3_Data_Structure/link_cut_tree.cpp` | `tree/dynamic_tree_vertex_add_path_sum` **AC** 15 筆 · 0.33s/5s (7%)（指標版 0.56s） | 3 000 個森林 n ≤ 40、88 萬次操作 vs 暴力：link / cut（含 10 萬次切非邊，須為 no-op）/ change / query / conn，chroot 後的 lca 與 get_root（**修 bug**：舊版 `cut` 判斷 `size != 5`，幾乎不切；切相連但不相鄰的點會切錯邊；切完沒 `pull`） | 需要外部 `N` | 2026-11-17 改成陣列版 `struct LCT`（1-base，0 是 nil） |
 | `3_Data_Structure/KDTree.cpp` | — 無對應題 | 3 000 組 n≤2000，座標 ±1e9（**修 bug**：初值 `LLONG_MAX`） | 需要外部 `maxn` | — |
-| `3_Data_Structure/StaticTopTree.cpp` | `tree/point_set_tree_path_composite_sum_fixed_root` **AC** 26 筆 · 0.465s/10s (5%) | 3 000 棵樹 n ≤ 5000（隨機、路徑、星、毛毛蟲）、55 萬次單點更新後 vs 暴力重算；高度 ≤ 6 log n + 6（實測最大 34） | 需要外部 `Path`、`Point` 與五個 DP 函式 | 2026-11-17 加入（ABC351G 解說的建法） |
+| `3_Data_Structure/StaticTopTree.cpp` | `tree/point_set_tree_path_composite_sum_fixed_root` **AC** 26 筆 · 0.465s/10s (5%) | 3 000 棵樹 n ≤ 5000（隨機、路徑、星、毛毛蟲）、55 萬次單點更新後 vs 暴力重算；高度 ≤ 6 log n + 6（實測最大 34） | 需要外部 `Path`、`Point` 與五個 DP 函式；2026-11-22 新增的 `query_subtree`、`query_reroot` **尚未測試** | 2026-11-17 加入（ABC351G 解說的建法） |
 
 ## Flow/Matching
 
@@ -348,3 +348,5 @@
 - **Fast Walsh Transform**：`subset_convolution` 原本整個在 `int` 上做、沒有取模，值一大就溢位（luogu P6097 要 mod 1e9+9）。`fwt` 改用 `add`/`mul`（跟 NTT 同一套），逆變換傳 `MOD - 1`；迴圈改用半長 `L`；函式行註明 OR only。對拍改成 mod 1e9+9、值到 MOD − 1，另加 L = 18 抽查。
 - **Fast Walsh Transform**：`fwt(a, n, op)` 改成 KACTL 式：OR/AND/XOR 三行 butterfly 都寫出來、留一行，`inv` 直接當參數（XOR 逆變換另乘 1/n）；拿掉原本要自己翻譯的公式表頭。新增 **Tips for FWT**（`7_Polynomial/FWT_tips.tex`）：三種變換的封閉式與逆變換。
 - **stress/run.sh**：測試旁邊若有 `<name>.pre.sh`，編譯前先跑它在 `build/` 產生模板的變體（FWT 用來產生三份各留一行的版本）。
+- **SIMD、Static Top Tree**（becaido 的修改）：超過 61 欄的 10 行改寫或換行，只動排版不動邏輯；SIMD 缺結尾換行補上。SIMD 對拍跟上改名（`count_less` → `cnt_lt`）並定義速查表用的 `N`（原本編譯失敗）。
+- **Black Magic**：`join` 後的註解跟著 push 改成 `h1 = {1, 2}`。

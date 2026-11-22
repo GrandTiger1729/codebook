@@ -1,7 +1,8 @@
-// SIMD.cpp: add() and count_less() vs scalar loops on random arrays/ranges (all
+// SIMD.cpp: add() and cnt_lt() vs scalar loops on random arrays/ranges (all
 // alignments and tails), plus every intrinsic named in the cheat sheet, each checked
-// on one input so a misspelt name fails to compile. Prints the speedup of count_less.
+// on one input so a misspelt name fails to compile. Prints the speedup of cnt_lt.
 #include "prelude.h"
+const int N = 64; // the sheet's aligned buffer
 #include "1_Basic/SIMD.cpp"
 #include "stress.h"
 int main() {
@@ -16,7 +17,7 @@ int main() {
     FOR (i, l, r - 1) b[i] += x;
     assert(a == b);
     int want = 0; for (int v : b) want += v < y;
-    assert(count_less(a.data(), n, y) == want);
+    assert(cnt_lt(a.data(), n, y) == want);
     cases++;
   }
   // the cheat sheet's intrinsics
@@ -40,11 +41,11 @@ int main() {
   // speed (informational)
   int n = 1 << 16; vector<int> v(n); for (int &x : v) x = rnd(0, 1000);
   auto t0 = chrono::steady_clock::now(); ll s1 = 0;
-  FOR (r, 1, 2000) s1 += count_less(v.data(), n, r % 1000);
+  FOR (r, 1, 2000) s1 += cnt_lt(v.data(), n, r % 1000);
   auto t1 = chrono::steady_clock::now(); ll s2 = 0;
   FOR (r, 1, 2000) { int y = r % 1000; for (int x : v) s2 += x < y; asm volatile("" ::: "memory"); }
   auto t2 = chrono::steady_clock::now();
   assert(s1 == s2);
-  printf("SIMD ok: %d cases; count_less %.3fs vs scalar %.3fs\n", cases,
+  printf("SIMD ok: %d cases; cnt_lt %.3fs vs scalar %.3fs\n", cases,
          chrono::duration<double>(t1 - t0).count(), chrono::duration<double>(t2 - t1).count());
 }

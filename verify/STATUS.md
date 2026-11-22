@@ -325,3 +325,4 @@
 - **Tips for Generating Functions**：單位根濾波註明 mod $p$ 需要 $m \mid p - 1$（998244353 下 $m = 3$ 不行）。
 - **理論文字行距** 9.5pt → 10.5pt（字仍是 8pt；`codebook.tex` 的 `\footnotesize` 改成 `\fontsize{8}{10.5}`，程式碼列表自己設 `\footnotesize` 不受影響）。成本約 0.63 欄，第 25 頁用到 0.65/3 欄。比較過 `\small`（9pt，1.26 欄且 5 行溢出）。
 - **Treap**：merge 的 `rand()` 換成 `mt19937`（Windows 的 `RAND_MAX` = 32767，子樹超過 32768 個節點時機率偏掉，樹會退化）。保留依大小隨機的 merge（不存 priority），複製節點（可持久化）時仍然平衡，加一行註解說明。LC AC 0.766s。
+- **Adaptive Simpson**：`make_simpson`（4 行）換成 deduction guide（2 行），用 `Simpson S{f};` 建構；guide 是給 C++17 用的（C++20 不需要）。

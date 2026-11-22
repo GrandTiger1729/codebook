@@ -282,3 +282,7 @@ verify/RESULT.md
 
 # built by CI (.github/workflows/build-codebook.yml), see the "latest" release
 codebook/codebook.pdf
+
+# local build (build.sh)
+/build/
+/pdf/

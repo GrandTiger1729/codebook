@@ -1,4 +1,4 @@
-// O(p^k + log^2 n), pk = p^k
+// O(p^k + log_p n), pk = p^k
 ll prod[MAXP];
 ll fac_no_p(ll n, ll p, ll pk) {
   prod[0] = 1;

@@ -24,7 +24,7 @@
 | `1_Basic/black_magic.cpp` | — 無對應題 | — | ✅ | — |
 | `1_Basic/Pragma.cpp` | — 無對應題 | — | 片段，非獨立編譯單元 | — |
 | `1_Basic/sanitize_fixer.cpp` | — 無對應題 | — | ✅ | — |
-| `1_Basic/SIMD.cpp` | — 無對應題 | 2 萬組隨機陣列與區間（各種對齊與尾端）vs 純量迴圈；註解列出的 intrinsic 都實際呼叫一次；cnt_lt 約 3.5 倍快（-O2） | ✅ | 2026-11-17 加入（GCC vector extension + AVX2 intrinsic 速查） |
+| `1_Basic/SIMD.cpp` | — 無對應題 | 2 萬組隨機陣列與區間（各種對齊與尾端）vs 純量迴圈；註解列出的 intrinsic 都實際呼叫，並在已知輸入上驗證註解寫的語意（set 順序、半邊內位移、alignr、前綴技巧等）；cnt_lt 約 3.5 倍快（-O2） | ✅ | 2026-11-17 加入（GCC vector extension + AVX2 intrinsic 速查） |
 
 ## Graph
 
@@ -40,10 +40,10 @@
 | `2_Graph/Maximum_Clique_Dyn.cpp` | — 無對應題 | 6 000 組 n≤60，答案 + `sol[]` 驗證 | 需要外部 `N` | test by TIOJ 1978, CF 101221 I (World Finals' problem) |
 | `2_Graph/MinimumSteinerTree.cpp` | `graph/minimum_steiner_tree` **AC** 24 筆 · 0.114s/5s (2%) | 16 000 組多重圖 n ≤ 8、T ≤ 5 vs 枚舉點集 + Prim（8 047 組有 `vcst`、5 411 組 W=1e9、3 486 組不連通），並驗 `ans` 是連通所有 terminal 的樹 | 需要外部 `N`、`T`、`INF` | test by luogu P6192, Lib-Checker Minimum Steiner Tree, local brute force |
 | `2_Graph/Dominator_Tree.cpp` | `graph/dominatortree` **AC** 13 筆 · 0.115s/5s (2%) | — | 需要外部 `N` | test by CF 100513 L, Lib-Checker Dominator Tree |
-| `2_Graph/Minimum_Arborescence_fast.cpp` | `graph/directedmst` **AC** 12 筆 · 0.122s/5s (2%) | — | 需要外部 `min_heap` | test by luogu P4716, Lib-Checker Directed MST |
+| `2_Graph/Minimum_Arborescence_fast.cpp` | `graph/directedmst` **AC** 12 筆 · 0.122s/5s (2%) | 3 萬張 n ≤ 6 隨機多重圖 vs 暴力（16 933 張無解、5 117 張 n = 1）：有解 iff 回傳 n − 1 條邊，且是以 root 為根的樹、權重最小 | 需要外部 `min_heap` | test by luogu P4716, Lib-Checker Directed MST |
 | `2_Graph/ManhattanMST.cpp` | `geo/manhattanmst` **AC** 16 筆 · 0.314s/5s (6%) | 20 000 組 n ≤ 200（座標到 ±1e9、大量重點）+ Kruskal vs O(n²) Prim；每條邊權正確、至多 4n 條 | ✅ | 2026-11-17 加入（kactl 演算法；取代 `9_Else` 裡沒收錄、不能編譯的舊版） |
 | `2_Graph/BipolarOrientation.cpp` | — 無對應題 | 20 萬張隨機多重圖 n ≤ 60，其中 93 582 張加 (s, t) 後點雙連通：結果是排列、s 第一 t 最後、其他點前後都有鄰居 | ✅ | 2026-11-17 加入（ckiseki 的 linked-list st-numbering）, test by CF1916F |
-| `2_Graph/Vizing.cpp` | — 無對應題 | 4 000 組 n≤104，合法著色且 ≤Δ+1 色 | ✅ | test by CF 101933 G |
+| `2_Graph/Vizing.cpp` | — 無對應題 | 4 000 組 n≤104，合法著色且 ≤Δ+1 色；另 4 000 組二分圖用 `bip = 1`，≤Δ 色 | ✅ | test by CF 101933 G |
 | `2_Graph/Minimum_Clique_Cover.cpp` | — 無對應題 | 3 000 組 n≤14 vs 子集 DP（**修 UB**：改 `unsigned`） | 需要外部 `N` | test by TIOJ 1472 |
 | `2_Graph/NumberofMaximalClique.cpp` | — 無對應題 | 4 000 組 n≤15 精確 + Moon–Moser n≤45 精確 | 需要外部 `N` | test by POJ 2989 |
 | `2_Graph/C3C4.cpp` | `graph/enumerate_triangles` **AC** 17 筆 · 0.164s/5s (3%) | 30 000 張隨機圖 vs 暴力（247 994 個三角形各回報恰一次、973 727 個四環）+ 星狀圖加團 n=2·10⁵ 的複雜度檢查 | 需要外部 `N`；先呼叫 `build(n)` | 2026-09-30 加入；`C3(n, f)` 對每個三角形呼叫 `f(a, b, c)`，`C4(n)` 回傳四環數 |
@@ -61,7 +61,7 @@
 | `3_Data_Structure/LiChaoST.cpp`（不在書中） | `data_structure/line_add_get_min#lichao` 無法驅動 | 3 000 組共 976 772 次查詢 vs 窮舉 | 需要外部 `INF` | test by Library Checker Line Add Get Min |
 | `3_Data_Structure/link_cut_tree.cpp` | `tree/dynamic_tree_vertex_add_path_sum` **AC** 15 筆 · 0.33s/5s (7%)（指標版 0.56s） | 3 000 個森林 n ≤ 40、88 萬次操作 vs 暴力：link / cut（含 10 萬次切非邊，須為 no-op）/ change / query / conn，chroot 後的 lca 與 get_root（**修 bug**：舊版 `cut` 判斷 `size != 5`，幾乎不切；切相連但不相鄰的點會切錯邊；切完沒 `pull`） | 需要外部 `N` | 2026-11-17 改成陣列版 `struct LCT`（1-base，0 是 nil） |
 | `3_Data_Structure/KDTree.cpp` | — 無對應題 | 3 000 組 n≤2000，座標 ±1e9（**修 bug**：初值 `LLONG_MAX`） | 需要外部 `maxn` | — |
-| `3_Data_Structure/StaticTopTree.cpp` | `tree/point_set_tree_path_composite_sum_fixed_root` **AC** 26 筆 · 0.465s/10s (5%) | 3 000 棵樹 n ≤ 5000（隨機、路徑、星、毛毛蟲）、55 萬次單點更新後 vs 暴力重算；高度 ≤ 6 log n + 6（實測最大 34） | 需要外部 `Path`、`Point` 與五個 DP 函式；2026-11-22 新增的 `query_subtree`、`query_reroot` **尚未測試** | 2026-11-17 加入（ABC351G 解說的建法） |
+| `3_Data_Structure/StaticTopTree.cpp` | `tree/point_set_tree_path_composite_sum_fixed_root` **AC** 26 筆 · 0.465s/10s (5%) | 3 000 棵樹 n ≤ 5000（隨機、路徑、星、毛毛蟲）、55 萬次單點更新後 vs 暴力重算；高度 ≤ 6 log n + 6（實測最大 34） | 需要外部 `Path`、`Point` 與五個 DP 函式；`query_subtree`、`query_reroot` 另有 4 000 棵樹 n ≤ 400 各約 31 萬次 vs 暴力（含單點更新） | 2026-11-17 加入（ABC351G 解說的建法） |
 
 ## Flow/Matching
 
@@ -351,3 +351,8 @@
 - **SIMD、Static Top Tree**（becaido 的修改）：超過 61 欄的 10 行改寫或換行，只動排版不動邏輯；SIMD 缺結尾換行補上。SIMD 對拍跟上改名（`count_less` → `cnt_lt`）並定義速查表用的 `N`（原本編譯失敗）。
 - **Black Magic**：`join` 後的註解跟著 push 改成 `h1 = {1, 2}`。
 - **SIMD**：改回 becaido 原本的註解文字（先前為了 61 欄縮寫過），只把超寬的 5 行換行。
+- **Vizing**：註解說明 becaido 新增的 `bip`：`bip=1: bipartite, Delta colors suffice`；對拍加二分圖情形。
+- **Static Top Tree**：新對拍 `StaticTopTree_queries.cpp` 測 `query_subtree`、`query_reroot`（非交換 DP vs 暴力），並用 6 個植入錯誤確認測得出來。
+- **SIMD**：對拍檢查速查表上每個 intrinsic 的語意，不只是能編譯；確認 prefix max 技巧只在值 ≥ 0 時對（左移補 0）。
+- **Minimum Arborescence**：註解改成「有解 iff `size() == n - 1`」（n = 1 的 `{}` 也符合），取代原本含糊的寫法；新增本地對拍（含無解與 n = 1）。
+- **fac_no_p**：複雜度註解跟著拿掉 `mpow` 改成 `O(p^k + log_p n)`。

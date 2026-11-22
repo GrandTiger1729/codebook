@@ -1,6 +1,6 @@
 #define SZ(a) ((int)a.size())
 namespace vizing { // 1-base, color of (u,v) in G[u][v]
-const int N = 105;
+const int N = 105; // bip=1: bipartite, Delta colors suffice
 int C[N][N], G[N][N], X[N], vst[N], n;
 void init(int _n) { n = _n;
   FOR (i, 0, n) FOR (j, 0, n) C[i][j] = G[i][j] = 0;

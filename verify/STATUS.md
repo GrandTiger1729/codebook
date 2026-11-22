@@ -45,7 +45,7 @@
 | `2_Graph/BipolarOrientation.cpp` | — 無對應題 | 20 萬張隨機多重圖 n ≤ 60，其中 93 582 張加 (s, t) 後點雙連通：結果是排列、s 第一 t 最後、其他點前後都有鄰居 | ✅ | 2026-11-17 加入（ckiseki 的 linked-list st-numbering） |
 | `2_Graph/Vizing.cpp` | — 無對應題 | 4 000 組 n≤104，合法著色且 ≤Δ+1 色 | ✅ | test by CF 101933 G |
 | `2_Graph/Minimum_Clique_Cover.cpp` | — 無對應題 | 3 000 組 n≤14 vs 子集 DP（**修 UB**：改 `unsigned`） | 需要外部 `N` | test by TIOJ 1472 |
-| `2_Graph/NumberofMaximalClique.cpp` | — 無對應題 | 4 000 組 n≤15 精確 + Moon–Moser n≤120（上限 1001） | 需要外部 `N` | test by POJ 2989 |
+| `2_Graph/NumberofMaximalClique.cpp` | — 無對應題 | 4 000 組 n≤15 精確 + Moon–Moser n≤45 精確 | 需要外部 `N` | test by POJ 2989 |
 | `2_Graph/C3C4.cpp` | `graph/enumerate_triangles` **AC** 17 筆 · 0.164s/5s (3%) | 30 000 張隨機圖 vs 暴力（247 994 個三角形各回報恰一次、973 727 個四環）+ 星狀圖加團 n=2·10⁵ 的複雜度檢查 | 需要外部 `N`；先呼叫 `build(n)` | 2026-09-30 加入；`C3(n, f)` 對每個三角形呼叫 `f(a, b, c)`，`C4(n)` 回傳四環數 |
 
 ## Data Structure
@@ -332,3 +332,4 @@
 - **LCP Array**：`len = 0; continue;` 寫成一行。
 - **Miller Rabin**：用 `__builtin_ctzll` 取 $n-1$ 的 2 的次方，取代 `(n-1) & (1-n)` 的寫法。
 - **PalTree**：建構子改呼叫 `clear()`、拿掉多餘的 `inline`、`count()` 改用下標迴圈（少 4 行）；`St` 加註解說明 0、1 號節點是根（len 0、-1）。
+- **NumberofMaximalClique**：pivot 改用 Tomita（在 `some ∪ none` 中選 `some` 鄰居最多的點），最壞 $O(3^{n/3})$；稠密隨機圖 n=80, p=0.9 從 10.5s 變 0.91s。拿掉 `cnt > 1000` 的剪枝（POJ 2989 專用，計數會被截斷）。加註解：時間與答案成正比（約 7e7 個/秒），Moon–Moser n=48 約 0.6s。

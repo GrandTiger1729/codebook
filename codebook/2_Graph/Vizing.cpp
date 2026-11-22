@@ -43,10 +43,9 @@ void solve(vector<pair<int, int>> &E) {
       else vst[d] = 1, v = C[u][d];
     }
     if (!G[u][v0]) {
-      for (; v; v = flip(v, c, d), swap(c, d));
+      for (; v; v = flip(v, c, d), swap(c, d)) {}
       if (int a; C[u][c0]) {
-        for (a = SZ(L) - 2; a >= 0 && L[a].S != c;
-          --a);
+        for (a = SZ(L) - 2; a >= 0 && L[a].S != c; a--) {}
         for (; a >= 0; a--) color(u, L[a].F, L[a].S);
       }
       else --t;

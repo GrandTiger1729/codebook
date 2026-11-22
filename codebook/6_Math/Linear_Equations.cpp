@@ -6,6 +6,8 @@ struct matrix { // m variables, n equations
     basis[MAXN][MAXN + 1];
   int solve() { // -1: inconsistent, else dim of
     rank = m; // the solution space
+    FOR (j, 0, m - 1)
+      fixed[j] = 0, sol[j] = T(), fill_n(basis[j], m, T());
     FOR (i, 0, n - 1) {
       int &p = pv[i] = 0;
       while (p < m && M[i][p] == T()) p++;

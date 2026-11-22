@@ -14,8 +14,9 @@ int QuadraticResidue(int a, int p) {
     return r.F;
   };
   if (pw({a, 0}, p / 2) != 1) return -1;
+  mt19937 rng(random_device{}());
   ll b;
-  do b = rand() % p, w = (b * b + p - a) % p;
+  do b = rng() % p, w = (b * b + p - a) % p;
   while (pw({w, 0}, p / 2) != p - 1);
   return pw({b, 1}, p / 2 + 1);
 }

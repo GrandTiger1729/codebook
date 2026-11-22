@@ -11,7 +11,7 @@ struct NTT {
   void operator()(vector<int>& a, bool inv = false) {
     int n = SZ(a);
     for (int j = 1, x = 0; j < n - 1; j++) {
-      for (int k = n >> 1; (x ^= k) < k; k >>= 1);
+      for (int k = n >> 1; (x ^= k) < k; k >>= 1) {}
       if (j < x) swap(a[x], a[j]);
     }
     for (int L = 2; L <= n; L <<= 1) {

@@ -6,9 +6,9 @@ struct Face {
 vector<Face> res;
 vector<Point> P;
 convex_hull_3D(const vector<Point> &_P) : res(), P(_P) {
-// all points coplanar case will WA, O(n^2)
+  // O(n^2); needs 4 non-coplanar points, else UB
   int n = SZ(P);
-  if (n <= 2) return; // be careful about edge case
+  if (n <= 3) return;
   // ensure first 4 points are not coplanar
   swap(P[1], *find_if(ALL(P), [&](auto p)
     { return sign(abs(P[0] - p)) != 0; }));

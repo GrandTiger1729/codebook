@@ -115,7 +115,7 @@
 | `6_Math/Pollard_Rho.cpp` | `number_theory/factorize` **AC** 31 筆 · 0.069s/10s (1%)（2026-11-17 改 kactl 式批次 gcd，原本 1.167s） | 24 萬組：n ≤ 2·10⁵ 窮舉 vs 試除法、2ᵏ·p、隨機至 10¹⁸、兩個約 10⁹ 質數之積、質數平方與立方、Carmichael 數、連續呼叫累加 | 需要外部 `prime` | test by Lib-Checker Factorize |
 | `6_Math/Simplex_Algorithm.cpp` | — 無對應題 | 12 000 組 vs 頂點枚舉（最佳/無界/不可行）+ 275 組對偶 | 需要外部 `MAXN`、`MAXM`、`INF` | 2026-11-18 改寫（見最後一節） |
 | `6_Math/chineseRemainder.cpp` | — 無對應題 | 724 575 組含非互質、無解、lcm 到 4e18（大 gcd、單一模數近 4e18）（**修溢位**） | 需要外部 `exgcd` | — |
-| `6_Math/fac_no_p.cpp` | `enumerative_combinatorics/binomial_coefficient` 無法驅動 | 44 960 組 vs 直接計算 | 需要外部 `MAXP`、`mpow(a, e, m)` | test by luogu P4720 |
+| `6_Math/fac_no_p.cpp` | `enumerative_combinatorics/binomial_coefficient` 無法驅動 | 44 960 組 vs 直接計算 | 需要外部 `MAXP` | test by luogu P4720 |
 | `6_Math/QuadraticResidue.cpp` | `number_theory/sqrt_mod` **AC** 13 筆 · 0.064s/10s (1%) | 289 050 組（p < 2000 每個 a 窮舉 + 大質數植入解） | ✅ | test by Lib-Checker Sqrt Mod, local brute force |
 | `6_Math/PiCount.cpp` | `number_theory/counting_primes` **AC** 31 筆 · 0.033s/5s (1%) | — | ✅ | test by luogu P7884, Lib-Checker Counting Primes |
 | `6_Math/DiscreteLog.cpp` | `number_theory/discrete_logarithm_mod` **AC** 20 筆 · 0.264s/10s (3%) | 585 220 組（m ≤ 120 窮舉 + 植入解到 1e9；443 296 組無解） | ✅ | test by Lib-Checker Discrete Logarithm |
@@ -151,7 +151,7 @@
 | `8_Geometry/minMaxEnclosingRectangle.cpp` | — 無對應題 | 2 989 組（**修 bug**：acos NaN 丟掉最大值，改封閉式） | 需要外部 `hull` | test by UVA 819 |
 | `8_Geometry/Vector_in_poly.cpp` | — 無對應題 | 1 832 940 組含凹角/180°，其中 904 740 組 |coord| ≤ 1e9 | ✅ | test by qoj 5479 |
 | `8_Geometry/PolyUnion.cpp` | — 無對應題 | 20 000 組 vs 精確 slab 分解（含重複多邊形） | ✅ | test by CF 101673 A |
-| `8_Geometry/Polar_Angle_Sort.cpp`（不在書中） | `geo/sort_points_by_argument` **AC** 21 筆 · 0.117s/5s (2%) | — | ✅ | test by NTUJ 2270, Lib-Checker Sort Points by Argument |
+| `8_Geometry/Polar_Angle_Sort.cpp` | `geo/sort_points_by_argument` **AC** 21 筆 · 0.117s/5s (2%) | — | ✅ | test by NTUJ 2270, Lib-Checker Sort Points by Argument |
 | `8_Geometry/Half_plane_intersection.cpp` | — 無對應題 | 56 016 組 vs exact 有理數暴力（含空/零面積），n 到 1e5 | 需要外部 `cmp`；書中 double 前置只到 |coord| ≈ 3.3e7（1e9 會把近平行線當平行），整數前置到 1e9 | test by qoj 2162 (World Finals' problem) |
 | `8_Geometry/HPIGeneralLine.cpp` | — 無對應題 | 56 012 組 vs exact 有理數暴力，格點直線到 1e9、n 到 1e5 | 需要外部 `cmp`；書中 double 前置只到 ≈ 3.3e7；`cov()` 直接比較 `__int128`（2026-11-22 修：原本 `sign(ll)` 會截斷） | — |
 | `8_Geometry/rotatingSweepLine.cpp` | — 無對應題 | 2 173 組一般位置（前提：無三點共線） | 需要外部 `cmp` | — |
@@ -206,7 +206,7 @@
 - 後補的對拍：`Math/Pollard_Rho`（24 萬組）、`Basic/readchar`（400 萬 byte 跨 2^16 邊界）、`Geometry/Default_code`（projection/reflection/linearTransformation）；後兩者以植入錯誤確認會 FAIL。
 - 對拍抓到 13 個 bug，已合併（PR #4）；上表標 **修** 的就是。
 - PDF：listings 一行 58 欄，超過就折行。原本 123 行會折，現在 0 行；另外把放得下的「header + 單一敘述」接回一行（純空白、hash 不變，獨立 commit）。**26 → 25 頁，最後一頁是滿的。**
-- 書裡仍缺、刻意沒補（不加新行）：`seg_strict_intersect`（Delaunay 要用）、`cmp`（HPI 兩份 + rotatingSweepLine，Polar_Angle_Sort 被註解掉）、`abs(pll)`（minMaxEnclosingRectangle）、BitsetLCS 需要的 bitset 型別。
+- 書裡仍缺、刻意沒補（不加新行）：`seg_strict_intersect`（Delaunay 要用）、`abs(pll)`（minMaxEnclosingRectangle）、BitsetLCS 需要的 bitset 型別。
 
 ## 2026-09-28：補回對拍檔
 
@@ -335,3 +335,12 @@
 - **NumberofMaximalClique**：pivot 改用 Tomita（在 `some ∪ none` 中選 `some` 鄰居最多的點），最壞 $O(3^{n/3})$；稠密隨機圖 n=80, p=0.9 從 10.5s 變 0.91s。拿掉 `cnt > 1000` 的剪枝（POJ 2989 專用，計數會被截斷）。加註解：時間與答案成正比（約 7e7 個/秒），Moon–Moser n=48 約 0.6s。
 - **Miller Rabin**：拿掉 `prime()` 包裝（還原上面三筆）；Pollard Rho 照舊需要自己寫 `prime()`，測試的 driver 恢復自帶的版本。
 - **Miller Rabin**：加一行註解：回傳 0 代表 n 一定是合數；n 是質數 ⇔ 表中每個 base a 都通過，且 n ≥ 2（`Miller_Rabin(a, 1)` 會回傳 1）。
+- **Polar Angle Sort** 放回書中（HPI、HPI Alternative Form、rotatingSweepLine 要用 `cmp`）；`is_neg` 改寫成 `sign(k.Y) ? sign(k.Y) < 0 : sign(k.X) < 0` 才塞得進 61 欄。
+- **Convexhull3D**：`n <= 2` 改 `n <= 3`（n = 3 時 `P[3]` 越界）；註解改成「需要 4 點不共面，否則 UB」（原本寫 WA，實際是 `*end()`）。
+- **Black Magic**：`__float128_t` 不存在，改 `__float128`。
+- **Pragma**：最後一行補 `;`，加註解「in main: flush denormals to 0」與「arch=skylake 在舊 CPU 會 RE」。
+- **fac_no_p**：不再需要 `mpow`：`prod[pk]` ≡ ±1 (mod pk)，所以它的 n/pk 次方只看奇偶，改成 `if (n / pk % 2) rt = rt * prod[pk] % pk;`。
+- **NTT、Vizing**：空迴圈 `for (...);` 改成 `for (...) {}`（跟 Delaunay 一致）；Vizing 的換行迴圈併成一行。
+- **Linear Equations**：`solve()` 開頭清 `fixed[]`、`sol[]`、`basis`；原本同一個物件解第二個系統時 basis 與自由變數的 sol 會殘留舊值（已用兩次 solve 的例子確認）。
+- **Minimum Arborescence**：`/* TODO` 改 `/* needs:`；無解回傳處註明 n = 1 也回傳 `{}`。
+- **QuadraticResidue**：`rand()` 改 `mt19937 rng(random_device{}())`（Windows `RAND_MAX` = 32767）。

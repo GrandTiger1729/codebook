@@ -350,3 +350,4 @@
 - **stress/run.sh**：測試旁邊若有 `<name>.pre.sh`，編譯前先跑它在 `build/` 產生模板的變體（FWT 用來產生三份各留一行的版本）。
 - **SIMD、Static Top Tree**（becaido 的修改）：超過 61 欄的 10 行改寫或換行，只動排版不動邏輯；SIMD 缺結尾換行補上。SIMD 對拍跟上改名（`count_less` → `cnt_lt`）並定義速查表用的 `N`（原本編譯失敗）。
 - **Black Magic**：`join` 後的註解跟著 push 改成 `h1 = {1, 2}`。
+- **SIMD**：改回 becaido 原本的註解文字（先前為了 61 欄縮寫過），只把超寬的 5 行換行。

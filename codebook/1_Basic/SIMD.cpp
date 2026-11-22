@@ -1,8 +1,10 @@
 #pragma GCC optimize("O3,unroll-loops")
 #pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt") // avx512vl
 #include <immintrin.h> // pragmas MUST precede #include
-// GCC vec: lanewise ops, cmp true=-1, scalar broadcast, v[i]
-typedef int v8i __attribute__((vector_size(32))); // 8i/4ll
+// GCC vec: lane-wise ops, cmp true=-1, scalar broadcast,
+//          v[i]
+// 8i/4ll/32c
+typedef int v8i __attribute__((vector_size(32)));
 v8i ld(const int *p) { v8i v; memcpy(&v, p, 32); return v; }
 void st(int *p, v8i v) { memcpy(p, &v, 32); }
 void add(int *a, int l, int r, int x) { // [l, r)
@@ -18,7 +20,8 @@ int cnt_lt(const int *a, int n, int y) {
 }
 alignas(32) int a[N]; __m256i *p = (__m256i*)a;
 // _mm256_<op>_<epi8|16|32|64|epu8..|ps|pd>
-// 128b: __m128{i,,d} _mm_ _si128 | 8b: char + epi8 (32/vec)
+// 128b: __m128{i,,d}, _mm_, _si128
+// 8b: char + epi8 (32/vec)
 // Init: setzero_si256, set1, set(hi..lo!), setr(lo..hi)
 // Mem:  loadu/storeu_si256, insert_epi32, extract_epi32/64
 // Math: add sub mullo(32b) mul_epi32(even->64b) min max abs
@@ -31,4 +34,5 @@ alignas(32) int a[N]; __m256i *p = (__m256i*)a;
 //       slli/srli_si256(a,bytes),
 //       alignr_epi8(a,b,bytes):[b,a]
 // Xlane: permutevar8x32_epi32, i32gather_epi32(base,idx,4)
-// 128b prefix op(add/max): a=op(a,slli_si128(a,4)), then 8
+// 128b prefix op(add/max): a=op(a,slli_si128(a,4));
+//                          op(...,8);

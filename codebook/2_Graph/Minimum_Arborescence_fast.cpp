@@ -1,4 +1,4 @@
-/* TODO
+/* needs:
 DSU: disjoint set
 - DSU(n), .boss(x), .Union(x, y)
 min_heap<T, Info>: min heap of {T, Info}, lazy add on T
@@ -30,7 +30,7 @@ vector<int> dmst(const vector<E> &e, int n, int root) {
       while (!h[p].empty() &&
         dsu.boss(e[h[p].top().S].s) == p)
         h[p].pop();
-      if (h[p].empty()) return {}; // no solution
+      if (h[p].empty()) return {}; // no answer
       r[p] = h[p].top().S;
     }
   }
@@ -41,5 +41,5 @@ vector<int> dmst(const vector<E> &e, int n, int root) {
       v[f] = n;
     ans.pb(r[i]);
   }
-  return ans; // default minimize, returns edgeid array
+  return ans; // edge ids; answer exists iff size() == n - 1
 } // O(Ef(E)), f(E) from min_heap

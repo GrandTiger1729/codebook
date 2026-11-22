@@ -1,0 +1,24 @@
+% Segment Tree Beats: what each node keeps and why
+Range $a_i \gets \min(a_i, t)$, $a_i \gets \max(a_i, t)$,
+$a_i \gets a_i + t$, range sum.
+\begin{itemize}
+\item \textbf{Each node keeps:} the sum; the max, how many times it
+  occurs, and the strict second max; the same three for the min;
+  lazy tags for add, chmin and chmax.
+\item \textbf{chmin($t$) on a node inside the range:}
+  \begin{itemize}
+  \item $t \ge$ max: nothing changes.
+  \item second max $< t <$ max: only the copies of the max change.
+    Sum drops by count $\times$ (max $- t$); set max $= t$, tag, stop.
+  \item $t \le$ second max: recurse into both children.
+  \end{itemize}
+  chmax is the mirror image, using the min side.
+\item \textbf{Merging:} if both maxes are equal, add the counts;
+  otherwise the second max also considers the loser's max.
+\item \textbf{Max and min can be the same elements} (at most two
+  distinct values): when the max changes, fix the min side too.
+\item \textbf{Tags:} push down add, then chmin, then chmax. A new
+  chmin($t$) also lowers a pending chmax tag to at most $t$.
+\item \textbf{Complexity:} chmin and chmax only, amortized
+  $O((n + q) \log n)$; with add, $O((n + q) \log^2 n)$.
+\end{itemize}

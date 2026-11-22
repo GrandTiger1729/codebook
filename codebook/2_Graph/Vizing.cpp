@@ -1,11 +1,11 @@
 #define SZ(a) ((int)a.size())
 namespace vizing { // 1-base, color of (u,v) in G[u][v]
-const int N = 105;
+const int N = 105; // bip=1: bipartite, Delta colors suffice
 int C[N][N], G[N][N], X[N], vst[N], n;
 void init(int _n) { n = _n;
   FOR (i, 0, n) FOR (j, 0, n) C[i][j] = G[i][j] = 0;
 }
-void solve(vector<pair<int, int>> &E) {
+void solve(vector<pair<int, int>> &E, bool bip = 0) {
   auto update = [&](int u)
   { for (X[u] = 1; C[u][X[u]]; ++X[u]); };
   auto color = [&](int u, int v, int c) {
@@ -39,14 +39,13 @@ void solve(vector<pair<int, int>> &E) {
       else if (!C[u][d])
         for (int a = SZ(L) - 1; a >= 0; a--)
           color(u, L[a].F, L[a].S);
-      else if (vst[d]) break;
+      else if (bip || vst[d]) break;
       else vst[d] = 1, v = C[u][d];
     }
     if (!G[u][v0]) {
-      for (; v; v = flip(v, c, d), swap(c, d));
+      for (; v; v = flip(v, c, d), swap(c, d)) {}
       if (int a; C[u][c0]) {
-        for (a = SZ(L) - 2; a >= 0 && L[a].S != c;
-          --a);
+        for (a = SZ(L) - 2; a >= 0 && L[a].S != c; a--) {}
         for (; a >= 0; a--) color(u, L[a].F, L[a].S);
       }
       else --t;

@@ -1,61 +1,49 @@
-namespace sfx {
-bool _t[N * 2];
-int SA[N * 2], H[N], RA[N];
-int _s[N * 2], _c[N * 2], x[N], _p[N], _q[N * 2];
-// zero based, string content MUST > 0
-// SA[i]: SA[i]-th suffix is the i-th lexigraphically smallest suffix.
-// H[i]: longest common prefix of suffix SA[i] and suffix SA[i - 1].
-void pre(int *sa, int *c, int n, int z)
-{ fill_n(sa, n, 0), copy_n(c, z, x); }
-void induce(int *sa, int *c, int *s, bool *t, int n, int z) {
-  copy_n(c, z - 1, x + 1);
-  FOR (i, 0, n - 1)
-    if (sa[i] && !t[sa[i] - 1])
-      sa[x[s[sa[i] - 1]]++] = sa[i] - 1;
-  copy_n(c, z, x);
-  for (int i = n - 1; i >= 0; i--)
-    if (sa[i] && t[sa[i] - 1])
-      sa[--x[s[sa[i] - 1]]] = sa[i] - 1;
-}
-void sais(int *s, int *sa, int *p, int *q, bool *t, int *c, int n, int z) {
-  bool uniq = t[n - 1] = true;
-  int nn = 0, nmxz = -1, *nsa = sa + n, *ns = s + n, last = -1;
-  fill_n(c, z, 0);
-  FOR (i, 0, n - 1) uniq &= ++c[s[i]] < 2;
-  partial_sum(c, c + z, c);
-  if (uniq) {
-    FOR (i, 0, n - 1) sa[--c[s[i]]] = i;
-    return;
-  }
+#define SZ(a) ((int)a.size())
+// s ends with a unique minimum 0, other values in [1, K)
+// returns sa of size n, sa[0] = n - 1 (the 0); O(n + K)
+vector<int> sais(const vector<int> &s, int K) {
+  int n = SZ(s);
+  vector<int> sa(n), cnt(K + 1), b, pos, id(n), ns;
+  if (n == 1) return sa;
+  vector<bool> ty(n, true); // S-type: s[i..] < s[i+1..]
   for (int i = n - 2; i >= 0; i--)
-    t[i] = (s[i] == s[i + 1] ? t[i + 1] : s[i] < s[i + 1]);
-  pre(sa, c, n, z);
-  FOR (i, 1, n - 1)
-    if (t[i] && !t[i - 1])
-      sa[--x[s[i]]] = p[q[i] = nn++] = i;
-  induce(sa, c, s, t, n, z);
-  FOR (i, 0, n - 1)
-    if (sa[i] && t[sa[i]] && !t[sa[i] - 1]) {
-      bool neq = last < 0 || !equal(s + sa[i], s + p[q[sa[i]] + 1], s + last);
-      ns[q[last = sa[i]]] = nmxz += neq;
+    ty[i] = s[i] == s[i + 1] ? ty[i + 1] : s[i] < s[i + 1];
+  auto lms = [&](int i) { return i && ty[i] && !ty[i - 1]; };
+  for (int x : s) cnt[x + 1]++;
+  FOR (c, 0, K - 1) cnt[c + 1] += cnt[c];
+  auto induce = [&](const vector<int> &v) {
+    sa.assign(n, -1);
+    b.assign(cnt.begin() + 1, cnt.end());
+    for (int i = SZ(v) - 1; i >= 0; i--)
+      sa[--b[s[v[i]]]] = v[i];
+    b.assign(cnt.begin(), cnt.end() - 1);
+    FOR (i, 0, n - 1) {
+      int j = sa[i] - 1;
+      if (j >= 0 && !ty[j]) sa[b[s[j]]++] = j;
     }
-  sais(ns, nsa, p + nn, q + n, t + n, c + z, nn, nmxz + 1);
-  pre(sa, c, n, z);
-  for (int i = nn - 1; i >= 0; i--)
-    sa[--x[s[p[nsa[i]]]]] = p[nsa[i]];
-  induce(sa, c, s, t, n, z);
-}
-void mkhei(int n) {
-  for (int i = 0, j = 0; i < n; i++) {
-    if (RA[i])
-      for (; _s[i + j] == _s[SA[RA[i] - 1] + j]; j++);
-    H[RA[i]] = j, j = max(0, j - 1);
+    b.assign(cnt.begin() + 1, cnt.end());
+    for (int i = n - 1; i >= 0; i--) {
+      int j = sa[i] - 1;
+      if (j >= 0 && ty[j]) sa[--b[s[j]]] = j;
+    }
+  };
+  FOR (i, 1, n - 1) if (lms(i)) pos.pb(i);
+  induce(pos);
+  auto same = [&](int x, int y) { // equal LMS substrings
+    for (int k = 0;; k++) {
+      if (s[x + k] != s[y + k]) return false;
+      if (k && (lms(x + k) || lms(y + k)))
+        return lms(x + k) && lms(y + k);
+    }
+  };
+  int m = 0, last = -1;
+  for (int p : sa) if (lms(p)) {
+    if (last >= 0 && !same(last, p)) m++;
+    id[p] = m, last = p;
   }
+  for (int p : pos) ns.pb(id[p]);
+  auto nsa = sais(ns, m + 1);
+  for (int &k : nsa) k = pos[k];
+  induce(nsa);
+  return sa;
 }
-void build(int *s, int n) {
-  copy_n(s, n, _s), _s[n] = 0;
-  sais(_s, SA, _p, _q, _t, _c, n + 1, 256);
-  copy_n(SA + 1, n, SA);
-  FOR (i, 0, n - 1) RA[SA[i]] = i;
-  mkhei(n);
-}}

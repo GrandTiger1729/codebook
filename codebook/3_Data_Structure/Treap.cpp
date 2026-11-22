@@ -1,18 +1,16 @@
+mt19937 rng(random_device{}());
 struct node {
   int data, sz;
   node *l, *r;
   node(int k) : data(k), sz(1), l(0), r(0) {}
-  void up() {
-    sz = 1;
-    if (l) sz += l->sz;
-    if (r) sz += r->sz;
-  }
+  void up() { sz = 1 + (l ? l->sz : 0) + (r ? r->sz : 0); }
   void down() {}
 };
 int sz(node *a) { return a ? a->sz : 0; }
 node *merge(node *a, node *b) {
   if (!a || !b) return a ? a : b;
-  if (rand() % (sz(a) + sz(b)) < sz(a))
+  // random by size: also balanced for persistent treap
+  if (rng() % (sz(a) + sz(b)) < sz(a))
     return a->down(), a->r = merge(a->r, b), a->up(), a;
   return b->down(), b->l = merge(a, b->l), b->up(), b;
 }

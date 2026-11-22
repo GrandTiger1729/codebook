@@ -14,11 +14,8 @@ struct SCC { // need adj
     }
     if (low[u] == dfn[u]) {
       sccnt++;
-      while (1) {
-        int x = st.back();
-        st.pop_back(), scc[x] = sccnt;
-        if (x == u) break;
-      }
+      for (int x = -1; x != u; st.pop_back())
+        scc[x = st.back()] = sccnt;
     }
   }
   void work() { FOR (i, 1, n) if (!dfn[i]) tarjan(i); }

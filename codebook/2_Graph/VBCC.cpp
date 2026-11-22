@@ -14,11 +14,8 @@ struct VBCC { // 1-base, need adj; bcc[v] = comps of v
         tarjan(v, u), low[u] = min(low[u], low[v]);
         if (low[v] < dfn[u]) continue;
         bccnt++; // u cuts v's subtree off
-        while (1) {
-          int x = st.back();
-          st.pop_back(), bcc[x].pb(bccnt);
-          if (x == v) break;
-        }
+        for (int x = -1; x != v; st.pop_back())
+          bcc[x = st.back()].pb(bccnt);
         bcc[u].pb(bccnt);
       }
     }

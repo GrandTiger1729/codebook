@@ -30,16 +30,13 @@ int main() {
     assert(bk.solve() == want);
     cases++;
   }
-  // pruning: Moon-Moser graph K_{3,3,...} has 3^(n/3) maximal cliques; answer capped at 1001
-  int capped = 0;
-  for (int k = 1; k <= 40; k++) {
+  // Moon-Moser graph K_{3,3,...} has 3^(n/3) maximal cliques (the worst case)
+  for (int k = 1; k <= 15; k++) {
     n = 3 * k;
     bk.init(n);
     FOR (i, 1, n) FOR (j, i + 1, n) if ((i - 1) / 3 != (j - 1) / 3) bk.add_edge(i, j);
-    ll want = 1; FOR (i, 1, k) want = min(want * 3, 100000LL);
-    int got = bk.solve();
-    assert(got == min(want, 1001LL));
-    capped += got > 1000;
+    int want = 1; FOR (i, 1, k) want *= 3;
+    assert(bk.solve() == want);
   }
-  printf("%d graphs n<=15 exact; Moon-Moser n<=120 (%d capped at 1001)\n", cases, capped);
+  printf("%d graphs n<=15 exact; Moon-Moser n<=45 exact (3^15 cliques)\n", cases);
 }

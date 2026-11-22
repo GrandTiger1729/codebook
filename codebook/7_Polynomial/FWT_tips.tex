@@ -1,0 +1,9 @@
+% FWT closed forms, for simulating the transform by hand
+\begin{itemize}
+\item OR: $\hat a_S = \sum_{T \subseteq S} a_T$,
+  inverse $a_S = \sum_{T \subseteq S} (-1)^{|S| - |T|} \hat a_T$
+\item AND: $\hat a_S = \sum_{T \supseteq S} a_T$,
+  inverse $a_S = \sum_{T \supseteq S} (-1)^{|T| - |S|} \hat a_T$
+\item XOR: $\hat a_S = \sum_T (-1)^{|S \cap T|} a_T$,
+  inverse: the same transform, then divide by $n$ (array length)
+\end{itemize}

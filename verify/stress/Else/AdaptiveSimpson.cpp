@@ -9,7 +9,7 @@ int main() {
     double a = rndd(-5, 5), b = rndd(-5, 5), c = rndd(-5, 5), e = rndd(-5, 5);
     double l = rndd(-10, 10), r = l + rndd(0, 10);
     auto F = [&](double x) { return ((a / 4 * x + b / 3) * x + c / 2) * x * x + e * x; };
-    auto S = make_simpson([&](double x) { return ((a * x + b) * x + c) * x + e; });
+    Simpson S{[&](double x) { return ((a * x + b) * x + c) * x + e; }};
     double want = F(r) - F(l);
     assert(abs(S.eval(l, r, 1e-9) - want) <= 1e-7 * max(1.0, abs(want)));
     assert(abs(S.eval2(l, r, 1e-9, 7) - want) <= 1e-7 * max(1.0, abs(want)));
@@ -30,7 +30,7 @@ int main() {
       auto &t = ts[ti];
       double want = t.F(t.r) - t.F(t.l);
       for (double eps : {1e-6, 1e-9}) {
-        auto S = make_simpson(t.f);
+        Simpson S{t.f};
         double got = S.eval(t.l, t.r, eps);
         // plain eval has no minimum depth: it can stop at the first level on oscillating / peaked
         // integrands (sin over several periods, Runge 1/(1+x^2)) -- that's what eval2 is for.

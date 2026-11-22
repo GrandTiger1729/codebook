@@ -7,22 +7,20 @@ struct palindromic_tree {
       FOR (i, 0, 25) next[i] = 0;
     }
   };
-  vector<node> St;
+  vector<node> St; // roots 0 (len 0), 1 (len -1)
   vector<char> s;
   int last, n;
-  palindromic_tree() : St(2), last(1), n(0) {
-    St[0].fail = 1, St[1].len = -1, s.pb(-1);
-  }
-  inline void clear() {
+  palindromic_tree() { clear(); }
+  void clear() {
     St.clear(), s.clear(), last = 1, n = 0;
     St.pb(0), St.pb(-1);
     St[0].fail = 1, s.pb(-1);
   }
-  inline int get_fail(int x) {
+  int get_fail(int x) {
     while (s[n - St[x].len - 1] != s[n]) x = St[x].fail;
     return x;
   }
-  inline void add(int c) {
+  void add(int c) {
     s.pb(c -= 'a'), ++n;
     int cur = get_fail(last);
     if (!St[cur].next[c]) {
@@ -34,13 +32,11 @@ struct palindromic_tree {
     }
     last = St[cur].next[c], ++St[last].cnt;
   }
-  inline void count() { // counting cnt
-    auto i = St.rbegin();
-    for (; i != St.rend(); ++i) {
-      St[i->fail].cnt += i->cnt;
-    }
+  void count() { // counting cnt
+    for (int i = (int)St.size() - 1; i > 1; i--)
+      St[St[i].fail].cnt += St[i].cnt;
   }
-  inline int size() { // The number of diff. pal.
+  int size() { // The number of diff. pal.
     return (int)St.size() - 2;
   }
 };

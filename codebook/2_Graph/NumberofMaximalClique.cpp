@@ -1,4 +1,5 @@
 struct BronKerbosch { // 1-base
+  // time ~ answer (~7e7/s); worst 3^(n/3): n = 48 in 0.6s
   int n, a[N], g[N][N];
   int cnt, all[N][N], some[N][N], none[N][N];
   void init(int _n) {
@@ -9,9 +10,13 @@ struct BronKerbosch { // 1-base
     g[u][v] = g[v][u] = 1;
   }
   void dfs(int d, int an, int sn, int nn) {
-    if (cnt > 1000) return; // pruning
     if (sn == 0 && nn == 0) ++cnt;
-    int u = some[d][0];
+    int u = 0, best = -1;
+    FOR (k, 0, sn + nn - 1) {
+      int w = k < sn ? some[d][k] : none[d][k - sn], c = 0;
+      FOR (j, 0, sn - 1) c += g[w][some[d][j]];
+      if (c > best) best = c, u = w;
+    }
     FOR (i, 0, sn - 1) {
       int v = some[d][i];
       if (g[u][v]) continue;

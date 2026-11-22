@@ -9,7 +9,7 @@ HERE=$(cd "$(dirname "$0")" && pwd)
 CB=$HERE/../../codebook
 SAN=${SAN:-1}
 OUT=$HERE/build; mkdir -p "$OUT"
-FLAGS="-std=c++20 -O2 -I$CB -I$HERE/.. -I$HERE -w"
+FLAGS="-std=c++20 -O2 -I$CB -I$HERE/.. -I$HERE -I$OUT -w"
 [ "$SAN" = 1 ] && FLAGS="$FLAGS -g -fsanitize=address,undefined -fno-sanitize-recover=all -D_GLIBCXX_DEBUG"
 cd "$HERE"
 files=("$@"); [ ${#files[@]} = 0 ] && files=(*/*.cpp)
@@ -20,6 +20,10 @@ annotate() { [ -n "${GITHUB_ACTIONS:-}" ] || return 0
     "$(head -c 2000 "$3" | sed ':a;N;$!ba;s/%/%25/g;s/\r/%0D/g;s/\n/%0A/g')"; }
 for f in "${files[@]}"; do
   exe=$OUT/$(echo "${f%.cpp}" | tr / _)
+  # optional pre-step: generate variants of a template into $OUT (e.g. FWT keeps one of three lines)
+  if [ -f "${f%.cpp}.pre.sh" ] && ! bash "${f%.cpp}.pre.sh" "$CB" "$OUT"; then
+    echo "PRE FAIL  $f"; fail=$((fail+1)); continue
+  fi
   if ! g++ $FLAGS "$f" -o "$exe" 2>"$exe.cerr"; then
     echo "COMPILE FAIL  $f"; head -5 "$exe.cerr"; annotate "$f" "compile failed" "$exe.cerr"
     fail=$((fail+1)); continue

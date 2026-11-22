@@ -4,10 +4,7 @@ vector<int> lcp_array(const auto &s, const auto &sa) {
   vector<int> rnk(n), lcp(max(n - 1, 0));
   FOR (i, 0, n - 1) rnk[sa[i]] = i;
   FOR (i, 0, n - 1) {
-    if (rnk[i] == n - 1) {
-      len = 0;
-      continue;
-    }
+    if (rnk[i] == n - 1) { len = 0; continue; }
     int j = sa[rnk[i] + 1];
     while (i + len < n && j + len < n &&
       s[i + len] == s[j + len])

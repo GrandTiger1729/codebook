@@ -24,7 +24,7 @@
 | `1_Basic/black_magic.cpp` | — 無對應題 | — | ✅ | — |
 | `1_Basic/Pragma.cpp` | — 無對應題 | — | 片段，非獨立編譯單元 | — |
 | `1_Basic/sanitize_fixer.cpp` | — 無對應題 | — | ✅ | — |
-| `1_Basic/SIMD.cpp` | — 無對應題 | 2 萬組隨機陣列與區間（各種對齊與尾端）vs 純量迴圈；註解列出的 intrinsic 都實際呼叫一次；count_less 約 3.5 倍快（-O2） | ✅ | 2026-11-17 加入（GCC vector extension + AVX2 intrinsic 速查） |
+| `1_Basic/SIMD.cpp` | — 無對應題 | 2 萬組隨機陣列與區間（各種對齊與尾端）vs 純量迴圈；註解列出的 intrinsic 都實際呼叫，並在已知輸入上驗證註解寫的語意（set 順序、半邊內位移、alignr、前綴技巧等）；cnt_lt 約 3.5 倍快（-O2） | ✅ | 2026-11-17 加入（GCC vector extension + AVX2 intrinsic 速查） |
 
 ## Graph
 
@@ -40,12 +40,12 @@
 | `2_Graph/Maximum_Clique_Dyn.cpp` | — 無對應題 | 6 000 組 n≤60，答案 + `sol[]` 驗證 | 需要外部 `N` | test by TIOJ 1978, CF 101221 I (World Finals' problem) |
 | `2_Graph/MinimumSteinerTree.cpp` | `graph/minimum_steiner_tree` **AC** 24 筆 · 0.114s/5s (2%) | 16 000 組多重圖 n ≤ 8、T ≤ 5 vs 枚舉點集 + Prim（8 047 組有 `vcst`、5 411 組 W=1e9、3 486 組不連通），並驗 `ans` 是連通所有 terminal 的樹 | 需要外部 `N`、`T`、`INF` | test by luogu P6192, Lib-Checker Minimum Steiner Tree, local brute force |
 | `2_Graph/Dominator_Tree.cpp` | `graph/dominatortree` **AC** 13 筆 · 0.115s/5s (2%) | — | 需要外部 `N` | test by CF 100513 L, Lib-Checker Dominator Tree |
-| `2_Graph/Minimum_Arborescence_fast.cpp` | `graph/directedmst` **AC** 12 筆 · 0.122s/5s (2%) | — | 需要外部 `min_heap` | test by luogu P4716, Lib-Checker Directed MST |
+| `2_Graph/Minimum_Arborescence_fast.cpp` | `graph/directedmst` **AC** 12 筆 · 0.122s/5s (2%) | 3 萬張 n ≤ 6 隨機多重圖 vs 暴力（16 933 張無解、5 117 張 n = 1）：有解 iff 回傳 n − 1 條邊，且是以 root 為根的樹、權重最小 | 需要外部 `min_heap` | test by luogu P4716, Lib-Checker Directed MST |
 | `2_Graph/ManhattanMST.cpp` | `geo/manhattanmst` **AC** 16 筆 · 0.314s/5s (6%) | 20 000 組 n ≤ 200（座標到 ±1e9、大量重點）+ Kruskal vs O(n²) Prim；每條邊權正確、至多 4n 條 | ✅ | 2026-11-17 加入（kactl 演算法；取代 `9_Else` 裡沒收錄、不能編譯的舊版） |
-| `2_Graph/BipolarOrientation.cpp` | — 無對應題 | 20 萬張隨機多重圖 n ≤ 60，其中 93 582 張加 (s, t) 後點雙連通：結果是排列、s 第一 t 最後、其他點前後都有鄰居 | ✅ | 2026-11-17 加入（ckiseki 的 linked-list st-numbering） |
-| `2_Graph/Vizing.cpp` | — 無對應題 | 4 000 組 n≤104，合法著色且 ≤Δ+1 色 | ✅ | test by CF 101933 G |
+| `2_Graph/BipolarOrientation.cpp` | — 無對應題 | 20 萬張隨機多重圖 n ≤ 60，其中 93 582 張加 (s, t) 後點雙連通：結果是排列、s 第一 t 最後、其他點前後都有鄰居 | ✅ | 2026-11-17 加入（ckiseki 的 linked-list st-numbering）, test by CF1916F |
+| `2_Graph/Vizing.cpp` | — 無對應題 | 4 000 組 n≤104，合法著色且 ≤Δ+1 色；另 4 000 組二分圖用 `bip = 1`，≤Δ 色 | ✅ | test by CF 101933 G |
 | `2_Graph/Minimum_Clique_Cover.cpp` | — 無對應題 | 3 000 組 n≤14 vs 子集 DP（**修 UB**：改 `unsigned`） | 需要外部 `N` | test by TIOJ 1472 |
-| `2_Graph/NumberofMaximalClique.cpp` | — 無對應題 | 4 000 組 n≤15 精確 + Moon–Moser n≤120（上限 1001） | 需要外部 `N` | test by POJ 2989 |
+| `2_Graph/NumberofMaximalClique.cpp` | — 無對應題 | 4 000 組 n≤15 精確 + Moon–Moser n≤45 精確 | 需要外部 `N` | test by POJ 2989 |
 | `2_Graph/C3C4.cpp` | `graph/enumerate_triangles` **AC** 17 筆 · 0.164s/5s (3%) | 30 000 張隨機圖 vs 暴力（247 994 個三角形各回報恰一次、973 727 個四環）+ 星狀圖加團 n=2·10⁵ 的複雜度檢查 | 需要外部 `N`；先呼叫 `build(n)` | 2026-09-30 加入；`C3(n, f)` 對每個三角形呼叫 `f(a, b, c)`，`C4(n)` 回傳四環數 |
 
 ## Data Structure
@@ -57,11 +57,11 @@
 | `3_Data_Structure/IntervalContainer.cpp`（不在書中） | — 無對應題 | — | ✅ | test by kactl stress test |
 | `3_Data_Structure/Heavy_light_Decomposition.cpp`（不在書中） | `tree/vertex_add_path_sum` **AC** 19 筆 · 0.468s/5s (9%) | — | 需要外部 `N` | test by CSES Path Queries II, Lib-Checker Vertex Add Path Sum |
 | `3_Data_Structure/Centroid_Decomposition.cpp` | `tree/frequency_table_of_tree_distance` 無法驅動 | 3 000 棵樹重用同一物件，28 萬次操作（**修 bug**：多測資沒清） | 需要外部 `N` | test by TIOJ 1171 |
-| `3_Data_Structure/Treap.cpp` | `data_structure/ordered_set#treap` **AC** 37 筆 · 0.817s/10s (8%) | — | ✅ | test by Lib-Checker Ordered Set |
+| `3_Data_Structure/Treap.cpp` | `data_structure/ordered_set#treap` **AC** 37 筆 · 0.766s/10s (8%) | — | ✅ | test by Lib-Checker Ordered Set；2026-11-22 `rand()` → `mt19937` |
 | `3_Data_Structure/LiChaoST.cpp`（不在書中） | `data_structure/line_add_get_min#lichao` 無法驅動 | 3 000 組共 976 772 次查詢 vs 窮舉 | 需要外部 `INF` | test by Library Checker Line Add Get Min |
 | `3_Data_Structure/link_cut_tree.cpp` | `tree/dynamic_tree_vertex_add_path_sum` **AC** 15 筆 · 0.33s/5s (7%)（指標版 0.56s） | 3 000 個森林 n ≤ 40、88 萬次操作 vs 暴力：link / cut（含 10 萬次切非邊，須為 no-op）/ change / query / conn，chroot 後的 lca 與 get_root（**修 bug**：舊版 `cut` 判斷 `size != 5`，幾乎不切；切相連但不相鄰的點會切錯邊；切完沒 `pull`） | 需要外部 `N` | 2026-11-17 改成陣列版 `struct LCT`（1-base，0 是 nil） |
 | `3_Data_Structure/KDTree.cpp` | — 無對應題 | 3 000 組 n≤2000，座標 ±1e9（**修 bug**：初值 `LLONG_MAX`） | 需要外部 `maxn` | — |
-| `3_Data_Structure/StaticTopTree.cpp` | `tree/point_set_tree_path_composite_sum_fixed_root` **AC** 26 筆 · 0.465s/10s (5%) | 3 000 棵樹 n ≤ 5000（隨機、路徑、星、毛毛蟲）、55 萬次單點更新後 vs 暴力重算；高度 ≤ 6 log n + 6（實測最大 34） | 需要外部 `Path`、`Point` 與五個 DP 函式 | 2026-11-17 加入（ABC351G 解說的建法） |
+| `3_Data_Structure/StaticTopTree.cpp` | `tree/point_set_tree_path_composite_sum_fixed_root` **AC** 26 筆 · 0.465s/10s (5%) | 3 000 棵樹 n ≤ 5000（隨機、路徑、星、毛毛蟲）、55 萬次單點更新後 vs 暴力重算；高度 ≤ 6 log n + 6（實測最大 34） | 需要外部 `Path`、`Point` 與五個 DP 函式；`query_subtree`、`query_reroot` 另有 4 000 棵樹 n ≤ 400 各約 31 萬次 vs 暴力（含單點更新） | 2026-11-17 加入（ABC351G 解說的建法） |
 
 ## Flow/Matching
 
@@ -86,7 +86,8 @@
 | `5_String/RollingHash.cpp` | — 無對應題 | 400 個字串（σ ≤ 3）的所有等長子字串對（220 萬對）：雜湊相等 ⇔ 子字串相等；`string` 與 `vector<int>` 一致 | ✅ | 2026-11-17 加入（mod 2^61−1、隨機底數） |
 | `5_String/Manacher.cpp` | `string/enumerate_palindromes` **AC** 24 筆 · 0.068s/5s (1%) | — | 需要外部 `SIZE` | test by Lib-Checker Enumerate Palindromes |
 | `5_String/SA_LCP_becaido.cpp` | `string/suffixarray#becaido` **AC** 50 筆 · 0.167s/5s (3%) | — | ✅ | test by caido, Lib-Checker Suffix Array |
-| `5_String/SAIS-C++20.cpp` | `string/suffixarray` **AC** 50 筆 · 0.181s/5s (4%) | σ≤3 窮舉 + 隨機 n≤3000，共 30 252 組 | ✅ | test by Lib-Checker Suffix Array |
+| `5_String/SAIS-C++20.cpp` | `string/suffixarray` **AC** 50 筆 · 0.181s/5s (4%) | σ≤3 窮舉 + 隨機 n≤3000，共 30 252 組 | ✅ | 2026-11-22 書中改用 SAIS.cpp（註解掉） |
+| `5_String/SAIS.cpp` | `string/suffixarray#sais` **AC** 50 筆 · 0.064s/5s (1%) | σ≤3 窮舉 + 隨機 n≤3000，共 30 252 組；另 10 萬組 vs 暴力排序 | ✅ | 2026-11-22 改寫：教科書式 SA-IS（S/L 型、LMS、induce、命名遞迴），不用 C++20 ranges；n = 5e6 速度與 SAIS-C++20 相同 |
 | `5_String/LCP_Array.cpp` | `string/number_of_substrings#lcp` **AC** 24 筆 · 0.065s/5s (1%) | 30 000 組 n≤2000（含週期串）vs 直接比相鄰後綴 | ✅ | SA 由 SAIS 產生；2026-11-17 從 SA_LCP_becaido 拆出（倍增 SA 刪掉） |
 | `5_String/Aho-Corasick_Automaton.cpp` | `string/aho_corasick` **AC** 72 筆 · 0.369s/5s (7%) | `fail[]` vs 最長後綴節點、沿 `to[]` 累加 `cnt[]` vs 樸素出現次數、`count()` vs 每個節點字串的樸素出現次數，100 000 組（含 `reset()` 重用） | 需要外部 `N`、`C`；字元以 `'a'` 為基底；根是 0 | std_abs 原檔 + macro 契約（2026-09-30 取代舊版，檔名改正為 Automaton）；`cnt[]` 在 `build_fail()` 後是「以該節點結尾的 pattern 數」；另加 `count(s)` 回傳每個節點字串在 `s` 裡的出現次數（取代舊版的 `ord[]`/`solve()`） |
 | `5_String/MinimumRotation.cpp` | — 無對應題 | 79 523 組（σ=3 n≤9 窮舉 + 週期串） | ✅ | test by CSES Minimal Rotation |
@@ -114,7 +115,7 @@
 | `6_Math/Pollard_Rho.cpp` | `number_theory/factorize` **AC** 31 筆 · 0.069s/10s (1%)（2026-11-17 改 kactl 式批次 gcd，原本 1.167s） | 24 萬組：n ≤ 2·10⁵ 窮舉 vs 試除法、2ᵏ·p、隨機至 10¹⁸、兩個約 10⁹ 質數之積、質數平方與立方、Carmichael 數、連續呼叫累加 | 需要外部 `prime` | test by Lib-Checker Factorize |
 | `6_Math/Simplex_Algorithm.cpp` | — 無對應題 | 12 000 組 vs 頂點枚舉（最佳/無界/不可行）+ 275 組對偶 | 需要外部 `MAXN`、`MAXM`、`INF` | 2026-11-18 改寫（見最後一節） |
 | `6_Math/chineseRemainder.cpp` | — 無對應題 | 724 575 組含非互質、無解、lcm 到 4e18（大 gcd、單一模數近 4e18）（**修溢位**） | 需要外部 `exgcd` | — |
-| `6_Math/fac_no_p.cpp` | `enumerative_combinatorics/binomial_coefficient` 無法驅動 | 44 960 組 vs 直接計算 | 需要外部 `MAXP`、`mpow(a, e, m)` | test by luogu P4720 |
+| `6_Math/fac_no_p.cpp` | `enumerative_combinatorics/binomial_coefficient` 無法驅動 | 44 960 組 vs 直接計算 | 需要外部 `MAXP` | test by luogu P4720 |
 | `6_Math/QuadraticResidue.cpp` | `number_theory/sqrt_mod` **AC** 13 筆 · 0.064s/10s (1%) | 289 050 組（p < 2000 每個 a 窮舉 + 大質數植入解） | ✅ | test by Lib-Checker Sqrt Mod, local brute force |
 | `6_Math/PiCount.cpp` | `number_theory/counting_primes` **AC** 31 筆 · 0.033s/5s (1%) | — | ✅ | test by luogu P7884, Lib-Checker Counting Primes |
 | `6_Math/DiscreteLog.cpp` | `number_theory/discrete_logarithm_mod` **AC** 20 筆 · 0.264s/10s (3%) | 585 220 組（m ≤ 120 窮舉 + 植入解到 1e9；443 296 組無解） | ✅ | test by Lib-Checker Discrete Logarithm |
@@ -127,10 +128,11 @@
 | `7_Polynomial/Fast_Fourier_Transform.cpp` | `convolution/convolution_mod_1000000007` **AC** 48 筆 · 0.369s/10s (4%) | `conv()`：500 組 vs 樸素卷積，最大誤差 1.5e-8（\|a_i\| ≤ 1e3）、1.1e-5（\|a_i\| ≤ 3e4） | ✅ | test by Lib-Checker Convolution mod 1e9+7 (through FFT Mod) |
 | `7_Polynomial/Fast_Fourier_Transform_Mod.cpp` | `convolution/convolution_mod_1000000007` **AC** 48 筆 · 0.369s/10s (4%) | — | 需要外部 `cplx` | test by Lib-Checker Convolution mod 1e9+7 |
 | `7_Polynomial/Number_Theory_Transform.cpp` | `convolution/convolution_mod` **AC** 53 筆 · 0.379s/5s (8%) | — | 需要外部 `MOD`/`G`/`N` 和 `add`/`sub`/`mul`/`Pow`；可用的 (mod, G, 2^k) 見下面的 NTT Primes 表 | std_abs 原檔 + macro 契約；test by Lib-Checker Convolution |
-| `7_Polynomial/Fast_Walsh_Transform.cpp` | — 無對應題 | `subset_convolution`：2 000 組 vs 樸素 $O(4^L)$，L = 1..5、共用同一組全域 | ✅ | test by luogu P6097, local brute force |
+| `7_Polynomial/Fast_Walsh_Transform.cpp` | — 無對應題 | 書上三行 OR/AND/XOR 各留一行產生三份（`.pre.sh`）：各驗封閉式、逆變換、卷積定理；`subset_convolution` 3 000 組 mod 1e9+9 vs 樸素 $O(4^L)$，L = 0..6、值到 MOD − 1；L = 18 抽查 | 需要外部 `MOD`、`add`、`sub`、`mul` | test by luogu P6097, local brute force |
 | `7_Polynomial/Polynomial_Operation.cpp` | `polynomial/inv_of_formal_power_series` **AC** 25 筆 · 0.418s/10s (4%)<br>`polynomial/exp_of_formal_power_series` **AC** 26 筆 · 1.619s/10s (16%)<br>`polynomial/log_of_formal_power_series` **AC** 25 筆 · 0.668s/10s (7%)<br>`polynomial/pow_of_formal_power_series` **AC** 37 筆 · 2.227s/10s (22%)<br>`polynomial/sqrt_of_formal_power_series` **AC** 35 筆 · 1.120s/10s (11%)<br>`polynomial/polynomial_taylor_shift` **AC** 38 筆 · 0.268s/5s (5%)<br>`polynomial/shift_of_sampling_points_of_polynomial` **AC** 32 筆 · 0.668s/5s (13%)<br>`polynomial/compositional_inverse_of_formal_power_series` **AC** 23 筆 · 0.215s/10s (2%)<br>`polynomial/compositional_inverse_of_formal_power_series_large` **AC** 28 筆 · 3.674s/10s (37%) | `Divide`（$bq+r=a$）500 組、`Evaluate` vs Horner 300 組、`Interpolate` 來回 300 組、`TaylorShift` vs 直接代入 300 組、`SamplingShift` vs Lagrange 200 組、`power_proj` vs $O(n^2m)$ 樸素 250 組、`PolyPow` vs 連乘 3 000 組（含 $k = 0$、$a_0 = 0$）、`Sqrt` 平方回去 1 073 組、`CompInv` $f(g(x)) = x$ 樸素合成 20 000 組（$n$ = 1..40） | 需要外部 NTT、`QuadraticResidue`；`PolyPow` 要 `Pow(int, ll)`；`TaylorShift`/`SamplingShift` 要 `fac[]`/`ifac[]` | 從 std_abs 改短（2026-11-20） |
 | `7_Polynomial/FastLinearRecursion.cpp` | `other/kth_term_of_linearly_recurrent_sequence` **AC** 20 筆 · 3.573s/10s (36%) | BM → BostanMori 重播整段前綴，290 組（d = 1..20）共 9 166 項 | 需要外部 `Mul`、`ntt`（`Polynomial_Operation`、`Number_Theory_Transform`） | Bostan–Mori（2026-09-28 取代 std_abs 的 Kitamasa，原本 TLE 19.442s）；`c` 是 **0-based**，BM 的輸出可直接餵入 |
-| `7_Polynomial/Value_Poly.cpp` | — 無對應題 | 431 189 組 vs 前綴和表 | 需要外部 `mint` | — |
+| `7_Polynomial/Lagrange_Interpolation.cpp` | — 無對應題 | 500 000 次求值 vs Horner（$d \le 300$；$x$ 含 $0..d$、近 $p$、到 $10^{18}$、負數；平移起點 $y_i = f(a+i)$ 查 $x - a$）、62 031 個 $\sum i^k$ vs 直接累加；$d = 10^6$ 0.013s | 需要外部 `MOD`/`add`/`sub`/`mul`、`ifac[]` 到 $d$ | 2026-11-22 取代 Value Polynomial；test by CF 622F（使用者送出 AC） |
+| `7_Polynomial/Value_Poly.cpp`（不在書中） | — 無對應題 | 431 189 組 vs 前綴和表 | 需要外部 `mint` | — |
 
 ## Geometry
 
@@ -149,9 +151,9 @@
 | `8_Geometry/minMaxEnclosingRectangle.cpp` | — 無對應題 | 2 989 組（**修 bug**：acos NaN 丟掉最大值，改封閉式） | 需要外部 `hull` | test by UVA 819 |
 | `8_Geometry/Vector_in_poly.cpp` | — 無對應題 | 1 832 940 組含凹角/180°，其中 904 740 組 |coord| ≤ 1e9 | ✅ | test by qoj 5479 |
 | `8_Geometry/PolyUnion.cpp` | — 無對應題 | 20 000 組 vs 精確 slab 分解（含重複多邊形） | ✅ | test by CF 101673 A |
-| `8_Geometry/Polar_Angle_Sort.cpp`（不在書中） | `geo/sort_points_by_argument` **AC** 21 筆 · 0.117s/5s (2%) | — | ✅ | test by NTUJ 2270, Lib-Checker Sort Points by Argument |
+| `8_Geometry/Polar_Angle_Sort.cpp` | `geo/sort_points_by_argument` **AC** 21 筆 · 0.117s/5s (2%) | — | ✅ | test by NTUJ 2270, Lib-Checker Sort Points by Argument |
 | `8_Geometry/Half_plane_intersection.cpp` | — 無對應題 | 56 016 組 vs exact 有理數暴力（含空/零面積），n 到 1e5 | 需要外部 `cmp`；書中 double 前置只到 |coord| ≈ 3.3e7（1e9 會把近平行線當平行），整數前置到 1e9 | test by qoj 2162 (World Finals' problem) |
-| `8_Geometry/HPIGeneralLine.cpp` | — 無對應題 | 56 012 組 vs exact 有理數暴力，格點直線到 1e9、n 到 1e5 | 需要外部 `cmp`；書中 double 前置只到 ≈ 3.3e7；整數前置下 `sign(ll)` 會截斷 `cov()` 的 `__int128`（**bug，未修**） | — |
+| `8_Geometry/HPIGeneralLine.cpp` | — 無對應題 | 56 012 組 vs exact 有理數暴力，格點直線到 1e9、n 到 1e5 | 需要外部 `cmp`；書中 double 前置只到 ≈ 3.3e7；`cov()` 直接比較 `__int128`（2026-11-22 修：原本 `sign(ll)` 會截斷） | — |
 | `8_Geometry/rotatingSweepLine.cpp` | — 無對應題 | 2 173 組一般位置（前提：無三點共線） | 需要外部 `cmp` | — |
 | `8_Geometry/Minimum_Enclosing_Circle.cpp` | `geo/minimum_enclosing_circle` **AC** 25 筆 · 0.033s/5s (1%) | — | 需要外部 `circenter` | test by TIOJ 1093, Lib-Checker Minimum Enclosing Circle |
 | `8_Geometry/Intersection_of_two_circles.cpp` | — 無對應題 | 398 738 組含精確相切（同圓回傳 NaN） | ✅ | test by TIOJ 1503 |
@@ -204,7 +206,7 @@
 - 後補的對拍：`Math/Pollard_Rho`（24 萬組）、`Basic/readchar`（400 萬 byte 跨 2^16 邊界）、`Geometry/Default_code`（projection/reflection/linearTransformation）；後兩者以植入錯誤確認會 FAIL。
 - 對拍抓到 13 個 bug，已合併（PR #4）；上表標 **修** 的就是。
 - PDF：listings 一行 58 欄，超過就折行。原本 123 行會折，現在 0 行；另外把放得下的「header + 單一敘述」接回一行（純空白、hash 不變，獨立 commit）。**26 → 25 頁，最後一頁是滿的。**
-- 書裡仍缺、刻意沒補（不加新行）：`seg_strict_intersect`（Delaunay 要用）、`cmp`（HPI 兩份 + rotatingSweepLine，Polar_Angle_Sort 被註解掉）、`abs(pll)`（minMaxEnclosingRectangle）、BitsetLCS 需要的 bitset 型別。
+- 書裡仍缺、刻意沒補（不加新行）：`seg_strict_intersect`（Delaunay 要用）、`abs(pll)`（minMaxEnclosingRectangle）、BitsetLCS 需要的 bitset 型別。
 
 ## 2026-09-28：補回對拍檔
 
@@ -307,3 +309,52 @@
 - **Berlekamp–Massey 改寫**：原本是 template `T`，要自己寫支援除法的 `mint`（書裡沒有），而傳 `vector<int>` 會靜靜算錯（整數除法、不取模）。改照 kactl，吃 `vector<int>`、用 NTT 那套 `MOD`/`add`/`sub`/`mul`/`Pow`，回傳 0-based `c` 可以直接餵 `BostanMori`。23 → 22 行；LC AC；對拍的 `mi` 結構拿掉。
 - **DeterminantAnyMod**：註解補上 $m \le 3 \cdot 10^9$（`(m - q) * a[j][k]` 接近 $m^2$）。
 - **Characteristic Polynomial 拿出書**（`content.tex` 註解掉，檔案與 LC 驗證保留）：ICPC 少用；$A^k$、$u^\mathsf{T}A^kv$ 用 Berlekamp–Massey + BostanMori，$\det(A + xB)$ 用 $n+1$ 個點的 `det` 再插值。
+
+## 2026-11-22
+- **HPIGeneralLine 修 bug**：`cov()` 把 `__int128` 傳給 `sign(ll)`，超過 $2^{63}$ 會截斷（|coord| 到 1e9 時近平行線判錯，該空的回傳 4 條）。改成直接比較 `__int128` 的正負，不多佔行。對拍拿掉原本補的 `sign(__int128)`（它把 bug 遮住了），舊版現在會失敗、新版 56 012 組通過。
+- **DelaunayTriangulation_dq**：`while (gao(0) || gao(1));` 改成 `{}`，空迴圈主體看得出來是故意的。
+- **Value Polynomial → Lagrange Interpolation**：舊版要自己寫支援比較與轉整數的 `mint`、外加 `inegfac[]`；換成 16 行的 `Lagrange(y, x)`（$f(0..d)$ 求 $f(x)$，$O(d)$，`int` + `add`/`sub`/`mul` + `ifac`，跟多項式章一致）。舊檔留著、從書中註解掉。
+- **Lagrange**：`x %= MOD` 改成 `x = (x % MOD + MOD) % MOD`，負的 $x$ 也安全（平移起點時呼叫 `Lagrange(y, x - a)` 可能是負數）。
+- **Lagrange Interpolation**：使用者在 CF 622F（$\sum_{i=1}^n i^k$，$k \le 10^6$）送出 AC，記進 content.tex 與 STATUS。
+- **拿掉所有標題的 `*`**（72 個，含註解掉的）：`*` 原本表示「真的在 OJ 送過」，現在書裡每個模板都有 LC 或對拍，測試紀錄在 content.tex 的 `test by` 註解和這份表裡，`*` 只剩雜訊。
+- **SAIS.cpp 改寫**：原本是全域陣列版（含 LCP，沒用到），換成教科書式 SA-IS：輸入尾端唯一最小 0、其餘在 $[1, K)$，回傳 `sa[0] = n - 1`，和 SAIS-C++20 介面相同。型別陣列命名 `ty`（`S` 是巨集）。LC AC 0.064s（C++20 版 0.066s），n = 5e6 兩者 0.448s 相同。還沒放進書。
+- **SAIS.cpp**：`same()` 只比字元、不比 S/L 型（兩段都在同一個位移結束於 LMS 時，型別由字元和後一格的型別決定，字元相同就推得型別相同）。少一行；對拍與 LC 照樣通過。
+- **書中 SAIS C++20 → SAIS**：SAIS-C++20 註解掉（檔案、driver、對拍保留）。LCP Array 的 LC 驅動（Number of Substrings，AC 0.064s）和對拍改用 SAIS.cpp。
+- **Tips for Generating Functions** 移到 Polynomial 章（`7_Polynomial/Generating_function.tex`，接在 Newton's Method 後）。刪掉基本性質（和、OGF 乘積與 $A^k$、$A(rx)$、EGF $A^k$、$(1+x)^n$）；修 EGF 定義 $x_i \to x^i$、$xA(x) \Rightarrow na_{n-1}$（原寫 $na_n$ 是錯的）；加 $\ln(1\pm x)$ 展開、$-\ln(1-x)$ 的 $k$ 階導數、$(\ln A)' = A'/A$、$(-\ln(1-x))^k/k!$ 是第一類 Stirling 的 EGF。
+- **Tips for Generating Functions**：加單位根濾波 $\sum_{m \mid n} a_nx^n = \frac1m\sum_j A(\omega^jx)$（取代 $A(rx)$ 的用途）。
+- **Tips for Generating Functions**：單位根濾波註明 mod $p$ 需要 $m \mid p - 1$（998244353 下 $m = 3$ 不行）。
+- **理論文字行距** 9.5pt → 10.5pt（字仍是 8pt；`codebook.tex` 的 `\footnotesize` 改成 `\fontsize{8}{10.5}`，程式碼列表自己設 `\footnotesize` 不受影響）。成本約 0.63 欄，第 25 頁用到 0.65/3 欄。比較過 `\small`（9pt，1.26 欄且 5 行溢出）。
+- **Treap**：merge 的 `rand()` 換成 `mt19937`（Windows 的 `RAND_MAX` = 32767，子樹超過 32768 個節點時機率偏掉，樹會退化）。保留依大小隨機的 merge（不存 priority），複製節點（可持久化）時仍然平衡，加一行註解說明。LC AC 0.766s。
+- **Adaptive Simpson**：`make_simpson`（4 行）換成 deduction guide（2 行），用 `Simpson S{f};` 建構；guide 是給 C++17 用的（C++20 不需要）。
+- **EBCC / SCC / VBCC**：出棧的 `while (1)` 五行改成兩行 `for (int x = -1; x != u; st.pop_back())`。
+- **Aho-Corasick**：fail link 直接取 `to[fail[v]][i]`，不再往上跳 `while`（少 2 行，LC 0.369 → 0.266s）。
+- **Treap**：`up()` 寫成一行。
+- **LCP Array**：`len = 0; continue;` 寫成一行。
+- **Miller Rabin**：用 `__builtin_ctzll` 取 $n-1$ 的 2 的次方，取代 `(n-1) & (1-n)` 的寫法。
+- **PalTree**：建構子改呼叫 `clear()`、拿掉多餘的 `inline`、`count()` 改用下標迴圈（少 4 行）；`St` 加註解說明 0、1 號節點是根（len 0、-1）。
+- **NumberofMaximalClique**：pivot 改用 Tomita（在 `some ∪ none` 中選 `some` 鄰居最多的點），最壞 $O(3^{n/3})$；稠密隨機圖 n=80, p=0.9 從 10.5s 變 0.91s。拿掉 `cnt > 1000` 的剪枝（POJ 2989 專用，計數會被截斷）。加註解：時間與答案成正比（約 7e7 個/秒），Moon–Moser n=48 約 0.6s。
+- **Miller Rabin**：拿掉 `prime()` 包裝（還原上面三筆）；Pollard Rho 照舊需要自己寫 `prime()`，測試的 driver 恢復自帶的版本。
+- **Miller Rabin**：加一行註解：回傳 0 代表 n 一定是合數；n 是質數 ⇔ 表中每個 base a 都通過，且 n ≥ 2（`Miller_Rabin(a, 1)` 會回傳 1）。
+- **Polar Angle Sort** 放回書中（HPI、HPI Alternative Form、rotatingSweepLine 要用 `cmp`）；`is_neg` 改寫成 `sign(k.Y) ? sign(k.Y) < 0 : sign(k.X) < 0` 才塞得進 61 欄。
+- **Convexhull3D**：`n <= 2` 改 `n <= 3`（n = 3 時 `P[3]` 越界）；註解改成「需要 4 點不共面，否則 UB」（原本寫 WA，實際是 `*end()`）。
+- **Black Magic**：`__float128_t` 不存在，改 `__float128`。
+- **Pragma**：最後一行補 `;`，加註解「in main: flush denormals to 0」與「arch=skylake 在舊 CPU 會 RE」。
+- **fac_no_p**：不再需要 `mpow`：`prod[pk]` ≡ ±1 (mod pk)，所以它的 n/pk 次方只看奇偶，改成 `if (n / pk % 2) rt = rt * prod[pk] % pk;`。
+- **NTT、Vizing**：空迴圈 `for (...);` 改成 `for (...) {}`（跟 Delaunay 一致）；Vizing 的換行迴圈併成一行。
+- **Linear Equations**：`solve()` 開頭清 `fixed[]`、`sol[]`、`basis`；原本同一個物件解第二個系統時 basis 與自由變數的 sol 會殘留舊值（已用兩次 solve 的例子確認）。
+- **Minimum Arborescence**：`/* TODO` 改 `/* needs:`；無解回傳處註明 n = 1 也回傳 `{}`。
+- **QuadraticResidue**：`rand()` 改 `mt19937 rng(random_device{}())`（Windows `RAND_MAX` = 32767）。
+- **Minimum Clique Cover**：不再呼叫 `fwt`（書上沒寫這個相依），改成自己寫兩行的子集和（OR 正變換）。對拍也拿掉自備的 `fwt`。
+- **Fast Walsh Transform**：`subset_convolution` 原本整個在 `int` 上做、沒有取模，值一大就溢位（luogu P6097 要 mod 1e9+9）。`fwt` 改用 `add`/`mul`（跟 NTT 同一套），逆變換傳 `MOD - 1`；迴圈改用半長 `L`；函式行註明 OR only。對拍改成 mod 1e9+9、值到 MOD − 1，另加 L = 18 抽查。
+- **Fast Walsh Transform**：`fwt(a, n, op)` 改成 KACTL 式：OR/AND/XOR 三行 butterfly 都寫出來、留一行，`inv` 直接當參數（XOR 逆變換另乘 1/n）；拿掉原本要自己翻譯的公式表頭。新增 **Tips for FWT**（`7_Polynomial/FWT_tips.tex`）：三種變換的封閉式與逆變換。
+- **stress/run.sh**：測試旁邊若有 `<name>.pre.sh`，編譯前先跑它在 `build/` 產生模板的變體（FWT 用來產生三份各留一行的版本）。
+- **SIMD、Static Top Tree**（becaido 的修改）：超過 61 欄的 10 行改寫或換行，只動排版不動邏輯；SIMD 缺結尾換行補上。SIMD 對拍跟上改名（`count_less` → `cnt_lt`）並定義速查表用的 `N`（原本編譯失敗）。
+- **Black Magic**：`join` 後的註解跟著 push 改成 `h1 = {1, 2}`。
+- **SIMD**：改回 becaido 原本的註解文字（先前為了 61 欄縮寫過），只把超寬的 5 行換行。
+- **Vizing**：註解說明 becaido 新增的 `bip`：`bip=1: bipartite, Delta colors suffice`；對拍加二分圖情形。
+- **Static Top Tree**：新對拍 `StaticTopTree_queries.cpp` 測 `query_subtree`、`query_reroot`（非交換 DP vs 暴力），並用 6 個植入錯誤確認測得出來。
+- **SIMD**：對拍檢查速查表上每個 intrinsic 的語意，不只是能編譯；確認 prefix max 技巧只在值 ≥ 0 時對（左移補 0）。
+- **Minimum Arborescence**：註解改成「有解 iff `size() == n - 1`」（n = 1 的 `{}` 也符合），取代原本含糊的寫法；新增本地對拍（含無解與 n = 1）。
+- **fac_no_p**：複雜度註解跟著拿掉 `mpow` 改成 `O(p^k + log_p n)`。
+- **Segment Tree Beats**：新增純文字筆記（節點要維護什麼、chmin 三種情況、合併、tag 順序、複雜度），程式碼不放進書。
+- **Centroid Decomposition**：移出書（comment out）。

@@ -29,6 +29,4 @@ struct Simpson {
   }
 };
 template <typename Func>
-Simpson<Func> make_simpson(Func f) {
-  return {f};
-}
+Simpson(Func) -> Simpson<Func>; // C++17

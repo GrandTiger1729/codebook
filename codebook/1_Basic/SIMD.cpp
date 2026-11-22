@@ -28,6 +28,7 @@ alignas(32) int a[N]; __m256i *p = (__m256i*)a;
 //       blendv_epi8(a,b,m)=m?b:a, movemask_epi8/ps(8msb)
 // Cast: castsi256_ps, cvtepi32_epi64(__m128i->256i)
 // Lane (AVX2 splits 2x128b!): shuffle_epi32(a,imm8)
-//       slli/srli_si256(a,kB), alignr_epi8(a,b,kB):[b,a]
+//       slli/srli_si256(a,bytes),
+//       alignr_epi8(a,b,bytes):[b,a]
 // Xlane: permutevar8x32_epi32, i32gather_epi32(base,idx,4)
 // 128b prefix op(add/max): a=op(a,slli_si128(a,4)), then 8

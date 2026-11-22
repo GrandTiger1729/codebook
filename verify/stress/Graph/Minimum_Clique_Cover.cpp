@@ -1,13 +1,6 @@
 #include "prelude.h"
 #include "stress.h"
 const int N = 14;
-// fwt: the OR transform from 7_Polynomial/Fast_Walsh_Transform.cpp, typed as a contestant would
-void fwt(int *a, int n, int op) { //or
-  for (int L = 2; L <= n; L <<= 1)
-    for (int i = 0; i < n; i += L)
-      FOR (j, i, j + (L >> 1) - 1)
-        a[j + (L >> 1)] += a[j] * op;
-}
 #include "2_Graph/Minimum_Clique_Cover.cpp"
 
 Clique_Cover cc;

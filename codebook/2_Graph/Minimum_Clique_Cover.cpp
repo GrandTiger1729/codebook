@@ -18,7 +18,8 @@ struct Clique_Cover { // 0-base, O(n2^n)
       co[i] = co[i ^ t] & co[t];
     }
     FOR (i, 0, (1 << n) - 1) co[i] = (co[i] & i) == i;
-    fwt(co, 1 << n, 1);
+    FOR (b, 0, n - 1) FOR (i, 0, (1 << n) - 1)
+      if (i >> b & 1) co[i] += co[i ^ 1 << b];
     FOR (ans, 1, n - 1) {
       unsigned sum = 0; // probabilistic
       FOR (i, 0, (1 << n) - 1) sum += (dp[i] *= co[i]);

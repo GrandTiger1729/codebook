@@ -366,3 +366,5 @@
 - PDF 25 頁、最後一頁全滿；分組標籤原本 8 個會變 26 頁，Estimation 併入 Combinatorics 不另標。
 - **hash.sh**：拿掉 `echo` 說明行；標題 Hash.sh 改成 Typo Check Hash。
 - **typo_check.sh**：`1_Basic/hash.sh` 改名 `typo_check.sh`；刪掉沒用到的舊副本 `9_Else/hash.sh`。
+- **Python**（`misc.py`）：加 `sys.stdin.readline`、`setrecursionlimit`、`set_int_max_str_digits(0)`（3.11+ 超過 4300 位的 int 轉字串會錯）、`pow(a, -1, m)`/`isqrt`/`comb`（3.8+）、Decimal 一般精度的 sqrt；註明 `MAX_PREC` 只能做精確的 `+ - *`，除法和 sqrt 會 `MemoryError`（已實測）。
+- **Matroid Intersection**：演算法說明文字移出書（comment out，檔案保留），程式碼已涵蓋；之後換成擬陣定義與常見模型（待寫）。

@@ -119,14 +119,6 @@
 \inputcode{Nim Product}{6_Math/NimProduct.cpp} % test by Lib-Checker Nim Product (64 bit), local brute force (Turning Corners SG, field axioms)
 \subsection{Primes}
 \lstinputlisting{6_Math/Primes.cpp}
-\subsection{Theorem}
-\input{6_Math/Theorem.tex}
-\subsection{Euclidean Algorithms}
-\input{6_Math/Euclidean.tex}
-\subsection{Estimation}
-\input{6_Math/Estimation.tex}
-\subsection{General Purpose Numbers}
-\input{6_Math/numbers.tex}
 
 \section{Polynomial}
 \inputcode{Fast Fourier Transform}{7_Polynomial/Fast_Fourier_Transform.cpp} % test by Lib-Checker Convolution mod 1e9+7 (through FFT Mod)
@@ -135,16 +127,10 @@
 \subsection{NTT Primes}
 \input{7_Polynomial/NTTprime.tex}
 \inputcode{Fast Walsh Transform}{7_Polynomial/Fast_Walsh_Transform.cpp} % test by luogu P6097, local brute force (3000 subset convolutions mod 1e9+9)
-\subsection{Tips for FWT}
-\input{7_Polynomial/FWT_tips.tex}
 \inputcode{Polynomial Operation}{7_Polynomial/Polynomial_Operation.cpp} % from std_abs, shortened; needs NTT, QuadraticResidue, Pow(int, ll) for PolyPow, and fac[]/ifac[] for TaylorShift/SamplingShift; test by Lib-Checker Inv/Exp/Log/Pow/Sqrt of FPS, Polynomial Taylor Shift, Shift of Sampling Points, Compositional Inverse of FPS (+ Large)
 \inputcode{Linear Recursion}{7_Polynomial/FastLinearRecursion.cpp} % Bostan-Mori; c is 0-based, same as BerlekampMassey; test by Lib-Checker Kth Term of Linearly Recurrent Sequence
 % \inputcode{Value Polynomial}{7_Polynomial/Value_Poly.cpp}
 \inputcode{Lagrange Interpolation}{7_Polynomial/Lagrange_Interpolation.cpp} % f(0..d) -> f(x) in O(d); test by CF 622F, local brute force (vs Horner, sum of powers)
-\subsection{Newton's Method}
-\input{7_Polynomial/Newton.tex}
-\subsection{Tips for Generating Functions}
-\input{7_Polynomial/Generating_function.tex}
 
 \section{Geometry}
 \inputcode{Default Code}{8_Geometry/Default_code.cpp}
@@ -205,3 +191,27 @@
 %\inputcode{N Queens Problem}{9_Else/NQueens.cpp}
 \subsection{Python}
 \lstinputlisting[language=Python]{9_Else/misc.py}
+
+\section{Theorems}
+% group labels are plain bold lines, not subsections: they stay out of the TOC
+\newcommand{\thmgroup}[1]{\par\noindent\textbf{#1}\par}
+\thmgroup{Graph}
+\input{10_Theorem/Graph.tex}
+\thmgroup{Combinatorics}
+\input{10_Theorem/Combinatorics.tex}
+\input{10_Theorem/numbers.tex}
+\input{10_Theorem/Estimation.tex}
+\thmgroup{Number Theory}
+\input{10_Theorem/NumberTheory.tex}
+\noindent Euclidean algorithm for floor sums:
+\input{10_Theorem/Euclidean.tex}
+\thmgroup{Game Theory}
+\input{10_Theorem/Game.tex}
+\thmgroup{String}
+\input{10_Theorem/String.tex}
+\thmgroup{Polynomial}
+\input{10_Theorem/Generating_function.tex}
+\input{10_Theorem/Newton.tex}
+\input{10_Theorem/FWT_tips.tex}
+\thmgroup{Geometry and Calculus}
+\input{10_Theorem/Geometry.tex}

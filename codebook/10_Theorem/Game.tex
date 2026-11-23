@@ -1,0 +1,22 @@
+\begin{itemize}
+\item Nim variants (the player to move loses iff \ldots)
+\begin{itemize}
+  \item Staircase Nim: coins on steps $1, \ldots, k$, a move moves any number of coins from step $i$ to step $i - 1$ (step $0$ is out of the game): Nim on the odd steps.
+  \item Moore's Nim$_k$ (take from up to $k$ piles at once): for every bit, the number of piles having that bit is divisible by $k + 1$.
+  \item Wythoff (take from one pile, or the same amount from both): $\{a, b\} = \{\lfloor k\varphi \rfloor, \lfloor k\varphi \rfloor + k\}$ for some $k \ge 0$, $\varphi = \frac{1+\sqrt5}{2}$.
+\end{itemize}
+
+\item Misère games (whoever makes the last move loses)
+\begin{itemize}
+  \item Misère Nim: the first player wins iff (some pile $> 1$ and $\bigoplus a_i \ne 0$) or (all piles $\le 1$ and $\bigoplus a_i = 0$).
+  \item SJ theorem: for a sum of games in which every position with $SG = 0$ is terminal, the first player wins iff ($\bigoplus SG_i \ne 0$ and some $SG_i > 1$) or ($\bigoplus SG_i = 0$ and every $SG_i \le 1$).
+\end{itemize}
+
+\item Undirected vertex geography
+
+A token starts on $v$; players alternately move it to an unvisited neighbour, and whoever cannot move loses. The first player wins iff $v$ is in every maximum matching, i.e.\ $\nu(G - v) < \nu(G)$; the winning move follows an edge of a maximum matching of $G$.
+
+\item Green Hackenbush (cut an edge; whatever is no longer connected to the ground disappears)
+
+Colon principle: for a tree hanging from the ground, $SG(v) = \bigoplus_{c \text{ child of } v} (SG(c) + 1)$.
+\end{itemize}

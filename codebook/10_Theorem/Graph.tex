@@ -1,0 +1,79 @@
+\begin{itemize}
+\item Kirchhoff's Theorem
+
+Let $L$ be the $n \times n$ Laplacian matrix of $G$, where $L_{ii} = d(i)$ (in-degree for directed case), $L_{ij} = -c$ where $c$ is the number of edges $(i, j)$ in $G$.
+\begin{itemize}
+  \item The number of undirected spanning trees in $G$ is $\lvert \det(\tilde{L}_{11}) \rvert$.
+  \item The number of directed spanning trees rooted at $r$ in $G$ is $\lvert \det(\tilde{L}_{rr}) \rvert$.
+\end{itemize}
+
+\item BEST Theorem
+
+Let $G$ be a directed Eulerian graph with no isolated vertices, $d(v)$ = in-degree, and $t_w(G)$ the number of directed spanning trees rooted at $w$ (Kirchhoff; the same for every $w$).
+\begin{itemize}
+  \item The number of Eulerian circuits is $t_w(G) \prod_v (d(v) - 1)!$.
+  \item Circuits are counted up to rotation; multiply by $d(s)$ for those starting at $s$.
+\end{itemize}
+
+\item Tutte's Matrix
+
+Let $D$ be an $n \times n$ matrix with $d_{ij} = x_{ij}$ ($x_{ij}$ random in $\mathbb{F}_p$) if $i < j$ and $(i, j) \in E$, $d_{ij} = -d_{ji}$ if $i > j$, and $0$ otherwise. $\frac{rank(D)}{2}$ is the maximum matching on $G$ (error $\le n/p$, only underestimates).
+
+\item Tutte–Berge Formula
+
+Maximum matching $= \frac 1 2 \min_{U \subseteq V} \big(|V| + |U| - \mathrm{odd}(G - U)\big)$, where $\mathrm{odd}$ counts the components with an odd number of vertices.
+
+\item Lindström–Gessel–Viennot Lemma
+
+In a DAG with sources $a_1, \ldots, a_n$ and sinks $b_1, \ldots, b_n$, let $e(a, b)$ be the number of paths $a \to b$ (or the sum of their weights) and $M_{ij} = e(a_i, b_j)$. Then $\det M = \sum_{\sigma} \operatorname{sgn}(\sigma) \cdot \#\{\text{vertex-disjoint paths } a_i \to b_{\sigma(i)}\}$. If only $\sigma = \mathrm{id}$ can be disjoint (e.g. a grid with sources and sinks in the same order), $\det M$ counts the non-intersecting path systems.
+
+\item Labeled graph counts
+
+\begin{itemize}
+  \item Connected graphs: EGF $C(x) = \ln G(x)$, $G(x) = \sum_n 2^{\binom n 2} \frac{x^n}{n!}$
+  \item DAGs: $a_n = \sum_{k=1}^{n} (-1)^{k+1} \binom nk 2^{k(n-k)} a_{n-k}$, $a_0 = 1$.
+\end{itemize}
+
+\item Cayley's Formula
+
+\begin{itemize}
+  \item Given a degree sequence $d_1, d_2, \ldots, d_n$ of \textit{labeled} vertices, there are $\frac{(n - 2)!}{(d_1 - 1)!(d_2 - 1)!\cdots(d_n - 1)!}$ spanning trees.
+  \item Let $T_{n, k}$ be the number of \textit{labeled} forests on $n$ vertices with $k$ components, such that vertices $1, 2, \ldots, k$ are in different components. Then $T_{n, k} = kn^{n - k - 1}$.
+\end{itemize}
+
+\item Degree sequences (all entries nonnegative integers; each inequality for every $1 \le k \le n$)
+\begin{itemize}
+  \item Erdős–Gallai: $d_1 \ge \cdots \ge d_n$ is the degree sequence of a simple graph iff $\sum_i d_i$ is even and $\displaystyle\sum_{i=1}^k d_i \le k(k-1) + \displaystyle\sum_{i=k+1}^n \min(d_i, k)$.
+  \item Gale–Ryser: $a_1 \ge \cdots \ge a_n$ and $b_1, \ldots, b_m$ are the degrees of the two sides of a simple bipartite graph ($0/1$ matrix with row sums $a$, column sums $b$) iff $\sum_i a_i = \sum_j b_j$ and $\displaystyle\sum_{i=1}^k a_i \le \displaystyle\sum_{j=1}^m \min(b_j, k)$.
+  \item Fulkerson–Chen–Anstee: pairs $(a_i, b_i)$ with $a_1 \ge \cdots \ge a_n$ are the (out, in)-degrees of a simple directed graph iff $\sum_i a_i = \sum_i b_i$ and $\displaystyle\sum_{i=1}^k a_i \le \displaystyle\sum_{i=1}^k \min(b_i, k-1) + \displaystyle\sum_{i=k+1}^n \min(b_i, k)$.
+  \item Landau: $s_1 \le \cdots \le s_n$ are the out-degrees (scores) of a tournament iff $\displaystyle\sum_{i=1}^k s_i \ge \binom{k}{2}$, with equality at $k = n$.
+\end{itemize}
+
+\item Dilworth / Mirsky
+
+\begin{itemize}
+  \item Minimum number of chains covering a poset $=$ maximum antichain; minimum number of antichains $=$ longest chain.
+  \item Minimum vertex-disjoint path cover of a DAG $= n\, -$ maximum matching in the bipartite graph with an edge $u_{out} - v_{in}$ for each edge $u \to v$.
+  \item If paths may share vertices, do the same on the transitive closure (add $u \to v$ whenever $v$ is reachable from $u$).
+\end{itemize}
+
+\item Graph facts
+
+\begin{itemize}
+  \item Hall: a bipartite graph has a matching saturating $L$ iff $|N(S)| \ge |S|$ for all $S \subseteq L$; maximum matching $= |L| - \max_{S \subseteq L} (|S| - |N(S)|)$.
+  \item Gallai: maximum independent set $+$ minimum vertex cover $= n$; with no isolated vertices, maximum matching $+$ minimum edge cover $= n$.
+  \item König: in a bipartite graph, maximum matching $=$ minimum vertex cover, and the edge chromatic number is $\Delta$.
+  \item Dirac / Ore ($n \ge 3$): if $\deg(u) + \deg(v) \ge n$ for all non-adjacent $u, v$ (e.g.\ every $\deg \ge n/2$), a Hamiltonian cycle exists. Palmer, $O(n^2)$: put all vertices on a circle in any order; repeatedly find a non-adjacent $v_i, v_{i+1}$ on it, find $j$ with $v_i v_j, v_{i+1} v_{j+1} \in E$ and reverse $v_{i+1}, \ldots, v_j$, until none remain.
+  \item Tournaments: every tournament has a Hamiltonian path (insert vertices one by one, binary search the position); a strongly connected one with $n \ge 3$ has a Hamiltonian cycle; a vertex of maximum out-degree reaches every vertex within $2$ steps.
+\end{itemize}
+
+\item Colouring
+\begin{itemize}
+  \item $\chi(G) \le k$ iff $\sum_{S \subseteq V} (-1)^{|V \setminus S|}\, I(S)^k > 0$, where $I(S)$ is the number of independent sets inside $S$ (with $\emptyset$); $I$ by subset DP, $O(2^n n)$ for all $k$.
+  \item Chordal graphs (every cycle of length $\ge 4$ has a chord): maximum cardinality search (repeatedly visit the unvisited vertex with the most visited neighbours) gives a reversed perfect elimination order; greedy colouring in visiting order is optimal, and $\chi = \omega$ = the largest number of visited neighbours $+ 1$.
+\end{itemize}
+
+\item Random walks
+
+Expected steps to reach a target set: solve $E_v = 1 + \sum_u P_{vu} E_u$ ($E = 0$ on targets) by Gaussian elimination. On a tree, from $v$ to its parent: $2\,\mathrm{size}(v) - 1$. In a connected graph with $m$ edges, the commute time $u \to v \to u$ is $2m R_{uv}$ ($R$: effective resistance, unit resistors).
+\end{itemize}

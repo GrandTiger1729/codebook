@@ -1,0 +1,5 @@
+\begin{itemize}
+\item Periods ($s$ of length $n$; $p$ is a period iff $s_i = s_{i+p}$ for all $i$, iff $s$ has a border of length $n - p$): the borders (periods) of $s$ form $O(\log n)$ arithmetic progressions.
+\item The palindromic suffixes of a string form $O(\log n)$ arithmetic progressions (series links), giving $O(n \log n)$ DP over palindromic factorizations.
+\item The number of accepted words of length $L$ of a DFA with $k$ states is a linear recurrence of order $\le k$: DP the first $2k$ terms, then Berlekamp–Massey. Patterns to avoid: run the DP on the Aho–Corasick automaton without the terminal states.
+\end{itemize}

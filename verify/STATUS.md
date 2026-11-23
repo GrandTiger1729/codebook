@@ -360,7 +360,7 @@
 - **Centroid Decomposition**：移出書（comment out）。
 
 ## 2026-11-24
-- **新章 Theorems（第 10 章，放最後）**：所有純敘述的理論集中在一處，用粗體分組標籤（Graph、Combinatorics、Number Theory、Game Theory、String、Polynomial、Geometry and Calculus），不進目錄。檔案搬到 `10_Theorem/`：`6_Math/Theorem.tex` 拆成 `Graph`、`Combinatorics`、`NumberTheory`、`Geometry`（內容不變；Misère Nim 改放 Game）；`numbers.tex`、`Estimation.tex`、`Euclidean.tex`、`Generating_function.tex`、`FWT_tips.tex`、`Newton.tex` 原樣搬過來。Flow Models、Simplex Construction、Mo's、Matroid、Segment Tree Beats 筆記留在程式碼旁。
+- **新章 Theorems（第 10 章，放最後）**：所有純敘述的理論集中在一處，用粗體分組標籤（Graph、Combinatorics、Number Theory、Game Theory、String、Polynomial、Geometry and Calculus），不進目錄。檔案搬到 `10_Theorem/`：`6_Math/Theorem.tex` 拆成 `Graph`、`Combinatorics`、`NumberTheory`、`Geometry`（內容不變；Misère Nim 改放 Game）；`numbers.tex`、`Estimation.tex`、`Generating_function.tex`、`FWT_tips.tex`、`Newton.tex` 原樣搬過來。Euclidean Algorithms（floor sum 遞迴）、Flow Models、Simplex Construction、Mo's、Matroid、Segment Tree Beats 筆記留在程式碼旁。
 - **新增敘述**（math-drafts 勾選的）：König、Tournaments、Colouring（$\chi \le k$ 的排容、弦圖 MCS）、Random walks；Game：Staircase、Moore's Nim$_k$、Wythoff、SJ 定理、Undirected vertex geography、Colon principle；String：borders、回文後綴的等差數列、DFA 接受字數是線性遞迴；Polynomial：power sums、Lagrange inversion、falling factorials、linear recurrences。
 - **Newton's Method**：拿掉 inv/ln/exp/sqrt 表（Polynomial Operation 已實作），只留一般迭代式並加 $P = 1 + xP^2$ 例子。
 - PDF 25 頁、最後一頁全滿；分組標籤原本 8 個會變 26 頁，Estimation 併入 Combinatorics 不另標。

@@ -194,7 +194,7 @@
 
 ## 總計
 
-- 收錄模版：**114**（上面各章主表中在書裡的列；不含 `hash.sh`、`stress.sh`、`Primes`、`misc.py`）
+- 收錄模版：**114**（上面各章主表中在書裡的列；不含 `typo_check.sh`、`stress.sh`、`Primes`、`misc.py`）
 - 有 Library Checker AC 的：**54**
 - 有本地對拍的：**88**（主表「本地對拍」欄有內容的列；`verify/stress/` 共 92 個測試）
 - 兩種自動測試都沒有的：**4**（black_magic、Pragma、sanitize_fixer、simulated_annealing；都是片段或工具檔）
@@ -365,3 +365,4 @@
 - **Newton's Method**：拿掉 inv/ln/exp/sqrt 表（Polynomial Operation 已實作），只留一般迭代式並加 $P = 1 + xP^2$ 例子。
 - PDF 25 頁、最後一頁全滿；分組標籤原本 8 個會變 26 頁，Estimation 併入 Combinatorics 不另標。
 - **hash.sh**：拿掉 `echo` 說明行；標題 Hash.sh 改成 Typo Check Hash。
+- **typo_check.sh**：`1_Basic/hash.sh` 改名 `typo_check.sh`；刪掉沒用到的舊副本 `9_Else/hash.sh`。

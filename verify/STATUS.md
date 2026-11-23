@@ -364,3 +364,4 @@
 - **新增敘述**（math-drafts 勾選的）：König、Tournaments、Colouring（$\chi \le k$ 的排容、弦圖 MCS）、Random walks；Game：Staircase、Moore's Nim$_k$、Wythoff、SJ 定理、Undirected vertex geography、Colon principle；String：borders、回文後綴的等差數列、DFA 接受字數是線性遞迴；Polynomial：power sums、Lagrange inversion、falling factorials、linear recurrences。
 - **Newton's Method**：拿掉 inv/ln/exp/sqrt 表（Polynomial Operation 已實作），只留一般迭代式並加 $P = 1 + xP^2$ 例子。
 - PDF 25 頁、最後一頁全滿；分組標籤原本 8 個會變 26 頁，Estimation 併入 Combinatorics 不另標。
+- **hash.sh**：拿掉 `echo` 說明行；標題 Hash.sh 改成 Typo Check Hash。

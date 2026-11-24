@@ -1,58 +1,36 @@
-const int N = 1021;
-struct CircleCover {
-  int C;
-  Cir c[N];
-  bool g[N][N], overlap[N][N];
-  // Area[i] : area covered by at least i circles
-  double Area[N];
-  void init(int _C) { C = _C; }
-  struct Teve {
-    pdd p; double ang; int add;
-    bool operator<(const Teve &a) const
-    { return ang < a.ang; }
-  } eve[N * 2];
-  // strict: x = 0, otherwise x = -1
-  bool disjuct(Cir &a, Cir &b, int x)
-  { return sign(abs(a.O - b.O) - a.R - b.R) > x; }
-  bool contain(Cir &a, Cir &b, int x)
-  { return sign(a.R - b.R - abs(a.O - b.O)) > x; }
-  bool contain(int i, int j) {
-    /* c[j] is non-strictly in c[i]. */
+// a[k]: area covered by at least k circles, k = 1..n
+vector<double> circleCover(vector<Cir> c) {
+  int n = c.size();
+  vector<double> a(n + 2);
+  auto in = [&](int i, int j) { // c[j] in c[i], tie: index
     int s = sign(c[i].R - c[j].R);
     return (s > 0 || (s == 0 && i < j)) &&
-      contain(c[i], c[j], -1);
-  }
-  void solve() {
-    fill_n(Area, C + 2, 0);
-    FOR (i, 0, C - 1)
-      FOR (j, 0, C - 1) overlap[i][j] = contain(i, j);
-    FOR (i, 0, C - 1) FOR (j, 0, C - 1)
-      g[i][j] = !(overlap[i][j] || overlap[j][i] ||
-          disjuct(c[i], c[j], -1));
-    FOR (i, 0, C - 1) {
-      int E = 0, cnt = 1;
-      pdd o = c[i].O; double R = c[i].R;
-      FOR (j, 0, C - 1) cnt += j != i && overlap[j][i];
-      FOR (j, 0, C - 1) if (i != j && g[i][j]) {
-        pdd aa, bb;
-        CCinter(c[i], c[j], aa, bb);
-        double A = atan2(aa.Y - o.Y, aa.X - o.X);
-        double B = atan2(bb.Y - o.Y, bb.X - o.X);
-        eve[E++] = {bb, B, 1}, eve[E++] = {aa, A, -1};
-        if (B > A) ++cnt;
-      }
-      if (E == 0) Area[cnt] += acos(-1) * R * R;
-      else {
-        sort(eve, eve + E);
-        eve[E] = eve[0];
-        FOR (j, 0, E - 1) {
-          cnt += eve[j].add;
-          Area[cnt] += cross(eve[j].p, eve[j + 1].p) * .5;
-          double th = eve[j + 1].ang - eve[j].ang;
-          if (th < 0) th += 2 * acos(-1);
-          Area[cnt] += (th - sin(th)) * R * R * .5;
-        }
+      sign(c[i].R - c[j].R - abs(c[i].O - c[j].O)) >= 0;
+  };
+  FOR (i, 0, n - 1) {
+    pdd o = c[i].O; double R = c[i].R, PI = acos(-1);
+    int cnt = 1;
+    vector<tuple<double, pdd, int>> e;
+    FOR (j, 0, n - 1) if (j != i) {
+      if (in(j, i)) cnt++;
+      else if (!in(i, j) &&
+               sign(abs(o - c[j].O) - R - c[j].R) < 0) {
+        pdd p, q;
+        CCinter(c[i], c[j], p, q);
+        double A = atan2(p.Y - o.Y, p.X - o.X);
+        double B = atan2(q.Y - o.Y, q.X - o.X);
+        e.pb(B, q, 1), e.pb(A, p, -1), cnt += B > A;
       }
     }
+    if (e.empty()) { a[cnt] += PI * R * R; continue; }
+    sort(e.begin(), e.end()), e.pb(e[0]);
+    FOR (j, 0, (int)e.size() - 2) {
+      auto [s, p, d] = e[j];
+      auto [t, q, _] = e[j + 1];
+      double th = t - s + (t < s) * 2 * PI;
+      cnt += d;
+      a[cnt] += cross(p, q) / 2 + (th - sin(th)) * R * R / 2;
+    }
   }
-};
+  return a;
+}

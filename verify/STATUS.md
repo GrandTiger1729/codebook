@@ -142,7 +142,7 @@
 | `8_Geometry/PointSegDist.cpp` | — 無對應題 | 400 000 組 vs long double 投影 | ✅ | test by aizu oj CGL_2_D |
 | `8_Geometry/Heart.cpp` | `geo/minimum_enclosing_circle` **AC** 25 筆 · 0.033s/5s (1%) | 294 534 個三角形（外心/內心/重心/垂心性質） | ✅ | circenter test by Lib-Checker Minimum Enclosing Circle |
 | `8_Geometry/point_in_circle.cpp` | — 無對應題 | 686 947 組，exact `__int128` 參考，含 |coord| ≤ 1e9 與恰好共圓（p 須 CCW） | ✅ | — |
-| `8_Geometry/Convex_hull.cpp` | `geo/static_convex_hull` **AC** 25 筆 · 0.168s/5s (3%) | — | ✅ | test by Zerojudge b398, Lib-Checker Static Convex Hull |
+| `8_Geometry/Convex_hull.cpp`（不在書中） | `geo/static_convex_hull` **AC** 25 筆 · 0.168s/5s (3%) | — | ✅ | test by Zerojudge b398, Lib-Checker Static Convex Hull；2026-11-24 拿出書（版面），Minkowski Sum、minMaxEnclosingRectangle 仍呼叫 `hull()` |
 | `8_Geometry/FarthestPair.cpp` | `geo/furthest_pair` **AC** 46 筆 · 0.366s/5s (7%) | 29 975 個凸包（座標到 1e9、含共線）vs O(n²) | 需要外部 `pll` primitives | 2026-11-17 加入（旋轉卡尺）；注意 `hull()` 對「全部同一點」會回傳重複點，driver 先去重 |
 | `8_Geometry/PointInConvex.cpp` | — 無對應題 | 1 988 萬筆查詢（不可有共線頂點），含 |coord| ≤ 1e9、凸包到 95 786 點 | ✅ | test by CF 104114 B, CF 101242 J (World Finals' problem) |
 | `8_Geometry/PointInPolygon.cpp` | — 無對應題 | 131 萬筆查詢，隨機星形簡單多邊形（兩種方向），含 |coord| ≤ 1e9、n 到 1e5，vs exact 繞數與邊上判斷 | 需要外部 `pll` primitives | 2026-11-17 加入（射線法，回傳 1 / 0 / −1） |
@@ -160,9 +160,9 @@
 | `8_Geometry/Intersection_of_polygon_and_circle.cpp` | — 無對應題 | 99 364 組 vs kactl（**修 NaN**：改 atan2） | ✅ | test by HDU 2892 |
 | `8_Geometry/Intersection_of_line_and_circle.cpp` | — 無對應題 | 299 352 組 | ✅ | test by kactl stress-tests |
 | `8_Geometry/Tangent_line_of_two_circles.cpp` | — 無對應題 | 300 000 組 | ✅ | — |
-| `8_Geometry/CircleCover.cpp` | — 無對應題 | 1 500 組 vs 數值積分（修未定義 `pi`） | 需要外部 `CCinter` | test by TIOJ 1503 |
+| `8_Geometry/CircleCover.cpp` | — 無對應題 | 1 500 組 vs 數值積分（修未定義 `pi`） | 需要外部 `CCinter` | test by TIOJ 1503；2026-11-24 改寫成函式 `circleCover(vector<Cir>)` 回傳 `a[k]`（58 → 36 行） |
 | `8_Geometry/3Dpoint.cpp` | — 無對應題 | 200 000 組 | ✅ | test by HDU 3662 |
-| `8_Geometry/Convexhull3D.cpp` | — 無對應題 | 8 693 個凸包：|coord| ≤ 65 000 vs O(n⁴) 暴力，n ≤ 2000 驗結構（**修編譯錯誤**） | 需要外部 `Point`；double、eps 1e-8，|coord| ≤ 6.5e4 才保證精確（1e6 會錯） | test by HDU 3662, Ptz. Summer 2023 olmrgcsi And His Friends' Contest K |
+| `8_Geometry/Convexhull3D.cpp` | — 無對應題 | 8 693 個凸包：|coord| ≤ 65 000 vs O(n⁴) 暴力，n ≤ 2000 驗結構（**修編譯錯誤**） | 需要外部 `Point`；double、eps 1e-8，|coord| ≤ 6.5e4 才保證精確（1e6 會錯） | test by HDU 3662, Ptz. Summer 2023 olmrgcsi And His Friends' Contest K；2026-11-24 縮短（66 → 59 行，介面不變） |
 | `8_Geometry/DelaunayTriangulation_dq.cpp` | — 無對應題 | 5 012 組 exact 驗空圓性質，n 到 1e5、近共圓（需外部 `seg_strict_intersect`） | 需要外部 `N`；書中 double 前置只到 |coord| ≈ 3.3e7，整數前置到 1e9 | test by Zerojudge b370, TIOJ 1310 |
 | `8_Geometry/Triangulation_Vonoroi.cpp` | — 無對應題 | 1 902 組 / 239 202 個 cell vs 全部中垂線裁切，n 到 1e5 | 需要外部 `tool`；書中 double 前置只到 |coord| ≈ 3.3e7，整數前置到 1e9 | test by CF 104555 J, NPSC 2018 territory |
 | `8_Geometry/Minkowski_Sum.cpp` | — 無對應題 | 9 735 組 vs 所有和的凸包（hull 不可退化），含 101 組 |coord| ≤ 7.5e8、1e5 點 | 需要外部 `hull`；輸入 |coord| ≤ 759 250 124（內部 `hull(C)` 的 cross 會溢位） | test by Zerojudge b398 |
@@ -368,3 +368,9 @@
 - **typo_check.sh**：`1_Basic/hash.sh` 改名 `typo_check.sh`；刪掉沒用到的舊副本 `9_Else/hash.sh`。
 - **Python**（`misc.py`）：加 `sys.stdin.readline`、`setrecursionlimit`、`set_int_max_str_digits(0)`（3.11+ 超過 4300 位的 int 轉字串會錯）、`pow(a, -1, m)`/`isqrt`/`comb`（3.8+）、Decimal 一般精度的 sqrt；註明 `MAX_PREC` 只能做精確的 `+ - *`，除法和 sqrt 會 `MemoryError`（已實測）。
 - **Matroid Intersection**：演算法說明文字移出書（comment out，檔案保留），程式碼已涵蓋；之後換成擬陣定義與常見模型（待寫）。
+- **Matroid**：`9_Else/Matroid.tex` 搬到 `10_Theorem/Matroid.tex`（Theorems 新增 Matroid 標籤），內容改寫成給沒學過的人看：三條公理、常見的擬陣（顏色上限、森林、線性獨立、刪邊後仍連通）、Matroid Intersection 的 `build`/`ind` 介面與兩個用法。
+- **敘述修訂**（review-items.md 逐條確認）：Tournaments 拆三點（二分插入、Camion、king）；Landau 補「等號處即 SCC 切點」；Random walks 拿掉 commute time；Game 統一成「名稱（規則）⇒ 何時先手輸」；Periods、回文 series link 定義、DFA 的 DP 與 Aho–Corasick 避開 pattern 改寫；falling factorial 補定義；linear recurrences 拆兩點。
+- **新增 Probability bounds**（Combinatorics）：Chernoff、reverse Markov、Paley–Zygmund。
+- **Derivatives/Integrals**：拿掉 $\int \tan ax$、$\int x \sin ax$、erf、$\int x e^{ax}$。
+- **Python**：`set_int_max_str_digits` 加 `hasattr` 保護（舊版直譯器沒有）、Decimal context 補 `Emin=MIN_EMIN`、加 Fraction 精確運算範例。
+- **版面回到 25 頁**：CircleCover 改寫成函式（58 → 36 行，對拍 1 500 組通過）、Convexhull3D 縮短（66 → 59 行，介面不變，8 693 個凸包通過）、2D Convex hull 拿出書（10 行；Minkowski Sum、minMaxEnclosingRectangle 仍呼叫 `hull()`，比賽時要自己寫 Andrew）。

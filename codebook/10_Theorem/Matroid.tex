@@ -1,15 +1,15 @@
-Start from $S = \emptyset$. In each iteration, let
-%\vspace{-0.5em}
 \begin{itemize}
-    %\itemsep-0.5em
-  \item $Y_1 = \{x \not\in S \mid S \cup \{x\} \in I_1 \}$
-  \item $Y_2 = \{x \not\in S \mid S \cup \{x\} \in I_2 \}$
-\end{itemize}
-If there exists $x \in Y_1 \cap Y_2$, insert $x$ into $S$. Otherwise for each $x \in S, y \not\in S$, create edges
-%\vspace{-0.5em}
+\item What it is: a rule saying which subsets $S \subseteq E$ are allowed (``independent''), with
 \begin{itemize}
-    %\itemsep-0.5em
-  \item $x \to y$ if $S - \{x\} \cup \{y\} \in I_1$.
-  \item $y \to x$ if $S - \{x\} \cup \{y\} \in I_2$.
+  \item $\emptyset$ is allowed;
+  \item every subset of an allowed set is allowed;
+  \item if $A$, $B$ are allowed and $|A| < |B|$, some $x \in B \setminus A$ makes $A \cup \{x\}$ allowed.
 \end{itemize}
-Find a \textit{shortest} path (with BFS) starting from a vertex in $Y_1$ and ending at a vertex in $Y_2$ which doesn't pass through any other vertices in $Y_2$, and alternate the path. The size of $S$ will be incremented by 1 in each iteration. For the weighted case, assign weight $w(x)$ to vertex $x$ if $x \in S$ and $-w(x)$ if $x \not\in S$. Find the path with the minimum number of edges among all minimum length paths and alternate it.
+These are exactly the rules where greedy works: sort by weight, add an element if the set stays allowed.
+\item Rules that are matroids: at most $cap_c$ elements of each colour $c$ (\texttt{ColorMat}); chosen edges form a forest (\texttt{GraphMat}); chosen vectors are linearly independent (xor basis); the unchosen edges keep the graph connected.
+\item Matroid Intersection: given two such rules on the same $E$, it finds the largest $S$ allowed by both. Each rule is a struct with \texttt{build(S)} (called once per round) and \texttt{ind(x, y)} (is $S - x + y$ allowed? $x = -1$: $S + y$); xor basis and connectivity have no ready-made struct, write \texttt{ind} yourself. Typical uses:
+\begin{itemize}
+  \item spanning tree with at most $cap_c$ edges of colour $c$: forest $\cap$ colour caps; one exists iff the answer has $n - 1$ edges.
+  \item one vector from each group, all independent: xor basis $\cap$ colour caps (group $=$ colour, $cap = 1$).
+\end{itemize}
+\end{itemize}

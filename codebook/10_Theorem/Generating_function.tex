@@ -26,8 +26,13 @@ $A(x) = \sum_{i\ge 0} \frac{a_i}{i!}x^i$
 If $F(G(x)) = x$ with $F(0) = 0$, $F'(0) \ne 0$, then for $n \ge 1$: $[x^n]\, G(x)^k = \frac{k}{n} [x^{n-k}] \left(\frac{x}{F(x)}\right)^n$ and $[x^n]\, H(G(x)) = \frac 1 n [x^{n-1}]\, H'(x) \left(\frac{x}{F(x)}\right)^n$.
 \item Falling factorials
 
-$f(x) = \sum_k c_k x^{\underline k}$ iff $\sum_i f(i) \frac{x^i}{i!} = e^x \sum_k c_k x^k$; one convolution each way.
+$x^{\underline k} = x(x - 1) \cdots (x - k + 1)$.
+
+From $f(0), \ldots, f(n)$, the coefficients of $f(x) = \sum_k c_k x^{\underline k}$ can be found by one convolution: $\sum_k c_k x^k = e^{-x} \sum_i f(i) \frac{x^i}{i!}$. Useful because $\sum_{x=0}^{m-1} x^{\underline k} = \frac{m^{\underline{k+1}}}{k+1}$.
 \item Linear recurrences
 
-$a$ satisfies $a_n = \sum_{i=1}^{d} c_i a_{n-i}$ iff $\sum a_n x^n = \frac{P(x)}{Q(x)}$ with $Q = 1 - \sum c_i x^i$, $\deg P < d$. Termwise sums of two recurrences have order $\le d_1 + d_2$, termwise products $\le d_1 d_2$, prefix sums $d + 1$: so Berlekamp–Massey on enough terms finds them.
+\begin{itemize}
+  \item $a_n = \sum_{i=1}^{d} c_i a_{n-i}$ ($n \ge d$) iff $\sum a_n x^n = \frac{P(x)}{Q(x)}$ with $Q = 1 - \sum c_i x^i$, $\deg P < d$.
+  \item If $a$, $b$ have orders $d_a$, $d_b$: $a_n + b_n$ has order $\le d_a + d_b$, $a_n b_n$ order $\le d_a d_b$, $\sum_{i \le n} a_i$ order $\le d_a + 1$; Berlekamp–Massey on twice that many terms finds the recurrence.
+\end{itemize}
 \end{itemize}

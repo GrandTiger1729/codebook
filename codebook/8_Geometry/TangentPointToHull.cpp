@@ -1,4 +1,4 @@
-// C: hull(); p outside or on the hull
+// C: convex hull, CCW, no 3 collinear; p outside or on it
 pii get_tangent(vector<pll> &C, pll p) {
   int n = SZ(C);
   pll d = p * 3 - C[0] - C[1 % n] - C[2 % n];

@@ -1,4 +1,4 @@
-// a[k]: area covered by at least k circles, k = 1..n
+// a[k]: area covered by >= k circles, O(n^2 log n)
 vector<double> circleCover(vector<Cir> c) {
   int n = c.size();
   vector<double> a(n + 2);

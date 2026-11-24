@@ -375,3 +375,4 @@
 - **Python**：`set_int_max_str_digits` 加 `hasattr` 保護（舊版直譯器沒有）、Decimal context 補 `Emin=MIN_EMIN`、加 Fraction 精確運算範例。
 - **版面回到 25 頁**：CircleCover 改寫成函式（58 → 36 行，對拍 1 500 組通過）、Convexhull3D 縮短（66 → 59 行，介面不變，8 693 個凸包通過）、2D Convex hull 拿出書（10 行；Minkowski Sum、minMaxEnclosingRectangle 仍呼叫 `hull()`，比賽時要自己寫 Andrew）。
 - **hull() 需求寫在呼叫端**：Minkowski Sum、minMaxEnclosingRectangle、TangentPointToHull 註明輸入／輸出是「凸包、逆時針、無三點共線」，2D Convex hull 不在書中也看得懂要寫什麼。
+- **CircleCover**：註解補上複雜度 $O(n^2 \log n)$。

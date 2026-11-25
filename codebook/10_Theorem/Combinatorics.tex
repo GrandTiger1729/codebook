@@ -1,0 +1,39 @@
+\begin{itemize}
+\item Vandermonde's Identity $\binom{n+m}{k} = \sum_{i=0}^{k} \binom{n}{i}\binom{m}{k-i}$
+
+\item Cycle Lemma
+
+If integers $x_1, \ldots, x_N$ are all $\le 1$ and sum to $k > 0$, exactly $k$ of the $N$ cyclic shifts have every prefix sum $> 0$. Grouping all permutations of these numbers by rotation, exactly a $\frac{k}{N}$ fraction of them are good.
+\begin{itemize}
+  \item Ballot: A gets $a$ votes, B gets $b$ votes. Orders in which, at every moment, A has strictly more than $t$ times B's votes: $\frac{a - tb}{a + b}\binom{a + b}{a}$ (write A as $+1$, B as $-t$); at least $t$ times: $\frac{a + 1 - tb}{a + 1}\binom{a + b}{a}$ (count strict orders with $a + 1$ A votes, then drop the first vote, which is always A).
+  \item Rooted unlabeled trees (whose children have a left-to-right order): two trees are equal iff their roots have the same number of children and all of their $i$-th subtrees are equal (defined recursively). Given $N = \sum n_d$ nodes, $n_d$ of which have $d$ children, write $1 - (\#\text{children})$ for each node; the sequences whose prefix sums are all $\ge 1$ are exactly the post-order traversals. The number of distinct trees is $\frac{1}{N}\binom{N}{n_0, n_1, \ldots}$.
+\end{itemize}
+
+\item Burnside's Lemma
+
+Number of orbits $= \frac{1}{|G|} \sum_{g \in G} |X^g|$, $X^g$: elements fixed by $g$.
+\begin{itemize}
+  \item Necklaces ($n$ beads, $k$ colors, equal up to rotation): $N = \frac 1 n \sum_{d \mid n} \varphi(d)\, k^{n/d}$.
+  \item Bracelets (equal up to rotation and reflection): $\frac N 2 + \frac 1 2 k^{(n+1)/2}$ for odd $n$; $\frac N 2 + \frac 1 4 (k+1) k^{n/2}$ for even $n$.
+\end{itemize}
+
+\item Hook length formula
+
+The number of ways to fill a Young diagram $\lambda$ (left-aligned rows of non-increasing length, $n$ cells) with $1, \ldots, n$ such that rows and columns increase is $\frac{n!}{\prod_{c} h(c)}$, where $h(c)$ = cells right of $c$ + cells below $c$ + 1. For a $2 \times n$ rectangle this is the Catalan number $C_n$.
+
+\item Min-Max Inclusion Exclusion Principle
+
+(Also holds for expected values, i.e.\ $E[\min]$.)
+\[
+\operatorname*{kthmax}_{i \in S} x_i = \sum_{\emptyset \ne T \subseteq S} (-1)^{|T|-k} \binom{|T|-1}{k-1} \min_{j \in T} x_j
+\]
+\[
+\operatorname*{kthmin}_{i \in S} x_i = \sum_{\emptyset \ne T \subseteq S} (-1)^{|T|-k} \binom{|T|-1}{k-1} \max_{j \in T} x_j
+\]
+\item Probability bounds
+\begin{itemize}
+  \item Chernoff: $X$ a sum of independent variables in $[0, 1]$, $\mu = E[X]$: $P(X \ge (1 + \delta)\mu) \le e^{-\delta^2 \mu / (2 + \delta)}$ for $\delta > 0$, $P(X \le (1 - \delta)\mu) \le e^{-\delta^2 \mu / 2}$ for $0 < \delta < 1$.
+  \item Reverse Markov: if $X \le U$ always, then $P(X > a) \ge \frac{E[X] - a}{U - a}$ for $a < U$.
+  \item Paley--Zygmund: if $X \ge 0$ and $0 \le \theta \le 1$, then $P(X > \theta E[X]) \ge (1 - \theta)^2 \frac{E[X]^2}{E[X^2]}$.
+\end{itemize}
+\end{itemize}

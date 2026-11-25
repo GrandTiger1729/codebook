@@ -1,4 +1,5 @@
 vector<pll> Minkowski(vector<pll> A, vector<pll> B) {
+  // hull(p): p := its convex hull, CCW, no 3 collinear
   hull(A), hull(B); // neither hull may be degenerate
   int n = SZ(A), m = SZ(B);
   vector<pll> C(1, A[0] + B[0]), s1, s2;

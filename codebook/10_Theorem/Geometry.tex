@@ -1,0 +1,61 @@
+\begin{itemize}
+\item Pick's theorem
+
+Simple polygon with lattice vertices: $A = I + \frac{B}{2} - 1$ ($I$: interior lattice points, $B$: boundary lattice points). $B = \sum_{\text{edges}} \gcd(|\Delta x|, |\Delta y|)$. Region with $h$ polygonal holes (disjoint from each other and from the outer boundary): $A = I + \frac{B}{2} + h - 1$.
+
+\item Spherical cap (a portion of a sphere cut off by a plane)
+
+\begin{itemize}
+  \item $r$: sphere radius, $a$: radius of the base of the cap, $h$: height of the cap, $\cos\theta = (r-h)/r$.
+  \item Volume $=\pi h^2(3r-h)/3=\pi h(3a^2+h^2)/6=\pi r^3(2+\cos\theta)(1-\cos\theta)^2/3$.
+  \item Area $=2\pi rh=\pi(a^2+h^2)=2\pi r^2(1-\cos\theta)$.
+\end{itemize}
+
+\item Nearest points of two skew lines
+
+$\boldsymbol{n} = \boldsymbol{d}_1 \times \boldsymbol{d}_2$
+
+\noindent
+\begin{minipage}[t]{0.47\linewidth}
+\begin{itemize}
+  \item Line 1: $\boldsymbol{v}_1 = \boldsymbol{p}_1 + t_1\boldsymbol{d}_1$
+  \item $\boldsymbol{n}_1 = \boldsymbol{d}_1 \times \boldsymbol{n}$
+  \item $\boldsymbol{c}_1 = \boldsymbol{p}_1 + \frac{(\boldsymbol{p}_2 - \boldsymbol{p}_1)\cdot\boldsymbol{n}_2}{\boldsymbol{d}_1\cdot\boldsymbol{n}_2}\boldsymbol{d}_1$
+\end{itemize}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.47\linewidth}
+\begin{itemize}
+  \item Line 2: $\boldsymbol{v}_2 = \boldsymbol{p}_2 + t_2\boldsymbol{d}_2$
+  \item $\boldsymbol{n}_2 = \boldsymbol{d}_2 \times \boldsymbol{n}$
+  \item $\boldsymbol{c}_2 = \boldsymbol{p}_2 + \frac{(\boldsymbol{p}_1 - \boldsymbol{p}_2)\cdot\boldsymbol{n}_1}{\boldsymbol{d}_2\cdot\boldsymbol{n}_1}\boldsymbol{d}_2$
+\end{itemize}
+\end{minipage}
+
+\item Lagrange multiplier
+
+To optimize $f(x_1, \ldots, x_n)$ subject to $g_i(x) = 0$ ($1 \le i \le k$): at an optimum (with linearly independent $\nabla g_i$), $\nabla f = \sum_i \lambda_i \nabla g_i$. Solve together with all $g_i = 0$; check the boundary separately.
+
+\item Derivatives/Integrals
+
+Integration by parts:
+\(\int_a^bf(x)g(x)dx = [F(x)g(x)]_a^b-\int_a^bF(x)g'(x)dx\)
+{
+\setlength{\arraycolsep}{1pt}
+\noindent
+$\begin{array}{|*{2}{>{\displaystyle}c|}}
+\frac{d}{dx}\sin^{-1} x = \frac{1}{\sqrt{1-x^2}}
+    &
+\frac{d}{dx}\cos^{-1} x = -\frac{1}{\sqrt{1-x^2}}
+\\
+\frac{d}{dx}\tan^{-1} x = \frac{1}{1+x^2}
+    &
+\frac{d}{dx}\tan x = 1+\tan^2 x
+\\
+\end{array}$
+
+\(
+\displaystyle
+\int \sqrt{a^2 + x^2} = \frac{1}{2} \left(x\sqrt{a^2+x^2} + a^2 \operatorname{asinh}(x/a) \right)
+\)
+}
+\end{itemize}

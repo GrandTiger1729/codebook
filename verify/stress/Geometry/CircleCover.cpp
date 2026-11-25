@@ -1,13 +1,12 @@
 #include "prelude.h"
 #include "geo_prelude.h"
 #include "stress.h"
-const double pi = acos(-1); // CircleCover uses `pi`, defined nowhere in the book
+const double pi = acos(-1); // for the brute force below
 #include "8_Geometry/Intersection_of_two_circles.cpp"
 #include "8_Geometry/CircleCover.cpp"
 // Area[k] = area covered by >= k circles. Brute: integrate over x; between critical
 // x's the covered length is smooth up to sqrt end-point singularities, which the
 // substitution x = m - h cos t removes; then Gauss-Legendre on t.
-CircleCover cc;
 vector<double> gx, gw;
 void gaussInit(int n) { // Gauss-Legendre nodes on [-1,1]
   gx.resize(n), gw.resize(n);
@@ -29,7 +28,7 @@ vector<double> brute(vector<Cir> cs) {
   for (auto &c : cs) xs.pb(c.O.X - c.R), xs.pb(c.O.X + c.R);
   FOR (i, 0, n - 1) FOR (j, i + 1, n - 1) {
     pdd a, b;
-    if (cs[i].O != cs[j].O && CCinter(cs[i], cs[j], a, b)) xs.pb(a.X), xs.pb(b.X);
+    if (cs[i].O != cs[j].O && circleInter(cs[i], cs[j], a, b)) xs.pb(a.X), xs.pb(b.X);
   }
   sort(ALL(xs));
   auto len = [&](double x, vector<double> &out) { // covered length by >=k at vertical line x
@@ -72,16 +71,14 @@ int main() {
       else c.O = pdd(rndd(-3, 3), rndd(-3, 3)), c.R = rndd(0.3, 4);
     }
     if (n > 1 && rnd(0, 3) == 0) cs[1] = cs[0]; // identical circles
-    cc.init(n);
-    FOR (i, 0, n - 1) cc.c[i] = cs[i];
-    cc.solve();
+    auto got = circleCover(cs);
     auto want = brute(cs);
     cnt++;
     FOR (k, 1, n) {
-      double err = fabs(cc.Area[k] - want[k]);
+      double err = fabs(got[k] - want[k]);
       worst = max(worst, err);
       if (err > 1e-6 * max(1.0, want[k])) {
-        printf("mismatch k=%d got=%.9f want=%.9f circles:", k, cc.Area[k], want[k]);
+        printf("mismatch k=%d got=%.9f want=%.9f circles:", k, got[k], want[k]);
         for (auto &c : cs) printf(" (%g,%g,%g)", c.O.X, c.O.Y, c.R);
         puts(""); fflush(stdout); assert(0);
       }

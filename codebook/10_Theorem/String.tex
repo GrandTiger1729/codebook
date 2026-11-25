@@ -1,0 +1,4 @@
+\begin{itemize}
+\item Periods of $s$ ($|s| = n$; $p$ is a period iff $s_i = s_{i+p}$ for all $i$, iff $s$ has a border of length $n - p$) form $O(\log n)$ arithmetic progressions.
+\item Accepted words of length $L$ of a DFA with $k$ states: $dp_0[\mathrm{start}] = 1$, $dp_{l+1}[\delta(q, c)] \mathrel{+}= dp_l[q]$, answer $\sum_{q \text{ accepting}} dp_L[q]$. It is a linear recurrence in $L$ of order $\le k$ (Cayley--Hamilton). DP the first $2k$ terms, Berlekamp--Massey (prime modulus), then Linear Recursion, $O(k^2 \log L)$. Avoiding patterns: on Aho--Corasick, drop every state whose fail chain (itself included) has $\mathrm{cnt} > 0$; run the DP on the rest, all accepting.
+\end{itemize}

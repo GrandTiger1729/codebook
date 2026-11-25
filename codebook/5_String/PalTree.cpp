@@ -1,11 +1,8 @@
 struct palindromic_tree {
   struct node {
-    int next[26], fail, len;
-    int cnt, num; // cnt: appear times, num: number of
-                  // pal. suf.
-    node(int l = 0) : fail(0), len(l), cnt(0), num(0) {
-      FOR (i, 0, 25) next[i] = 0;
-    }
+    int next[26] = {}, fail = 0, len, diff = 0, slink = 0;
+    int cnt = 0, num = 0; // occurrences, # pal. suffixes
+    node(int l = 0) : len(l) {}
   };
   vector<node> St; // roots 0 (len 0), 1 (len -1)
   vector<char> s;
@@ -26,17 +23,33 @@ struct palindromic_tree {
     if (!St[cur].next[c]) {
       int now = (int)St.size();
       St.pb(St[cur].len + 2);
-      St[now].fail = St[get_fail(St[cur].fail)].next[c];
-      St[cur].next[c] = now;
-      St[now].num = St[St[now].fail].num + 1;
+      int f = St[get_fail(St[cur].fail)].next[c];
+      int d = St[now].len - St[f].len;
+      St[now].fail = f, St[now].diff = d;
+      St[now].slink = d == St[f].diff ? St[f].slink : f;
+      St[cur].next[c] = now, St[now].num = St[f].num + 1;
     }
     last = St[cur].next[c], ++St[last].cnt;
+  }
+  int process(string t) { // min palindrome partition
+    clear();
+    int m = t.size();
+    vector<int> dp(m + 1, 1e9), g(m + 2); // dp[prefix len]
+    dp[0] = 0;
+    FOR (i, 1, m) {
+      add(t[i - 1]);
+      for (int x = last; x > 1; x = St[x].slink) {
+        g[x] = dp[i - St[St[x].slink].len - St[x].diff];
+        if (St[x].diff == St[St[x].fail].diff)
+          g[x] = min(g[x], g[St[x].fail]);
+        dp[i] = min(dp[i], g[x] + 1);
+      }
+    }
+    return dp[m];
   }
   void count() { // counting cnt
     for (int i = (int)St.size() - 1; i > 1; i--)
       St[St[i].fail].cnt += St[i].cnt;
   }
-  int size() { // The number of diff. pal.
-    return (int)St.size() - 2;
-  }
+  int size() { return (int)St.size() - 2; } // # distinct
 };

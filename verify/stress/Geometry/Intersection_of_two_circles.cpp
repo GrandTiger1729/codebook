@@ -2,7 +2,7 @@
 #include "geo_prelude.h"
 #include "stress.h"
 #include "8_Geometry/Intersection_of_two_circles.cpp"
-// CCinter(a, b, p1, p2): 1 iff circles touch/cross; p1 = left of a.O->b.O, p2 = right.
+// circleInter(a, b, p1, p2): 1 iff circles touch/cross; p1 = left of a.O->b.O, p2 = right.
 int main() {
   int cnt = 0, conc = 0, tanMiss = 0, tanHit = 0;
   FOR (it, 1, 400000) {
@@ -20,7 +20,7 @@ int main() {
     if (a.O == b.O) { conc++; continue; } // concentric: see note (a.R == b.R gives NaN)
     cnt++;
     pdd p1(1e18, 1e18), p2 = p1;
-    bool ret = CCinter(a, b, p1, p2);
+    bool ret = circleInter(a, b, p1, p2);
     double d = abs(a.O - b.O);
     if (ret) {
       for (pdd p : {p1, p2}) {
@@ -43,7 +43,7 @@ int main() {
   }
   // concentric circles: document behaviour
   Cir a{pdd(0, 0), 1}, b{pdd(0, 0), 1}; pdd p1, p2;
-  bool r = CCinter(a, b, p1, p2);
-  printf("CCinter: %d cases OK; exact int tangencies hit/miss %d/%d; identical circles -> ret=%d p1=(%g,%g)\n",
+  bool r = circleInter(a, b, p1, p2);
+  printf("circleInter: %d cases OK; exact int tangencies hit/miss %d/%d; identical circles -> ret=%d p1=(%g,%g)\n",
          cnt, tanHit, tanMiss, r, p1.X, p1.Y);
 }

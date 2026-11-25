@@ -1,0 +1,5 @@
+\begin{itemize}
+\item Newton's method
+
+Given $F(x) = \sum_{i \ge 0} \alpha_i (x - \beta)^i$ for a constant $\beta$, $P$ with $F(P) = 0$ can be found iteratively: if $F(Q_k) \equiv 0 \pmod {x^{2^k}}$, then $Q_{k+1} = Q_k - F(Q_k) / F^\prime(Q_k) \pmod {x^{2^{k+1}}}$. E.g.\ $P = 1 + xP^2$: $F(Q) = 1 + xQ^2 - Q$, $F^\prime(Q) = 2xQ - 1$, $Q_0 = 1$.
+\end{itemize}

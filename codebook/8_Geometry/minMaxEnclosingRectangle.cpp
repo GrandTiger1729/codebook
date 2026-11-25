@@ -2,7 +2,7 @@ const double INF = 1e18;
 pdd solve(vector<pll> &dots) {
 #define diff(u, v) (dots[u] - dots[v])
 #define vec(v) (dots[v] - dots[i])
-  hull(dots);
+  hull(dots); // dots := convex hull, CCW, no 3 collinear
   double Max = 0, Min = INF;
   int n = SZ(dots);
   dots.pb(dots[0]);

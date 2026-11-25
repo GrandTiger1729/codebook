@@ -359,6 +359,10 @@
 - **Segment Tree Beats**：新增純文字筆記（節點要維護什麼、chmin 三種情況、合併、tag 順序、複雜度），程式碼不放進書。
 - **Centroid Decomposition**：移出書（comment out）。
 
+## 2026-11-26
+- **Bipartite Matching `cover()`**：試過改用最後一次 `bfs()` 的 `dis`（−7 行，測試都過），撤回：會依賴 `bfs()` 的內部行為。記在 `docs/SPACE.md`。
+- 新增 `docs/SPACE.md`：量過但還沒採用的省行方法與可拿出書的模板，下次超頁時用。
+
 ## 2026-11-25
 - **PalTree 加 series link**：節點多 `diff`、`slink`，新增 `best(dp)` 回傳 $\min(dp[j] + 1, j)$（$s[j, n)$ 是回文），每次 `add()` 後都要呼叫，$O(\log n)$。最小回文分割（ICPC 2024 Seoul G）一行；CF 906E 在外面加偶數位置與免費步驟。新增 `stress/String/PalTree.cpp`（最小分割與 906E 都對暴力）。Library Checker Eertree 重跑 AC。`clear()`、`size()` 與註解壓短。
 - **Theorems 拿掉 Palindromic suffixes 敘述**：程式已實作，改看 PalTree。

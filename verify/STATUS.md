@@ -73,7 +73,7 @@
 | `4_Flow_Matching/Maximum_Simple_Graph_Matching.cpp` | `graph/general_matching` **AC** 12 筆 · 0.008s/5s (0%) | — | ✅ | test by Library Checker Matching on General Graph |
 | `4_Flow_Matching/Maximum_Weight_Matching.cpp` | `graph/general_weighted_matching` **AC** 24 筆 · 0.336s/5s (7%) | — | 需要外部 `INF` | test by Library Checker General Weighted Matching |
 | `4_Flow_Matching/SW-mincut.cpp` | — 無對應題 | 30 000 組 n≤11 vs 2^n 枚舉 | ✅ | — |
-| `4_Flow_Matching/BoundedFlow.cpp` | — 無對應題 | 30 000 組 vs 枚舉整數流（可行/最大/最小，流量可為負）（`init` 補清匯點只是清理，不影響答案） | 需要外部 `N`、`INF` | Maximum boundedflow test by LOJ 116; Minimum boundedflow test by LOJ 117; Dinic test by NTUJ 184; local brute force (flows of either sign) |
+| `4_Flow_Matching/BoundedFlow.cpp` | — 無對應題 | 30 000 組 vs 枚舉整數流（可行/最大/最小，流量可為負）（`init` 補清匯點只是清理，不影響答案） | 需要外部 `N`、`INF` | Maximum boundedflow test by LOJ 116; Minimum boundedflow test by LOJ 117; Dinic test by NTUJ 184; local brute force (flows of either sign)；2026-11-25 縮短（80 → 67 行，行為與速度不變） |
 | `4_Flow_Matching/Gomory_Hu_tree.cpp` | — 無對應題 | 6 000 組 n≤8，全點對 min cut（**修越界**） | 需要外部 `MaxFlow` | test by LOJ 2042 |
 | `4_Flow_Matching/MinCostCirculation.cpp` | `graph/min_cost_b_flow` 無法驅動 | 23 000 組（含負環）vs 枚舉 / cycle-cancelling | 需要外部 `N` | test by uoj 487 |
 
@@ -94,7 +94,7 @@
 | `5_String/LyndonFactorization.cpp` | `string/lyndon_factorization` **AC** 23 筆 · 0.032s/5s (1%) | 79 524 組（σ=3 n≤9 窮舉 + 週期串），依定義檢查：接起來是 s、每段嚴格小於自己的真後綴、各段不遞增 | ✅ | std_abs 原檔 + macro 契約（Duval，2026-09-30 加入） |
 | `5_String/De_Bruijn_sequence.cpp` | — 無對應題 | 416 組 (C,N,K)，每個長 N 字只出現一次 | ✅ | test by CF 102001 C |
 | `5_String/exSAM.cpp` | `string/number_of_substrings` **AC** 24 筆 · 0.065s/5s (1%) | — | 需要外部 `N` | test by CF 616 C, Lib-Checker Number of Substrings |
-| `5_String/PalTree.cpp` | `string/eertree` **AC** 24 筆 · 0.171s/5s (3%) | — | ✅ | test by APIO 2014 palindrome, Lib-Checker Eertree |
+| `5_String/PalTree.cpp` | `string/eertree` **AC** 24 筆 · 0.171s/5s (3%) | `best()`：3 000 組最小回文分割 vs O(n³) 暴力、3 000 組 CF 906E vs 區間暴力（含套用反轉驗證）、n = 5e5 計時 | ✅ | test by APIO 2014 palindrome, Lib-Checker Eertree；2026-11-25 加 series link 與 `best()` |
 | `5_String/MainLorentz.cpp` | `string/runenumerate` **AC** 24 筆 · 0.165s/5s (3%) | — | 需要外部 `kN` | test by Lib-Checker Run Enumerate |
 
 ## Math
@@ -156,11 +156,11 @@
 | `8_Geometry/HPIGeneralLine.cpp` | — 無對應題 | 56 012 組 vs exact 有理數暴力，格點直線到 1e9、n 到 1e5 | 需要外部 `cmp`；書中 double 前置只到 ≈ 3.3e7；`cov()` 直接比較 `__int128`（2026-11-22 修：原本 `sign(ll)` 會截斷） | — |
 | `8_Geometry/rotatingSweepLine.cpp` | — 無對應題 | 2 173 組一般位置（前提：無三點共線） | 需要外部 `cmp` | — |
 | `8_Geometry/Minimum_Enclosing_Circle.cpp` | `geo/minimum_enclosing_circle` **AC** 25 筆 · 0.033s/5s (1%) | — | 需要外部 `circenter` | test by TIOJ 1093, Lib-Checker Minimum Enclosing Circle |
-| `8_Geometry/Intersection_of_two_circles.cpp` | — 無對應題 | 398 738 組含精確相切（同圓回傳 NaN） | ✅ | test by TIOJ 1503 |
+| `8_Geometry/Intersection_of_two_circles.cpp` | — 無對應題 | 398 738 組含精確相切（同圓回傳 NaN） | ✅ | test by TIOJ 1503；2026-11-25 函式 `CCinter` 改名 `circleInter` |
 | `8_Geometry/Intersection_of_polygon_and_circle.cpp` | — 無對應題 | 99 364 組 vs kactl（**修 NaN**：改 atan2） | ✅ | test by HDU 2892 |
 | `8_Geometry/Intersection_of_line_and_circle.cpp` | — 無對應題 | 299 352 組 | ✅ | test by kactl stress-tests |
 | `8_Geometry/Tangent_line_of_two_circles.cpp` | — 無對應題 | 300 000 組 | ✅ | — |
-| `8_Geometry/CircleCover.cpp` | — 無對應題 | 1 500 組 vs 數值積分（修未定義 `pi`） | 需要外部 `CCinter` | test by TIOJ 1503；2026-11-24 改寫成函式 `circleCover(vector<Cir>)` 回傳 `a[k]`（58 → 36 行） |
+| `8_Geometry/CircleCover.cpp` | — 無對應題 | 1 500 組 vs 數值積分（修未定義 `pi`） | 需要外部 `circleInter` | test by TIOJ 1503；2026-11-24 改寫成函式 `circleCover(vector<Cir>)` 回傳 `a[k]`（58 → 36 行） |
 | `8_Geometry/3Dpoint.cpp` | — 無對應題 | 200 000 組 | ✅ | test by HDU 3662 |
 | `8_Geometry/Convexhull3D.cpp` | — 無對應題 | 8 693 個凸包：|coord| ≤ 65 000 vs O(n⁴) 暴力，n ≤ 2000 驗結構（**修編譯錯誤**） | 需要外部 `Point`；double、eps 1e-8，|coord| ≤ 6.5e4 才保證精確（1e6 會錯） | test by HDU 3662, Ptz. Summer 2023 olmrgcsi And His Friends' Contest K；2026-11-24 縮短（66 → 59 行，介面不變） |
 | `8_Geometry/DelaunayTriangulation_dq.cpp` | — 無對應題 | 5 012 組 exact 驗空圓性質，n 到 1e5、近共圓（需外部 `seg_strict_intersect`） | 需要外部 `N`；書中 double 前置只到 |coord| ≈ 3.3e7，整數前置到 1e9 | test by Zerojudge b370, TIOJ 1310 |
@@ -358,6 +358,13 @@
 - **fac_no_p**：複雜度註解跟著拿掉 `mpow` 改成 `O(p^k + log_p n)`。
 - **Segment Tree Beats**：新增純文字筆記（節點要維護什麼、chmin 三種情況、合併、tag 順序、複雜度），程式碼不放進書。
 - **Centroid Decomposition**：移出書（comment out）。
+
+## 2026-11-25
+- **PalTree 加 series link**：節點多 `diff`、`slink`，新增 `best(dp)` 回傳 $\min(dp[j] + 1, j)$（$s[j, n)$ 是回文），每次 `add()` 後都要呼叫，$O(\log n)$。最小回文分割（ICPC 2024 Seoul G）一行；CF 906E 在外面加偶數位置與免費步驟。新增 `stress/String/PalTree.cpp`（最小分割與 906E 都對暴力）。Library Checker Eertree 重跑 AC。`clear()`、`size()` 與註解壓短。
+- **Theorems 拿掉 Palindromic suffixes 敘述**：程式已實作，改看 PalTree。
+- **BoundedFlow 縮短**（80 → 67 行）：三參數 `add_edge` 改呼叫四參數版（下界 0 本來就一樣）、`dfs` 合併、`solve()` 清輔助點改成整個清空。對拍 30 000 組通過；20 000 點、20 萬邊計時與舊版相同。
+- **`CCinter` 改名 `circleInter`**（和 `circleLine` 一致，也是 kactl 的名字）；CircleCover 註解寫明需要它、在哪個模板。
+- 仍是 25 頁。
 
 ## 2026-11-24
 - **新章 Theorems（第 10 章，放最後）**：所有純敘述的理論集中在一處，用粗體分組標籤（Graph、Combinatorics、Number Theory、Game Theory、String、Polynomial、Geometry and Calculus），不進目錄。檔案搬到 `10_Theorem/`：`6_Math/Theorem.tex` 拆成 `Graph`、`Combinatorics`、`NumberTheory`、`Geometry`（內容不變；Misère Nim 改放 Game）；`numbers.tex`、`Estimation.tex`、`Generating_function.tex`、`FWT_tips.tex`、`Newton.tex` 原樣搬過來。Euclidean Algorithms（floor sum 遞迴）、Flow Models、Simplex Construction、Mo's、Matroid、Segment Tree Beats 筆記留在程式碼旁。

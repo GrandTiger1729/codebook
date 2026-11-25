@@ -28,7 +28,7 @@ vector<double> brute(vector<Cir> cs) {
   for (auto &c : cs) xs.pb(c.O.X - c.R), xs.pb(c.O.X + c.R);
   FOR (i, 0, n - 1) FOR (j, i + 1, n - 1) {
     pdd a, b;
-    if (cs[i].O != cs[j].O && CCinter(cs[i], cs[j], a, b)) xs.pb(a.X), xs.pb(b.X);
+    if (cs[i].O != cs[j].O && circleInter(cs[i], cs[j], a, b)) xs.pb(a.X), xs.pb(b.X);
   }
   sort(ALL(xs));
   auto len = [&](double x, vector<double> &out) { // covered length by >=k at vertical line x

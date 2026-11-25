@@ -1,4 +1,5 @@
 // a[k]: area covered by >= k circles, O(n^2 log n)
+// needs circleInter (Intersection of two circles)
 vector<double> circleCover(vector<Cir> c) {
   int n = c.size();
   vector<double> a(n + 2);
@@ -16,7 +17,7 @@ vector<double> circleCover(vector<Cir> c) {
       else if (!in(i, j) &&
                sign(abs(o - c[j].O) - R - c[j].R) < 0) {
         pdd p, q;
-        CCinter(c[i], c[j], p, q);
+        circleInter(c[i], c[j], p, q);
         double A = atan2(p.Y - o.Y, p.X - o.X);
         double B = atan2(q.Y - o.Y, q.X - o.X);
         e.pb(B, q, 1), e.pb(A, p, -1), cnt += B > A;

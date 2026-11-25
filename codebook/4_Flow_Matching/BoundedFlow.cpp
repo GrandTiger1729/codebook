@@ -19,10 +19,13 @@ struct BoundedFlow { // 0-base
     for (int &i = cur[u]; i < SZ(G[u]); i++) {
       edge &e = G[u][i];
       if (dis[e.to] == dis[u] + 1 && e.cap != e.flow)
-        if (int df = dfs(e.to, min(e.cap - e.flow, cap)))
-          return e.flow += df, G[e.to][e.rev].flow -= df, df;
+        if (int df = dfs(e.to, min(e.cap - e.flow, cap))) {
+          e.flow += df, G[e.to][e.rev].flow -= df;
+          return df;
+        }
     }
-    return dis[u] = -1, 0;
+    dis[u] = -1;
+    return 0;
   }
   bool bfs() {
     fill_n(dis, n + 3, -1);

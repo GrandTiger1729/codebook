@@ -31,9 +31,16 @@ struct Bipartite_Matching { // 0-base
     return res; // (i, mp[i] != -1)
   }
   vector<int> cover() { // Konig, call after matching()
-    vector<int> res; // L: i, R: l + e; dis from last bfs()
-    FOR (i, 0, l - 1) if (!~dis[i]) res.pb(i);
-    FOR (e, 0, r - 1) if (~dis[mq[e]]) res.pb(l + e);
+    vector<int> vl(l), vr(r), q, res; // L: i, R: l + e
+    FOR (i, 0, l - 1) if (!~mp[i]) vl[i] = 1, q.pb(i);
+    for (int h = 0; h < (int)q.size(); h++)
+      for (int e : G[q[h]]) if (!vr[e]) {
+        vr[e] = 1;
+        if (mq[e] != l && !vl[mq[e]])
+          vl[mq[e]] = 1, q.pb(mq[e]);
+      }
+    FOR (i, 0, l - 1) if (!vl[i]) res.pb(i);
+    FOR (e, 0, r - 1) if (vr[e]) res.pb(l + e);
     return res; // complement = max independent set
   }
   void add_edge(int s, int t) { G[s].pb(t); }

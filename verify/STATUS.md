@@ -67,7 +67,7 @@
 
 | 模版 | Library Checker | 本地對拍 | 單檔編譯 | 書上標註 |
 |---|---|---|---|---|
-| `4_Flow_Matching/Bipartite_Matching.cpp` | `graph/bipartitematching` **AC** 44 筆 · 0.516s/5s (10%) | 30 000 組 L, R ≤ 6（含重邊）：`matching()` vs bitmask DP；`cover()` vs 2^(L+R) 窮舉 | 需要外部 `N` | test by Lib-Checker Matching on Bipartite Graph; cover() by local brute force；2026-11-26 `cover()` 改用最後一次 `bfs()` 的 `dis`（51 → 44 行） |
+| `4_Flow_Matching/Bipartite_Matching.cpp` | `graph/bipartitematching` **AC** 44 筆 · 0.516s/5s (10%) | 30 000 組 L, R ≤ 6（含重邊）：`matching()` vs bitmask DP；`cover()` vs 2^(L+R) 窮舉 | 需要外部 `N` | test by Lib-Checker Matching on Bipartite Graph; cover() by local brute force |
 | `4_Flow_Matching/Kuhn_Munkres.cpp` | `graph/assignment` **AC** 14 筆 · 0.165s/5s (3%) | 20 000 組 n ≤ m ≤ 7 vs 窮舉（12 545 組矩形 n < m、6 666 組 perfect 模式含負權） | 需要外部 `N` | test by CF 101239 C (World Finals' problem), Lib-Checker Assignment Problem |
 | `4_Flow_Matching/MincostMaxflow.cpp` | `graph/assignment#mcmf` **AC** 14 筆 · 1.417s/5s (28%) | 4 000 組 n ≤ 8、m ≤ 20 vs SPFA 最短路增廣（1 545 組負權、走 setpi；同一物件重複 `init`）（**修 bug**：`par[s]` 沒重設，重用物件會沿舊邊回溯）；負環：Flow Models 的「先把負邊流滿」歸約，20 000 組 vs 窮舉所有整數流（任意流量 / 最大流兩種） | 需要外部 `N` | test by Lib-Checker Assignment Problem, local stress vs SPFA reference |
 | `4_Flow_Matching/Maximum_Simple_Graph_Matching.cpp` | `graph/general_matching` **AC** 12 筆 · 0.008s/5s (0%) | — | ✅ | test by Library Checker Matching on General Graph |
@@ -358,9 +358,6 @@
 - **fac_no_p**：複雜度註解跟著拿掉 `mpow` 改成 `O(p^k + log_p n)`。
 - **Segment Tree Beats**：新增純文字筆記（節點要維護什麼、chmin 三種情況、合併、tag 順序、複雜度），程式碼不放進書。
 - **Centroid Decomposition**：移出書（comment out）。
-
-## 2026-11-26
-- **Bipartite Matching `cover()`**：不再自己 BFS。`matching()` 最後一次 `bfs()` 失敗時，`dis[u] != -1` 正好是「從未匹配左點沿交錯路可達」的左點；König 覆蓋 = 不可達的左點 + 配偶可達的右點（未匹配右點的 `mq` 是哨兵 `l`，`dis[l] = -1`，自動排除）。51 → 44 行。對拍 30 000 組 vs 窮舉、Lib-Checker Bipartite Matching 重跑 AC。
 
 ## 2026-11-25
 - **PalTree 加 series link**：節點多 `diff`、`slink`，新增 `best(dp)` 回傳 $\min(dp[j] + 1, j)$（$s[j, n)$ 是回文），每次 `add()` 後都要呼叫，$O(\log n)$。最小回文分割（ICPC 2024 Seoul G）一行；CF 906E 在外面加偶數位置與免費步驟。新增 `stress/String/PalTree.cpp`（最小分割與 906E 都對暴力）。Library Checker Eertree 重跑 AC。`clear()`、`size()` 與註解壓短。

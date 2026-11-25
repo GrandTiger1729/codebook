@@ -1,6 +1,6 @@
 #include "prelude.h"
-// PalTree::best (series links): min palindrome partition vs O(n^3) brute, and
-// CF 906E (Reverses) built on it vs an interval brute; also n = 5e5 timing.
+// PalTree series links: process() (min palindrome partition) vs O(n^3) brute, and
+// CF 906E (Reverses) as a contest driver over diff/slink vs an interval brute.
 #include "stress.h"
 #include "5_String/PalTree.cpp"
 bool isPal(const string &s, int l, int r) { // [l, r)
@@ -13,13 +13,21 @@ pair<int, vector<pair<int,int>>> solve906(const string &s, const string &t) {
   FOR (i, 0, n - 1) z += s[i], z += t[i];
   palindromic_tree pal;
   vector<int> dp(2 * n + 1, 1e9), pre(2 * n + 1);
+  vector<pair<int, int>> g(2 * n + 3); // (dp value, start)
   dp[0] = 0;
   FOR (i, 1, 2 * n) {
     pal.add(z[i - 1]);
-    auto [v, j] = pal.best(dp);
+    auto &St = pal.St;
+    pair<int, int> r(1e9, 0);
+    for (int x = pal.last; x > 1; x = St[x].slink) {
+      int j = i - St[St[x].slink].len - St[x].diff;
+      g[x] = {dp[j], j};
+      if (St[x].diff == St[St[x].fail].diff) g[x] = min(g[x], g[St[x].fail]);
+      r = min(r, g[x]);
+    }
     if (i % 2) continue;
     if (z[i - 1] == z[i - 2]) dp[i] = dp[i - 2], pre[i] = i - 2;
-    if (v < dp[i]) dp[i] = v, pre[i] = j;
+    if (r.F + 1 < dp[i]) dp[i] = r.F + 1, pre[i] = r.S;
   }
   vector<pair<int,int>> iv;
   if (dp[2 * n] >= 1e9) return {-1, iv};
@@ -32,13 +40,14 @@ int main() {
   FOR (it, 1, 3000) {
     int m = rnd(1, 40), a = rnd(1, 3); string s;
     FOR (i, 1, m) s += char('a' + rnd(0, a - 1));
-    palindromic_tree pal; vector<int> dp(m + 1, 1e9), pre(m + 1); dp[0] = 0;
-    FOR (i, 1, m) { pal.add(s[i - 1]); tie(dp[i], pre[i]) = pal.best(dp); }
+    palindromic_tree pal; int got = pal.process(s);
     vector<int> b(m + 1, 1e9); b[0] = 0;
     FOR (i, 1, m) FOR (j, 0, i - 1) if (isPal(s, j, i)) b[i] = min(b[i], b[j] + 1);
-    assert(dp[m] == b[m]);
-    int cnt = 0; for (int i = m; i > 0; i = pre[i]) assert(isPal(s, pre[i], i)), cnt++;
-    assert(cnt == dp[m]);
+    assert(got == b[m]);
+    pal.count(); // cnt/num still right after process()
+    long long occ = 0; FOR (v, 2, (int)pal.St.size() - 1) occ += pal.St[v].cnt;
+    long long want = 0; FOR (i, 0, m - 1) FOR (j, i + 1, m) want += isPal(s, i, j);
+    assert(occ == want);
   }
   // 2) CF 906E vs brute (interval DP on reversals)
   FOR (it, 1, 3000) {

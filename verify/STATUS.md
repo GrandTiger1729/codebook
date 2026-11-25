@@ -94,7 +94,7 @@
 | `5_String/LyndonFactorization.cpp` | `string/lyndon_factorization` **AC** 23 筆 · 0.032s/5s (1%) | 79 524 組（σ=3 n≤9 窮舉 + 週期串），依定義檢查：接起來是 s、每段嚴格小於自己的真後綴、各段不遞增 | ✅ | std_abs 原檔 + macro 契約（Duval，2026-09-30 加入） |
 | `5_String/De_Bruijn_sequence.cpp` | — 無對應題 | 416 組 (C,N,K)，每個長 N 字只出現一次 | ✅ | test by CF 102001 C |
 | `5_String/exSAM.cpp` | `string/number_of_substrings` **AC** 24 筆 · 0.065s/5s (1%) | — | 需要外部 `N` | test by CF 616 C, Lib-Checker Number of Substrings |
-| `5_String/PalTree.cpp` | `string/eertree` **AC** 24 筆 · 0.171s/5s (3%) | `best()`：3 000 組最小回文分割 vs O(n³) 暴力、3 000 組 CF 906E vs 區間暴力（含套用反轉驗證）、n = 5e5 計時 | ✅ | test by APIO 2014 palindrome, Lib-Checker Eertree；2026-11-25 加 series link 與 `best()` |
+| `5_String/PalTree.cpp` | `string/eertree` **AC** 24 筆 · 0.171s/5s (3%) | `process()`：3 000 組最小回文分割 vs O(n³) 暴力（另驗 `cnt`）、3 000 組 CF 906E（driver 直接走 `diff`/`slink`）vs 區間暴力（含套用反轉驗證）、n = 5e5 計時 | ✅ | test by APIO 2014 palindrome, Lib-Checker Eertree；2026-11-25 加 series link 與 `process()` |
 | `5_String/MainLorentz.cpp` | `string/runenumerate` **AC** 24 筆 · 0.165s/5s (3%) | — | 需要外部 `kN` | test by Lib-Checker Run Enumerate |
 
 ## Math
@@ -365,6 +365,7 @@
 - **BoundedFlow 縮短**（80 → 67 行）：三參數 `add_edge` 改呼叫四參數版（下界 0 本來就一樣）、`dfs` 合併、`solve()` 清輔助點改成整個清空。對拍 30 000 組通過；20 000 點、20 萬邊計時與舊版相同。
 - **`CCinter` 改名 `circleInter`**（和 `circleLine` 一致，也是 kactl 的名字）；CircleCover 註解寫明需要它、在哪個模板。
 - 仍是 25 頁。
+- **PalTree 改用隊友的寫法**：`best(dp)` 換成 `process(t)`（直接算最小回文分割），series link 在 `add()` 裡照定義算。修掉原稿三個問題：全形空白編譯失敗、`diff`/`slink` 未初始化（根 0 的 `diff` 會被比較）、用到契約外的 `INF`；dp 改成以前綴長度為索引，拿掉 `>= 0` 特判。節點改用預設成員初始化（56 行）。906E 等變形照 `process()` 的迴圈自己寫。Lib-Checker Eertree 重跑 AC。
 
 ## 2026-11-24
 - **新章 Theorems（第 10 章，放最後）**：所有純敘述的理論集中在一處，用粗體分組標籤（Graph、Combinatorics、Number Theory、Game Theory、String、Polynomial、Geometry and Calculus），不進目錄。檔案搬到 `10_Theorem/`：`6_Math/Theorem.tex` 拆成 `Graph`、`Combinatorics`、`NumberTheory`、`Geometry`（內容不變；Misère Nim 改放 Game）；`numbers.tex`、`Estimation.tex`、`Generating_function.tex`、`FWT_tips.tex`、`Newton.tex` 原樣搬過來。Euclidean Algorithms（floor sum 遞迴）、Flow Models、Simplex Construction、Mo's、Matroid、Segment Tree Beats 筆記留在程式碼旁。

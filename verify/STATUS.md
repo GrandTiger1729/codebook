@@ -367,6 +367,7 @@
 - 仍是 25 頁。
 - **PalTree 改用隊友的寫法**：`best(dp)` 換成 `process(t)`（直接算最小回文分割），series link 在 `add()` 裡照定義算。修掉原稿三個問題：全形空白編譯失敗、`diff`/`slink` 未初始化（根 0 的 `diff` 會被比較）、用到契約外的 `INF`；dp 改成以前綴長度為索引，拿掉 `>= 0` 特判。節點改用預設成員初始化（56 行）。906E 等變形照 `process()` 的迴圈自己寫。Lib-Checker Eertree 重跑 AC。
 - **BoundedFlow `dfs`**：拿掉 `return a, b;` 逗號回傳的寫法，改回 `dis[u] = -1; return 0;`；保留 `if (int df = dfs(...))`。
+- **PalTree `add()`**：拿掉 `node &v` 參考，回到直接寫 `St[now]` 的五行版本（少 1 行）。
 
 ## 2026-11-24
 - **新章 Theorems（第 10 章，放最後）**：所有純敘述的理論集中在一處，用粗體分組標籤（Graph、Combinatorics、Number Theory、Game Theory、String、Polynomial、Geometry and Calculus），不進目錄。檔案搬到 `10_Theorem/`：`6_Math/Theorem.tex` 拆成 `Graph`、`Combinatorics`、`NumberTheory`、`Geometry`（內容不變；Misère Nim 改放 Game）；`numbers.tex`、`Estimation.tex`、`Generating_function.tex`、`FWT_tips.tex`、`Newton.tex` 原樣搬過來。Euclidean Algorithms（floor sum 遞迴）、Flow Models、Simplex Construction、Mo's、Matroid、Segment Tree Beats 筆記留在程式碼旁。

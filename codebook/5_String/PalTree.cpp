@@ -24,11 +24,10 @@ struct palindromic_tree {
       int now = (int)St.size();
       St.pb(St[cur].len + 2);
       int f = St[get_fail(St[cur].fail)].next[c];
-      node &v = St[now];
-      v.fail = f, v.num = St[f].num + 1;
-      v.diff = v.len - St[f].len; // slink: series link
-      v.slink = v.diff == St[f].diff ? St[f].slink : f;
-      St[cur].next[c] = now;
+      int d = St[now].len - St[f].len;
+      St[now].fail = f, St[now].diff = d;
+      St[now].slink = d == St[f].diff ? St[f].slink : f;
+      St[cur].next[c] = now, St[now].num = St[f].num + 1;
     }
     last = St[cur].next[c], ++St[last].cnt;
   }

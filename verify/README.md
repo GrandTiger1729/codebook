@@ -34,7 +34,7 @@ uv venv && uv pip install colorlog          # generate.py 需要
 
 ## 排版：`check_layout.py`
 
-listings 一行放得下 58 欄，超過就折行。`python3 verify/check_layout.py` 列出所有超過的行；
+listings 一行放得下 61 欄，超過就折行。`python3 verify/check_layout.py` 列出所有超過的行；
 CI 也會檢查這個，另外檢查 PDF 不超過 25 頁。
 
 ## 其他

@@ -1,7 +1,6 @@
 #include "prelude.h"
 #include "stress.h"
 #include "6_Math/Gaussian_gcd.cpp"
-#undef rnd // the template's rounding macro would shadow stress.h's rnd()
 #include "6_Math/Miller_Rabin.cpp"
 // gaussian_gcd(a, b) (b != 0), cpx = complex<__int128_t>:
 // 1. small |coords| <= 30: g divides a and b, and N(g) equals the largest

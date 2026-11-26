@@ -105,7 +105,7 @@
 | `6_Math/floor_ceil.cpp` | — 無對應題 | 101 萬組含 INT 邊界 | ✅ | — |
 | `6_Math/floor_enumeration.cpp` | `number_theory/enumerate_quotients` **AC** 26 筆 · 0.121s/5s (2%) | — | 片段，非獨立編譯單元 | test by Lib-Checker Enumerate Quotients |
 | `6_Math/ModMin.cpp` | `number_theory/min_of_mod_of_linear` **AC** 17 筆 · 0.265s/10s (3%) | 1 734 355 組 vs 暴力（m ≤ 60 窮舉，88 406 組無解） | ✅ | test by Lib-Checker Min of Mod of Linear |
-| `6_Math/Gaussian_gcd.cpp` | `number_theory/gcd_of_gaussian_integers` **AC** 12 筆 · 0.115s/5s (2%)<br>`number_theory/two_square_sum` **AC** 38 筆 · 0.065s/5s (1%) | 兩平方構造：$p \equiv 1 \pmod 4$ 質數到 $4 \cdot 10^{18}$ 各 2000 個，$N(\gcd(p, c+i)) = p$ | ✅ | test by Lib-Checker GCD of Gaussian Integers, Represent A Number As Two Square Sum |
+| `6_Math/Gaussian_gcd.cpp` | `number_theory/gcd_of_gaussian_integers` **AC** 12 筆 · 0.115s/5s (2%)<br>`number_theory/two_square_sum` **AC** 38 筆 · 0.065s/5s (1%) | 小座標 2 000 組：整除兩者且範數等於窮舉的最大公因數；大座標（到 1e18）2 萬組 $a = hx, b = hy$：$h \mid g$；兩平方：$p \equiv 1 \pmod 4$ 質數到 $4 \cdot 10^{18}$ 共 6 000 個，$N(\gcd(p, c+i)) = p$ | ✅ | test by Lib-Checker GCD of Gaussian Integers, Represent A Number As Two Square Sum |
 | `6_Math/NimProduct.cpp` | `number_theory/nim_product_64` **AC** 10 筆 · 0.365s/10s (4%) | Turning Corners 32×32 的 SG 暴力表（Tartan）、2 萬組 64 位元隨機值的體公理（交換、結合、對 xor 分配、a^(2^64−1) = 1） | ✅ | 2026-11-17 加入 |
 | `6_Math/Josephus.cpp` | — 無對應題 | n ≤ 300、k ≤ 400 vs 模擬；n ≤ 1e7 vs O(n) 遞迴；n 到 1e18（k ≤ 1000）vs 獨立實作與 k = 2 公式，共 123 300 組 | k > n 時遞迴深 n：n ≈ 3e5 會爆棧 | 2026-11-17 加入 |
 | `6_Math/Miller_Rabin.cpp` | `number_theory/factorize` **AC** 31 筆 · 1.167s/10s (12%)<br>`number_theory/primality_test` **AC** 12 筆 · 0.265s/5s (5%) | 經 Pollard_Rho 的對拍（每個因數都要通過 `prime()`） | ✅ | test by NTUJ 1237, Lib-Checker Primality Test |
@@ -128,7 +128,7 @@
 |---|---|---|---|---|
 | `7_Polynomial/Fast_Fourier_Transform.cpp` | `convolution/convolution_mod_1000000007` **AC** 48 筆 · 0.369s/10s (4%) | `conv()`：500 組 vs 樸素卷積，最大誤差 1.5e-8（\|a_i\| ≤ 1e3）、1.1e-5（\|a_i\| ≤ 3e4） | ✅ | test by Lib-Checker Convolution mod 1e9+7 (through FFT Mod) |
 | `7_Polynomial/Fast_Fourier_Transform_Mod.cpp` | `convolution/convolution_mod_1000000007` **AC** 48 筆 · 0.369s/10s (4%) | — | 需要外部 `cplx` | test by Lib-Checker Convolution mod 1e9+7 |
-| `7_Polynomial/Number_Theory_Transform.cpp` | `convolution/convolution_mod` **AC** 53 筆 · 0.379s/5s (8%) | — | 需要外部 `MOD`/`G`/`N` 和 `add`/`sub`/`mul`/`Pow`；可用的 (mod, G, 2^k) 見下面的 NTT Primes 表 | std_abs 原檔 + macro 契約；test by Lib-Checker Convolution |
+| `7_Polynomial/Number_Theory_Transform.cpp` | `convolution/convolution_mod` **AC** 53 筆 · 0.379s/5s (8%) | 經 Polynomial_Operation、FastLinearRecursion 的對拍（乘法 vs 暴力） | 需要外部 `MOD`/`G`/`N` 和 `add`/`sub`/`mul`/`Pow`；可用的 (mod, G, 2^k) 見下面的 NTT Primes 表 | std_abs 原檔 + macro 契約；test by Lib-Checker Convolution |
 | `7_Polynomial/Fast_Walsh_Transform.cpp` | — 無對應題 | 書上三行 OR/AND/XOR 各留一行產生三份（`.pre.sh`）：各驗封閉式、逆變換、卷積定理；`subset_convolution` 3 000 組 mod 1e9+9 vs 樸素 $O(4^L)$，L = 0..6、值到 MOD − 1；L = 18 抽查 | 需要外部 `MOD`、`add`、`sub`、`mul` | test by luogu P6097, local brute force |
 | `7_Polynomial/Polynomial_Operation.cpp` | `polynomial/inv_of_formal_power_series` **AC** 25 筆 · 0.418s/10s (4%)<br>`polynomial/exp_of_formal_power_series` **AC** 26 筆 · 1.619s/10s (16%)<br>`polynomial/log_of_formal_power_series` **AC** 25 筆 · 0.668s/10s (7%)<br>`polynomial/pow_of_formal_power_series` **AC** 37 筆 · 2.227s/10s (22%)<br>`polynomial/sqrt_of_formal_power_series` **AC** 35 筆 · 1.120s/10s (11%)<br>`polynomial/polynomial_taylor_shift` **AC** 38 筆 · 0.268s/5s (5%)<br>`polynomial/shift_of_sampling_points_of_polynomial` **AC** 32 筆 · 0.668s/5s (13%)<br>`polynomial/compositional_inverse_of_formal_power_series` **AC** 23 筆 · 0.215s/10s (2%)<br>`polynomial/compositional_inverse_of_formal_power_series_large` **AC** 28 筆 · 3.674s/10s (37%) | `Divide`（$bq+r=a$）500 組、`Evaluate` vs Horner 300 組、`Interpolate` 來回 300 組、`TaylorShift` vs 直接代入 300 組、`SamplingShift` vs Lagrange 200 組、`power_proj` vs $O(n^2m)$ 樸素 250 組、`PolyPow` vs 連乘 3 000 組（含 $k = 0$、$a_0 = 0$）、`Sqrt` 平方回去 1 073 組、`CompInv` $f(g(x)) = x$ 樸素合成 20 000 組（$n$ = 1..40） | 需要外部 NTT、`QuadraticResidue`；`PolyPow` 要 `Pow(int, ll)`；`TaylorShift`/`SamplingShift` 要 `fac[]`/`ifac[]` | 從 std_abs 改短（2026-11-20） |
 | `7_Polynomial/FastLinearRecursion.cpp` | `other/kth_term_of_linearly_recurrent_sequence` **AC** 20 筆 · 3.573s/10s (36%) | BM → BostanMori 重播整段前綴，290 組（d = 1..20）共 9 166 項 | 需要外部 `Mul`、`ntt`（`Polynomial_Operation`、`Number_Theory_Transform`） | Bostan–Mori（2026-09-28 取代 std_abs 的 Kitamasa，原本 TLE 19.442s）；`c` 是 **0-based**，BM 的輸出可直接餵入 |
@@ -152,7 +152,7 @@
 | `8_Geometry/minMaxEnclosingRectangle.cpp` | — 無對應題 | 2 989 組（**修 bug**：acos NaN 丟掉最大值，改封閉式） | 需要外部 `hull` | test by UVA 819 |
 | `8_Geometry/Vector_in_poly.cpp` | — 無對應題 | 1 832 940 組含凹角/180°，其中 904 740 組 |coord| ≤ 1e9 | ✅ | test by qoj 5479 |
 | `8_Geometry/PolyUnion.cpp` | — 無對應題 | 20 000 組 vs 精確 slab 分解（含重複多邊形） | ✅ | test by CF 101673 A |
-| `8_Geometry/Polar_Angle_Sort.cpp` | `geo/sort_points_by_argument` **AC** 21 筆 · 0.117s/5s (2%) | — | ✅ | test by NTUJ 2270, Lib-Checker Sort Points by Argument |
+| `8_Geometry/Polar_Angle_Sort.cpp` | `geo/sort_points_by_argument` **AC** 21 筆 · 0.117s/5s (2%) | 經 Half_plane_intersection、HPIGeneralLine、rotatingSweepLine、Triangulation_Vonoroi 的對拍（`cmp()`） | ✅ | test by NTUJ 2270, Lib-Checker Sort Points by Argument |
 | `8_Geometry/Half_plane_intersection.cpp` | — 無對應題 | 56 016 組 vs exact 有理數暴力（含空/零面積），n 到 1e5 | 需要外部 `cmp`；書中 double 前置只到 |coord| ≈ 3.3e7（1e9 會把近平行線當平行），整數前置到 1e9 | test by qoj 2162 (World Finals' problem) |
 | `8_Geometry/HPIGeneralLine.cpp` | — 無對應題 | 56 012 組 vs exact 有理數暴力，格點直線到 1e9、n 到 1e5 | 需要外部 `cmp`；書中 double 前置只到 ≈ 3.3e7；`cov()` 直接比較 `__int128`（2026-11-22 修：原本 `sign(ll)` 會截斷） | — |
 | `8_Geometry/rotatingSweepLine.cpp` | — 無對應題 | 2 173 組一般位置（前提：無三點共線） | 需要外部 `cmp` | — |
@@ -196,7 +196,7 @@
 
 - 收錄模版：**114**（上面各章主表中在書裡的列；不含 `typo_check.sh`、`stress.sh`、`Primes`、`misc.py`）
 - 有 Library Checker AC 的：**54**
-- 有本地對拍的：**89**（主表「本地對拍」欄有內容的列；`verify/stress/` 共 97 個測試）
+- 有本地對拍的：**92**（書中模版被至少一個 `verify/stress/` 檔 `#include` 的；`verify/stress/` 共 98 個測試，另有 9 個測書外模版、2 個模版各有兩個測試）
 - 兩種自動測試都沒有的：**4**（black_magic、Pragma、sanitize_fixer、simulated_annealing；都是片段或工具檔）
 
 ## 2026-09-27：stress test + 排版
@@ -367,6 +367,7 @@
 - **Josephus** 從 Else 移到 Math（`6_Math/Josephus.cpp`，放在 Nim Product 後；對拍檔移到 `stress/Math/`）。加上 Matching 省的行，回到 25 頁。
 - **Trigonometry**（Geometry and Calculus，放在 Derivatives/Integrals 前）：從 ideograph_advantage 的筆記挑容易記錯的：和差化積、積化和差、$\tan(\alpha+\beta)$、$a\cos x + b\sin x = r\cos(x-\phi)$、正切定理（原筆記括號有歧義，改寫成分式）、trig(atrig x) 的 3×3 表（使用者實際遇過、推導花時間；分式寫成 $x/\sqrt{\cdot}$ 讓每列一行高）。和角、倍角、sinh/cosh 太基本沒收。每條都用隨機數值驗過。維持 25 頁。
 - `MAP.tsv` 的 fac_no_p 備註拿掉「需要 `mpow()`」（模板早已不用 `mpow`）。
+- **對拍總數對帳**：「有本地對拍」改成從 `#include` 算（書中模版被至少一個 stress 檔用到），89 → 92。新增 `stress/Math/Gaussian_gcd.cpp`（之前表上寫的兩平方驗證只在本機跑過）；NTT、Polar_Angle_Sort 的列補上是經哪些測試驗的。寫測試時發現 `Gaussian_gcd.cpp` 的 `#define rnd` 沒 `#undef`，會蓋掉同名函式（stress.h 的 `rnd()`），測試檔先 `#undef rnd`。
 
 ## 2026-11-25
 - **PalTree 加 series link**：節點多 `diff`、`slink`，新增 `best(dp)` 回傳 $\min(dp[j] + 1, j)$（$s[j, n)$ 是回文），每次 `add()` 後都要呼叫，$O(\log n)$。最小回文分割（ICPC 2024 Seoul G）一行；CF 906E 在外面加偶數位置與免費步驟。新增 `stress/String/PalTree.cpp`（最小分割與 906E 都對暴力）。Library Checker Eertree 重跑 AC。`clear()`、`size()` 與註解壓短。

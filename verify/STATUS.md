@@ -366,6 +366,7 @@
 - **Maximum Weight Matching 壓縮**（170 → 144 行；內部可讀性讓步，介面寫清楚）：開頭兩行註解寫介面（1-based、`add_edge` 需要 w > 0、`solve()` 只能呼叫一次、回傳 {weight, size}、`match[u]` 為 0 表示沒配）。`st`、`flo_from` 初值移到建構子；`add_edge` 順便記最大權重 `wm`；`E(e)` 直接用 `e.w`；`update_slk` 改 `upd(u, x)`（第三個參數一定是 `slk[x]`）；`q_push` 改 `push`、`split_flo` 改 `split`；`augment` 改成一個 for；`ALL` 巨集拿掉，改 `ranges::fill`／`ranges::find`；兩個逗號回傳改一般寫法；刪掉到不了的 `return false;`。`INF` 改 `INT_MAX`，UBSan 抓到原本 d 沒被限制時 `lab[u] += d` 溢位（driver 的 `INF = INT_MAX`），加一行用偶點的 `lab` 限制 d，回傳 false 的時機不變。Lib-Checker AC；新增對拍 `stress/Flow/Maximum_Weight_Matching.cpp`（30 000 組 n ≤ 12 vs 位元 DP；另在本機跑過 20 萬組 ASan + UBSan）。
 - **Josephus** 從 Else 移到 Math（`6_Math/Josephus.cpp`，放在 Nim Product 後；對拍檔移到 `stress/Math/`）。加上 Matching 省的行，回到 25 頁。
 - **Trigonometry**（Geometry and Calculus，放在 Derivatives/Integrals 前）：從 ideograph_advantage 的筆記挑容易記錯的：和差化積、積化和差、$\tan(\alpha+\beta)$、$a\cos x + b\sin x = r\cos(x-\phi)$、正切定理（原筆記括號有歧義，改寫成分式）、trig(atrig x) 的 3×3 表（使用者實際遇過、推導花時間；分式寫成 $x/\sqrt{\cdot}$ 讓每列一行高）。和角、倍角、sinh/cosh 太基本沒收。每條都用隨機數值驗過。維持 25 頁。
+- `MAP.tsv` 的 fac_no_p 備註拿掉「需要 `mpow()`」（模板早已不用 `mpow`）。
 
 ## 2026-11-25
 - **PalTree 加 series link**：節點多 `diff`、`slink`，新增 `best(dp)` 回傳 $\min(dp[j] + 1, j)$（$s[j, n)$ 是回文），每次 `add()` 後都要呼叫，$O(\log n)$。最小回文分割（ICPC 2024 Seoul G）一行；CF 906E 在外面加偶數位置與免費步驟。新增 `stress/String/PalTree.cpp`（最小分割與 906E 都對暴力）。Library Checker Eertree 重跑 AC。`clear()`、`size()` 與註解壓短。

@@ -1,5 +1,4 @@
 #include "../prelude.h"
-typedef complex<ll> cpx;
 #include "../../codebook/6_Math/Gaussian_gcd.cpp"
 
 int main() {
@@ -11,6 +10,6 @@ int main() {
     if (a == cpx(0, 0) && b == cpx(0, 0)) { cout << "0 0\n"; continue; }
     if (b == cpx(0, 0)) swap(a, b);
     cpx g = gaussian_gcd(a, b);
-    cout << g.real() << ' ' << g.imag() << '\n';
+    cout << (ll)g.real() << ' ' << (ll)g.imag() << '\n';
   }
 }

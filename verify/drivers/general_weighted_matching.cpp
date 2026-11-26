@@ -1,5 +1,4 @@
 #include "../prelude.h"
-const int INF = INT_MAX;  // Maximum_Weight_Matching uses INF; the codebook never defines it
 #include "../../codebook/4_Flow_Matching/Maximum_Weight_Matching.cpp"
 
 int main() {

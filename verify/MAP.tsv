@@ -9,7 +9,7 @@ convolution/min_plus_convolution_convex_arbitrary	min_plus_convolution_convex_ar
 convolution/convolution_mod	convolution_mod.cpp	7_Polynomial/Number_Theory_Transform.cpp	
 graph/bipartitematching	bipartitematching.cpp	4_Flow_Matching/Bipartite_Matching.cpp	cover() (Konig min vertex cover) verified separately against exhaustive search on 30000 random graphs
 graph/general_matching	general_matching.cpp	4_Flow_Matching/Maximum_Simple_Graph_Matching.cpp	
-graph/general_weighted_matching	general_weighted_matching.cpp	4_Flow_Matching/Maximum_Weight_Matching.cpp	driver supplies INF
+graph/general_weighted_matching	general_weighted_matching.cpp	4_Flow_Matching/Maximum_Weight_Matching.cpp	
 polynomial/inv_of_formal_power_series	fps.cpp -DOP_INV	7_Polynomial/Polynomial_Operation.cpp	
 polynomial/exp_of_formal_power_series	fps.cpp -DOP_EXP	7_Polynomial/Polynomial_Operation.cpp	
 polynomial/log_of_formal_power_series	fps.cpp -DOP_LOG	7_Polynomial/Polynomial_Operation.cpp	
@@ -31,7 +31,8 @@ tree/vertex_add_path_sum	vertex_add_path_sum.cpp	3_Data_Structure/Heavy_light_De
 tree/dynamic_tree_vertex_add_path_sum	dynamic_tree_vertex_add_path_sum.cpp	3_Data_Structure/link_cut_tree.cpp	
 tree/frequency_table_of_tree_distance	-	3_Data_Structure/Centroid_Decomposition.cpp	the template's info/upinfo answer "sum of distances to marked vertices", not a distance frequency table; no LC problem matches this API.
 number_theory/enumerate_quotients	enumerate_quotients.cpp	6_Math/floor_enumeration.cpp	snippet is int-typed; N goes to 1e12, so the driver widens int and inlines the loop body to observe x
-number_theory/gcd_of_gaussian_integers	gcd_of_gaussian_integers.cpp	6_Math/Gaussian_gcd.cpp	driver supplies cpx = complex<ll> and the zero-input cases
+number_theory/gcd_of_gaussian_integers	gcd_of_gaussian_integers.cpp	6_Math/Gaussian_gcd.cpp	driver handles the zero-input cases
+number_theory/two_square_sum	two_square_sum.cpp	6_Math/Gaussian_gcd.cpp, 6_Math/Pollard_Rho.cpp, 6_Math/Miller_Rabin.cpp	driver follows the Sum of squares bullet: factor, split p = 1 (mod 4) by gaussian_gcd, multiply out
 number_theory/counting_primes	counting_primes.cpp	6_Math/PiCount.cpp	
 number_theory/primality_test	primality_test.cpp	6_Math/Miller_Rabin.cpp	driver supplies mul() and the base set from the template's comment
 other/find_linear_recurrence	find_linear_recurrence.cpp	6_Math/Berlekamp-Massey.cpp	driver supplies a modint T

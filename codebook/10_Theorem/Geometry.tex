@@ -35,6 +35,23 @@ $\boldsymbol{n} = \boldsymbol{d}_1 \times \boldsymbol{d}_2$
 
 To optimize $f(x_1, \ldots, x_n)$ subject to $g_i(x) = 0$ ($1 \le i \le k$): at an optimum (with linearly independent $\nabla g_i$), $\nabla f = \sum_i \lambda_i \nabla g_i$. Solve together with all $g_i = 0$; check the boundary separately.
 
+\item Trigonometry
+
+\begin{itemize}
+  \item $\sin\alpha+\sin\beta = 2\sin\frac{\alpha+\beta}{2}\cos\frac{\alpha-\beta}{2}$, \quad $\cos\alpha+\cos\beta = 2\cos\frac{\alpha+\beta}{2}\cos\frac{\alpha-\beta}{2}$
+  \item $2\sin\alpha\sin\beta = \cos(\alpha-\beta)-\cos(\alpha+\beta)$, \quad $\tan(\alpha+\beta) = \frac{\tan\alpha+\tan\beta}{1-\tan\alpha\tan\beta}$
+  \item $2\cos\alpha\cos\beta = \cos(\alpha-\beta)+\cos(\alpha+\beta)$
+  \item $2\sin\alpha\cos\beta = \sin(\alpha+\beta)+\sin(\alpha-\beta)$
+  \item $a\cos x+b\sin x = r\cos(x-\phi)$, \quad $a\sin x+b\cos x = r\sin(x+\phi)$, where $r = \sqrt{a^2+b^2}$, $\phi = \operatorname{atan2}(b, a)$.
+  \item Law of tangents: $\frac{a-b}{a+b} = \tan\frac{\alpha-\beta}{2} \big/ \tan\frac{\alpha+\beta}{2}$, with sides $a$, $b$ opposite angles $\alpha$, $\beta$ (any triangle; follows from the law of sines).
+  \item $\mathrm{trig}(\mathrm{atrig}\,x)$: $\begin{array}[t]{c|ccc}
+     & \arcsin x & \arccos x & \arctan x \\ \hline
+    \sin & x & \sqrt{1-x^2} & x/\sqrt{1+x^2} \\
+    \cos & \sqrt{1-x^2} & x & 1/\sqrt{1+x^2} \\
+    \tan & x/\sqrt{1-x^2} & \sqrt{1-x^2}/x & x
+  \end{array}$
+\end{itemize}
+
 \item Derivatives/Integrals
 
 Integration by parts:

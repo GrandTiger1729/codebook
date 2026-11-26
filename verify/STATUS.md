@@ -71,7 +71,7 @@
 | `4_Flow_Matching/Kuhn_Munkres.cpp` | `graph/assignment` **AC** 14 筆 · 0.165s/5s (3%) | 20 000 組 n ≤ m ≤ 7 vs 窮舉（12 545 組矩形 n < m、6 666 組 perfect 模式含負權） | 需要外部 `N` | test by CF 101239 C (World Finals' problem), Lib-Checker Assignment Problem |
 | `4_Flow_Matching/MincostMaxflow.cpp` | `graph/assignment#mcmf` **AC** 14 筆 · 1.417s/5s (28%) | 4 000 組 n ≤ 8、m ≤ 20 vs SPFA 最短路增廣（1 545 組負權、走 setpi；同一物件重複 `init`）（**修 bug**：`par[s]` 沒重設，重用物件會沿舊邊回溯）；負環：Flow Models 的「先把負邊流滿」歸約，20 000 組 vs 窮舉所有整數流（任意流量 / 最大流兩種） | 需要外部 `N` | test by Lib-Checker Assignment Problem, local stress vs SPFA reference |
 | `4_Flow_Matching/Maximum_Simple_Graph_Matching.cpp` | `graph/general_matching` **AC** 12 筆 · 0.008s/5s (0%) | — | ✅ | test by Library Checker Matching on General Graph |
-| `4_Flow_Matching/Maximum_Weight_Matching.cpp` | `graph/general_weighted_matching` **AC** 24 筆 · 0.336s/5s (7%) | — | 需要外部 `INF` | test by Library Checker General Weighted Matching |
+| `4_Flow_Matching/Maximum_Weight_Matching.cpp` | `graph/general_weighted_matching` **AC** 24 筆 · 0.315s/5s (6%) | 30 000 組 n ≤ 12 vs 位元 DP（權重 1–3 多平手、1–1000） | ✅ | test by Library Checker General Weighted Matching |
 | `4_Flow_Matching/SW-mincut.cpp` | — 無對應題 | 30 000 組 n≤11 vs 2^n 枚舉 | ✅ | — |
 | `4_Flow_Matching/BoundedFlow.cpp` | — 無對應題 | 30 000 組 vs 枚舉整數流（可行/最大/最小，流量可為負）（`init` 補清匯點只是清理，不影響答案） | 需要外部 `N`、`INF` | Maximum boundedflow test by LOJ 116; Minimum boundedflow test by LOJ 117; Dinic test by NTUJ 184; local brute force (flows of either sign)；2026-11-25 縮短（80 → 67 行，行為與速度不變） |
 | `4_Flow_Matching/Gomory_Hu_tree.cpp` | — 無對應題 | 6 000 組 n≤8，全點對 min cut（**修越界**） | 需要外部 `MaxFlow` | test by LOJ 2042 |
@@ -105,8 +105,9 @@
 | `6_Math/floor_ceil.cpp` | — 無對應題 | 101 萬組含 INT 邊界 | ✅ | — |
 | `6_Math/floor_enumeration.cpp` | `number_theory/enumerate_quotients` **AC** 26 筆 · 0.121s/5s (2%) | — | 片段，非獨立編譯單元 | test by Lib-Checker Enumerate Quotients |
 | `6_Math/ModMin.cpp` | `number_theory/min_of_mod_of_linear` **AC** 17 筆 · 0.265s/10s (3%) | 1 734 355 組 vs 暴力（m ≤ 60 窮舉，88 406 組無解） | ✅ | test by Lib-Checker Min of Mod of Linear |
-| `6_Math/Gaussian_gcd.cpp` | `number_theory/gcd_of_gaussian_integers` **AC** 12 筆 · 0.065s/5s (1%) | — | 需要外部 `cpx` | test by Lib-Checker GCD of Gaussian Integers |
+| `6_Math/Gaussian_gcd.cpp` | `number_theory/gcd_of_gaussian_integers` **AC** 12 筆 · 0.115s/5s (2%)<br>`number_theory/two_square_sum` **AC** 38 筆 · 0.065s/5s (1%) | 兩平方構造：$p \equiv 1 \pmod 4$ 質數到 $4 \cdot 10^{18}$ 各 2000 個，$N(\gcd(p, c+i)) = p$ | ✅ | test by Lib-Checker GCD of Gaussian Integers, Represent A Number As Two Square Sum |
 | `6_Math/NimProduct.cpp` | `number_theory/nim_product_64` **AC** 10 筆 · 0.365s/10s (4%) | Turning Corners 32×32 的 SG 暴力表（Tartan）、2 萬組 64 位元隨機值的體公理（交換、結合、對 xor 分配、a^(2^64−1) = 1） | ✅ | 2026-11-17 加入 |
+| `6_Math/Josephus.cpp` | — 無對應題 | n ≤ 300、k ≤ 400 vs 模擬；n ≤ 1e7 vs O(n) 遞迴；n 到 1e18（k ≤ 1000）vs 獨立實作與 k = 2 公式，共 123 300 組 | k > n 時遞迴深 n：n ≈ 3e5 會爆棧 | 2026-11-17 加入 |
 | `6_Math/Miller_Rabin.cpp` | `number_theory/factorize` **AC** 31 筆 · 1.167s/10s (12%)<br>`number_theory/primality_test` **AC** 12 筆 · 0.265s/5s (5%) | 經 Pollard_Rho 的對拍（每個因數都要通過 `prime()`） | ✅ | test by NTUJ 1237, Lib-Checker Primality Test |
 | `6_Math/Linear_Equations.cpp` | `linear_algebra/system_of_linear_equations` **AC** 27 筆 · 0.515s/5s (10%) | 有理數、modint 各 3 000 組，驗 A·sol = b 且 basis 在核空間（1 239 + 1 322 組無解） | 需要外部 `MAXN` 與域型別 `T` | test by Lib-Checker System of Linear Equations (modint), local brute force (fraction) |
 | `6_Math/DeterminantAnyMod.cpp` | `linear_algebra/matrix_det_arbitrary_mod` **AC** 20 筆 · 0.165s/5s (3%)<br>`linear_algebra/matrix_det` **AC** 25 筆 · 0.165s/5s (3%) | — | ✅ | 2026-11-17 收進書（原 `Determinant.cpp` 改寫：回傳行列式而非交換次數，m 任意） |
@@ -176,7 +177,6 @@
 | `9_Else/Mos_Algorithm_With_modification.cpp` | — 無對應題 | 3 000 組 6 萬筆查詢（**原本編不過** + `R = -1`） | 需要外部 `blk` | — |
 | `9_Else/Mos_Algorithm_On_Tree.cpp` | — 無對應題 | 3 000 棵樹 6 萬筆查詢（**原本編不過** + `R = -1`） | 需要外部 `LCA` | — |
 | `9_Else/HilbertCurve.cpp` | — 無對應題 | n≤2^10 窮舉 + 2^30 隨機 | ✅ | — |
-| `9_Else/Josephus.cpp` | — 無對應題 | n ≤ 300、k ≤ 400 vs 模擬；n ≤ 1e7 vs O(n) 遞迴；n 到 1e18（k ≤ 1000）vs 獨立實作與 k = 2 公式，共 123 300 組 | k > n 時遞迴深 n：n ≈ 3e5 會爆棧 | 2026-11-17 加入 |
 | `9_Else/DynamicConvexTrick.cpp` | `data_structure/line_add_get_min` **AC** 15 筆 · 0.167s/5s (3%) | — | ✅ | test by TIOJ 1921, Lib-Checker Line Add Get Min |
 | `9_Else/All_LCS.cpp` | `string/prefix_substring_lcs` **AC** 11 筆 · 0.115s/5s (2%) | — | ✅ | test by Lib-Checker Prefix-Substring LCS |
 | `9_Else/DLX.cpp`（不在書中） | — 無對應題 | — | 需要外部 `NN` | test by TIOJ 1333, 1381 |
@@ -196,7 +196,7 @@
 
 - 收錄模版：**114**（上面各章主表中在書裡的列；不含 `typo_check.sh`、`stress.sh`、`Primes`、`misc.py`）
 - 有 Library Checker AC 的：**54**
-- 有本地對拍的：**88**（主表「本地對拍」欄有內容的列；`verify/stress/` 共 92 個測試）
+- 有本地對拍的：**89**（主表「本地對拍」欄有內容的列；`verify/stress/` 共 97 個測試）
 - 兩種自動測試都沒有的：**4**（black_magic、Pragma、sanitize_fixer、simulated_annealing；都是片段或工具檔）
 
 ## 2026-09-27：stress test + 排版
@@ -362,6 +362,10 @@
 ## 2026-11-26
 - **Bipartite Matching `cover()`**：試過改用最後一次 `bfs()` 的 `dis`（−7 行，測試都過），撤回：會依賴 `bfs()` 的內部行為。記在 `docs/SPACE.md`。
 - 新增 `docs/SPACE.md`：量過但還沒採用的省行方法與可拿出書的模板，下次超頁時用。
+- **Sum of squares（兩平方）**：個數改寫成 $4\prod_{p \equiv 1}(e_p+1)$（舊的 $d_1 - d_3$ 註解保留）；加構造法：$c = r^{(p-1)/4}$ 找 $c^2 \equiv -1$，$a + bi = \gcd(p, c + i)$ 用 Gaussian gcd，$n$ 的所有解由質因數乘出。`gaussian_gcd` 原本用 `complex<ll>`，$p > 1.75 \cdot 10^9$ 時 `rnd` 的 $2c + r \approx 3p^2$ 溢位（不會結束）；改成檔內 `typedef complex<__int128_t> cpx;`、中間值用 `auto`，$p$ 到 $4 \cdot 10^{18}$ 都對，Lib-Checker 仍 AC。新增 `two_square_sum` driver（照理論那條做：Pollard–Rho 分解、`gaussian_gcd` 拆 $p \equiv 1$、乘出所有解），**AC** 38 筆。OGF／EGF 的子清單改成標題一行、規則一行，維持 25 頁。
+- **Maximum Weight Matching 壓縮**（170 → 144 行；內部可讀性讓步，介面寫清楚）：開頭兩行註解寫介面（1-based、`add_edge` 需要 w > 0、`solve()` 只能呼叫一次、回傳 {weight, size}、`match[u]` 為 0 表示沒配）。`st`、`flo_from` 初值移到建構子；`add_edge` 順便記最大權重 `wm`；`E(e)` 直接用 `e.w`；`update_slk` 改 `upd(u, x)`（第三個參數一定是 `slk[x]`）；`q_push` 改 `push`、`split_flo` 改 `split`；`augment` 改成一個 for；`ALL` 巨集拿掉，改 `ranges::fill`／`ranges::find`；兩個逗號回傳改一般寫法；刪掉到不了的 `return false;`。`INF` 改 `INT_MAX`，UBSan 抓到原本 d 沒被限制時 `lab[u] += d` 溢位（driver 的 `INF = INT_MAX`），加一行用偶點的 `lab` 限制 d，回傳 false 的時機不變。Lib-Checker AC；新增對拍 `stress/Flow/Maximum_Weight_Matching.cpp`（30 000 組 n ≤ 12 vs 位元 DP；另在本機跑過 20 萬組 ASan + UBSan）。
+- **Josephus** 從 Else 移到 Math（`6_Math/Josephus.cpp`，放在 Nim Product 後；對拍檔移到 `stress/Math/`）。加上 Matching 省的行，回到 25 頁。
+- **Trigonometry**（Geometry and Calculus，放在 Derivatives/Integrals 前）：從 ideograph_advantage 的筆記挑容易記錯的：和差化積、積化和差、$\tan(\alpha+\beta)$、$a\cos x + b\sin x = r\cos(x-\phi)$、正切定理（原筆記括號有歧義，改寫成分式）、trig(atrig x) 的 3×3 表（使用者實際遇過、推導花時間；分式寫成 $x/\sqrt{\cdot}$ 讓每列一行高）。和角、倍角、sinh/cosh 太基本沒收。每條都用隨機數值驗過。維持 25 頁。
 
 ## 2026-11-25
 - **PalTree 加 series link**：節點多 `diff`、`slink`，新增 `best(dp)` 回傳 $\min(dp[j] + 1, j)$（$s[j, n)$ 是回文），每次 `add()` 後都要呼叫，$O(\log n)$。最小回文分割（ICPC 2024 Seoul G）一行；CF 906E 在外面加偶數位置與免費步驟。新增 `stress/String/PalTree.cpp`（最小分割與 906E 都對暴力）。Library Checker Eertree 重跑 AC。`clear()`、`size()` 與註解壓短。

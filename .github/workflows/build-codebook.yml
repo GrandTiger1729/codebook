@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - name: Every listing fits in 58 columns
+      - name: Every listing fits in 61 columns
         run: python3 verify/check_layout.py
       - name: Get Ubuntu fonts
         run: |

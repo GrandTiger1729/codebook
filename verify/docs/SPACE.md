@@ -11,8 +11,6 @@ PDF 上限 25 頁。下面是試過、量過但**還沒採用**的省行方法�
   以後若改 `bfs()` 會悄悄壞掉。要用的話建議寫成 `mq[e] != l && ~dis[mq[e]]`，別靠哨兵。
 - **Mo's Algorithm On Tree 開頭註解**（−6 行）：8 行的 `/* ... */` 改成兩行
   `// needs LCA, dfs with in[u] = dft++, out[u] = dft++,` / `// ord[in[u]] = ord[out[u]] = u, bitset<MAXN> inset`。
-- **Maximum Weight Matching 小幅整理**（約 −6～8 行）：`on_found_edge` 四行賦值併一行、`solve()` 的 `flo_from` 初始化與 `w_max`
-  分開成兩個簡單迴圈、刪掉 `for (;;)` 後面到不了的 `return false;`、`set_slk` 併行。用 Lib-Checker General Weighted Matching 驗。
 
 ## 拿出書（comment out `content.tex`，檔案保留）
 
@@ -21,6 +19,10 @@ PDF 上限 25 頁。下面是試過、量過但**還沒採用**的省行方法�
 | Maximum Weight Matching | 170 | 比賽沒用過，帶著以防萬一 |
 | HPI Alternative Form | 26 | |
 | Determinant Any Mod | 15 | |
+
+## 注意
+
+- 第 7 章（Polynomial）目前從第 15 頁頂開始，第 14 頁最後一欄以不能拆的 Euclidean 公式結尾：第 15 頁之前省幾行通常會被吃掉，要省頁就從第 15 頁之後下手。
 
 ## 不要用的省法
 

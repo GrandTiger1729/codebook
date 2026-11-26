@@ -3,7 +3,7 @@
 // with k <= 1000 vs an iterative forward version of the recurrence that skips wrap-free steps.
 #include "prelude.h"
 #include "stress.h"
-#include "9_Else/Josephus.cpp"
+#include "6_Math/Josephus.cpp"
 ll rec(ll n, ll k) { // J(i) = (J(i - 1) + k) mod i
   ll s = 0;
   for (ll i = 2; i <= n; i++) s = (s + k % i) % i;
